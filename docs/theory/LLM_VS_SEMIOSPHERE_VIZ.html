@@ -102,16 +102,6 @@ html.popout-mode .viz-section.is-popout-active.popout-panel-flat .two-col + .viz
   <p class="sub">Interactive 2D and 3D models - illustrative, not measured brain activity or formal proof.</p>
 </header>
 
-<div class="banner">
-  <strong>Pop out:</strong> each figure has a <em>Pop out window</em> button - opens a resizable standalone window; the plot area grows with the window (ResizeObserver), without the fixed <code>min(58vh, …)</code> cap.
-  <br><br>
-  <strong>How to read these figures.</strong>
-  They are <em>pedagogical models</em> aligned with Lotman&rsquo;s semiosphere and with this lab&rsquo;s 2026-09-26 findings
-  (typed relay vs pooled similarity; flat retrieval tier confusion; matched-null retraction of the 0.613 map).
-  They do <strong>not</strong> claim that LLMs cannot be useful, that humans are non-computational, or that AGI is impossible.
-  See <code>docs/theory/SEMIOSPHERE_AGI_LIMIT.md</code> and <code>LOTMAN_INTERPRETATION.html</code>.
-</div>
-
 <div id="popoutTopbar" class="popout-topbar" hidden></div>
 
 <!-- ========== FIG 1: 2D LLM ========== -->
@@ -194,7 +184,7 @@ html.popout-mode .viz-section.is-popout-active.popout-panel-flat .two-col + .viz
   <strong>Persistence</strong> here means what survives across time to structure the next act of meaning.
   For an LLM, persistence is bounded by the context window and frozen weights: earlier tokens decay in influence
   (attention dilution) unless the architecture re-injects them; nothing <em>outside</em> the window exists for the step.
-  For a semiosphere, persistence is layered: institutions, archives, pair-read warrant, autocommunication (I–I loops that
+  For a semiosphere, persistence is layered: institutions, archives, pair-read warrant, autocommunication (I-I loops that
   restructure the sender), and Lotman/Uspensky&rsquo;s &ldquo;non-hereditary memory of the community&rdquo; - not identical to any one transcript.
   That memory is <strong>not a closed orbit</strong>: events, rival texts, and primary acquisitions cross the boundary filter from the
   <em>outside</em> and retool the field (E7 counts, 2026-09-26: same volume, new operators after 1987).
@@ -211,10 +201,10 @@ html.popout-mode .viz-section.is-popout-active.popout-panel-flat .two-col + .viz
       <input type="range" id="rngPersist" min="5" max="40" value="24">
       <span id="lblPersist">24 tokens</span>
     </label>
-    <label class="btn"><input type="checkbox" id="chkAutoLoop" checked> Animate semiosphere (external ingress + I–I loop)</label>
+    <label class="btn"><input type="checkbox" id="chkAutoLoop" checked> Animate semiosphere (external ingress + I-I loop)</label>
   </div>
   <div class="legend">
-    <span><i style="background:#1f5136"></i> Autocommunication (I–I · stays inner)</span>
+    <span><i style="background:#1f5136"></i> Autocommunication (I-I · stays inner)</span>
     <span><i style="background:#b8860b"></i> Licensed relay (crosses filter · changes shell)</span>
     <span><i style="background:#2a4a6f"></i> External ingress (primary · rival · event)</span>
     <span><i style="background:#8d94a3"></i> Outside - never fully absorbed</span>
@@ -294,7 +284,7 @@ html.popout-mode .viz-section.is-popout-active.popout-panel-flat .two-col + .viz
     <tr>
       <td><strong>Persistence</strong></td>
       <td>Archive, ritual, autocommunication loops, explosion retools vocabulary at flat volume (E7)</td>
-      <td>Context window + static weights; no I–I restructuring unless prompted</td>
+      <td>Context window + static weights; no I-I restructuring unless prompted</td>
     </tr>
     <tr>
       <td><strong>Prohibition</strong></td>
@@ -308,17 +298,6 @@ html.popout-mode .viz-section.is-popout-active.popout-panel-flat .two-col + .viz
     </tr>
   </tbody>
 </table>
-<cite>
-  Conceptual basis: <code>SEMIOSPHERE_AGI_LIMIT.md</code>, <code>LOTMAN_INTERPRETATION.html</code>,
-  <code>RUN_FINDINGS_2026-09-26.md</code>. Empirical anchors named in prose are from that battery; 3D coordinates here are schematic, not PCA of the Montreal calibration plate.
-</cite>
-
-<footer>
-  <p>
-    File: <code>docs/theory/LLM_VS_SEMIOSPHERE_VIZ.html</code> · Three.js r128 (CDN) · No data leaves the browser.
-    For measured embedding geometry of the Montreal plate, use <code>report/embed/fig-semiosphere-embedding-3d.html</code>.
-  </p>
-</footer>
 </div>
 
 <script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>
@@ -590,7 +569,7 @@ function drawPersist(){
   const cx = mid + (W - mid) / 2;
   const cy = H / 2 + 16;
   const r = Math.min(W - mid, H) * 0.2;
-  const layers = ['Archive / fond', 'Pair-read warrant', 'Institution · shell', 'Autocommunication I–I'];
+  const layers = ['Archive / fond', 'Pair-read warrant', 'Institution · shell', 'Autocommunication I-I'];
   const rFilter = r * 1.08;
   const rOutside = r * 1.38;
 
@@ -710,7 +689,7 @@ function drawPersist(){
     ctxP.fillStyle = '#1f5136';
     ctxP.font = '9px system-ui,sans-serif';
     ctxP.textAlign = 'center';
-    ctxP.fillText('I–I only (does not cross filter)', px, py + 14);
+    ctxP.fillText('I-I only (does not cross filter)', px, py + 14);
 
     const cycle = 320;
     const phase = (persT % cycle) / cycle;

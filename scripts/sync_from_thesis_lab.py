@@ -8,8 +8,9 @@ Run only against the thesis lab path configured in this script.
 """
 from __future__ import annotations
 
-import re
 import shutil
+import subprocess
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -22,12 +23,9 @@ THEORY = HTR / "docs" / "theory"
 LAB = Path(__file__).resolve().parents[2] / "lab"  # MLCS lab filter copies
 
 CURRENT_REPORT = [
-    "status_dashboard.html",
-    "relay_cards.html",
     "filter_model.html",
     "lotman_3d_evidence.html",
     "lotman_evidence_dashboard.html",
-    "experiment_semiosphere_feature_space.html",
 ]
 
 CURRENT_EMBED = [
@@ -59,17 +57,6 @@ def copy_file(src: Path, dst: Path) -> None:
     dst.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(src, dst)
     print(f"  {src.name} -> {dst.relative_to(ROOT)}")
-
-
-def patch_status_dashboard(path: Path) -> None:
-    text = path.read_text(encoding="utf-8")
-    text = text.replace("../docs/theory/", "theory/")
-    text = re.sub(
-        r'href="theory/([^"]+)\.md"',
-        r'href="theory/SEMIOTIC_COORDINATE_PLAIN.html"',
-        text,
-    )
-    path.write_text(text, encoding="utf-8")
 
 
 def main() -> int:
@@ -119,10 +106,6 @@ def main() -> int:
                 continue
             copy_file(src, legacy_embed / src.name)
 
-    dash = DOCS / "status_dashboard.html"
-    if dash.is_file():
-        patch_status_dashboard(dash)
-
     for stale in (DOCS / "proposal_evidence_viz.html", DOCS / "fig-filter-l1.html"):
         if stale.is_file():
             stale.unlink()
@@ -142,11 +125,10 @@ def main() -> int:
         text = text.replace('dissertation_proposal.html', '../index.html')
         legacy_prop.write_text(text, encoding="utf-8")
 
-    for html_path in DOCS.rglob("*.html"):
-        text = html_path.read_text(encoding="utf-8")
-        if "\u2014" in text:
-            html_path.write_text(text.replace("\u2014", "-"), encoding="utf-8")
-
+    subprocess.run(
+        [sys.executable, str(ROOT / "scripts" / "sanitize_public_site.py")],
+        check=True,
+    )
     (DOCS / ".nojekyll").touch()
     print("Done.")
     return 0
