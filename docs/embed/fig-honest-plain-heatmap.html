@@ -41,10 +41,10 @@ th.surf{writing-mode:vertical-rl;transform:rotate(180deg);min-width:1.6rem;font-
 <a class="back" href="../status_dashboard.html">← Status dashboard</a>
 <h1>The honest plain · L2 operator tensor</h1>
 <p class="meta">L2 operator × surface counts · darker = more hits · gray zero = finding · column tags: <span class="lang-tag lang-ru">ru</span> / <span class="lang-tag lang-en">en</span></p>
-<p class="how-to"><strong>How to explore:</strong> <strong>Click any cell</strong> in the table — operator and surface explanations appear in the panel below. Hover may work after the first click; if nothing shows, click first.</p>
-<div class="bilingual"><strong>Bilingual filter:</strong> Secret memos are <span class="lang-tag lang-ru">ru</span> (spr. 1206/1208/1249); outward Soviet surfaces are <span class="lang-tag lang-en">en</span> (embassy, Novosti alias, Khmil UN). Operators are counted in source language — scare-quote grammar peaks on Russian internal columns and reads <strong>0</strong> on English outward columns.</div>
-<div class="lede"><strong>Semiotic read:</strong> Empty cells are not missing data. Scare-quote row at 0 on embassy/Novosti/UN is untranslatability made countable — internal Russian quoting habits do not cross the bilingual boundary.</div>
-<div id="info-panel" class="empty">Click a cell in the table below — details appear here.</div>
+<p class="how-to"><strong>How to explore:</strong> <strong>Click any cell</strong> in the table - operator and surface explanations appear in the panel below. Hover may work after the first click; if nothing shows, click first.</p>
+<div class="bilingual"><strong>Bilingual filter:</strong> Secret memos are <span class="lang-tag lang-ru">ru</span> (spr. 1206/1208/1249); outward Soviet surfaces are <span class="lang-tag lang-en">en</span> (embassy, Novosti alias, Khmil UN). Operators are counted in source language - scare-quote grammar peaks on Russian internal columns and reads <strong>0</strong> on English outward columns.</div>
+<div class="lede"><strong>Semiotic read:</strong> Empty cells are not missing data. Scare-quote row at 0 on embassy/Novosti/UN is untranslatability made countable - internal Russian quoting habits do not cross the bilingual boundary.</div>
+<div id="info-panel" class="empty">Click a cell in the table below - details appear here.</div>
 <p class="legend">
 <span class="group g-int">internal memos</span>
 <span class="group g-out">outward Soviet</span>
@@ -77,7 +77,7 @@ function clearTip(defaultText) {
   var p = document.getElementById('info-panel');
   if (!p) return;
   p.classList.add('empty');
-  p.textContent = defaultText || 'Click an element — details appear here.';
+  p.textContent = defaultText || 'Click an element - details appear here.';
 }
 
 var OP = {"scare_quote": "Quotation marks around contested words \u2014 reader is told not to accept the label as fact.", "genre_downgrade_gathering": "Calls a conference a disreputable \u00ab\u0441\u0431\u043e\u0440\u0438\u0449\u0435\u00bb instead of a scholarly symposium.", "symposium_recode": "Reframes symposium as propaganda, not academic meeting.", "denial_no_artificial_famine": "Explicit denial that famine was artificial or man-made.", "drought_frame": "Natural-disaster explanation \u2014 drought, not policy failure.", "kulak_blame": "Blames kulak sabotage for food shortages.", "genocide_commemoration": "Commemorative genocide or deliberate-famine language (rival shell).", "forgery_fabrication_frame": "Calls rival materials forgeries or fabrications.", "attack_slander_frame": "Accusation of slander / \u043a\u043b\u0435\u0432\u0435\u0442\u0430 against Soviet side.", "operational_media_push": "Orders operational channels to push outward materials."};

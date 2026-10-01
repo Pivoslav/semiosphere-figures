@@ -115,11 +115,11 @@ details.verify summary { cursor:pointer; color:var(--accent); font-weight:600; }
     
     <p class="how-to"><strong>How to explore:</strong> drag to rotate · scroll to zoom · <strong>hover</strong> for a quick label · <strong>click</strong> for full context · toggle the detail panel with the button ↗</p>
 
-    <p class="cap">The dissertation tests whether Soviet-era talking points on famine commemoration <strong>transform predictably</strong> when they cross register boundaries — secret memo → embassy/Novosti → domestic news → diaspora/scholarly print — and whether that transformation is <strong>dated and measurable</strong> (Montreal 1983 as anchor, post-1983 explosion as qualitative rewire). These 3D models make Lotman’s spatial vocabulary falsifiable: they read from the same open JSON as Figures 1–12.</p>
+    <p class="cap">The dissertation tests whether Soviet-era talking points on famine commemoration <strong>transform predictably</strong> when they cross register boundaries - secret memo → embassy/Novosti → domestic news → diaspora/scholarly print - and whether that transformation is <strong>dated and measurable</strong> (Montreal 1983 as anchor, post-1983 explosion as qualitative rewire). These 3D models make Lotman’s spatial vocabulary falsifiable: they read from the same open JSON as Figures 1–12.</p>
     <div class="layman-grid">
       <div class="layman-block">
         <div class="layman-label">In plain terms</div>
-        <p>This is a <strong>three-dimensional heatmap</strong> of operators. Each bar = one operator (scare quotes, drought frame, genocide commemoration…) in one document. <strong>Taller bar</strong> = more matches in that text. The “mountain range” on internal memo columns — especially scare quotes on spr. 1206 — drops to <strong>zero</strong> on the embassy column at the same operator row. Same three topics (famine, symposium, gathering); incompatible required readings. The gap is counted untranslatability.</p>
+        <p>This is a <strong>three-dimensional heatmap</strong> of operators. Each bar = one operator (scare quotes, drought frame, genocide commemoration…) in one document. <strong>Taller bar</strong> = more matches in that text. The “mountain range” on internal memo columns - especially scare quotes on spr. 1206 - drops to <strong>zero</strong> on the embassy column at the same operator row. Same three topics (famine, symposium, gathering); incompatible required readings. The gap is counted untranslatability.</p>
       </div>
       <div class="layman-block">
         <div class="layman-label">What the axes mean</div>
@@ -128,14 +128,14 @@ details.verify summary { cursor:pointer; color:var(--accent); font-weight:600; }
     </div>
     <div class="thesis-prose">
       <h3>What connections between columns mean</h3>
-      <p>There are no drawn arcs here — the <strong>comparison is spatial</strong>. When you mentally connect the tall internal scare-quote bar to the flat embassy bar on the same row, you are testing relay: did the operator travel outward? The answer is measurable: M<sub>scare</sub><sup>int</sup> = 48 vs 0 on embassy. Denial frames (drought, kulak, no artificial famine) rise on outward columns instead. That skew is the dissertation’s operator evidence for Lotman’s untranslatability — not a metaphor, a counted gap.</p>
-      <p><strong>Thesis link:</strong> The tensor makes Lotman’s ‘untranslatability’ countable: internal columns spike on scare quotes and gathering downgrade; embassy and Novosti columns stay flat on those operators while rising on denial frames. That spatial gap is the dissertation’s operator-skew evidence — same three topics, incompatible required readings.</p>
+      <p>There are no drawn arcs here - the <strong>comparison is spatial</strong>. When you mentally connect the tall internal scare-quote bar to the flat embassy bar on the same row, you are testing relay: did the operator travel outward? The answer is measurable: M<sub>scare</sub><sup>int</sup> = 48 vs 0 on embassy. Denial frames (drought, kulak, no artificial famine) rise on outward columns instead. That skew is the dissertation’s operator evidence for Lotman’s untranslatability - not a metaphor, a counted gap.</p>
+      <p><strong>Thesis link:</strong> The tensor makes Lotman’s ‘untranslatability’ countable: internal columns spike on scare quotes and gathering downgrade; embassy and Novosti columns stay flat on those operators while rising on denial frames. That spatial gap is the dissertation’s operator-skew evidence - same three topics, incompatible required readings.</p>
     </div>
     <div class="stats">
       <div class="stat"><strong>48</strong>scare-quote hits · internal</div>
       <div class="stat"><strong>0</strong>scare-quote hits · embassy</div>
     </div>
-    <p class="chart-key"><strong>Try it:</strong> click the tallest scare-quote bar on spr. 1206 — read “Why it matters to the dissertation.” Then click the embassy column on the same operator row and compare height. Pair with L1 arcs: thematic relay carries denial, not scare quotes.</p>
+    <p class="chart-key"><strong>Try it:</strong> click the tallest scare-quote bar on spr. 1206 - read “Why it matters to the dissertation.” Then click the embassy column on the same operator row and compare height. Pair with L1 arcs: thematic relay carries denial, not scare quotes.</p>
     </div>
 
   </section>
@@ -305,9 +305,9 @@ DATA.cells.forEach(c => {
       { label: 'What row (depth) means', text: `Operator row: ${c.operator_layman}` },
       { label: 'What column (left-right) means', text: `${c.surface_layman} Register: ${c.register_layman}` },
       { label: 'Why it matters to the dissertation', text: internalOnly
-          ? 'Peaks on secret memo columns that disappear on embassy/Novosti columns show internal-only operators — Lotman untranslatability with counts. This is the measurable face of boundary non-equivalence: same three topics, incompatible required readings.'
+          ? 'Peaks on secret memo columns that disappear on embassy/Novosti columns show internal-only operators - Lotman untranslatability with counts. This is the measurable face of boundary non-equivalence: same three topics, incompatible required readings.'
           : 'Cross-register bars show where a frame travels outward or stays rival-side only. Compare height to internal columns on the same operator row to test relay vs silence.' },
-      { label: 'Thesis / chapter link', text: DATA.operator_thesis || 'Operator tensor O[operator, surface] — spatial form of the dissertation operator-skew argument.' }
+      { label: 'Thesis / chapter link', text: DATA.operator_thesis || 'Operator tensor O[operator, surface] - spatial form of the dissertation operator-skew argument.' }
     ]
   };
   mesh.userData.tooltip = `<strong>${c.operator.replace(/_/g, ' ')}</strong>${c.hits}× in ${c.surface_label.slice(0, 40)}…`;

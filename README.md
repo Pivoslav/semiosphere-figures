@@ -30,8 +30,8 @@ Then run `sync_from_thesis_lab.py` and commit `docs/`.
 
 ## Layout
 
-- **`docs/index.html`** — home (points at current program)
-- **`docs/status_dashboard.html`** — hub for interactive figures
-- **`docs/theory/`** — LLM cognition / semiosphere theory HTML
-- **`docs/embed/`** — current embed figures (3D embedding, heatmaps, Lotman 3D, filters)
-- **`docs/legacy/`** — superseded Peter I proposal operator/press gallery
+- **`docs/index.html`** - home (points at current program)
+- **`docs/status_dashboard.html`** - hub for interactive figures
+- **`docs/theory/`** - LLM cognition / semiosphere theory HTML
+- **`docs/embed/`** - current embed figures (3D embedding, heatmaps, Lotman 3D, filters)
+- **`docs/legacy/`** - superseded Peter I proposal operator/press gallery

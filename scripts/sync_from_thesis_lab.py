@@ -142,6 +142,11 @@ def main() -> int:
         text = text.replace('dissertation_proposal.html', '../index.html')
         legacy_prop.write_text(text, encoding="utf-8")
 
+    for html_path in DOCS.rglob("*.html"):
+        text = html_path.read_text(encoding="utf-8")
+        if "\u2014" in text:
+            html_path.write_text(text.replace("\u2014", "-"), encoding="utf-8")
+
     (DOCS / ".nojekyll").touch()
     print("Done.")
     return 0

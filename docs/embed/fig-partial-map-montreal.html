@@ -43,21 +43,21 @@ a{color:var(--accent)}
 <a class="back" href="../status_dashboard.html">← Status dashboard</a>
 <h1>Partial map · Montreal calibration</h1>
 <p class="meta">T<sub>s→s′</sub> : o<sub>s</sub> ↦ o<sub>s′</sub> ∪ {⊥} · pair-read licensed edges only</p>
-<p class="how-to"><strong>How to explore:</strong> <strong>Click any shell box or arrow block</strong> — the semiotic reading appears in the panel below. Hover may work after the first click; if nothing shows, click a block first.</p>
-<div class="bilingual"><strong>Bilingual partial map:</strong> Shell 1 source text is Russian; Shell 3/4 targets are English. Translation is typed relay across the language boundary — not a total function.</div>
+<p class="how-to"><strong>How to explore:</strong> <strong>Click any shell box or arrow block</strong> - the semiotic reading appears in the panel below. Hover may work after the first click; if nothing shows, click a block first.</p>
+<div class="bilingual"><strong>Bilingual partial map:</strong> Shell 1 source text is Russian; Shell 3/4 targets are English. Translation is typed relay across the language boundary - not a total function.</div>
 <div class="lede">Translation between shells is not total. Some operators transform RU→EN, some are forbidden (zero L2 column), some hit <span class="bot">⊥</span> (documented miss).</div>
-<div id="info-panel" class="empty">Click a shell or edge block below — details appear here.</div>
+<div id="info-panel" class="empty">Click a shell or edge block below - details appear here.</div>
 
 <div class="shell interactive" tabindex="0" style="border-color:#2a5f8f" data-key="shell1"><h3>Shell 1 · Secret · Russian (spr. 1206, 24 Mar 1983)</h3><p>Operators active: scare-quote «искусственный голод», symposium recode (сборище), hostile gathering frame.</p></div>
 <div class="shell interactive" tabindex="0" style="border-color:#6b8f71" data-key="shell3"><h3>Shell 3 · Outward Soviet · English (embassy, Novosti alias, UN)</h3><p>Speakable in English: drought frame, kulak blame, denial of artificial famine, slander frame (Khmil).</p></div>
 <div class="shell interactive" tabindex="0" style="border-color:#8d94a3" data-key="silence"><h3>Silence · domestic newspapers (tier B)</h3><p>Processed absence of Holodomor denial frame in anniversary window.</p></div>
-<div class="shell interactive" tabindex="0" style="border-color:#c45c26" data-key="shell4"><h3>Shell 4 · Rival (Weekly, CIUS, AP)</h3><p>Dual model — not merged with embassy. Probe: outward-trained W does not align secret → rival (orth −0.025).</p></div>
+<div class="shell interactive" tabindex="0" style="border-color:#c45c26" data-key="shell4"><h3>Shell 4 · Rival (Weekly, CIUS, AP)</h3><p>Dual model - not merged with embassy. Probe: outward-trained W does not align secret → rival (orth −0.025).</p></div>
 
 <div class="diagram">
 <div class="arrow transform interactive" tabindex="0" data-key="transform_famine"><strong>famine theme → transformed (RU→EN)</strong><br>«искусственный голод» in quotes (spr. 1206) → English drought + kulak denial on embassy (28 Apr 1983). Same field, different operators.</div>
 <div class="arrow forbidden interactive" tabindex="0" data-key="forbidden_scare"><strong>scare_quote_artificial_famine → forbidden</strong><br>L2 zero on embassy/Novosti/UN. Internal grammar does not cross outward.</div>
 <div class="arrow bot interactive" tabindex="0" data-key="bot_montreal"><strong>symposium / Montreal meeting → ⊥</strong><br>Documented miss: embassy release never names Montreal. No licensed outward target exists.</div>
-<div class="arrow bot interactive" tabindex="0" data-key="bot_domestic"><strong>drought denial → ⊥ on domestic Pravda/Izvestiia (processed 1983)</strong><br>Silence coordinate: outward-only routing in tier-B audit. Not missing files — channel assignment.</div>
+<div class="arrow bot interactive" tabindex="0" data-key="bot_domestic"><strong>drought denial → ⊥ on domestic Pravda/Izvestiia (processed 1983)</strong><br>Silence coordinate: outward-only routing in tier-B audit. Not missing files - channel assignment.</div>
 
 </div>
 
@@ -76,10 +76,10 @@ function clearTip(defaultText) {
   var p = document.getElementById('info-panel');
   if (!p) return;
   p.classList.add('empty');
-  p.textContent = defaultText || 'Click an element — details appear here.';
+  p.textContent = defaultText || 'Click an element - details appear here.';
 }
 
-var MAP = {"shell1": {"title": "Shell 1 · Secret · Russian (spr. 1206, 24 Mar 1983)", "body": "Internal relay grammar in Russian — what the office may say about Montreal before the bilingual filter."}, "shell3": {"title": "Shell 3 · Outward Soviet · English (embassy, Novosti alias, UN)", "body": "Public-facing Soviet register for Western audiences — Novosti is verbatim embassy English in this corpus."}, "silence": {"title": "Silence · domestic newspapers (tier B)", "body": "Silence coordinate: channel does not carry the outward denial frame in the audited window."}, "shell4": {"title": "Shell 4 · Rival (Weekly, CIUS, AP)", "body": "Rival shell is parallel, not a translation target. ML must not collapse it into one manifold with embassy."}, "transform_famine": {"title": "famine theme → transformed (RU→EN)", "body": "Bilingual operator substitution: Russian scare-quote grammar does not copy outward; English embassy supplies drought/kulak frame instead."}, "forbidden_scare": {"title": "scare_quote_artificial_famine → forbidden", "body": "Forbidden edge: the internal quoting habit has no licensed outward counterpart. Zero in L2 is a finding, not missing data."}, "bot_montreal": {"title": "symposium / Montreal meeting → ⊥", "body": "Bottom element ⊥: pair-read finds no outward stretch that answers the Montreal meeting operator. Documented absence of target."}, "bot_domestic": {"title": "drought denial → ⊥ on domestic Pravda/Izvestiia (processed 1983)", "body": "Silence is a coordinate: the denial frame routes outward only. Domestic tier-B surfaces carry different obligations."}};
+var MAP = {"shell1": {"title": "Shell 1 · Secret · Russian (spr. 1206, 24 Mar 1983)", "body": "Internal relay grammar in Russian - what the office may say about Montreal before the bilingual filter."}, "shell3": {"title": "Shell 3 · Outward Soviet · English (embassy, Novosti alias, UN)", "body": "Public-facing Soviet register for Western audiences - Novosti is verbatim embassy English in this corpus."}, "silence": {"title": "Silence · domestic newspapers (tier B)", "body": "Silence coordinate: channel does not carry the outward denial frame in the audited window."}, "shell4": {"title": "Shell 4 · Rival (Weekly, CIUS, AP)", "body": "Rival shell is parallel, not a translation target. ML must not collapse it into one manifold with embassy."}, "transform_famine": {"title": "famine theme → transformed (RU→EN)", "body": "Bilingual operator substitution: Russian scare-quote grammar does not copy outward; English embassy supplies drought/kulak frame instead."}, "forbidden_scare": {"title": "scare_quote_artificial_famine → forbidden", "body": "Forbidden edge: the internal quoting habit has no licensed outward counterpart. Zero in L2 is a finding, not missing data."}, "bot_montreal": {"title": "symposium / Montreal meeting → ⊥", "body": "Bottom element ⊥: pair-read finds no outward stretch that answers the Montreal meeting operator. Documented absence of target."}, "bot_domestic": {"title": "drought denial → ⊥ on domestic Pravda/Izvestiia (processed 1983)", "body": "Silence is a coordinate: the denial frame routes outward only. Domestic tier-B surfaces carry different obligations."}};
 function showBlock(el) {
   document.querySelectorAll('.shell.active,.arrow.active').forEach(function(x) { x.classList.remove('active'); });
   el.classList.add('active');

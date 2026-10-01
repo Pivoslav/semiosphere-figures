@@ -99,11 +99,11 @@ html.popout-mode .viz-section.is-popout-active.popout-panel-flat .two-col + .viz
 
 <header>
   <h1>How an LLM &ldquo;thinks&rdquo; vs how a semiosphere thinks</h1>
-  <p class="sub">Interactive 2D and 3D models — illustrative, not measured brain activity or formal proof.</p>
+  <p class="sub">Interactive 2D and 3D models - illustrative, not measured brain activity or formal proof.</p>
 </header>
 
 <div class="banner">
-  <strong>Pop out:</strong> each figure has a <em>Pop out window</em> button — opens a resizable standalone window; the plot area grows with the window (ResizeObserver), without the fixed <code>min(58vh, …)</code> cap.
+  <strong>Pop out:</strong> each figure has a <em>Pop out window</em> button - opens a resizable standalone window; the plot area grows with the window (ResizeObserver), without the fixed <code>min(58vh, …)</code> cap.
   <br><br>
   <strong>How to read these figures.</strong>
   They are <em>pedagogical models</em> aligned with Lotman&rsquo;s semiosphere and with this lab&rsquo;s 2026-09-26 findings
@@ -121,7 +121,7 @@ html.popout-mode .viz-section.is-popout-active.popout-panel-flat .two-col + .viz
   At each step the model does not &ldquo;visit&rdquo; an institution. It predicts the next token from a <strong>single</strong>
   hidden state that has already mixed every register present in pretraining. The diagram shows one prompt unfolding left-to-right:
   each column is a layer of context; colour intensity is how much <em>theme</em> (famine, film, symposium) dominates over
-  <em>shell</em> (secret, outward, rival). As context grows, theme gravity pulls unrelated registers together — the failure mode
+  <em>shell</em> (secret, outward, rival). As context grows, theme gravity pulls unrelated registers together - the failure mode
   the E4 retrieval run (2026-09-26) measured 6/6 tier confusion on unpaired Globe-forgery queries.
 </p>
 <div class="viz-box">
@@ -146,7 +146,7 @@ html.popout-mode .viz-section.is-popout-active.popout-panel-flat .two-col + .viz
 </div>
 <p class="viz-blurb">
   <span class="blurb-label">In plain terms</span>
-  An LLM does not &ldquo;think&rdquo; like a person walking from the KGB file room to the embassy press desk. It reads the prompt one word at a time and guesses the next word from one big internal mood board that already blends every kind of text it was trained on. Orange in the bars means &ldquo;this sounds like the same topic&rdquo; (famine, film, forgery); blue means &ldquo;which institution is speaking,&rdquo; and that signal is weak unless someone adds rules or filters. <strong>Play</strong> shows the model answering a question about a newspaper clip by drifting toward a secret memo on the same topic — the same mistake flat search made in the E4 experiment (6/6 wrong tier). The slider shows how much earlier words still matter: turn it down and the window forgets faster, like a short chat history.
+  An LLM does not &ldquo;think&rdquo; like a person walking from the KGB file room to the embassy press desk. It reads the prompt one word at a time and guesses the next word from one big internal mood board that already blends every kind of text it was trained on. Orange in the bars means &ldquo;this sounds like the same topic&rdquo; (famine, film, forgery); blue means &ldquo;which institution is speaking,&rdquo; and that signal is weak unless someone adds rules or filters. <strong>Play</strong> shows the model answering a question about a newspaper clip by drifting toward a secret memo on the same topic - the same mistake flat search made in the E4 experiment (6/6 wrong tier). The slider shows how much earlier words still matter: turn it down and the window forgets faster, like a short chat history.
 </p>
 </section>
 
@@ -157,7 +157,7 @@ html.popout-mode .viz-section.is-popout-active.popout-panel-flat .two-col + .viz
   Lotman models culture as a <strong>semiosphere</strong>: nested semiotic shells, a boundary that translates inward and outward,
   and an outside that is never fully absorbed. Drag to rotate. Toggle paths to compare a <strong>human</strong> trajectory
   (stays in a shell until a licensed edge crosses the filter) with an <strong>LLM-default</strong> trajectory
-  (cuts through the centre — maximum theme similarity, minimum institutional typing).
+  (cuts through the centre - maximum theme similarity, minimum institutional typing).
 </p>
 <div class="viz-box">
   <div class="viz-head">
@@ -183,7 +183,7 @@ html.popout-mode .viz-section.is-popout-active.popout-panel-flat .two-col + .viz
 </div>
 <p class="viz-blurb">
   <span class="blurb-label">In plain terms</span>
-  Imagine culture as nested bubbles: inner secret speech, official outward speech, rival diaspora speech, and silence (things that must not be said on a given channel). The <strong>human path</strong> (green) moves along a bubble surface and only jumps to another bubble where the archive allows a licensed translation — like a pair-read that says this Russian memo matches that embassy release. The <strong>LLM path</strong> (purple) cuts through the middle where everything is &ldquo;just text about the same subject,&rdquo; ignoring who is allowed to say what. The green line is a permitted relay; the red line is a forbidden merge (embassy grammar must not absorb rival grammar). Drag to rotate; toggles show or hide those story lines. This is a schematic model, not a measured map of real documents.
+  Imagine culture as nested bubbles: inner secret speech, official outward speech, rival diaspora speech, and silence (things that must not be said on a given channel). The <strong>human path</strong> (green) moves along a bubble surface and only jumps to another bubble where the archive allows a licensed translation - like a pair-read that says this Russian memo matches that embassy release. The <strong>LLM path</strong> (purple) cuts through the middle where everything is &ldquo;just text about the same subject,&rdquo; ignoring who is allowed to say what. The green line is a permitted relay; the red line is a forbidden merge (embassy grammar must not absorb rival grammar). Drag to rotate; toggles show or hide those story lines. This is a schematic model, not a measured map of real documents.
 </p>
 </section>
 
@@ -195,7 +195,7 @@ html.popout-mode .viz-section.is-popout-active.popout-panel-flat .two-col + .viz
   For an LLM, persistence is bounded by the context window and frozen weights: earlier tokens decay in influence
   (attention dilution) unless the architecture re-injects them; nothing <em>outside</em> the window exists for the step.
   For a semiosphere, persistence is layered: institutions, archives, pair-read warrant, autocommunication (I–I loops that
-  restructure the sender), and Lotman/Uspensky&rsquo;s &ldquo;non-hereditary memory of the community&rdquo; — not identical to any one transcript.
+  restructure the sender), and Lotman/Uspensky&rsquo;s &ldquo;non-hereditary memory of the community&rdquo; - not identical to any one transcript.
   That memory is <strong>not a closed orbit</strong>: events, rival texts, and primary acquisitions cross the boundary filter from the
   <em>outside</em> and retool the field (E7 counts, 2026-09-26: same volume, new operators after 1987).
 </p>
@@ -217,13 +217,13 @@ html.popout-mode .viz-section.is-popout-active.popout-panel-flat .two-col + .viz
     <span><i style="background:#1f5136"></i> Autocommunication (I–I · stays inner)</span>
     <span><i style="background:#b8860b"></i> Licensed relay (crosses filter · changes shell)</span>
     <span><i style="background:#2a4a6f"></i> External ingress (primary · rival · event)</span>
-    <span><i style="background:#8d94a3"></i> Outside — never fully absorbed</span>
+    <span><i style="background:#8d94a3"></i> Outside - never fully absorbed</span>
     <span style="border-bottom:2px dashed #1f5136;width:14px;height:0;display:inline-block;vertical-align:middle;margin-right:4px"></span> Bilingual filter (boundary)
   </div>
 </div>
 <p class="viz-blurb">
   <span class="blurb-label">In plain terms</span>
-  <strong>Left side (LLM):</strong> memory is a sliding window of recent words. Only the highlighted bars strongly influence the next prediction; everything earlier fades. Weights from training are fixed — the model does not grow an archive. <strong>Right side (semiosphere):</strong> memory is stacked — fond, pair-read warrant, institutional position, plus inward self-talk (green dashed loop). That loop alone stays inside; it does not cross the dashed <strong>bilingual filter</strong>. The gold tracer shows a licensed relay that leaves the inner shell, crosses the boundary, visits outward and rival registers, and returns. Colored arcs from the gray <strong>outside</strong> are new clips, rival texts, or events that enter and ripple the rings (same idea as 1987 vocabulary changing without the archive getting louder). <strong>Animate</strong> runs those motions; the LLM slider shortens how long tokens stay influential.
+  <strong>Left side (LLM):</strong> memory is a sliding window of recent words. Only the highlighted bars strongly influence the next prediction; everything earlier fades. Weights from training are fixed - the model does not grow an archive. <strong>Right side (semiosphere):</strong> memory is stacked - fond, pair-read warrant, institutional position, plus inward self-talk (green dashed loop). That loop alone stays inside; it does not cross the dashed <strong>bilingual filter</strong>. The gold tracer shows a licensed relay that leaves the inner shell, crosses the boundary, visits outward and rival registers, and returns. Colored arcs from the gray <strong>outside</strong> are new clips, rival texts, or events that enter and ripple the rings (same idea as 1987 vocabulary changing without the archive getting louder). <strong>Animate</strong> runs those motions; the LLM slider shortens how long tokens stay influential.
 </p>
 </section>
 
@@ -233,7 +233,7 @@ html.popout-mode .viz-section.is-popout-active.popout-panel-flat .two-col + .viz
 <p>
   Lab formalism: edges are <code>transformed | dual_model | forbidden | bottom</code>. Multipass relay with L2 rules
   reached 100% on miss-or-target where pooled embeddings reached ~8.3%. The left panel is the graph the semiosphere <em>is</em>;
-  the right panel is what a single vector space <em>sees</em> when shells are not enforced — one cloud, theme neighbours,
+  the right panel is what a single vector space <em>sees</em> when shells are not enforced - one cloud, theme neighbours,
   unpaired internal claims adjacent to outward questions.
 </p>
 <div class="two-col">
@@ -245,7 +245,7 @@ html.popout-mode .viz-section.is-popout-active.popout-panel-flat .two-col + .viz
     <div class="viz-stage" data-resize="graph"><canvas id="canvasGraph"></canvas></div>
     <p class="viz-blurb viz-blurb--compact">
       <span class="blurb-label">Left panel · plain terms</span>
-      Documents are nodes; arrows are allowed moves. Solid green is a licensed translation (secret → outward). Gray dashed is &ldquo;rival sees it differently.&rdquo; Red to silence is <strong>stop — do not invent the missing sentence</strong> (⊥). Dashed orange is an internal claim with no verified outward clip (unpaired). Rules and humans can refuse; the graph remembers what is forbidden.
+      Documents are nodes; arrows are allowed moves. Solid green is a licensed translation (secret → outward). Gray dashed is &ldquo;rival sees it differently.&rdquo; Red to silence is <strong>stop - do not invent the missing sentence</strong> (⊥). Dashed orange is an internal claim with no verified outward clip (unpaired). Rules and humans can refuse; the graph remembers what is forbidden.
     </p>
   </div>
   <div class="viz-box viz-panel-flat">
@@ -256,7 +256,7 @@ html.popout-mode .viz-section.is-popout-active.popout-panel-flat .two-col + .viz
     <div class="viz-stage" data-resize="flat"><canvas id="canvasFlat"></canvas></div>
     <p class="viz-blurb viz-blurb--compact">
       <span class="blurb-label">Right panel · plain terms</span>
-      One shared cloud of similarity: everything &ldquo;about famine&rdquo; pulls together regardless of whether it is a KGB memo, embassy denial, or diaspora weekly. Thin orange lines are &ldquo;nearest neighbour&rdquo; guesses — topic gravity, not warrant. There is no ⊥ node: gaps get filled by whatever text is closest. That is why pooled search can hand back a secret memo when the question asked for a newspaper clip.
+      One shared cloud of similarity: everything &ldquo;about famine&rdquo; pulls together regardless of whether it is a KGB memo, embassy denial, or diaspora weekly. Thin orange lines are &ldquo;nearest neighbour&rdquo; guesses - topic gravity, not warrant. There is no ⊥ node: gaps get filled by whatever text is closest. That is why pooled search can hand back a secret memo when the question asked for a newspaper clip.
     </p>
   </div>
 </div>
@@ -283,7 +283,7 @@ html.popout-mode .viz-section.is-popout-active.popout-panel-flat .two-col + .viz
     </tr>
     <tr>
       <td><strong>Position</strong></td>
-      <td>Speaker inside fond, embassy, diaspora press — bind and refusal are social acts</td>
+      <td>Speaker inside fond, embassy, diaspora press - bind and refusal are social acts</td>
       <td>No institutional slot; simulates all voices → synthetic speaker</td>
     </tr>
     <tr>
@@ -498,7 +498,7 @@ function drawLLM(){
   ctxLLM.font = '12px Georgia,serif';
   const foot1 = Math.max(40, Math.min(H - 36, H * 0.88));
   const foot2 = Math.max(52, Math.min(H - 16, H * 0.94));
-  ctxLLM.fillText('Next token chosen where theme overlap is high — shell tag weak unless RAG/types enforce it.', 16, foot1);
+  ctxLLM.fillText('Next token chosen where theme overlap is high - shell tag weak unless RAG/types enforce it.', 16, foot1);
   ctxLLM.fillText('↓ unpaired internal claim (secret) reads as answer to outward-clip question (E4 flat pool)', 16, foot2);
 }
 
@@ -785,7 +785,7 @@ function drawPersist(){
   ctxP.textAlign = 'left';
   ctxP.fillStyle = '#5c6670';
   ctxP.font = '11px Georgia';
-  ctxP.fillText('Ingress retools the field (E7: new operators at flat volume) — not the same shell forever.', mid + 24, Math.min(H - 38, H * 0.9));
+  ctxP.fillText('Ingress retools the field (E7: new operators at flat volume) - not the same shell forever.', mid + 24, Math.min(H - 38, H * 0.9));
   ctxP.fillText('Autocommunication is one channel; memory also moves when the outside crosses the filter.', mid + 24, Math.min(H - 18, H * 0.96));
 }
 
@@ -886,7 +886,7 @@ function drawFlat(){
   ctx.fillStyle = '#161a20';
   ctx.font = '11px Georgia';
   ctx.fillText('Nearest neighbour = theme, not warrant (E8 language/register confound)', 8, H-28);
-  ctx.fillText('No ⊥ — completion fills the gap', 8, H-10);
+  ctx.fillText('No ⊥ - completion fills the gap', 8, H-10);
 }
 
 function initGraphFlat(){

@@ -127,21 +127,21 @@ details.verify summary { cursor:pointer; color:var(--accent); font-weight:600; }
     
     <p class="how-to"><strong>How to explore:</strong> drag to rotate · scroll to zoom · <strong>hover</strong> dots or lines · <strong>click</strong> for detail · toggle panel ↗</p>
 
-    <p class="cap">The dissertation tests whether Soviet-era talking points on famine commemoration <strong>transform predictably</strong> when they cross register boundaries — secret memo → embassy/Novosti → domestic news → diaspora/scholarly print — and whether that transformation is <strong>dated and measurable</strong> (Montreal 1983 as anchor, post-1983 explosion as qualitative rewire). These 3D models make Lotman’s spatial vocabulary falsifiable: they read from the same open JSON as Figures 1–12.</p>
+    <p class="cap">The dissertation tests whether Soviet-era talking points on famine commemoration <strong>transform predictably</strong> when they cross register boundaries - secret memo → embassy/Novosti → domestic news → diaspora/scholarly print - and whether that transformation is <strong>dated and measurable</strong> (Montreal 1983 as anchor, post-1983 explosion as qualitative rewire). These 3D models make Lotman’s spatial vocabulary falsifiable: they read from the same open JSON as Figures 1–12.</p>
     <div class="layman-grid">
       <div class="layman-block">
         <div class="layman-label">In plain terms</div>
-        <p>Two phrase-network maps stacked vertically. <strong>Lower plane</strong> = memos before 1983 (only two early files). <strong>Upper plane</strong> = memos after 1983 (fourteen files). Each dot = a wording-habit cluster; each line = those habits appear in the <em>same memo</em>. <strong>Red lines</strong> = co-occurrences that did not exist before Montreal — new internal wiring. Grey vertical pillars = topics that continue across the rupture at the same horizontal position.</p>
+        <p>Two phrase-network maps stacked vertically. <strong>Lower plane</strong> = memos before 1983 (only two early files). <strong>Upper plane</strong> = memos after 1983 (fourteen files). Each dot = a wording-habit cluster; each line = those habits appear in the <em>same memo</em>. <strong>Red lines</strong> = co-occurrences that did not exist before Montreal - new internal wiring. Grey vertical pillars = topics that continue across the rupture at the same horizontal position.</p>
       </div>
       <div class="layman-block">
         <div class="layman-label">What connections tell us</div>
-        <p>Before 1983, three topics co-occur in a tight triangle — operational vocabulary, OUN actor references, scare quotes. After 1983, new nodes appear («artificial famine», hostile «gathering») and new edges link them. The institution did not merely write more memos; it <strong>rewired which phrases travel together</strong> when commemoration proceeds despite counter-measures. That is Lotman’s explosion as a dated, countable claim.</p>
+        <p>Before 1983, three topics co-occur in a tight triangle - operational vocabulary, OUN actor references, scare quotes. After 1983, new nodes appear («artificial famine», hostile «gathering») and new edges link them. The institution did not merely write more memos; it <strong>rewired which phrases travel together</strong> when commemoration proceeds despite counter-measures. That is Lotman’s explosion as a dated, countable claim.</p>
       </div>
     </div>
     <div class="thesis-prose">
       <h3>Thesis significance</h3>
-      <p>Lotman’s ‘explosion’ names qualitative reshaping, not louder word counts. After Montreal 1983 the memo phrase network gains new nodes («artificial famine», hostile «gathering») and new edges between them — the institution rewires which wording habits co-occur when the outside story ‘wins.’ The lower plane is the pre-rupture bundle; red upper-plane edges are co-occurrences that did not exist before.</p>
-      <p>Connections on the upper plane are <strong>internal to the fond</strong> — they do not prove outward press changed line-by-line. They prove the secret register’s phrase ecology bifurcated after the 1983 anchor. Pair this figure with L1 (outward relay) and L2 (operator skew) for the full argument: boundary non-equivalence at the shell edge <em>and</em> qualitative rewire inside the archive after the outside story wins.</p>
+      <p>Lotman’s ‘explosion’ names qualitative reshaping, not louder word counts. After Montreal 1983 the memo phrase network gains new nodes («artificial famine», hostile «gathering») and new edges between them - the institution rewires which wording habits co-occur when the outside story ‘wins.’ The lower plane is the pre-rupture bundle; red upper-plane edges are co-occurrences that did not exist before.</p>
+      <p>Connections on the upper plane are <strong>internal to the fond</strong> - they do not prove outward press changed line-by-line. They prove the secret register’s phrase ecology bifurcated after the 1983 anchor. Pair this figure with L1 (outward relay) and L2 (operator skew) for the full argument: boundary non-equivalence at the shell edge <em>and</em> qualitative rewire inside the archive after the outside story wins.</p>
     </div>
     <div class="layman-block" style="margin-bottom:0.55rem;">
       <div class="layman-label">Where things sit (fixed rules)</div>
@@ -156,7 +156,7 @@ details.verify summary { cursor:pointer; color:var(--accent); font-weight:600; }
       <span><i style="background:#8d94a3;height:1px;border-top:2px dashed #8d94a3"></i> Same topic, lower → upper plane</span>
     </div>
     <p class="eq">Δ topics = 4 · Δ links = 16 · new topics: artificial_famine, hostile_gathering, pedagogy, symposium_recode</p>
-    <p class="chart-key"><strong>Try it:</strong> click the red line between «Quoted artificial famine» and «Hostile gathering» on the upper plane — read “What this connection tells us” and “Thesis significance.” Compare to the lower-plane triangle where that edge did not exist.</p>
+    <p class="chart-key"><strong>Try it:</strong> click the red line between «Quoted artificial famine» and «Hostile gathering» on the upper plane - read “What this connection tells us” and “Thesis significance.” Compare to the lower-plane triangle where that edge did not exist.</p>
     <details class="verify">
   <summary>Verify every line against the JSON (co-occurrence = same memo)</summary>
   <table class="verify-table">
@@ -393,12 +393,12 @@ function addEdgeTube(a, b, e, yLevel) {
     sections: [
       { label: 'What this line means', text: e.layman },
       { label: 'Shared memo count', text: `Weight ${e.weight} = both phrase families appear in ${e.weight} memo${e.weight === 1 ? '' : 's'} in this period.` },
-      { label: 'What this connection tells us', text: e.thesis || 'Co-occurrence inside the fond — which wording habits travel together in the same documents.' },
+      { label: 'What this connection tells us', text: e.thesis || 'Co-occurrence inside the fond - which wording habits travel together in the same documents.' },
       { label: 'Thesis significance (Lotman explosion)', text: DATA.explosion_thesis || 'Qualitative rewire of the internal phrase network after the 1983 rupture.' },
       { label: 'Layout note', text: yLevel < 0 ? DATA.pre.layout_note : DATA.post.layout_note }
     ]
   };
-  cyl.userData.tooltip = `<strong>${e.a_label} — ${e.b_label}</strong>${e.weight} shared memo${e.weight === 1 ? '' : 's'}${e.is_new ? ' · NEW' : ''}`;
+  cyl.userData.tooltip = `<strong>${e.a_label} - ${e.b_label}</strong>${e.weight} shared memo${e.weight === 1 ? '' : 's'}${e.is_new ? ' · NEW' : ''}`;
   pickables.push(cyl);
   scene.add(cyl);
 }
@@ -431,12 +431,12 @@ function layoutNetwork(net, y, tint, eraLabel) {
         { label: 'Plain language', text: meta.layman },
         { label: 'What left/right position means', text: 'Position is computed from co-occurrence: topics that share more memos are placed closer. Not chronological order around a circle.' },
         { label: 'What up/down means', text: y < 0
-            ? 'Lower plane only — memos dated before 1983 (spr. 1127, 1128).'
-            : 'Upper plane — memos from 1983 onward. Shared topics stay at the same left-right spot as below.' },
-        { label: 'Lines to neighbors', text: neighbors || 'No co-occurrence link in this period (would be isolated — not the case here).' },
+            ? 'Lower plane only - memos dated before 1983 (spr. 1127, 1128).'
+            : 'Upper plane - memos from 1983 onward. Shared topics stay at the same left-right spot as below.' },
+        { label: 'Lines to neighbors', text: neighbors || 'No co-occurrence link in this period (would be isolated - not the case here).' },
         { label: 'Why it matters to the dissertation', text: meta.is_new
-            ? 'Lotman explosion: a new hub enters the memo network after anniversary pressure — qualitative rewire inside the fond when outward commemoration proceeds despite counter-measures.'
-            : 'Baseline enemy-language bundle that persists after 1983 but gets wired to new topics — shows continuity and change, not invention from zero.' },
+            ? 'Lotman explosion: a new hub enters the memo network after anniversary pressure - qualitative rewire inside the fond when outward commemoration proceeds despite counter-measures.'
+            : 'Baseline enemy-language bundle that persists after 1983 but gets wired to new topics - shows continuity and change, not invention from zero.' },
         { label: 'Thesis link (pair with L1/L2)', text: DATA.explosion_thesis || 'Internal phrase ecology bifurcates after Montreal; pair with semiosphere arcs (outward relay) and operator tensor (skew) for the full boundary-non-equivalence argument.' }
       ]
     };
