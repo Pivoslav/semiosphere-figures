@@ -1,6 +1,6 @@
 # Semiosphere figures (GitHub Pages)
 
-Static export of **current** dissertation visualizations (semiotic coordinate plain, relay geometry) — **not** the [Vozmezdie](https://github.com/Pivoslav/vozmezdie) site.
+Static export of **current** dissertation visualizations (semiotic coordinate plain, relay geometry).
 
 ## Publish
 
