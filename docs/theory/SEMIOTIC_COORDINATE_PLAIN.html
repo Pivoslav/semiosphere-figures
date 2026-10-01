@@ -295,8 +295,7 @@
 
 <header class="doc-head">
   <h1>Semiotic coordinate plain</h1>
-  
-</header>
+  </header>
 
 <nav class="toc" id="top">
   <strong>Contents</strong>
@@ -316,7 +315,11 @@
         <li><a href="#s9">9 · Falsifiers</a></li>
         <li><a href="#s10">10-14 · Dissertation, publication, index</a></li>
       </ol>
-    </li><li><a href="#open-q">Open questions</a></li>
+    </li>
+    <li><a href="#roadmap">Exploration roadmap</a>
+      <ol class="sub">
+        <li><a href="#phase0">Phases 0-6</a></li>
+        <li><a href="#open-q">Open questions</a></li>
       </ol>
     </li>
     <li><a href="#glossary">Glossary</a> <span style="font-weight:normal;color:var(--muted)">(click dotted terms)</span></li>
@@ -379,7 +382,7 @@
 </table>
 
 <h3>Probe in one paragraph</h3>
-<p>Frozen <code>paraphrase-multilingual-MiniLM-L12-v2</code>; 25 units, 9 secret→outward pairs; <a class="term" href="#eq-procrustes" data-tip="The probe’s rotation map Y ≈ WX - explained in plain language below.">orthogonal Procrustes</a> + <a class="term" href="#gloss-ridge" data-tip="Less constrained linear map that can stretch dimensions; higher fit ≠ better history.">ridge</a> + Hewitt-Liang shuffled controls. In-sample orthogonal beats identity and shuffled pairing; <a class="term" href="#gloss-loto" data-tip="Leave-one-topic-out: hold out a theme and test the map. With nine pairs, it collapses to chance.">LOTO</a> collapses (nine pairs = dictionary, not training set). <strong>Key negative result:</strong> outward-trained <a class="term" href="#eq-procrustes" data-tip="The map matrix W - see equation block."><strong>W</strong></a> does not send secret stretches toward rival/diaspora targets..</p>
+<p>Frozen <code>paraphrase-multilingual-MiniLM-L12-v2</code>; 25 units, 9 secret→outward pairs; <a class="term" href="#eq-procrustes" data-tip="The probe’s rotation map Y ≈ WX - explained in plain language below.">orthogonal Procrustes</a> + <a class="term" href="#gloss-ridge" data-tip="Less constrained linear map that can stretch dimensions; higher fit ≠ better history.">ridge</a> + Hewitt-Liang shuffled controls (<code>scripts/run_semiosphere_feature_space.py</code>). In-sample orthogonal beats identity and shuffled pairing; <a class="term" href="#gloss-loto" data-tip="Leave-one-topic-out: hold out a theme and test the map. With nine pairs, it collapses to chance.">LOTO</a> collapses (nine pairs = dictionary, not training set). <strong>Key negative result:</strong> outward-trained <a class="term" href="#eq-procrustes" data-tip="The map matrix W - see equation block."><strong>W</strong></a> does not send secret stretches toward rival/diaspora targets. See <a href="../EXPERIMENT_LOG_semiosphere_feature_space.md">EXPERIMENT_LOG_semiosphere_feature_space.md</a>.</p>
 
 <h3>Stakes (if extrapolated honestly)</h3>
 <p><strong>Semiotics:</strong> <a class="term" href="#gloss-untranslatable" data-tip="What cannot cross a shell unchanged - empty tensor cell, not failed translation.">Untranslatability</a> becomes empirical (zero column), not metaphor. Dual models without a neutral sphere become geometry, not ideology talk.</p>
@@ -406,7 +409,8 @@ Counts, L1-L3 models, probe  →  falsify bad averaging / false survey</pre>
   <li><strong><a class="term" href="#gloss-pair-read" data-tip="The warrant for every claim.">Pair-read</a>, or <a class="term" href="#gloss-documented-miss" data-tip="Expected outward sentence absent - e.g. no Montreal name.">documented miss</a>, is the warrant.</strong></li>
   <li>The <a class="term" href="#gloss-semiosphere" data-tip="Map of surfaces and relay arcs.">semiosphere</a> <a class="term" href="#gloss-probe" data-tip="Microscope, not oracle.">probe</a> does <strong>not</strong> generate memo language and does <strong>not</strong> redo Khanenko-Friesen fond-internal CDA.</li>
   <li><a class="term" href="#gloss-explosion" data-tip="Candidate phase change after 1983 - gated.">Explosion</a> (L3) is <strong>gated</strong>, not claimed from pilot counts alone.</li>
-  </ul>
+  <li>Do not promote probe numbers into SSHRC prose or comprehensive exam lists.</li>
+</ul>
 
 <h2 class="section" id="s1">1 · Core thesis</h2>
 <p><strong><a class="term" href="#gloss-semiosis" data-tip="Meaning as typed relay, not a dictionary point.">Semiosis</a> is not a point in one vector space.</strong> It is <strong><a class="term" href="#gloss-relay" data-tip="Movement between surfaces under institutional rules.">typed relay</a></strong> across document <a class="term" href="#gloss-surface" data-tip="Where a text lives: memo, embassy release, Weekly, etc.">surfaces</a> that obey different grammars on the same calendar week.</p>
@@ -477,7 +481,7 @@ Counts, L1-L3 models, probe  →  falsify bad averaging / false survey</pre>
 </ul>
 <p><strong>Semiotic stake:</strong> Location in culture = <strong>relay position</strong>, not frequency.</p>
 <p><strong>ML stake:</strong> Knowledge graphs need <strong>edge types and blocked edges</strong>, not only similarity cliques.</p>
-<p class="figure-links"><strong>Figures:</strong> <a href="../index.html">L1 empirical</a> · <a href="../index.html">L1-demo (target state - fabricated)</a></p>
+<p class="figure-links"><strong>Figures:</strong> <a href="../embed/fig-lotman-semiosphere-3d.html">L1 empirical</a> · <a href="../embed/fig-lotman-semiosphere-demo-3d.html">L1-demo (target state - fabricated)</a></p>
 
 <h3>4.2 L2 · Operator <a class="term" href="#gloss-tensor" data-tip="Grid: which wording habits appear on which surfaces. Empty cells = findings.">tensor</a> = the honest “plain”</h3>
 <p><strong>Question:</strong> Which <a class="term" href="#gloss-operator" data-tip="Recoding habit: scare quotes, gathering recode, drought frame.">operators</a> fire on which surfaces?</p>
@@ -504,13 +508,13 @@ Counts, L1-L3 models, probe  →  falsify bad averaging / false survey</pre>
   <li><code>nationalist_slander_frame</code> (Khmil UN)</li>
 </ul>
 <p><strong>Pilot skew (internal vs outward):</strong> 48 scare-quote hits on internal memos, 0 on embassy/Novosti/UN in the same window - <strong>hard non-equivalence</strong>, not sampling noise.</p>
-<p class="figure-links"><strong>Figure:</strong> <a href="../index.html">L2 operator tensor</a></p>
+<p class="figure-links"><strong>Figure:</strong> <a href="../embed/fig-lotman-operator-tensor-3d.html">L2 operator tensor</a></p>
 
 <h3>4.3 L3 · <a class="term" href="#gloss-explosion" data-tip="Candidate: internal phrase network rewires after 1983. Not claimed until gated.">Explosion</a> = phase change (candidate)</h3>
 <p><strong>Question:</strong> After Montreal 1983, does <strong>internal phrase co-occurrence</strong> rewire while 1955 training-manual operators persist?</p>
 <p>Pilot visualization: 3→7 nodes, 3→19 edges before/after 1983; red edges = new co-occurrences.</p>
 <p><strong>Gate:</strong> Claim explosion only if (1) post-1983 combinations are new relative to baseline; (2) 1955 operator vocabulary still describes the office habit; (3) rewrite tracks <strong>calendar time</strong>, not ingestion order.</p>
-<p class="figure-links"><strong>Figure:</strong> <a href="../index.html">L3 explosion (candidate only)</a></p>
+<p class="figure-links"><strong>Figure:</strong> <a href="../embed/fig-lotman-explosion-3d.html">L3 explosion (candidate only)</a></p>
 
 <h2 class="section" id="s5">5 · Semiosphere feature-space <a class="term" href="#gloss-probe" data-tip="Computational check on frozen embeddings.">probe</a></h2>
 <h3>5.1 Design</h3>
@@ -522,7 +526,9 @@ Counts, L1-L3 models, probe  →  falsify bad averaging / false survey</pre>
     <tr><td>Controls</td><td>Identity, shuffled pairing (Hewitt &amp; Liang)</td></tr>
     <tr><td>Hold-out</td><td>By topic; Montreal gathering = stress case</td></tr>
     <tr><td>Units</td><td>25 stretches, 9 secret→outward pairs</td></tr>
-    </tbody>
+    <tr><td>Script</td><td><code>scripts/run_semiosphere_feature_space.py</code></td></tr>
+    <tr><td>Report</td><td><a href="../index.html">experiment_semiosphere_feature_space.html</a></td></tr>
+  </tbody>
 </table>
 <p><strong>Literature chain:</strong> Schönemann 1966; Mikolov et al. 2013; Xing et al. 2015; Artetxe et al. 2016; Alain &amp; Bengio 2017; Hewitt &amp; Manning 2019; Hewitt &amp; Liang 2019.</p>
 
@@ -675,10 +681,158 @@ Counts, L1-L3 models, probe  →  falsify bad averaging / false survey</pre>
   </tbody>
 </table>
 
+<h2 class="section" id="s10">10 · Relationship to dissertation chapters</h2>
+<table>
+  <thead><tr><th>Chapter work</th><th>This theory</th></tr></thead>
+  <tbody>
+    <tr><td>Montreal pair-read narrative</td><td><strong>Primary</strong> - history, Canada, embassy</td></tr>
+    <tr><td>Five-step checklist</td><td><strong>Method warrant</strong></td></tr>
+    <tr><td>L1-L3 figures</td><td><strong>Method chapter</strong></td></tr>
+    <tr><td>Probe report</td><td><strong>Appendix</strong> - anti-merge check</td></tr>
+    <tr><td>Khanenko-Friesen et al. manuscript</td><td><strong>Dialogue</strong> - fond-internal CDA vs cross-register relay</td></tr>
+    <tr><td>SSHRC / comps</td><td><strong>Exclude</strong> probe math and unpublished NKF claims</td></tr>
+  </tbody>
+</table>
+
+<h2 class="section" id="s11">11 · Publication tracks (post-gate)</h2>
+<ol>
+  <li><strong>History</strong> - embassy, Holodomor anniversary, Canadian reception (SSHRC core).</li>
+  <li><strong>Semiotics / Slavic</strong> - operational Lotman, untranslatables as tensor gaps.</li>
+  <li><strong>ML / DH</strong> - probe as falsification instrument; pair-read benchmark.</li>
+  <li><strong>Archival science</strong> - companion checklist UX; proof tiers on edges.</li>
+</ol>
+
+<!-- ========== ROADMAP ========== -->
+<part-divider id="roadmap">
+  <h2>Part III · Exploration roadmap</h2>
+</part-divider>
+
+<p><strong>Rule:</strong> Pair-read remains the warrant. Experiments falsify bad averaging; they do not replace composition and uptake.</p>
+
+<h3>North star</h3>
+<p>Build a <strong>checkable semiotic coordinate system</strong> where:</p>
+<ul>
+  <li>axes are chosen (shell, operator, date, proof tier), not inherited from a generic encoder;</li>
+  <li>translation is a <strong>partial map</strong> with explicit untranslatables (⊥);</li>
+  <li>machine outputs are <strong>register-typed</strong> and cannot merge secret with public without a logged merge penalty.</li>
+</ul>
+
+<h2 class="section" id="phase0"><span class="phase-tag">Phase 0</span> Lock what we already have (1-2 sessions)</h2>
+<table>
+  <thead><tr><th>Task</th><th>Output</th><th>Status</th></tr></thead>
+  <tbody>
+    <tr><td>Re-run probe; archive results</td><td><code>results.json</code> snapshot</td><td>done 2026-09-17</td></tr>
+    <tr><td>Export L2 matrix as CSV</td><td><code>l2_operator_matrix.csv</code></td><td>done 2026-09-17</td></tr>
+    <tr><td>Confirm empiricization ledger complete</td><td>24 rows, all pairing types marked</td><td>done 2026-09-17</td></tr>
+    <tr><td>Sean confirms dated_units</td><td>Human warrant on 14 units</td><td><strong>pending</strong> (0/14)</td></tr>
+  </tbody>
+</table>
+<p><strong>Exit criterion:</strong> “Proven / tier B / miss / not claimed” synced with <code>docs/EXPERIMENT_GAPS.md</code>.</p>
+
+<h2 class="section" id="phase1"><span class="phase-tag">Phase 1</span> Make the plain explicit (theory + data model)</h2>
+<h3>1a · Sign-event schema</h3>
+<pre>{
+  "id": "1206_1983-03-24_gathering",
+  "surface": "secret_memo",
+  "shell": 1,
+  "date": "1983-03-24",
+  "operators": ["scare_quote_artificial_famine", "symposium_recode"],
+  "stretch_text_ref": "...",
+  "proof_tier": "primary",
+  "pair_ids": ["embassy_1983-04-28", "weekly_1983-04-10"]
+}</pre>
+<p><strong>Action:</strong> Draft <code>data/bc_corpus/semiosphere/sign_event_schema.json</code>; migrate 25 probe units from <code>pairs.json</code>.</p>
+
+<h3>1b · Partial map registry</h3>
+<p>For each licensed relay: source/target shell, operator map (preserved | transformed | forbidden), evidence tier, ⊥ cases.</p>
+<p><strong>Action:</strong> Extend <code>register_relay_experiment.json</code> or new <code>partial_maps.json</code>.</p>
+
+<h3>1c · One-page formal sketch</h3>
+<p>Objects = sign-events; morphisms = proof-typed relays; obstruction = miss. Deliver after 1a-1b.</p>
+
+<h2 class="section" id="phase2"><span class="phase-tag">Phase 2</span> Probe v2 (falsification, not scale)</h2>
+<table>
+  <thead><tr><th>Experiment</th><th>Hypothesis</th><th>If true</th><th>If false</th></tr></thead>
+  <tbody>
+    <tr><td><strong>P2.1</strong> Register-conditioned encoder</td><td>Shell one-hot concatenated to embeddings</td><td>Rival alignment still fails on operator rows</td><td>Merge was encoder noise</td></tr>
+    <tr><td><strong>P2.2</strong> Anti-merge loss</td><td>Penalize secret-rival cosine</td><td>Head separates operators</td><td>Theme gravity dominates</td></tr>
+    <tr><td><strong>P2.3</strong> Operator labels as controls</td><td>Linear operator-class probe</td><td>Operators separable in frozen space</td><td>Need structured features</td></tr>
+    <tr><td><strong>P2.4</strong> Non-anniversary controls</td><td>1976-1982 memos without anniversary wording</td><td>Skew weakens → 1983-specific</td><td>Method generalizes</td></tr>
+  </tbody>
+</table>
+<p><strong>Do not:</strong> Fine-tune the transformer on the fond. Do not present LOTO as “model understands KGB.”</p>
+
+<h2 class="section" id="phase3"><span class="phase-tag">Phase 3</span> Fill L1 arcs (empirical geometry)</h2>
+<table>
+  <thead><tr><th>Acquisition</th><th>Unlocks</th><th>Tier</th></tr></thead>
+  <tbody>
+    <tr><td>CIUS 1986 full text ingested</td><td>Scholarly rival arc</td><td>Primary</td></tr>
+    <tr><td><em>Globe and Mail</em> page (spr. 1249)</td><td>Print verification arc</td><td>Primary or falsify</td></tr>
+    <tr><td>East View Pravda/Izvestiia/Rad ykr 1983</td><td>Domestic silence test</td><td>Tier A or revise claim</td></tr>
+    <tr><td>Carleton embassy Press Office releases</td><td>Outward packet completeness</td><td>Primary</td></tr>
+    <tr><td><em>Harvest of Despair</em> (licensed)</td><td>Film foil arc</td><td>L1-33</td></tr>
+  </tbody>
+</table>
+
+<h2 class="section" id="phase4"><span class="phase-tag">Phase 4</span> L3 explosion gate</h2>
+<table>
+  <thead><tr><th>Step</th><th>Method</th></tr></thead>
+  <tbody>
+    <tr><td>Baseline co-occurrence</td><td>1976-1982 internal memos</td></tr>
+    <tr><td>Post-1983 window</td><td>Same operator vocabulary</td></tr>
+    <tr><td>Compare</td><td>Node/edge counts; new edges (red in L3 viz)</td></tr>
+    <tr><td>Control</td><td>Random date cut vs 1983 cut</td></tr>
+    <tr><td>Claim</td><td>Explosion only if rewrite + stable 1955 baseline</td></tr>
+  </tbody>
+</table>
+
+<h2 class="section" id="phase5"><span class="phase-tag">Phase 5</span> Pair-read benchmark (publishable artifact)</h2>
+<p><strong>Task types:</strong></p>
+<ol>
+  <li><strong>Operator retention</strong> - pick outward candidate that preserves/forbids scare-quote operator.</li>
+  <li><strong>Miss detection</strong> - does embassy packet name Montreal?</li>
+  <li><strong>Relay direction</strong> - classify surface type.</li>
+  <li><strong>False merge detection</strong> - flag register collapse in a summary.</li>
+</ol>
+<p><strong>Deliverable:</strong> <code>data/bc_corpus/benchmarks/register_relay_v1.json</code> + scorer script.</p>
+
+<h2 class="section" id="phase6"><span class="phase-tag">Phase 6</span> Writing tracks</h2>
+<table>
+  <thead><tr><th>Track</th><th>Venue</th><th>Lead with</th></tr></thead>
+  <tbody>
+    <tr><td>History / archive</td><td>Dissertation ch. 1-4</td><td>Montreal pair-read, Canada, embassy</td></tr>
+    <tr><td>Semiotics / Lotman</td><td>Method + article</td><td>L1-L3, ⊥</td></tr>
+    <tr><td>ML / DH</td><td>Workshop or journal</td><td>Probe, benchmark</td></tr>
+    <tr><td>Archivist UX</td><td>Checklist + site</td><td>“Do not read spravka alone”</td></tr>
+  </tbody>
+</table>
+
+<h3>Suggested session order</h3>
+<ol>
+  <li>Phase 0 re-run + confirm dated_units.</li>
+  <li>Phase 1a sign-event schema (2-3 hours coding).</li>
+  <li>Phase 3 acquisition (Globe, East View) - parallel, human-bound.</li>
+  <li>Phase 2.3 operator linear probe when schema exists.</li>
+  <li>Phase 4 L3 gate after more memos.</li>
+  <li>Phase 5 benchmark when 20+ scored pairs.</li>
+</ol>
+
+<h2 class="section" id="open-q">Open questions</h2>
+<table>
+  <thead><tr><th>#</th><th>Question</th><th>Answer / date</th></tr></thead>
+  <tbody>
+    <tr><td>Q1</td><td>Register non-mergeability stable under different frozen encoder (e.g. LaBSE)?</td><td></td></tr>
+    <tr><td>Q2</td><td>Does CIUS ingestion change L1 arc set materially?</td><td></td></tr>
+    <tr><td>Q3</td><td>Primary Pravda pages: silence holds or outward frame appears domestically?</td><td></td></tr>
+    <tr><td>Q4</td><td>Non-anniversary controls: same operator skew?</td><td></td></tr>
+    <tr><td>Q5</td><td>Partial-map formalism - dissertation appendix or separate paper?</td><td></td></tr>
+  </tbody>
+</table>
+
+</main>
+
 <section class="glossary" id="glossary">
   <h2>Glossary · lay terms for this project</h2>
-  <p class="meta">Dotted terms in the text link here. Click a term for a quick popover; follow the link for the full entry.</p>
-
   <dl>
     <dt id="gloss-tensor">Tensor (L2 operator tensor)</dt>
     <dd>
@@ -828,10 +982,6 @@ Counts, L1-L3 models, probe  →  falsify bad averaging / false survey</pre>
     </dd>
   </dl>
 </section>
-
-<p class="meta" style="margin-top:2rem;border-top:1px solid var(--rule);padding-top:1rem;">
-  Compiled 2026-09-17 · <a href="#top">Back to contents</a> · <a href="#glossary">Glossary</a>
-</p>
 
 <script>
 (function () {
