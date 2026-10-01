@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="color-scheme" content="light"/>
+<title>Figure L1-demo · Ideal semiosphere (fabricated)</title>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,600&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --paper:#f7f4ef; --ink:#1a1814; --muted:#5c564c; --accent:#8b6914; --line:#d8d0c4; --panel:#fffdfa;
+  --internal:#2a5f8f; --outward:#6b8f71; --press:#c45c26; --rival:#9a3b3b;
+  --serif: Georgia, "Times New Roman", serif; --sans: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+* { box-sizing:border-box; }
+:root, html, body { color-scheme: light; }
+html, body { overflow-x: hidden; max-width: 100%; }
+body { margin:0; font-family:var(--sans); background:var(--paper); color:var(--ink); line-height:1.5; }
+body.embed { background:#fff; }
+.wrap.embed-wrap { max-width:100%; padding:0.65rem 0.85rem 0.85rem; }
+h2 { font-family:var(--serif); font-size:1.05rem; margin:0 0 0.35rem; }
+.cap { font-size:0.84rem; color:var(--muted); max-width:72ch; margin:0 0 0.55rem; }
+.eq { font-family:Georgia,serif; font-size:0.82rem; background:#f3efe6; border:1px solid var(--line); border-radius:6px; padding:0.45rem 0.65rem; margin:0 0 0.55rem; }
+.chart-key { font-size:0.75rem; color:var(--muted); margin-top:0.55rem; padding-top:0.45rem; border-top:1px dashed var(--line); line-height:1.45; }
+.chart-key strong { color:var(--ink); }
+.embed-back { font-size:0.78rem; margin:0.75rem 0 0; }
+.embed-back a { color:var(--accent); }
+.legend { display:flex; flex-wrap:wrap; gap:0.45rem 0.85rem; font-size:0.72rem; margin:0.45rem 0 0; }
+.legend span { display:inline-flex; align-items:center; gap:0.3rem; }
+.legend i { width:10px; height:10px; border-radius:50%; display:inline-block; }
+.stats { display:flex; flex-wrap:wrap; gap:0.5rem; margin:0.45rem 0; }
+.stat { background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:0.4rem 0.55rem; font-size:0.78rem; }
+.stat strong { display:block; font-family:var(--serif); font-size:1rem; }
+.layman-grid { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:0.55rem; margin:0 0 0.55rem; }
+@media(max-width:900px) { .layman-grid { grid-template-columns:minmax(0,1fr); } }
+body.embed .layman-grid { grid-template-columns:minmax(0,1fr); }
+.layman-block { background:#f3efe6; border:1px solid var(--line); border-radius:8px; padding:0.65rem 0.75rem; font-size:0.82rem; }
+.layman-label { font-size:0.68rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:var(--accent); margin-bottom:0.3rem; }
+.layman-block p { margin:0; color:#2a2620; }
+.how-to { font-size:0.78rem; color:var(--muted); margin:0 0 0.45rem; padding:0.4rem 0.55rem; background:#faf8f4; border:1px dashed var(--line); border-radius:6px; }
+.viz-stage { position:relative; border:1px solid var(--line); border-radius:8px; overflow:hidden; background:#faf8f4;
+  width:100%; height:min(58vh,480px); min-height:320px; }
+body.embed .viz-stage { height:380px; min-height:280px; }
+body.embed .shell-caption, body.embed .surface-label, body.embed .node-label, body.embed .plane-label {
+  max-width: 7.5rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.52rem;
+}
+#viz3d { width:100%; height:100%; display:block; cursor:grab; position:absolute; inset:0; }
+#viz3d canvas { display:block !important; width:100% !important; height:100% !important; margin:0 !important; }
+#viz3d:active { cursor:grabbing; }
+.file-warn { margin:1rem; padding:0.85rem 1rem; background:#fffdfa; border:1px solid var(--line); border-radius:8px; font-size:0.84rem; line-height:1.5; }
+.file-warn code { font-size:0.8rem; }
+.viz-hud { position:absolute; top:42px; right:8px; width:min(280px,calc(100% - 16px)); max-height:calc(100% - 50px); overflow:auto;
+  background:rgba(255,253,250,0.96); border:1px solid var(--line); border-radius:8px; padding:0.65rem 0.75rem;
+  box-shadow:0 4px 18px rgba(0,0,0,0.08); font-size:0.78rem; z-index:2; transition:opacity 0.15s, transform 0.15s; }
+body.embed .viz-hud { top:auto; bottom:8px; left:8px; right:8px; width:auto; max-height:36%; }
+.viz-hud.is-collapsed { opacity:0; pointer-events:none; transform:translateX(12px); visibility:hidden; }
+.viz-hud-toggle { position:absolute; top:8px; right:8px; z-index:3; font-family:var(--sans); font-size:0.72rem; font-weight:600;
+  padding:0.3rem 0.55rem; border:1px solid var(--line); border-radius:6px; background:rgba(255,253,250,0.95); color:var(--ink);
+  cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.06); }
+.viz-hud-toggle:hover { border-color:var(--accent); color:var(--accent); }
+.demo-banner { font-size:0.78rem; background:#2c2820; color:#e8dcc0; padding:0.45rem 0.65rem; border-radius:6px; margin:0 0 0.55rem; }
+.demo-banner strong { color:#fff; }
+.shell-caption { color:#5c564c; font-size:0.62rem; font-weight:600; letter-spacing:0.04em; text-transform:uppercase;
+  padding:0.15rem 0.35rem; background:rgba(255,253,250,0.9); border:1px solid #d8d0c4; border-radius:4px; pointer-events:none; max-width:140px; line-height:1.25; }
+.surface-label { font-size:0.58rem; font-weight:600; padding:0.1rem 0.25rem; background:rgba(255,253,250,0.93);
+  border:1px solid #d8d0c4; border-radius:3px; pointer-events:none; white-space:nowrap; }
+.surface-label.ghost { opacity:0.55; border-style:dashed; color:var(--muted); }
+.viz-hud h3 { margin:0 0 0.25rem; font-family:var(--serif); font-size:0.92rem; line-height:1.25; }
+.viz-hud .sub { color:var(--muted); margin:0 0 0.45rem; font-size:0.72rem; }
+.viz-hud dl { margin:0; }
+.viz-hud dt { font-weight:600; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.04em; color:var(--accent); margin-top:0.4rem; }
+.viz-hud dt:first-child { margin-top:0; }
+.viz-hud dd { margin:0.12rem 0 0; color:#2a2620; line-height:1.4; }
+.viz-hud .pill { display:inline-block; font-size:0.65rem; font-weight:600; padding:0.1rem 0.35rem; border-radius:4px; background:#ede8df; margin-top:0.35rem; }
+.viz-hud .default { color:var(--muted); font-style:italic; }
+.viz-tooltip { position:fixed; pointer-events:none; z-index:9999; max-width:260px; padding:0.45rem 0.55rem;
+  background:#2c2820; color:#f0ece4; font-size:0.72rem; line-height:1.35; border-radius:6px;
+  box-shadow:0 6px 20px rgba(0,0,0,0.25); opacity:0; transition:opacity 0.12s; }
+.viz-tooltip.visible { opacity:1; }
+.viz-tooltip strong { display:block; color:#e8dcc0; margin-bottom:0.15rem; font-size:0.76rem; }
+.node-label { color:#1a1814; font-size:0.62rem; font-weight:600; padding:0.12rem 0.28rem; background:rgba(255,253,250,0.92);
+  border:1px solid #d8d0c4; border-radius:4px; white-space:nowrap; pointer-events:none; text-transform:capitalize; }
+.node-label.new-node { border-color:#9a3b3b; color:#7a2a2a; }
+.plane-label { color:#5c564c; font-size:0.72rem; font-weight:600; letter-spacing:0.03em; text-transform:uppercase;
+  padding:0.2rem 0.45rem; background:rgba(255,253,250,0.85); border-radius:4px; pointer-events:none; }
+.edge-key { display:flex; flex-wrap:wrap; gap:0.55rem 1rem; font-size:0.72rem; margin:0.45rem 0 0; }
+.edge-key span { display:inline-flex; align-items:center; gap:0.35rem; }
+.edge-key i { width:18px; height:3px; border-radius:2px; display:inline-block; }
+.verify-table { width:100%; border-collapse:collapse; font-size:0.72rem; margin-top:0.55rem; }
+.verify-table th, .verify-table td { border:1px solid var(--line); padding:0.35rem 0.45rem; text-align:left; }
+.verify-table th { background:#f3efe6; font-size:0.68rem; }
+.verify-table .new { color:#9a3b3b; font-weight:600; }
+details.verify { margin-top:0.55rem; font-size:0.78rem; }
+details.verify summary { cursor:pointer; color:var(--accent); font-weight:600; }
+.thesis-prose { background:#faf6ef; border:1px solid var(--line); border-radius:8px; padding:0.85rem 1rem; margin:0.55rem 0 0.65rem; font-size:0.84rem; line-height:1.62; max-width:100%; }
+.thesis-prose h3 { font-family:var(--serif); font-size:0.92rem; margin:0 0 0.45rem; color:var(--ink); font-weight:600; }
+.thesis-prose p { margin:0 0 0.65rem; color:#2a2620; }
+.thesis-prose p:last-child { margin-bottom:0; }
+.thesis-prose ul { margin:0.35rem 0 0.65rem; padding-left:1.25rem; }
+.thesis-prose li { margin-bottom:0.35rem; }
+.thesis-prose .ru { font-family:Georgia,serif; }
+.viz-after {
+  margin-top: 0.75rem;
+  padding-top: 0.65rem;
+  border-top: 1px dashed var(--line);
+}
+.gallery-intro { font-size:0.88rem; line-height:1.65; color:#2a2620; margin-bottom:1rem; max-width:72ch; }
+.gallery-section-note { font-size:0.84rem; line-height:1.6; color:var(--muted); margin:0 0 0.65rem; max-width:72ch; }
+</style>
+</head>
+<body class="embed">
+<div class="wrap embed-wrap">
+  <section id="fig-lotman-semiosphere-demo-3d">
+
+    <h2>Figure L1-demo · Ideal semiosphere (fabricated)</h2>
+    
+    <div class="viz-stage" id="viz-stage">
+      <button type="button" id="viz-hud-toggle" class="viz-hud-toggle" aria-expanded="false" aria-controls="viz-hud" title="Show or hide detail panel">Show panel</button>
+      <div id="viz3d"></div>
+      <aside id="viz-hud" class="viz-hud is-collapsed" aria-live="polite">
+        <p class="default">Hover a coloured dot, bar, or connection for a quick summary. <strong>Click</strong> for verbose context: what the element is, what its position means, what connections prove and do not prove alone, and how it supports the dissertation’s boundary-non-equivalence argument (cross-register talking-point transformation, Montreal 1983 anchor, honest proof tiers).</p>
+      </aside>
+    </div>
+    <div id="viz-tooltip" class="viz-tooltip" hidden></div>
+
+    <div class="viz-after">
+    <div class="demo-banner"><strong>Illustration only.</strong> Illustrative semiosphere · fabricated companions · not empirical counts — shows what a complete Lotman semiosphere model could look like when all shells, registers, and relay types are populated. Compare to <a href="fig-lotman-semiosphere-3d.html">Figure L1 (empirical pilot)</a>.</div>
+    
+    <p class="how-to"><strong>How to explore:</strong> drag to rotate · scroll to zoom · <strong>hover</strong> for a quick label · <strong>click</strong> for full context · toggle the detail panel with the button ↗</p>
+
+    <p class="cap">The dissertation tests whether Soviet-era talking points on famine commemoration <strong>transform predictably</strong> when they cross register boundaries — secret memo → embassy/Novosti → domestic news → diaspora/scholarly print — and whether that transformation is <strong>dated and measurable</strong> (Montreal 1983 as anchor, post-1983 explosion as qualitative rewire). These 3D models make Lotman’s spatial vocabulary falsifiable: they read from the same open JSON as Figures 1–12.</p>
+    <div class="layman-grid">
+      <div class="layman-block">
+        <div class="layman-label">What this adds over L1</div>
+        <p>L1 empirical is intentionally sparse — 13 surfaces, empty autocommunication shell, <strong>five traced relay arcs</strong> (2 proven thematic, 1 verbatim outward packet, 2 Farisei-tier memo-claim links — mixed proof tiers in JSON). This demo <strong>fabricates companions</strong> the dissertation will ingest later: shell-2 autocommunication loops (purple), silence voids on Pravda/Izvestiia, cross-semiosphere dialogue spr. 1206 ↔ CIUS 1986 (violet), tier-A Globe clip, exile broadcast, MFA circular. It is a <em>target state</em> for the spatial model, not a count from files.</p>
+      </div>
+      <div class="layman-block">
+        <div class="layman-label">Why fabricate a full model?</div>
+        <p>Supervisors and readers need to see what Lotman’s vocabulary looks like when populated — otherwise the pilot looks like a few dots and lines. The demo answers: “If the checklist succeeds, what shape does the evidence take?” Every fabricated arc still uses the same relay-type logic and click-panel fields (what it tells us / what it does not prove / thesis significance) so the interpretive habit transfers to L1 when new companions arrive.</p>
+      </div>
+    </div>
+    <div class="thesis-prose">
+<h3>What the connections (arcs and lines) mean</h3>
+<p>In this visualization, a <strong>connection is not a vague “link.”</strong> It is a pair-read adjudication stored in JSON: two text surfaces share a topic (famine, symposium, gathering) and we document <em>how</em> wording travels — or refuses to travel — between them. An arc therefore encodes an evidentiary claim with a proof tier (proven thematic relay, proven verbatim, memo-claim only, and so on).</p>
+<p><strong>What connections tell us collectively:</strong> (1) Internal hostility (<span class="ru">сборище</span>, scare quotes) stays on the inner shell and does not relay to embassy, Novosti, or UN — <strong>0</strong> scare-quote operator hits on those Soviet-outward surfaces in the register-relay matrix (48 internal hits across three memos). (2) Outward Soviet lines share denial frames (drought, kulak sabotage, no artificial famine) across embassy and agency. (3) Rival and diaspora surfaces carry commemorative language the outward line rejects. (4) Domestic Soviet newsprint in 1983 is largely <em>silent</em> on Holodomor denial — shown as absence of arcs on the newspaper shell; tier-B tracks may show incidental quote-mark matches (1933 baseline idiom), not denial relay. Together, arcs sketch a <strong>governed split narrative</strong>, not one story told louder or softer.</p>
+<p><strong>What a missing arc also means:</strong> No line between spr. 1206 and Pravda is itself evidence — denial routed abroad, not through verified domestic clips in the anniversary window. The model is honest about silence and pending tiers.</p>
+<ul>
+  <li><strong>Sky blue · thematic relay</strong> — same topic, transformed operators (the main dissertation finding).</li>
+  <li><strong>Green · verbatim</strong> — outward channels copying each other (coordination, not domestic reach).</li>
+  <li><strong>Purple · autocommunication</strong> — inward fond loops (demo / future companions).</li>
+  <li><strong>Violet · dialogue</strong> — cross-semiosphere mutual projection without translatability.</li>
+  <li><strong>Magenta · rival uptake</strong> — commemoration persisting in press the memo opposes.</li>
+</ul>
+</div>
+    <div class="legend">
+      <span><i style="background:#2a5f8f"></i> Internal</span>
+      <span><i style="background:#7a6b9a"></i> Autocommunication</span>
+      <span><i style="background:#6b8f71"></i> Soviet outward</span>
+      <span><i style="background:#8d94a3"></i> Domestic news / silence</span>
+      <span><i style="background:#c45c26"></i> Diaspora / mainstream</span>
+      <span><i style="background:#5a4a8f"></i> Scholarly rival</span>
+      <span><i style="background:#b83a3a"></i> Exile broadcast</span>
+      <span><i style="background:#00b4ff"></i> Thematic</span>
+      <span><i style="background:#00e676"></i> Verbatim</span>
+      <span><i style="background:#651fff"></i> Dialogue</span>
+      <span><i style="background:#ce93d8"></i> Autocomm. arc</span>
+      <span><i style="background:#e040fb"></i> Rival uptake</span>
+    </div>
+    <p class="chart-key"><strong>Try it:</strong> click the violet spr. 1206 ↔ CIUS 1986 arc — dialogue of texts at the semiosphere edge. Then click an autocommunication purple arc on shell 2 — inward loop before outward pedagogy. Toggle Hide panel for an unobstructed view.</p>
+    </div>
+
+  </section>
+  <p class="embed-back"><a href="../lotman_3d_evidence.html#fig-lotman-semiosphere-demo-3d" target="_top">Open in 3D gallery →</a></p>
+</div>
+
+<script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>
+<script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://unpkg.com/three@0.128.0/examples/js/renderers/CSS2DRenderer.js"></script>
+<script>
+const OrbitControls = THREE.OrbitControls;
+const CSS2DRenderer = THREE.CSS2DRenderer;
+const CSS2DObject = THREE.CSS2DObject;
+
+
+
+const HUD_DEFAULT = '<p class="default">Hover a coloured dot, bar, or connection for a quick summary. Click it for what it is, what its position means, and why it matters to the dissertation.</p>';
+
+function renderHud(hud, info, toggleBtn) {
+  if (!info) {
+    hud.innerHTML = hud.dataset.defaultHtml || HUD_DEFAULT;
+    return;
+  }
+  if (hud.classList.contains('is-collapsed')) {
+    hud.classList.remove('is-collapsed');
+    if (toggleBtn) {
+      toggleBtn.setAttribute('aria-expanded', 'true');
+      toggleBtn.textContent = 'Hide panel';
+    }
+  }
+  let html = `<h3>${info.title || ''}</h3>`;
+  if (info.subtitle) html += `<p class="sub">${info.subtitle}</p>`;
+  if (info.pill) html += `<span class="pill">${info.pill}</span>`;
+  if (info.sections && info.sections.length) {
+    html += '<dl>';
+    info.sections.forEach(s => {
+      html += `<dt>${s.label}</dt><dd>${s.text}</dd>`;
+    });
+    html += '</dl>';
+  }
+  hud.innerHTML = html;
+}
+
+function setupHudToggle(hud, toggleBtn) {
+  if (!hud || !toggleBtn) return;
+  if (document.body.classList.contains('embed')) {
+    hud.classList.add('is-collapsed');
+    toggleBtn.setAttribute('aria-expanded', 'false');
+    toggleBtn.textContent = 'Show panel';
+  }
+  toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const collapsed = hud.classList.toggle('is-collapsed');
+    toggleBtn.setAttribute('aria-expanded', String(!collapsed));
+    toggleBtn.textContent = collapsed ? 'Show panel' : 'Hide panel';
+  });
+}
+
+function bindStageResize(stage, apply) {
+  function run() {
+    const w = Math.max(stage.clientWidth || 0, 280);
+    const h = Math.max(stage.clientHeight || 0, 240);
+    if (w < 40 || h < 40) return;
+    apply(w, h);
+  }
+  window.addEventListener('resize', run);
+  window.addEventListener('load', run);
+  if (window.ResizeObserver) new ResizeObserver(run).observe(stage);
+  requestAnimationFrame(run);
+  setTimeout(run, 80);
+  setTimeout(run, 300);
+}
+
+function fitThree(renderer, w, h, labelRenderer) {
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.setSize(w, h, true);
+  const canvas = renderer.domElement;
+  canvas.style.display = 'block';
+  canvas.style.width = '100%';
+  canvas.style.height = '100%';
+  canvas.style.maxWidth = '100%';
+  canvas.style.margin = '0';
+  if (labelRenderer) {
+    labelRenderer.setSize(w, h);
+    const overlay = labelRenderer.domElement;
+    overlay.style.position = 'absolute';
+    overlay.style.left = '0';
+    overlay.style.top = '0';
+    overlay.style.width = '100%';
+    overlay.style.height = '100%';
+    overlay.style.margin = '0';
+  }
+}
+
+function setupPickInteraction({ el, camera, renderer, controls, pickables, hud, tip, toggleBtn }) {
+  const ray = new THREE.Raycaster();
+  const mouse = new THREE.Vector2();
+  let hovered = null;
+  let selected = null;
+
+  function setHighlight(mesh, on) {
+    if (!mesh || !mesh.material) return;
+    if (!mesh.userData.baseEmissive) mesh.userData.baseEmissive = mesh.material.emissiveIntensity || 0;
+    if (!mesh.userData.baseScale) mesh.userData.baseScale = mesh.scale.x;
+    mesh.material.emissiveIntensity = on ? 0.55 : mesh.userData.baseEmissive;
+    const s = on ? mesh.userData.baseScale * 1.22 : mesh.userData.baseScale;
+    mesh.scale.set(s, s, s);
+  }
+
+  function clearHover() {
+    if (hovered && hovered !== selected) setHighlight(hovered, false);
+    hovered = null;
+    tip.classList.remove('visible');
+    tip.hidden = true;
+  }
+
+  function pick(clientX, clientY) {
+    const rect = el.getBoundingClientRect();
+    mouse.x = ((clientX - rect.left) / rect.width) * 2 - 1;
+    mouse.y = -((clientY - rect.top) / rect.height) * 2 + 1;
+    ray.setFromCamera(mouse, camera);
+    const hits = ray.intersectObjects(pickables, false);
+    return hits.length ? hits[0].object : null;
+  }
+
+  el.addEventListener('pointermove', (e) => {
+    const hit = pick(e.clientX, e.clientY);
+    if (hit === hovered) {
+      if (hit && hit.userData.tooltip) {
+        tip.style.left = (e.clientX + 14) + 'px';
+        tip.style.top = (e.clientY + 14) + 'px';
+      }
+      return;
+    }
+    if (hovered && hovered !== selected) setHighlight(hovered, false);
+    hovered = hit;
+    if (hit) {
+      setHighlight(hit, true);
+      if (hit.userData.tooltip) {
+        tip.innerHTML = hit.userData.tooltip;
+        tip.hidden = false;
+        tip.classList.add('visible');
+        tip.style.left = (e.clientX + 14) + 'px';
+        tip.style.top = (e.clientY + 14) + 'px';
+      }
+    } else {
+      tip.classList.remove('visible');
+      tip.hidden = true;
+    }
+  });
+
+  el.addEventListener('pointerleave', () => clearHover());
+
+  el.addEventListener('click', (e) => {
+    const hit = pick(e.clientX, e.clientY);
+    if (selected && selected !== hit) setHighlight(selected, false);
+    selected = hit;
+    if (hit && hit.userData.info) {
+      setHighlight(hit, true);
+      renderHud(hud, hit.userData.info, toggleBtn);
+    } else {
+      renderHud(hud, null, toggleBtn);
+    }
+  });
+}
+
+
+const DATA = {"mode": "demo", "fabricated": true, "surfaces": [{"id": "spr_1206", "label": "Spr. 1206 \u00b7 Montreal counter-order", "register": "internal", "register_layman": "Secret memo inside the KGB fond \u2014 written for Moscow-facing readers, not the public.", "shell": 1, "shell_layman": "Inner shell \u2014 secret KGB/CC voice. Scare quotes and \u00ab\u0441\u0431\u043e\u0440\u0438\u0449\u0435\u00bb live here.", "color": "#2a5f8f", "tier": "primary", "tier_layman": "Primary source in corpus.", "what": "Secret Kyiv memo ordering counter-measures before Montreal.", "relevance": "Montreal anchor \u2014 hostility + scare quotes.", "operators_text": "Fabricated operator summary for illustration.", "connections_text": "See relay arcs \u2014 demo models full register map.", "x": 0.0, "y": -0.675, "z": -1.25, "ghost": false}, {"id": "spr_1208", "label": "Spr. 1208 \u00b7 remedial plan", "register": "internal", "register_layman": "Secret memo inside the KGB fond \u2014 written for Moscow-facing readers, not the public.", "shell": 1, "shell_layman": "Inner shell \u2014 secret KGB/CC voice. Scare quotes and \u00ab\u0441\u0431\u043e\u0440\u0438\u0449\u0435\u00bb live here.", "color": "#2a5f8f", "tier": "primary", "tier_layman": "Primary source in corpus.", "what": "June 1983 follow-up after the conference proceeds anyway.", "relevance": "Persistence layer after failed outward uptake.", "operators_text": "Fabricated operator summary for illustration.", "connections_text": "See relay arcs \u2014 demo models full register map.", "x": 1.189, "y": -0.675, "z": -0.386, "ghost": false}, {"id": "spr_1249", "label": "Spr. 1249 \u00b7 Operation Farisei", "register": "internal_directive", "register_layman": "Later operational directive memo \u2014 names outward media campaigns.", "shell": 1, "shell_layman": "Inner shell \u2014 secret KGB/CC voice. Scare quotes and \u00ab\u0441\u0431\u043e\u0440\u0438\u0449\u0435\u00bb live here.", "color": "#1a4a70", "tier": "primary", "tier_layman": "Primary source in corpus.", "what": "1987 directive naming Toronto press and Globe placement.", "relevance": "Tier-B outward claim in real corpus.", "operators_text": "Fabricated operator summary for illustration.", "connections_text": "See relay arcs \u2014 demo models full register map.", "x": 0.735, "y": -0.675, "z": 1.011, "ghost": false}, {"id": "spr_1127", "label": "Spr. 1127 \u00b7 routine enemy report", "register": "internal", "register_layman": "Secret memo inside the KGB fond \u2014 written for Moscow-facing readers, not the public.", "shell": 1, "shell_layman": "Inner shell \u2014 secret KGB/CC voice. Scare quotes and \u00ab\u0441\u0431\u043e\u0440\u0438\u0449\u0435\u00bb live here.", "color": "#2a5f8f", "tier": "primary", "tier_layman": "Primary source in corpus.", "what": "1976 baseline memo \u2014 long-habit enemy categories.", "relevance": "Pre-1983 internal bundle (real early memo).", "operators_text": "Fabricated operator summary for illustration.", "connections_text": "See relay arcs \u2014 demo models full register map.", "x": -0.735, "y": -0.675, "z": 1.011, "ghost": false}, {"id": "spr_1213", "label": "Spr. 1213 \u00b7 anniversary pressure", "register": "internal", "register_layman": "Secret memo inside the KGB fond \u2014 written for Moscow-facing readers, not the public.", "shell": 1, "shell_layman": "Inner shell \u2014 secret KGB/CC voice. Scare quotes and \u00ab\u0441\u0431\u043e\u0440\u0438\u0449\u0435\u00bb live here.", "color": "#2a5f8f", "tier": "primary", "tier_layman": "Primary source in corpus.", "what": "1983 internal note tying symposium to hostile networks.", "relevance": "Bridges routine habit to 1983 rupture.", "operators_text": "Fabricated operator summary for illustration.", "connections_text": "See relay arcs \u2014 demo models full register map.", "x": -1.189, "y": -0.675, "z": -0.386, "ghost": false}, {"id": "cc_relay_up", "label": "CC upward relay digest", "register": "autocommunication", "register_layman": "Inward CC/KGB relay \u2014 officers reporting upward inside the system (I\u2013I channel).", "shell": 2, "shell_layman": "Middle shell \u2014 autocommunication relay (officers reporting upward inside the system).", "color": "#7a6b9a", "tier": "primary", "tier_layman": "Primary source in corpus.", "what": "Fabricated: consolidated CC/KGB autocommunication summary.", "relevance": "I\u2013I channel Lotman names \u2014 inward relay noise filtered in real adjudication.", "operators_text": "Fabricated operator summary for illustration.", "connections_text": "See relay arcs \u2014 demo models full register map.", "x": 0.0, "y": -0.225, "z": -2.05, "ghost": false}, {"id": "kgb_ops_channel", "label": "KGB operational channel log", "register": "autocommunication", "register_layman": "Inward CC/KGB relay \u2014 officers reporting upward inside the system (I\u2013I channel).", "shell": 2, "shell_layman": "Middle shell \u2014 autocommunication relay (officers reporting upward inside the system).", "color": "#7a6b9a", "tier": "primary", "tier_layman": "Primary source in corpus.", "what": "Fabricated: inward operational reporting loop.", "relevance": "Shows autocommunication shell populated in a full model.", "operators_text": "Fabricated operator summary for illustration.", "connections_text": "See relay arcs \u2014 demo models full register map.", "x": 2.05, "y": -0.225, "z": 0.0, "ghost": false}, {"id": "secretariat_route", "label": "Secretariat routing slip", "register": "autocommunication", "register_layman": "Inward CC/KGB relay \u2014 officers reporting upward inside the system (I\u2013I channel).", "shell": 2, "shell_layman": "Middle shell \u2014 autocommunication relay (officers reporting upward inside the system).", "color": "#7a6b9a", "tier": "primary", "tier_layman": "Primary source in corpus.", "what": "Fabricated: internal routing between offices.", "relevance": "Middle shell = not public, not rival \u2014 institutional self-talk.", "operators_text": "Fabricated operator summary for illustration.", "connections_text": "See relay arcs \u2014 demo models full register map.", "x": 0.0, "y": -0.225, "z": 2.05, "ghost": false}, {"id": "cc_to_kyiv_return", "label": "Moscow return copy", "register": "autocommunication", "register_layman": "Inward CC/KGB relay \u2014 officers reporting upward inside the system (I\u2013I channel).", "shell": 2, "shell_layman": "Middle shell \u2014 autocommunication relay (officers reporting upward inside the system).", "color": "#7a6b9a", "tier": "primary", "tier_layman": "Primary source in corpus.", "what": "Fabricated: acknowledgment copy back to Kyiv.", "relevance": "Completes autocommunication loop visual.", "operators_text": "Fabricated operator summary for illustration.", "connections_text": "See relay arcs \u2014 demo models full register map.", "x": -2.05, "y": -0.225, "z": 0.0, "ghost": false}, {"id": "embassy_1983", "label": "Embassy Ottawa \u00b7 28 Apr 1983", "register": "soviet_outward", "register_layman": "Soviet text aimed at foreign audiences (embassy release, UN statement).", "shell": 3, "shell_layman": "Outward Soviet shell \u2014 embassy, Novosti, UN, domestic news register.", "color": "#6b8f71", "tier": "citation_full_text", "tier_layman": "Full text from scholarly citation tier.", "what": "Drought, kulaks, no artificial famine.", "relevance": "Proven thematic relay from spr. 1206 in real corpus.", "operators_text": "Fabricated operator summary for illustration.", "connections_text": "See relay arcs \u2014 demo models full register map.", "x": 0.0, "y": 0.225, "z": -2.95, "ghost": false}, {"id": "novosti_1983", "label": "Novosti release \u00b7 Apr 1983", "register": "soviet_agency", "register_layman": "Soviet press agency wire \u2014 outward pedagogy, not domestic newsprint.", "shell": 3, "shell_layman": "Outward Soviet shell \u2014 embassy, Novosti, UN, domestic news register.", "color": "#5a8060", "tier": "citation_full_text", "tier_layman": "Full text from scholarly citation tier.", "what": "Same denial packet as embassy.", "relevance": "Verbatim outward relay \u2014 not domestic Pravda.", "operators_text": "Fabricated operator summary for illustration.", "connections_text": "See relay arcs \u2014 demo models full register map.", "x": 2.306, "y": 0.225, "z": -1.839, "ghost": false}, {"id": "khmil_un", "label": "Khmil UN statement \u00b7 Oct 1983", "register": "soviet_outward", "register_layman": "Soviet text aimed at foreign audiences (embassy release, UN statement).", "shell": 3, "shell_layman": "Outward Soviet shell \u2014 embassy, Novosti, UN, domestic news register.", "color": "#6b8f71", "tier": "citation_full_text", "tier_layman": "Full text from scholarly citation tier.", "what": "UN outward diplomatic denial.", "relevance": "Extends embassy frame to multilateral channel.", "operators_text": "Fabricated operator summary for illustration.", "connections_text": "See relay arcs \u2014 demo models full register map.", "x": 2.876, "y": 0.225, "z": 0.656, "ghost": false}, {"id": "pravda_silence", "label": "Pravda \u00b7 1983 silence (void)", "register": "soviet_newspaper", "register_layman": "Soviet domestic newspaper register \u2014 tier B processed; 1983 Holodomor denial silence is a finding.", "shell": 3, "shell_layman": "Outward Soviet shell \u2014 embassy, Novosti, UN, domestic news register.", "color": "#8d94a3", "tier": "processed_tier_b", "tier_layman": "Processed tier B \u2014 silence audit or scholarly excerpt, not newsprint facsimile.", "what": "Fabricated void node: no Holodomor denial clip Mar\u2013Dec 1983.", "relevance": "Register finding \u2014 denial routed abroad.", "operators_text": "Fabricated operator summary for illustration.", "connections_text": "See relay arcs \u2014 demo models full register map.", "x": 1.28, "y": 0.225, "z": 2.658, "ghost": true}, {"id": "izvestiia_silence", "label": "Izvestiia \u00b7 1983 silence (void)", "register": "soviet_newspaper", "register_layman": "Soviet domestic newspaper register \u2014 tier B processed; 1983 Holodomor denial silence is a finding.", "shell": 3, "shell_layman": "Outward Soviet shell \u2014 embassy, Novosti, UN, domestic news register.", "color": "#8d94a3", "tier": "processed_tier_b", "tier_layman": "Processed tier B \u2014 silence audit or scholarly excerpt, not newsprint facsimile.", "what": "Fabricated void node: domestic silence audit.", "relevance": "Tier B processed in real pilot.", "operators_text": "Fabricated operator summary for illustration.", "connections_text": "See relay arcs \u2014 demo models full register map.", "x": -1.28, "y": 0.225, "z": 2.658, "ghost": true}, {"id": "rad_ykr_1983", "label": "Radianska Ukraina \u00b7 tier B", "register": "soviet_newspaper", "register_layman": "Soviet domestic newspaper register \u2014 tier B processed; 1983 Holodomor denial silence is a finding.", "shell": 3, "shell_layman": "Outward Soviet shell \u2014 embassy, Novosti, UN, domestic news register.", "color": "#8d94a3", "tier": "processed_tier_b", "tier_layman": "Processed tier B \u2014 silence audit or scholarly excerpt, not newsprint facsimile.", "what": "Republic paper track \u2014 silence + companion excerpt.", "relevance": "Separates domestic from Novosti agency.", "operators_text": "Fabricated operator summary for illustration.", "connections_text": "See relay arcs \u2014 demo models full register map.", "x": -2.876, "y": 0.225, "z": 0.656, "ghost": false}, {"id": "mfa_circular", "label": "MFA circular \u00b7 outward pedagogy", "register": "soviet_outward", "register_layman": "Soviet text aimed at foreign audiences (embassy release, UN statement).", "shell": 3, "shell_layman": "Outward Soviet shell \u2014 embassy, Novosti, UN, domestic news register.", "color": "#6b8f71", "tier": "citation_full_text", "tier_layman": "Full text from scholarly citation tier.", "what": "Fabricated: foreign-ministry guidance echoing drought frame.", "relevance": "Shows full outward Soviet shell in ideal model.", "operators_text": "Fabricated operator summary for illustration.", "connections_text": "See relay arcs \u2014 demo models full register map.", "x": -2.306, "y": 0.225, "z": -1.839, "ghost": false}, {"id": "diaspora_weekly", "label": "Ukrainian Weekly \u00b7 Apr 1983", "register": "diaspora_press", "register_layman": "Ukrainian diaspora weekly \u2014 commemorative, rival reading to embassy denial.", "shell": 4, "shell_layman": "Outer shell \u2014 rival, diaspora, and mainstream print the memos oppose or cite.", "color": "#c45c26", "tier": "digital_primary", "tier_layman": "Digital primary press clip.", "what": "Montreal commemoration \u2014 deliberate famine language.", "relevance": "Rival lesson embassy rejects.", "operators_text": "Fabricated operator summary for illustration.", "connections_text": "See relay arcs \u2014 demo models full register map.", "x": 0.0, "y": 0.675, "z": -4.0, "ghost": false}, {"id": "ap_wire", "label": "AP wire \u00b7 Sep 1983", "register": "mainstream_press", "register_layman": "Western wire or newspaper \u2014 mainstream public channel.", "shell": 4, "shell_layman": "Outer shell \u2014 rival, diaspora, and mainstream print the memos oppose or cite.", "color": "#a05020", "tier": "digital_secondary", "tier_layman": "Digital secondary press source.", "what": "Mainstream commemoration reaches wire services.", "relevance": "Rival uptake timeline anchor.", "operators_text": "Fabricated operator summary for illustration.", "connections_text": "See relay arcs \u2014 demo models full register map.", "x": 3.127, "y": 0.675, "z": -2.494, "ghost": false}, {"id": "globe_primary", "label": "Globe and Mail \u00b7 primary clip", "register": "mainstream_press", "register_layman": "Western wire or newspaper \u2014 mainstream public channel.", "shell": 4, "shell_layman": "Outer shell \u2014 rival, diaspora, and mainstream print the memos oppose or cite.", "color": "#a05020", "tier": "digital_primary", "tier_layman": "Digital primary press clip.", "what": "Fabricated tier-A Globe clip paired to Farisei claim.", "relevance": "Ideal state: memo-to-print verified.", "operators_text": "Fabricated operator summary for illustration.", "connections_text": "See relay arcs \u2014 demo models full register map.", "x": 3.9, "y": 0.675, "z": 0.89, "ghost": false}, {"id": "cius_1986", "label": "CIUS 1986 volume \u00b7 conference proceedings", "register": "rival_scholarly", "register_layman": "Scholarly counter-print that restores ordinary conference genre against memo hostility.", "shell": 4, "shell_layman": "Outer shell \u2014 rival, diaspora, and mainstream print the memos oppose or cite.", "color": "#5a4a8f", "tier": "digital_primary", "tier_layman": "Digital primary press clip.", "what": "Ordinary scholarly genre restores symposium against memo \u00ab\u0441\u0431\u043e\u0440\u0438\u0449\u0435\u00bb.", "relevance": "Cross-semiosphere dialogue partner.", "operators_text": "Fabricated operator summary for illustration.", "connections_text": "See relay arcs \u2014 demo models full register map.", "x": 1.736, "y": 0.675, "z": 3.604, "ghost": false}, {"id": "radio_liberty", "label": "Radio Liberty \u00b7 exile broadcast", "register": "rival_broadcast", "register_layman": "Exile broadcast reaching diaspora audiences outside Soviet control.", "shell": 4, "shell_layman": "Outer shell \u2014 rival, diaspora, and mainstream print the memos oppose or cite.", "color": "#b83a3a", "tier": "digital_secondary", "tier_layman": "Digital secondary press source.", "what": "Fabricated: exile broadcast carrying commemoration.", "relevance": "Outer rival semiosphere edge.", "operators_text": "Fabricated operator summary for illustration.", "connections_text": "See relay arcs \u2014 demo models full register map.", "x": -1.736, "y": 0.675, "z": 3.604, "ghost": false}, {"id": "ukrainian_voice", "label": "Ukrainian Voice \u00b7 Toronto weekly", "register": "diaspora_press", "register_layman": "Ukrainian diaspora weekly \u2014 commemorative, rival reading to embassy denial.", "shell": 4, "shell_layman": "Outer shell \u2014 rival, diaspora, and mainstream print the memos oppose or cite.", "color": "#c45c26", "tier": "digital_primary", "tier_layman": "Digital primary press clip.", "what": "Fabricated diaspora foil alongside Weekly.", "relevance": "Shows dense outer shell in full model.", "operators_text": "Fabricated operator summary for illustration.", "connections_text": "See relay arcs \u2014 demo models full register map.", "x": -3.9, "y": 0.675, "z": 0.89, "ghost": false}, {"id": "globe_memo_claim", "label": "Globe 1987 \u00b7 memo-derived English", "register": "memo_claim_print", "register_layman": "English text from a memo claiming newspaper placement \u2014 not yet a verified clip.", "shell": 4, "shell_layman": "Outer shell \u2014 rival, diaspora, and mainstream print the memos oppose or cite.", "color": "#c9a227", "tier": "kgb_internal_citation", "tier_layman": "Text exists only inside KGB memo citation.", "what": "Memo-side Globe text from spr. 1249 \u2014 not verified clip.", "relevance": "Real tier-B limit in actual corpus.", "operators_text": "Fabricated operator summary for illustration.", "connections_text": "See relay arcs \u2014 demo models full register map.", "x": -3.127, "y": 0.675, "z": -2.494, "ghost": false}], "links": [{"from": "spr_1206", "to": "embassy_1983", "from_label": "Spr. 1206", "to_label": "Embassy", "tier": "proven_thematic_relay", "tier_layman": "Proven: themes match across registers with documented transform.", "type": "thematic_transform", "type_layman": "Same topic, different wording \u2014 the memo\u2019s hostile frame becomes outward denial (drought, kulaks) without copying internal scare quotes or \u00ab\u0441\u0431\u043e\u0440\u0438\u0449\u0435\u00bb.", "interpretation": "Ideal thematic relay: famine denial transforms without scare-quote copy."}, {"from": "embassy_1983", "to": "novosti_1983", "from_label": "Embassy", "to_label": "Novosti", "tier": "proven_verbatim_relay", "tier_layman": "Proven: texts are effectively identical on outward channel.", "type": "verbatim_copy", "type_layman": "Near-identical text copied between outward surfaces \u2014 embassy and Novosti run the same denial packet.", "interpretation": "Verbatim outward packet across Soviet-facing channels."}, {"from": "spr_1206", "to": "cc_relay_up", "from_label": "Spr. 1206", "to_label": "CC relay", "tier": "proven_internal_directive", "tier_layman": "Inward autocommunication (fabricated companion)", "type": "autocommunication", "type_layman": "I\u2013I inward relay \u2014 not outward pedagogy", "interpretation": "Fabricated: memo feeds CC autocommunication shell before outward transform."}, {"from": "cc_relay_up", "to": "kgb_ops_channel", "from_label": "CC relay", "to_label": "Ops channel", "tier": "proven_internal_directive", "tier_layman": "Autocommunication loop (fabricated)", "type": "autocommunication", "type_layman": "Institutional self-reporting loop", "interpretation": "Fabricated middle-shell loop Lotman calls autocommunication."}, {"from": "kgb_ops_channel", "to": "secretariat_route", "from_label": "Ops channel", "to_label": "Secretariat", "tier": "proven_internal_directive", "tier_layman": "Autocommunication loop (fabricated)", "type": "autocommunication", "type_layman": "Routing inside the fond", "interpretation": "Fabricated inward arc \u2014 filtered as noise in real pair-read."}, {"from": "embassy_1983", "to": "mfa_circular", "from_label": "Embassy", "to_label": "MFA circular", "tier": "proven_thematic_relay", "tier_layman": "Outward pedagogy spread (fabricated)", "type": "thematic_transform", "type_layman": "Same topic, different wording \u2014 the memo\u2019s hostile frame becomes outward denial (drought, kulaks) without copying internal scare quotes or \u00ab\u0441\u0431\u043e\u0440\u0438\u0449\u0435\u00bb.", "interpretation": "Fabricated: denial frame propagates across outward Soviet shell."}, {"from": "spr_1249", "to": "globe_primary", "from_label": "Spr. 1249", "to_label": "Globe primary", "tier": "proven_thematic_relay", "tier_layman": "Ideal tier-A directive-to-print (fabricated)", "type": "memo_claims_print_placement", "type_layman": "Memo names a newspaper placement \u2014 counts as intent documentation until a primary clip is acquired.", "interpretation": "Ideal state: verified Globe clip pairs to Farisei memo."}, {"from": "spr_1249", "to": "globe_memo_claim", "from_label": "Spr. 1249", "to_label": "Globe memo claim", "tier": "promising_memo_derived_only", "tier_layman": "Promising but memo-only \u2014 independent print not yet verified.", "type": "translation_parallel", "type_layman": "Same frame in Russian memo and memo-derived English \u2014 internal consistency only, not independent press proof.", "interpretation": "Real corpus limit: memo-derived English only."}, {"from": "spr_1206", "to": "cius_1986", "from_label": "Spr. 1206", "to_label": "CIUS 1986", "tier": "proven_thematic_relay", "tier_layman": "Cross-semiosphere dialogue (pair-read)", "type": "dialogue_rival", "type_layman": "Dialogue of texts \u2014 mutually projecting, not translatable", "interpretation": "Lotman dialogue edge: secret memo vs scholarly proceedings on same Montreal event."}, {"from": "diaspora_weekly", "to": "cius_1986", "from_label": "Ukrainian Weekly", "to_label": "CIUS 1986", "tier": "proven_thematic_relay", "tier_layman": "Rival uptake chain (fabricated companion)", "type": "rival_uptake", "type_layman": "Commemoration converges with scholarly print", "interpretation": "Fabricated: press and scholarly outer shell reinforce rival lesson."}, {"from": "radio_liberty", "to": "diaspora_weekly", "from_label": "Radio Liberty", "to_label": "Weekly", "tier": "proven_thematic_relay", "tier_layman": "Exile broadcast foil (fabricated)", "type": "rival_uptake", "type_layman": "Exile media amplifies diaspora commemoration", "interpretation": "Fabricated outer-semiosphere resonance."}], "shells": {"1": 1.25, "2": 2.05, "3": 2.95, "4": 4.0}, "shell_labels": {"1": "Inner shell \u2014 secret KGB/CC voice. Scare quotes and \u00ab\u0441\u0431\u043e\u0440\u0438\u0449\u0435\u00bb live here.", "2": "Middle shell \u2014 autocommunication relay (officers reporting upward inside the system).", "3": "Outward Soviet shell \u2014 embassy, Novosti, UN, domestic news register.", "4": "Outer shell \u2014 rival, diaspora, and mainstream print the memos oppose or cite."}, "caption": "Illustrative semiosphere \u00b7 fabricated companions \u00b7 not empirical counts", "link_meta": {"thematic_transform": {"tells_us": "The same event (Montreal symposium, famine commemoration) is narrated in both registers, but the required reading changes: internal memos use scare quotes and gathering downgrade; embassy/Novosti use drought and kulak frames. The arc is evidence of governed relay, not accidental similarity.", "not_proves": "Does not prove line-by-line dictation from Kyiv to Ottawa, or that Soviet domestic readers saw the same text as foreign audiences. Novosti is not substitutable for Pravda.", "thesis": "Central to the boundary-non-equivalence claim: talking points transform at the shell edge. This is the dissertation\u2019s primary positive finding \u2014 cross-register relay with documented operator skew."}, "verbatim_copy": {"tells_us": "Outward Soviet channels reproduced the same denial language \u2014 embassy and agency wire are one coordinated outward packet, not independent voices.", "not_proves": "Does not prove the packet reached Soviet domestic newsprint. Tier-B silence audit shows denial did not run through verified Pravda clips in the 1983 anniversary window.", "thesis": "Supports the tiered directive\u2192media model: proven outward coordination on the channels we have; domestic register remains a separate, largely silent foil."}, "autocommunication": {"tells_us": "Institutional self-reporting loops inside the fond \u2014 the system talking to itself before pedagogy reaches outward or rival registers.", "not_proves": "In L1 empirical pilot, shell 2 is empty until more inward CC/KGB companions are ingested. Demo arcs are fabricated illustrations.", "thesis": "Names Lotman\u2019s I\u2013I channel as a measurable shell. When populated, autocommunication arcs explain why outward denial can lag behind internal counter-orders."}, "dialogue_rival": {"tells_us": "Two semiospheres project incompatible readings of the same historical wound. Pair-read shows structured incompatibility (same topics, opposite operator sets), not translation error.", "not_proves": "Does not mean either text is \u201cwrong\u201d in isolation \u2014 dialogue intensifies distinction rather than blurring it (Lotman, ch. 5).", "thesis": "Restores the missing interlocutor: archive alone is one voice; CIUS 1986 and diaspora press supply the rival code the memo opposes. Chapter argument on dialogue of texts."}, "rival_uptake": {"tells_us": "Commemorative or scholarly language rejected in the Soviet outward line persists and amplifies in rival print \u2014 the outside story did not stop when the conference proceeded.", "not_proves": "Does not prove Soviet authorities \u201clost control\u201d of diaspora media \u2014 only that rival registers carry a lesson internal memos treat as hostile.", "thesis": "Shows the third foil in the checklist: after Montreal, genocide/deliberate-famine vocabulary lives in press the embassy packet explicitly rejects."}, "memo_claims_print_placement": {"tells_us": "A secret memo documents intent to place or counter a story in named print \u2014 operational media push as institutional fact inside the fond.", "not_proves": "Memo naming Globe placement is not the same as a verified newspaper clip. Tier stays promising until LAC primary is acquired.", "thesis": "Honest tier discipline: directive\u2192media claims are counted and visualized, but proof stops where the archive stops."}, "translation_parallel": {"tells_us": "Russian operational vocabulary and memo-derived English align on the same denial/forgery frame \u2014 useful for internal consistency checks.", "not_proves": "Parallel English in a memo is not independent Western press evidence.", "thesis": "Supports multilingual pair-read without over-claiming print placement \u2014 frame shift scored directionally, not as \u201ctranslation mistake.\u201d"}}, "surface_thesis_note": "Each coloured dot is a text surface the dissertation pair-reads across registers. Shell radius encodes institutional distance from the Moscow-facing secret core \u2014 ordinal, not geographic. Click any relay arc to see what the connection proves, what it cannot prove alone, and how it fits the boundary-non-equivalence argument. Demo arcs are fabricated companions showing target-state connections the empirical pilot will gain as more fond materials are ingested."};
+const stage = document.getElementById('viz-stage');
+const el = document.getElementById('viz3d');
+const hud = document.getElementById('viz-hud');
+const tip = document.getElementById('viz-tooltip');
+const toggleBtn = document.getElementById('viz-hud-toggle');
+setupHudToggle(hud, toggleBtn);
+
+const isDemo = DATA.mode === 'demo';
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xfaf8f4);
+const camera = new THREE.PerspectiveCamera(isDemo ? 44 : 48, 1, 0.1, 120);
+camera.position.set(isDemo ? 7.5 : 5.5, isDemo ? 5.5 : 4.2, isDemo ? 9.5 : 6.5);
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+el.appendChild(renderer.domElement);
+let labelRenderer = null;
+{
+  labelRenderer = new CSS2DRenderer();
+  labelRenderer.domElement.style.position = 'absolute';
+  labelRenderer.domElement.style.inset = '0';
+  labelRenderer.domElement.style.pointerEvents = 'none';
+  stage.appendChild(labelRenderer.domElement);
+}
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+const pickables = [];
+
+scene.add(new THREE.DirectionalLight(0xffffff, 1.1), new THREE.AmbientLight(0xffffff, 0.55));
+
+Object.entries(DATA.shells).forEach(([k, r]) => {
+  const shellIdx = parseInt(k);
+  const radius = parseFloat(r);
+  const fillOpacity = 0.018 + shellIdx * 0.012;
+  const wireOpacity = 0.16 + shellIdx * 0.06;
+  scene.add(new THREE.Mesh(
+    new THREE.SphereGeometry(radius, isDemo ? 48 : 40, isDemo ? 32 : 24),
+    new THREE.MeshBasicMaterial({ color: 0x8b6914, transparent: true, opacity: fillOpacity, depthWrite: false })
+  ));
+  scene.add(new THREE.Mesh(
+    new THREE.SphereGeometry(radius, isDemo ? 48 : 40, isDemo ? 32 : 24),
+    new THREE.MeshBasicMaterial({ color: 0x9a7b2a, wireframe: true, transparent: true, opacity: wireOpacity })
+  ));
+  if (DATA.shell_labels && DATA.shell_labels[k]) {
+    const cap = document.createElement('div');
+    cap.className = 'shell-caption';
+    cap.textContent = DATA.shell_labels[k];
+    const obj = new CSS2DObject(cap);
+    obj.position.set(parseFloat(r) * 0.95, (parseInt(k) - 2.5) * 0.45 + 0.6, 0);
+    scene.add(obj);
+  }
+});
+
+const plane = new THREE.Mesh(
+  new THREE.PlaneGeometry(isDemo ? 11 : 9, isDemo ? 11 : 9),
+  new THREE.MeshBasicMaterial({ color: 0x9a3b3b, transparent: true, opacity: 0.07, side: THREE.DoubleSide })
+);
+plane.rotation.x = -Math.PI / 2;
+scene.add(plane);
+
+function surfaceInfo(s) {
+  const posNote = isDemo
+    ? `Fixed demo layout on shell ${s.shell}: ${s.shell_layman}`
+    : `Shell ${s.shell}: ${s.shell_layman} Distance from centre is register type, not geography.`;
+  return {
+    title: s.label,
+    subtitle: s.register_layman,
+    pill: isDemo ? (s.ghost ? 'Silence / void (demo)' : 'Fabricated companion') : s.tier_layman,
+    sections: [
+      { label: 'What this document is', text: s.what },
+      { label: 'What its position means', text: posNote },
+      { label: 'Wording habits here', text: s.operators_text },
+      { label: 'Connections (arcs from/to this dot)', text: s.connections_text },
+      { label: 'Why it matters to the dissertation', text: s.relevance },
+      { label: 'How this fits the overall argument', text: DATA.surface_thesis_note || '' }
+    ]
+  };
+}
+
+function linkColor(l) {
+  const map = {
+    thematic_transform: 0x00b4ff,
+    verbatim_copy: 0x00e676,
+    autocommunication: 0xce93d8,
+    dialogue_rival: 0x651fff,
+    rival_uptake: 0xe040fb,
+    memo_claims_print_placement: 0x00e5ff,
+    translation_parallel: 0xff4081,
+  };
+  return map[l.type] || 0x448aff;
+}
+
+function addRelayArc(a, b, l, col) {
+  const mid = a.clone().lerp(b, 0.5);
+  if (l.type === 'dialogue_rival') mid.multiplyScalar(1.25);
+  else mid.multiplyScalar(1.12);
+  const curve = new THREE.QuadraticBezierCurve3(a, mid, b);
+  const pts = curve.getPoints(22);
+  const tubeR = l.type === 'dialogue_rival' ? 0.042 : 0.038;
+  for (let i = 0; i < pts.length - 1; i++) {
+    const p1 = pts[i], p2 = pts[i + 1];
+    const seg = p2.clone().sub(p1);
+    const len = seg.length();
+    if (len < 0.001) continue;
+    const cyl = new THREE.Mesh(
+      new THREE.CylinderGeometry(tubeR, tubeR, len, 8),
+      new THREE.MeshBasicMaterial({ color: col, transparent: true, opacity: 0.96 })
+    );
+    cyl.position.copy(p1.clone().add(p2).multiplyScalar(0.5));
+    cyl.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), seg.normalize());
+    scene.add(cyl);
+  }
+  return mid;
+}
+
+const posById = {};
+const golden = Math.PI * (3 - Math.sqrt(5));
+DATA.surfaces.forEach((s, i) => {
+  let pos;
+  if (isDemo && s.x != null) {
+    pos = new THREE.Vector3(s.x, s.y, s.z);
+  } else {
+    const r = DATA.shells[String(s.shell)] || 2.5;
+    const t = golden * (i + 1);
+    const y = 1 - (i / (DATA.surfaces.length - 1 || 1)) * 2;
+    const rad = Math.sqrt(Math.max(0, 1 - y * y)) * r;
+    pos = new THREE.Vector3(Math.cos(t) * rad, y * r * 0.85, Math.sin(t) * rad);
+  }
+  posById[s.id] = pos;
+  const col = new THREE.Color(s.color);
+  const size = s.ghost ? 0.09 : (0.13 + (s.shell === 1 ? 0.05 : 0));
+  const mesh = new THREE.Mesh(
+    new THREE.SphereGeometry(size, 18, 14),
+    new THREE.MeshPhongMaterial({
+      color: col,
+      emissive: col,
+      emissiveIntensity: s.ghost ? 0.05 : 0.28,
+      transparent: !!s.ghost,
+      opacity: s.ghost ? 0.45 : 1
+    })
+  );
+  mesh.position.copy(pos);
+  mesh.userData.info = surfaceInfo(s);
+  mesh.userData.tooltip = `<strong>${s.label}</strong>${s.register_layman}${s.ghost ? ' · silence void' : ''}`;
+  if (!s.ghost) pickables.push(mesh);
+  scene.add(mesh);
+  if (isDemo && labelRenderer) {
+    const lbl = document.createElement('div');
+    lbl.className = 'surface-label' + (s.ghost ? ' ghost' : '');
+    lbl.textContent = s.label.split('·')[0].trim();
+    const labelObj = new CSS2DObject(lbl);
+    labelObj.position.set(pos.x, pos.y + 0.28, pos.z);
+    scene.add(labelObj);
+  }
+});
+
+DATA.links.forEach(l => {
+  const a = posById[l.from], b = posById[l.to];
+  if (!a || !b) return;
+  const col = linkColor(l);
+  const mid = addRelayArc(a, b, l, col);
+  const meta = (DATA.link_meta && DATA.link_meta[l.type]) || {};
+  const pick = new THREE.Mesh(
+    new THREE.SphereGeometry(0.18, 10, 8),
+    new THREE.MeshBasicMaterial({ color: col, transparent: true, opacity: 0.03 })
+  );
+  pick.position.copy(mid);
+  pick.userData.info = {
+    title: `${l.from_label} ↔ ${l.to_label}`,
+    subtitle: l.type_layman || l.type,
+    pill: isDemo ? 'Fabricated arc' : (l.tier_layman || l.tier),
+    sections: [
+      { label: 'What this arc means', text: isDemo
+          ? 'Illustrative relay showing what a complete semiosphere map could trace — not counted from files.'
+          : 'A traced relay between text surfaces — empirical pairing adjudicated in register_relay_experiment.json.' },
+      { label: 'Relay type', text: l.type_layman || l.type },
+      { label: 'What this connection tells us', text: meta.tells_us || l.interpretation || 'Pair-read documents how wording travels between registers on the same topic.' },
+      { label: 'What it does not prove by itself', text: meta.not_proves || 'A single arc does not prove dictation, causation, or domestic print reach without tier-B/C companions.' },
+      { label: 'Thesis significance', text: meta.thesis || 'Supports the boundary-non-equivalence claim: cross-register talking-point transformation with honest proof tiers.' },
+      { label: 'Interpretation (corpus note)', text: l.interpretation || 'See register relay report for adjudication notes.' }
+    ]
+  };
+  pick.userData.tooltip = `<strong>Relay arc</strong>${l.from_label} → ${l.to_label}`;
+  pickables.push(pick);
+  scene.add(pick);
+});
+
+setupPickInteraction({ el: stage, camera, renderer, controls, pickables, hud, tip, toggleBtn });
+
+bindStageResize(stage, (w, h) => {
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
+  fitThree(renderer, w, h, labelRenderer);
+});
+(function animate() {
+  requestAnimationFrame(animate);
+  controls.update();
+  renderer.render(scene, camera);
+  if (labelRenderer) labelRenderer.render(scene, camera);
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Filter model · pair-or-miss table</title>
+<style>
+:root { --paper:#f7f4ef; --ink:#1a1814; --muted:#5c564c; --line:#d8d0c4; --accent:#8b6914; }
+* { box-sizing:border-box; }
+html, body { margin:0; background:var(--paper); color:var(--ink); font-family:Georgia, "Times New Roman", serif; }
+body.embed { background:#fff; }
+.wrap { padding:0.7rem 0.9rem 1rem; }
+h2 { font-size:1.05rem; margin:0 0 0.3rem; }
+.cap { font-size:0.84rem; color:var(--muted); max-width:78ch; margin:0 0 0.55rem; line-height:1.45; }
+svg { display:block; width:100%; height:auto; }
+.legend { display:flex; flex-wrap:wrap; gap:0.4rem 0.9rem; font-size:0.72rem; color:var(--muted); margin-top:0.45rem; }
+.legend i { width:10px; height:10px; border-radius:50%; display:inline-block; }
+table { border-collapse:collapse; font-size:0.72rem; width:100%; }
+th, td { border:1px solid var(--line); padding:0.28rem 0.4rem; text-align:center; }
+th { font-weight:600; background:#f3efe6; }
+td.rowh { text-align:left; font-weight:600; }
+.zero { color:#b0a89c; }
+.hit { font-weight:600; }
+.note { font-size:0.75rem; color:var(--muted); margin-top:0.55rem; max-width:78ch; line-height:1.45; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<h2>Filter model from one record type</h2>
+<p class="cap">L1 and L2 are drawn from <code>filter_table.json</code>. Shell 1 is the 1955 code.
+Shell 2 is I–I: the informational reports and Yakovlev’s analytic note. Shell 3 is Soviet I–s/he.
+Shell 4 is rival I–s/he. Novosti is an alias. MFA stays an office. L3 is not redrawn.</p>
+<h2>L1 · shells</h2>
+<svg viewBox="0 0 680 660" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="L1 filter shells from unified table">
+<rect width="680" height="660" fill="#fffdfa"/>
+<circle cx="340" cy="330" r="78" fill="#f3efe6" fill-opacity="0.35" stroke="#d8d0c4" stroke-width="1.2"/>
+<circle cx="340" cy="330" r="138" fill="#f3efe6" fill-opacity="0.35" stroke="#d8d0c4" stroke-width="1.2"/>
+<circle cx="340" cy="330" r="200" fill="#f3efe6" fill-opacity="0.35" stroke="#d8d0c4" stroke-width="1.2"/>
+<circle cx="340" cy="330" r="272" fill="#f3efe6" fill-opacity="0.35" stroke="#d8d0c4" stroke-width="1.2"/>
+<text x="18" y="28" font-size="10" fill="#5c564c">1 grammar (core) · 2 I–I reports · 3 Soviet I–s/he · 4 rival I–s/he</text>
+<line x1="474.5" y1="360.7" x2="340.0" y2="130.0" stroke="#8b3a2a" stroke-width="1.6" stroke-dasharray="6 4" opacity="0.85"/>
+<line x1="474.5" y1="360.7" x2="340.0" y2="58.0" stroke="#2a5f8f" stroke-width="1.6" opacity="0.85"/>
+<line x1="474.5" y1="360.7" x2="575.6" y2="194.0" stroke="#9a3b3b" stroke-width="1.6" opacity="0.85"/>
+<line x1="474.5" y1="360.7" x2="340.0" y2="130.0" stroke="#2a5f8f" stroke-width="1.6" opacity="0.85"/>
+<line x1="340.0" y1="130.0" x2="340.0" y2="130.0" stroke="#5a8060" stroke-width="1.6" stroke-dasharray="2 3" opacity="0.85"/>
+<line x1="474.5" y1="360.7" x2="222.4" y2="491.8" stroke="#4a7c6a" stroke-width="1.6" opacity="0.85"/>
+<line x1="474.5" y1="360.7" x2="575.6" y2="466.0" stroke="#5a4a8f" stroke-width="1.6" stroke-dasharray="8 3" opacity="0.85"/>
+<line x1="205.5" y1="360.7" x2="340.0" y2="602.0" stroke="#9a3b3b" stroke-width="1.6" opacity="0.85"/>
+<line x1="474.5" y1="360.7" x2="232.1" y2="244.0" stroke="#6b8f71" stroke-width="1.6" stroke-dasharray="5 4" opacity="0.85"/>
+<line x1="340.0" y1="602.0" x2="530.2" y2="268.2" stroke="#6b8f71" stroke-width="1.6" stroke-dasharray="5 4" opacity="0.85"/>
+<line x1="280.1" y1="454.3" x2="457.6" y2="491.8" stroke="#c45c26" stroke-width="1.6" opacity="0.85"/>
+<line x1="399.9" y1="454.3" x2="104.4" y2="466.0" stroke="#2a5f8f" stroke-width="1.6" opacity="0.85"/>
+<line x1="340.0" y1="130.0" x2="149.8" y2="268.2" stroke="#8b3a2a" stroke-width="1.6" stroke-dasharray="6 4" opacity="0.85"/>
+<line x1="340.0" y1="330.0" x2="340.0" y2="192.0" stroke="#1a4a70" stroke-width="1.6" opacity="0.85"/>
+<line x1="205.5" y1="360.7" x2="104.4" y2="194.0" stroke="#8d94a3" stroke-width="1.6" stroke-dasharray="2 3" opacity="0.85"/>
+<circle cx="340.0" cy="330.0" r="7" fill="#1a4a70" stroke="#1a4a70" stroke-width="1.2"/>
+<text x="340.0" y="348.0" text-anchor="middle" font-size="9" fill="#1a1814">1955 Higher School ch. VI</text>
+<circle cx="340.0" cy="192.0" r="7" fill="#2a5f8f" stroke="#2a5f8f" stroke-width="1.2"/>
+<text x="340.0" y="210.0" text-anchor="middle" font-size="9" fill="#1a1814">Spr. 1127</text>
+<circle cx="447.9" cy="244.0" r="7" fill="#2a5f8f" stroke="#2a5f8f" stroke-width="1.2"/>
+<text x="447.9" y="262.0" text-anchor="middle" font-size="9" fill="#1a1814">Spr. 1128</text>
+<circle cx="474.5" cy="360.7" r="7" fill="#2a5f8f" stroke="#2a5f8f" stroke-width="1.2"/>
+<text x="474.5" y="378.7" text-anchor="middle" font-size="9" fill="#1a1814">Spr. 1206</text>
+<circle cx="399.9" cy="454.3" r="7" fill="#2a5f8f" stroke="#2a5f8f" stroke-width="1.2"/>
+<text x="399.9" y="472.3" text-anchor="middle" font-size="9" fill="#1a1814">Spr. 1208</text>
+<circle cx="280.1" cy="454.3" r="7" fill="#2a5f8f" stroke="#2a5f8f" stroke-width="1.2"/>
+<text x="280.1" y="472.3" text-anchor="middle" font-size="9" fill="#1a1814">Spr. 1209</text>
+<circle cx="205.5" cy="360.7" r="7" fill="#2a5f8f" stroke="#2a5f8f" stroke-width="1.2"/>
+<text x="205.5" y="378.7" text-anchor="middle" font-size="9" fill="#1a1814">Spr. 1249 Farisei</text>
+<circle cx="340.0" cy="130.0" r="7" fill="#6b8f71" stroke="#6b8f71" stroke-width="1.2"/>
+<text x="340.0" y="148.0" text-anchor="middle" font-size="9" fill="#1a1814">Embassy 28 Apr 1983</text>
+<circle cx="232.1" cy="244.0" r="7" fill="#6b8f71" stroke="#6b8f71" stroke-width="1.2"/>
+<text x="232.1" y="262.0" text-anchor="middle" font-size="9" fill="#1a1814">Yakovlev Feb 1983 (via Sir…</text>
+<circle cx="530.2" cy="268.2" r="7" fill="#6b8f71" stroke="#6b8f71" stroke-width="1.2"/>
+<text x="530.2" y="286.2" text-anchor="middle" font-size="9" fill="#1a1814">Makarov protest 21 Oct 1984</text>
+<circle cx="457.6" cy="491.8" r="7" fill="#6b8f71" stroke="#6b8f71" stroke-width="1.2"/>
+<text x="457.6" y="509.8" text-anchor="middle" font-size="9" fill="#1a1814">MFA monument notes (Edmont…</text>
+<circle cx="222.4" cy="491.8" r="7" fill="#4a7c6a" stroke="#4a7c6a" stroke-width="1.2"/>
+<text x="222.4" y="509.8" text-anchor="middle" font-size="9" fill="#1a1814">Khmil UN 19 Oct 1983</text>
+<circle cx="149.8" cy="268.2" r="6" fill="#fff" stroke="#8d94a3" stroke-width="1.6" stroke-dasharray="2 2"/>
+<text x="149.8" y="286.2" text-anchor="middle" font-size="9" fill="#1a1814">Pravda 1983 (silence)</text>
+<circle cx="340.0" cy="58.0" r="7" fill="#c45c26" stroke="#c45c26" stroke-width="1.2"/>
+<text x="340.0" y="76.0" text-anchor="middle" font-size="9" fill="#1a1814">Ukrainian Weekly 10 Apr 1983</text>
+<circle cx="575.6" cy="194.0" r="7" fill="#6a5a9f" stroke="#6a5a9f" stroke-width="1.2"/>
+<text x="575.6" y="212.0" text-anchor="middle" font-size="9" fill="#1a1814">UQAM tapes (Luhovy catalog…</text>
+<circle cx="575.6" cy="466.0" r="7" fill="#5a4a8f" stroke="#5a4a8f" stroke-width="1.2"/>
+<text x="575.6" y="484.0" text-anchor="middle" font-size="9" fill="#1a1814">Serbyn and Krawchenko 1986</text>
+<circle cx="340.0" cy="602.0" r="7" fill="#9a3b3b" stroke="#9a3b3b" stroke-width="1.2"/>
+<text x="340.0" y="620.0" text-anchor="middle" font-size="9" fill="#1a1814">Harvest of Despair script</text>
+<circle cx="104.4" cy="466.0" r="7" fill="#a05020" stroke="#a05020" stroke-width="1.2"/>
+<text x="104.4" y="484.0" text-anchor="middle" font-size="9" fill="#1a1814">AP 28 Sep 1983</text>
+<circle cx="104.4" cy="194.0" r="6" fill="#fff" stroke="#a05020" stroke-width="1.6" stroke-dasharray="2 2"/>
+<text x="104.4" y="212.0" text-anchor="middle" font-size="9" fill="#1a1814">Globe 28 Mar 1983 (no clip)</text>
+<circle cx="354.0" cy="118.0" r="4" fill="none" stroke="#5a8060" stroke-width="1.2" stroke-dasharray="2 2"/>
+<text x="354.0" y="110.0" text-anchor="middle" font-size="8" fill="#5a8060">Novosti alias</text>
+</svg>
+<p class="note">Dashed red: miss. Dotted green: alias. Dashed green: companion fond (MFA). Violet dash: later dual (CIUS 1986). Hollow nodes: silence or clip not in hand.</p>
+<h2>L2 · operator tensor (presence / relay counts)</h2>
+<table><thead><tr><th>Operator</th><th>1127</th><th>1206</th><th>1249</th><th>Embassy</th><th>Khmil</th><th>Pravda</th><th>Weekly</th><th>Film</th><th>Tapes</th></tr></thead><tbody><tr><td class="rowh">bourgeois nationalist</td><td class="hit">1</td><td class="hit">1</td><td class="zero">·</td><td class="zero">·</td><td class="zero">·</td><td class="zero">·</td><td class="zero">·</td><td class="zero">·</td><td class="zero">·</td></tr><tr><td class="rowh">sborishche</td><td class="zero">·</td><td class="hit">2</td><td class="zero">·</td><td class="zero">·</td><td class="zero">·</td><td class="zero">·</td><td class="zero">·</td><td class="zero">·</td><td class="zero">·</td></tr><tr><td class="rowh">scare quoted symposium</td><td class="zero">·</td><td class="hit">3</td><td class="zero">·</td><td class="zero">·</td><td class="zero">·</td><td class="hit">1</td><td class="hit">2</td><td class="zero">·</td><td class="zero">·</td></tr><tr><td class="rowh">quoted artificial famine</td><td class="zero">·</td><td class="hit">3</td><td class="hit">3</td><td class="hit">2</td><td class="zero">·</td><td class="zero">·</td><td class="zero">·</td><td class="zero">·</td><td class="zero">·</td></tr><tr><td class="rowh">drought frame</td><td class="zero">·</td><td class="zero">·</td><td class="zero">·</td><td class="hit">3</td><td class="zero">·</td><td class="hit">1</td><td class="zero">·</td><td class="zero">·</td><td class="zero">·</td></tr><tr><td class="rowh">kulak blame</td><td class="zero">·</td><td class="zero">·</td><td class="zero">·</td><td class="hit">5</td><td class="zero">·</td><td class="hit">1</td><td class="zero">·</td><td class="zero">·</td><td class="zero">·</td></tr><tr><td class="rowh">slander lie</td><td class="zero">·</td><td class="zero">·</td><td class="zero">·</td><td class="zero">·</td><td class="hit">1</td><td class="zero">·</td><td class="zero">·</td><td class="zero">·</td><td class="zero">·</td></tr><tr><td class="rowh">symposium as scholarship</td><td class="zero">·</td><td class="zero">·</td><td class="zero">·</td><td class="zero">·</td><td class="zero">·</td><td class="zero">·</td><td class="hit">1</td><td class="zero">·</td><td class="hit">1</td></tr><tr><td class="rowh">man made famine</td><td class="zero">·</td><td class="zero">·</td><td class="zero">·</td><td class="zero">·</td><td class="zero">·</td><td class="zero">·</td><td class="hit">1</td><td class="hit">1</td><td class="zero">·</td></tr><tr><td class="rowh">witness testimony</td><td class="zero">·</td><td class="hit">1</td><td class="zero">·</td><td class="zero">·</td><td class="zero">·</td><td class="zero">·</td><td class="zero">·</td><td class="hit">1</td><td class="zero">·</td></tr></tbody></table>
+<p class="note">1127 carries bourgeois-nationalist and Canada-facing work, not famine operators.
+Embassy carries drought/kulak, not сборище. Khmil is a second outward packet. Film and tapes are the same tensor, intersemiotic columns. Pravda column is a miss on the drought packet.</p>
+<h2>Units</h2>
+<table><thead><tr><th>id</th><th>pairing</th><th>source</th><th>target</th><th>translation type</th></tr></thead>
+<tbody><tr><td class='rowh'>G1</td><td>miss</td><td>internal_1206</td><td>embassy_1983</td><td>refusal — no Montreal or symposium sentence on the famine packet</td></tr><tr><td class='rowh'>G1b</td><td>pair</td><td>internal_1206</td><td>weekly_1983</td><td>interlingual recoding into incompatible genres (gathering vs symposium)</td></tr><tr><td class='rowh'>SYMP1</td><td>intersemiotic</td><td>internal_1206</td><td>uqam_tapes_1983</td><td>memo recodes a videotaped university symposium; tapes are that symposium</td></tr><tr><td class='rowh'>F1</td><td>pair</td><td>internal_1206</td><td>embassy_1983</td><td>thematic transform, not copy — quoted label becomes drought/kulak</td></tr><tr><td class='rowh'>N1</td><td>alias</td><td>embassy_1983</td><td>novosti_1983</td><td>not a second translation</td></tr><tr><td class='rowh'>F1b</td><td>second_packet</td><td>internal_1206</td><td>khmil_un_1983</td><td>nationalist-bourgeois slander / lie; drought-kulak absent</td></tr><tr><td class='rowh'>C1</td><td>later_dual</td><td>internal_1206</td><td>cius_1986</td><td>intergeneric recoding across three years</td></tr><tr><td class='rowh'>V1</td><td>intersemiotic</td><td>internal_1249</td><td>harvest_1984</td><td>film makes man-made famine for a festival public; memo recodes film as forgery</td></tr><tr><td class='rowh'>MFA1</td><td>companion_fond</td><td>internal_1206</td><td>mfa_yakovlev_1983_02</td><td>another office, before Montreal opens</td></tr><tr><td class='rowh'>MFA2</td><td>companion_fond</td><td>harvest_1984</td><td>mfa_makarov_1984_10</td><td>MFA protest after U of T screening; not the spravka</td></tr><tr><td class='rowh'>M1</td><td>same_operator_new_city</td><td>internal_1209</td><td>mfa_monument_notes_1983</td><td>sborishche and famine lexicon travel; Montreal still unnamed in the April packet</td></tr><tr><td class='rowh'>F2</td><td>pair</td><td>internal_1208</td><td>ap_wire_1983</td><td>quoted slander internally; deliberately provoked famine on a US wire</td></tr><tr><td class='rowh'>S1</td><td>miss</td><td>embassy_1983</td><td>pravda_1983</td><td>refusal on domestic newsprint — drought packet not verified in Pravda</td></tr><tr><td class='rowh'>Ctrl</td><td>clock_control</td><td>kgb_school_1955</td><td>internal_1127</td><td>1955 enemy-language in Canadian media without famine/symposium neighborhood</td></tr><tr><td class='rowh'>GLOBE</td><td>acquisition</td><td>internal_1249</td><td>globe_1983</td><td>memo claim and Weekly report; no primary clip</td></tr></tbody></table>
+</div>
+</body>
+</html>

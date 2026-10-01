@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Figure 12 · Dated press paired to the institutional chain (Press extension)</title>
+<meta name="color-scheme" content="light" />
+<style>
+:root {
+  --paper:#f7f4ef; --ink:#1a1814; --muted:#5c564c; --accent:#8b6914; --line:#d8d0c4; --panel:#fffdfa;
+  --serif: Georgia, "Times New Roman", serif; --sans: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+* { box-sizing:border-box; }
+body { margin:0; font-family:var(--sans); background:var(--paper); color:var(--ink); line-height:1.5; }
+body.embed { background:#fff; }
+header { background:#2c2820; color:#f0ece4; padding:1.1rem 1.25rem; border-bottom:3px solid var(--accent); }
+header h1 { margin:0; font-family:var(--serif); font-size:1.25rem; }
+header p { margin:0.35rem 0 0; font-size:0.88rem; color:#c8c0b0; }
+.nav { display:flex; flex-wrap:wrap; gap:0.4rem; margin-top:0.65rem; }
+.nav a { color:#e8dcc0; font-size:0.78rem; text-decoration:none; padding:0.2rem 0.5rem; border:1px solid #5c574d; border-radius:5px; }
+.wrap { max-width:920px; margin:0 auto; padding:1.25rem 1rem 2.5rem; }
+.wrap.embed-wrap { max-width:100%; padding:0.65rem 0.85rem 0.85rem; }
+.embed-back { font-size:0.78rem; margin:0.75rem 0 0; }
+.embed-back a { color:var(--accent); }
+.back { font-size:0.85rem; margin-bottom:1rem; }
+.back a { color:var(--accent); }
+section { margin-bottom:2rem; scroll-margin-top:1rem; }
+body.embed section { margin-bottom:0; }
+h2 { font-family:var(--serif); font-size:1.15rem; margin:0 0 0.35rem; }
+.cap { font-size:0.88rem; color:var(--muted); max-width:70ch; margin:0 0 0.65rem; }
+.layman { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:0.65rem; margin:0 0 0.85rem; }
+@media(max-width:900px) { .layman { grid-template-columns:minmax(0,1fr); } }
+.layman-block { background:#f3efe6; border:1px solid var(--line); border-radius:8px; padding:0.75rem 0.85rem; font-size:0.86rem; }
+.layman-label { font-size:0.68rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--accent); margin-bottom:0.35rem; }
+.layman-block p { margin:0; line-height:1.55; color:#2a2620; }
+.figure-blurb { display:flex; flex-direction:column; gap:0.55rem; margin:0 0 0.85rem; }
+.chart-key { font-size:0.78rem; color:var(--muted); margin-top:0.65rem; padding-top:0.55rem; border-top:1px dashed var(--line); line-height:1.5; }
+.chart-key strong { color:var(--ink); }
+.panel { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:1rem; }
+.stats { display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:0.55rem; margin-bottom:1rem; }
+.stat { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:0.7rem; text-align:center; }
+.stat .n { font-family:var(--serif); font-size:1.5rem; font-weight:600; color:var(--accent); }
+.stat .l { font-size:0.68rem; color:var(--muted); margin-top:0.15rem; }
+:root, html, body { color-scheme: light; }
+html, body { overflow-x: hidden; max-width: 100%; }
+.bar-row, .phase-row, .tl-row {
+  display: grid;
+  grid-template-columns: 7rem minmax(0, 1fr) 2.6rem;
+  column-gap: 0.45rem;
+  align-items: center;
+  font-size: 0.78rem;
+  margin: 0.28rem 0;
+  min-height: 1.35rem;
+  width: 100%;
+  max-width: 100%;
+}
+.heat-wrap { overflow-x: auto; max-width: 100%; }
+.heat-table { width: 100%; min-width: 0; table-layout: fixed; }
+body.embed .layman,
+body.embed .layman-grid { grid-template-columns: minmax(0, 1fr); }
+body.embed .frame-compare { grid-template-columns: minmax(0, 1fr); }
+body.embed .frame-mid { display: none; }
+body.embed .channel-compare { grid-template-columns: minmax(0, 1fr); }
+body.embed .concept-grid,
+body.embed .three-way-cards { grid-template-columns: minmax(0, 1fr); }
+.bar-label, .phase-lbl, .tl-lbl {
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+.bar-sub { display: block; font-size: 0.68rem; color: var(--muted); font-weight: 400; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bar-track, .phase-track, .tl-track { height: 10px; background: #ede8df; border-radius: 5px; overflow: hidden; min-width: 0; }
+.bar-fill { height: 100%; border-radius: 5px; }
+.phase-fill { height: 100%; background: linear-gradient(90deg,#8b6914,#2a5f8f); border-radius: 6px; }
+.bar-val, .phase-days, .tl-days { text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; }
+.dual-bar { margin-bottom: 0.75rem; padding-bottom: 0.75rem; border-bottom: 1px solid #eee; }
+.dual-bar:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.dual-label { font-size: 0.82rem; font-weight: 600; margin-bottom: 0.35rem; }
+.concept-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:0.65rem; }
+.concept-card { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:0.75rem; font-size:0.82rem; }
+.concept-card.non-eq { border-left:3px solid #9a3b3b; }
+.concept-card.eq { border-left:3px solid #6b8f71; }
+.concept-name { font-weight:600; text-transform:capitalize; margin-bottom:0.35rem; }
+.concept-reads div { margin:0.2rem 0; color:var(--muted); font-size:0.78rem; }
+.concept-badge { margin-top:0.45rem; font-size:0.68rem; font-weight:600; text-transform:uppercase; letter-spacing:0.04em; }
+.network-svg { width:100%; max-width:360px; display:block; margin:0 auto; }
+.phase-lbl span { display:block; font-size:0.72rem; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.tri-bar { margin-bottom:0.85rem; }
+.tri-label { font-weight:600; font-size:0.85rem; margin-bottom:0.25rem; }
+.hub-row { display:flex; flex-wrap:wrap; align-items:center; gap:0.35rem; padding:0.45rem 0; border-bottom:1px solid #eee; font-size:0.85rem; }
+.hub-concept { font-weight:600; color:var(--internal); }
+.hub-arrow { color:var(--accent); }
+.hub-family { font-family:var(--serif); }
+.hub-ok { margin-left:auto; font-size:0.72rem; color:var(--outward); font-weight:600; }
+.adj-block { margin-bottom:0.75rem; }
+.adj-title { font-size:0.82rem; font-weight:600; margin-bottom:0.3rem; }
+.stack-bar { display:flex; height:18px; border-radius:4px; overflow:hidden; background:#ede8df; }
+.stack-seg { height:100%; }
+.adj-legend { font-size:0.72rem; color:var(--muted); margin-top:0.25rem; }
+.channel-compare { display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; text-align:center; }
+.channel-box { padding:1rem; border-radius:8px; border:1px solid var(--line); }
+.channel-box.internal { background:rgba(42,95,143,0.08); }
+.channel-box.public { background:rgba(107,143,113,0.08); }
+.channel-box .big { font-family:var(--serif); font-size:2rem; font-weight:700; }
+.press-concept { margin-bottom:1rem; padding-bottom:0.85rem; border-bottom:1px solid #eee; }
+.press-concept:last-child { border-bottom:none; margin-bottom:0; padding-bottom:0; }
+.press-concept-title { font-weight:600; font-size:0.9rem; margin-bottom:0.35rem; color:var(--accent); }
+.heat-table { width:100%; min-width:0; table-layout:fixed; border-collapse:collapse; font-size:0.72rem; }
+.heat-table th, .heat-table td { border:1px solid var(--line); padding:0.45rem 0.5rem; text-align:center; }
+.heat-table th:first-child { text-align:left; font-weight:600; background:#ede8df; }
+.heat-table thead th { background:#2c2820; color:#f0ece4; font-size:0.72rem; }
+.frame-compare { display:grid; grid-template-columns:1fr auto 1fr; gap:0.65rem; align-items:stretch; }
+@media(max-width:900px) { .frame-compare { grid-template-columns:1fr; } .frame-mid { display:none; } }
+.frame-col { border:1px solid var(--line); border-radius:8px; padding:0.85rem; font-size:0.84rem; }
+.frame-col.denial { border-top:3px solid var(--outward); }
+.frame-col.rival { border-top:3px solid var(--rival); }
+.frame-col h4 { margin:0 0 0.5rem; font-family:var(--serif); font-size:0.95rem; }
+.frame-item { margin:0.45rem 0; padding:0.35rem 0; border-bottom:1px solid #eee; }
+.frame-item span { display:block; font-size:0.75rem; color:var(--muted); margin-top:0.15rem; }
+.frame-mid { font-size:1.75rem; font-weight:700; color:var(--accent); align-self:center; }
+.align-badge { margin-top:0.65rem; font-size:0.72rem; font-weight:600; text-transform:uppercase; letter-spacing:0.04em; color:var(--rival); }
+.tl-lbl span { display:block; font-size:0.68rem; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.tl-fill.inst { height:100%; background:linear-gradient(90deg,#8b6914,#2a5f8f); }
+.tl-fill.press { height:100%; background:var(--press); }
+.tl-fill.press.pending { background:#c9a227; opacity:0.85; }
+.three-way-cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:0.55rem; margin-bottom:0.85rem; }
+.tw-card { background:var(--panel); border:1px solid var(--line); border-left:3px solid var(--accent); border-radius:6px; padding:0.65rem 0.75rem; font-size:0.8rem; }
+.tw-card strong { display:block; text-transform:capitalize; margin-bottom:0.2rem; }
+</style>
+</head>
+<body class="embed">
+<div class="wrap embed-wrap">
+  <section id="fig-press-timeline">
+    <h2>Figure 12 · Dated press paired to the institutional chain (Press extension)</h2>
+    <p class="cap">Technical: c_press_timeline_coverage — eleven sources 1983-03-28 through 1987-12-26 on shared day scale.</p>
+    
+    <div class="figure-blurb">
+      <div class="layman-block">
+        <div class="layman-label">What you&rsquo;re looking at</div>
+        <p>A shared timeline anchored to mid-March 1983 (the spr. 1206 window). Each row is one dated text; bar length shows how many days after that anchor it appeared; the number at right is the exact day count. Blue-gradient rows are the <strong>institutional chain</strong> from Figure 4: conference held, embassy release (~34 days), follow-up memo spr. 1208 (~95 days), CIUS book (~3 years), Operation Farisei (~4 years). Orange rows are <strong>ingested press</strong> with primary text; gold rows are press items known from citations but still awaiting archive clips (<em>Globe</em> 1983 page-one, 1987 Farisei article).</p>
+      </div>
+      <div class="layman-block">
+        <div class="layman-label">How to read it</div>
+        <p>Look for <strong>overlap in time</strong>, not just presence on the list. Novosti denial and <em>Ukrainian Weekly</em> symposium coverage sit in the same April 1983 band as the embassy release—you can pair memo, denial, and newspaper within weeks. AP wire (Sep 1983) keeps famine talk alive in the same calendar year as the secret follow-up. The 1987 <em>Globe</em> row lands in the same late phase as Farisei, when spr. 1249 names Canadian press placement. Shorter bar = sooner after the anchor; compare institutional and press rows at similar lengths to see contemporaneous writing.</p>
+      </div>
+      <div class="layman-block">
+        <div class="layman-label">Why it counts</div>
+        <p>Dated pairing is what makes cross-register comparison legitimate. Press that arrived years later would be context only; press from the same fortnight is evidence. Eleven sources are already placed on this scale (including six Soviet newspaper tracks); East View primary clips for 1983 domestic newsprint and two Globe clips remain to be acquired, but enough text exists to run the six-register experiments in Figures 9–11.</p>
+      </div>
+    </div>
+    <div class="panel">
+        <div class="tl-row inst">
+          <div class="tl-lbl"><strong>Conference held</strong><span>institutional</span></div>
+          <div class="tl-track"><div class="tl-fill inst" style="width:3%"></div></div>
+          <div class="tl-days">0d</div>
+        </div>
+        <div class="tl-row inst">
+          <div class="tl-lbl"><strong>Embassy release</strong><span>institutional</span></div>
+          <div class="tl-track"><div class="tl-fill inst" style="width:3%"></div></div>
+          <div class="tl-days">34d</div>
+        </div>
+        <div class="tl-row inst">
+          <div class="tl-lbl"><strong>spr. 1208</strong><span>institutional</span></div>
+          <div class="tl-track"><div class="tl-fill inst" style="width:6%"></div></div>
+          <div class="tl-days">95d</div>
+        </div>
+        <div class="tl-row inst">
+          <div class="tl-lbl"><strong>Embassy release</strong><span>institutional</span></div>
+          <div class="tl-track"><div class="tl-fill inst" style="width:3%"></div></div>
+          <div class="tl-days">34d</div>
+        </div>
+        <div class="tl-row inst">
+          <div class="tl-lbl"><strong>CIUS 1986</strong><span>institutional</span></div>
+          <div class="tl-track"><div class="tl-fill inst" style="width:68%"></div></div>
+          <div class="tl-days">1013d</div>
+        </div>
+        <div class="tl-row inst">
+          <div class="tl-lbl"><strong>Operation Farisei</strong><span>institutional</span></div>
+          <div class="tl-track"><div class="tl-fill inst" style="width:97%"></div></div>
+          <div class="tl-days">1453d</div>
+        </div>
+        <div class="tl-row press">
+          <div class="tl-lbl"><strong>Globe page-one (cited)</strong><span>press · secondary</span></div>
+          <div class="tl-track"><div class="tl-fill press pending" style="width:3%"></div></div>
+          <div class="tl-days">13d</div>
+        </div>
+        <div class="tl-row press">
+          <div class="tl-lbl"><strong>Novosti / embassy denial</strong><span>press · primary</span></div>
+          <div class="tl-track"><div class="tl-fill press primary" style="width:3%"></div></div>
+          <div class="tl-days">17d</div>
+        </div>
+        <div class="tl-row press">
+          <div class="tl-lbl"><strong>Novosti / embassy denial</strong><span>press · primary</span></div>
+          <div class="tl-track"><div class="tl-fill press primary" style="width:3%"></div></div>
+          <div class="tl-days">17d</div>
+        </div>
+        <div class="tl-row press">
+          <div class="tl-lbl"><strong>Ukrainian Weekly symposium</strong><span>press · primary</span></div>
+          <div class="tl-track"><div class="tl-fill press primary" style="width:3%"></div></div>
+          <div class="tl-days">26d</div>
+        </div>
+        <div class="tl-row press">
+          <div class="tl-lbl"><strong>AP wire on famine</strong><span>press · primary</span></div>
+          <div class="tl-track"><div class="tl-fill press primary" style="width:13%"></div></div>
+          <div class="tl-days">197d</div>
+        </div>
+        <div class="tl-row press">
+          <div class="tl-lbl"><strong>Globe Farisei claim</strong><span>press · citation</span></div>
+          <div class="tl-track"><div class="tl-fill press pending" style="width:98%"></div></div>
+          <div class="tl-days">1463d</div>
+        </div>
+      <p class="chart-key"><strong>Blue gradient</strong> = institutional texts · <strong>Orange</strong> = press with ingested primary text · <strong>Gold</strong> = press known from citation, clip pending · Day count measured from ~15 Mar 1983.</p>
+    </div>
+  </section>
+  <p class="embed-back"><a href="../proposal_evidence_viz.html#fig-press-timeline" target="_top">Open in full gallery →</a></p>
+</div>
+</body>
+</html>

@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="color-scheme" content="light"/>
+<title>Figure L3 · Explosion bifurcation (Lotman 3D)</title>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,600&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --paper:#f7f4ef; --ink:#1a1814; --muted:#5c564c; --accent:#8b6914; --line:#d8d0c4; --panel:#fffdfa;
+  --internal:#2a5f8f; --outward:#6b8f71; --press:#c45c26; --rival:#9a3b3b;
+  --serif: Georgia, "Times New Roman", serif; --sans: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+* { box-sizing:border-box; }
+:root, html, body { color-scheme: light; }
+html, body { overflow-x: hidden; max-width: 100%; }
+body { margin:0; font-family:var(--sans); background:var(--paper); color:var(--ink); line-height:1.5; }
+body.embed { background:#fff; }
+.wrap.embed-wrap { max-width:100%; padding:0.65rem 0.85rem 0.85rem; }
+h2 { font-family:var(--serif); font-size:1.05rem; margin:0 0 0.35rem; }
+.cap { font-size:0.84rem; color:var(--muted); max-width:72ch; margin:0 0 0.55rem; }
+.eq { font-family:Georgia,serif; font-size:0.82rem; background:#f3efe6; border:1px solid var(--line); border-radius:6px; padding:0.45rem 0.65rem; margin:0 0 0.55rem; }
+.chart-key { font-size:0.75rem; color:var(--muted); margin-top:0.55rem; padding-top:0.45rem; border-top:1px dashed var(--line); line-height:1.45; }
+.chart-key strong { color:var(--ink); }
+.embed-back { font-size:0.78rem; margin:0.75rem 0 0; }
+.embed-back a { color:var(--accent); }
+.legend { display:flex; flex-wrap:wrap; gap:0.45rem 0.85rem; font-size:0.72rem; margin:0.45rem 0 0; }
+.legend span { display:inline-flex; align-items:center; gap:0.3rem; }
+.legend i { width:10px; height:10px; border-radius:50%; display:inline-block; }
+.stats { display:flex; flex-wrap:wrap; gap:0.5rem; margin:0.45rem 0; }
+.stat { background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:0.4rem 0.55rem; font-size:0.78rem; }
+.stat strong { display:block; font-family:var(--serif); font-size:1rem; }
+.layman-grid { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:0.55rem; margin:0 0 0.55rem; }
+@media(max-width:900px) { .layman-grid { grid-template-columns:minmax(0,1fr); } }
+body.embed .layman-grid { grid-template-columns:minmax(0,1fr); }
+.layman-block { background:#f3efe6; border:1px solid var(--line); border-radius:8px; padding:0.65rem 0.75rem; font-size:0.82rem; }
+.layman-label { font-size:0.68rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:var(--accent); margin-bottom:0.3rem; }
+.layman-block p { margin:0; color:#2a2620; }
+.how-to { font-size:0.78rem; color:var(--muted); margin:0 0 0.45rem; padding:0.4rem 0.55rem; background:#faf8f4; border:1px dashed var(--line); border-radius:6px; }
+.viz-stage { position:relative; border:1px solid var(--line); border-radius:8px; overflow:hidden; background:#faf8f4;
+  width:100%; height:min(58vh,480px); min-height:320px; }
+body.embed .viz-stage { height:380px; min-height:280px; }
+body.embed .shell-caption, body.embed .surface-label, body.embed .node-label, body.embed .plane-label {
+  max-width: 7.5rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.52rem;
+}
+#viz3d { width:100%; height:100%; display:block; cursor:grab; position:absolute; inset:0; }
+#viz3d canvas { display:block !important; width:100% !important; height:100% !important; margin:0 !important; }
+#viz3d:active { cursor:grabbing; }
+.file-warn { margin:1rem; padding:0.85rem 1rem; background:#fffdfa; border:1px solid var(--line); border-radius:8px; font-size:0.84rem; line-height:1.5; }
+.file-warn code { font-size:0.8rem; }
+.viz-hud { position:absolute; top:42px; right:8px; width:min(280px,calc(100% - 16px)); max-height:calc(100% - 50px); overflow:auto;
+  background:rgba(255,253,250,0.96); border:1px solid var(--line); border-radius:8px; padding:0.65rem 0.75rem;
+  box-shadow:0 4px 18px rgba(0,0,0,0.08); font-size:0.78rem; z-index:2; transition:opacity 0.15s, transform 0.15s; }
+body.embed .viz-hud { top:auto; bottom:8px; left:8px; right:8px; width:auto; max-height:36%; }
+.viz-hud.is-collapsed { opacity:0; pointer-events:none; transform:translateX(12px); visibility:hidden; }
+.viz-hud-toggle { position:absolute; top:8px; right:8px; z-index:3; font-family:var(--sans); font-size:0.72rem; font-weight:600;
+  padding:0.3rem 0.55rem; border:1px solid var(--line); border-radius:6px; background:rgba(255,253,250,0.95); color:var(--ink);
+  cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.06); }
+.viz-hud-toggle:hover { border-color:var(--accent); color:var(--accent); }
+.demo-banner { font-size:0.78rem; background:#2c2820; color:#e8dcc0; padding:0.45rem 0.65rem; border-radius:6px; margin:0 0 0.55rem; }
+.demo-banner strong { color:#fff; }
+.shell-caption { color:#5c564c; font-size:0.62rem; font-weight:600; letter-spacing:0.04em; text-transform:uppercase;
+  padding:0.15rem 0.35rem; background:rgba(255,253,250,0.9); border:1px solid #d8d0c4; border-radius:4px; pointer-events:none; max-width:140px; line-height:1.25; }
+.surface-label { font-size:0.58rem; font-weight:600; padding:0.1rem 0.25rem; background:rgba(255,253,250,0.93);
+  border:1px solid #d8d0c4; border-radius:3px; pointer-events:none; white-space:nowrap; }
+.surface-label.ghost { opacity:0.55; border-style:dashed; color:var(--muted); }
+.viz-hud h3 { margin:0 0 0.25rem; font-family:var(--serif); font-size:0.92rem; line-height:1.25; }
+.viz-hud .sub { color:var(--muted); margin:0 0 0.45rem; font-size:0.72rem; }
+.viz-hud dl { margin:0; }
+.viz-hud dt { font-weight:600; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.04em; color:var(--accent); margin-top:0.4rem; }
+.viz-hud dt:first-child { margin-top:0; }
+.viz-hud dd { margin:0.12rem 0 0; color:#2a2620; line-height:1.4; }
+.viz-hud .pill { display:inline-block; font-size:0.65rem; font-weight:600; padding:0.1rem 0.35rem; border-radius:4px; background:#ede8df; margin-top:0.35rem; }
+.viz-hud .default { color:var(--muted); font-style:italic; }
+.viz-tooltip { position:fixed; pointer-events:none; z-index:9999; max-width:260px; padding:0.45rem 0.55rem;
+  background:#2c2820; color:#f0ece4; font-size:0.72rem; line-height:1.35; border-radius:6px;
+  box-shadow:0 6px 20px rgba(0,0,0,0.25); opacity:0; transition:opacity 0.12s; }
+.viz-tooltip.visible { opacity:1; }
+.viz-tooltip strong { display:block; color:#e8dcc0; margin-bottom:0.15rem; font-size:0.76rem; }
+.node-label { color:#1a1814; font-size:0.62rem; font-weight:600; padding:0.12rem 0.28rem; background:rgba(255,253,250,0.92);
+  border:1px solid #d8d0c4; border-radius:4px; white-space:nowrap; pointer-events:none; text-transform:capitalize; }
+.node-label.new-node { border-color:#9a3b3b; color:#7a2a2a; }
+.plane-label { color:#5c564c; font-size:0.72rem; font-weight:600; letter-spacing:0.03em; text-transform:uppercase;
+  padding:0.2rem 0.45rem; background:rgba(255,253,250,0.85); border-radius:4px; pointer-events:none; }
+.edge-key { display:flex; flex-wrap:wrap; gap:0.55rem 1rem; font-size:0.72rem; margin:0.45rem 0 0; }
+.edge-key span { display:inline-flex; align-items:center; gap:0.35rem; }
+.edge-key i { width:18px; height:3px; border-radius:2px; display:inline-block; }
+.verify-table { width:100%; border-collapse:collapse; font-size:0.72rem; margin-top:0.55rem; }
+.verify-table th, .verify-table td { border:1px solid var(--line); padding:0.35rem 0.45rem; text-align:left; }
+.verify-table th { background:#f3efe6; font-size:0.68rem; }
+.verify-table .new { color:#9a3b3b; font-weight:600; }
+details.verify { margin-top:0.55rem; font-size:0.78rem; }
+details.verify summary { cursor:pointer; color:var(--accent); font-weight:600; }
+.thesis-prose { background:#faf6ef; border:1px solid var(--line); border-radius:8px; padding:0.85rem 1rem; margin:0.55rem 0 0.65rem; font-size:0.84rem; line-height:1.62; max-width:100%; }
+.thesis-prose h3 { font-family:var(--serif); font-size:0.92rem; margin:0 0 0.45rem; color:var(--ink); font-weight:600; }
+.thesis-prose p { margin:0 0 0.65rem; color:#2a2620; }
+.thesis-prose p:last-child { margin-bottom:0; }
+.thesis-prose ul { margin:0.35rem 0 0.65rem; padding-left:1.25rem; }
+.thesis-prose li { margin-bottom:0.35rem; }
+.thesis-prose .ru { font-family:Georgia,serif; }
+.viz-after {
+  margin-top: 0.75rem;
+  padding-top: 0.65rem;
+  border-top: 1px dashed var(--line);
+}
+.gallery-intro { font-size:0.88rem; line-height:1.65; color:#2a2620; margin-bottom:1rem; max-width:72ch; }
+.gallery-section-note { font-size:0.84rem; line-height:1.6; color:var(--muted); margin:0 0 0.65rem; max-width:72ch; }
+</style>
+</head>
+<body class="embed">
+<div class="wrap embed-wrap">
+  <section id="fig-lotman-explosion-3d">
+
+    <h2>Figure L3 · Explosion bifurcation</h2>
+    
+    <div class="viz-stage" id="viz-stage">
+      <button type="button" id="viz-hud-toggle" class="viz-hud-toggle" aria-expanded="false" aria-controls="viz-hud" title="Show or hide detail panel">Show panel</button>
+      <div id="viz3d"></div>
+      <aside id="viz-hud" class="viz-hud is-collapsed" aria-live="polite" data-default-html="&lt;p class=&quot;default&quot;&gt;Each &lt;strong&gt;dot&lt;/strong&gt; is a wording-habit cluster; each &lt;strong&gt;line&lt;/strong&gt; means those habits appear in the same memo(s). Lower plane = before 1983; upper = after. Shared dots align vertically.&lt;/p&gt;">
+        <p class="default">Each <strong>dot</strong> is a wording-habit cluster; each <strong>line</strong> means those habits appear in the same memo(s). Lower plane = before 1983; upper = after. Shared dots align vertically.</p>
+      </aside>
+    </div>
+    <div id="viz-tooltip" class="viz-tooltip" hidden></div>
+
+    <div class="viz-after">
+    
+    <p class="how-to"><strong>How to explore:</strong> drag to rotate · scroll to zoom · <strong>hover</strong> dots or lines · <strong>click</strong> for detail · toggle panel ↗</p>
+
+    <p class="cap">The dissertation tests whether Soviet-era talking points on famine commemoration <strong>transform predictably</strong> when they cross register boundaries — secret memo → embassy/Novosti → domestic news → diaspora/scholarly print — and whether that transformation is <strong>dated and measurable</strong> (Montreal 1983 as anchor, post-1983 explosion as qualitative rewire). These 3D models make Lotman’s spatial vocabulary falsifiable: they read from the same open JSON as Figures 1–12.</p>
+    <div class="layman-grid">
+      <div class="layman-block">
+        <div class="layman-label">In plain terms</div>
+        <p>Two phrase-network maps stacked vertically. <strong>Lower plane</strong> = memos before 1983 (only two early files). <strong>Upper plane</strong> = memos after 1983 (fourteen files). Each dot = a wording-habit cluster; each line = those habits appear in the <em>same memo</em>. <strong>Red lines</strong> = co-occurrences that did not exist before Montreal — new internal wiring. Grey vertical pillars = topics that continue across the rupture at the same horizontal position.</p>
+      </div>
+      <div class="layman-block">
+        <div class="layman-label">What connections tell us</div>
+        <p>Before 1983, three topics co-occur in a tight triangle — operational vocabulary, OUN actor references, scare quotes. After 1983, new nodes appear («artificial famine», hostile «gathering») and new edges link them. The institution did not merely write more memos; it <strong>rewired which phrases travel together</strong> when commemoration proceeds despite counter-measures. That is Lotman’s explosion as a dated, countable claim.</p>
+      </div>
+    </div>
+    <div class="thesis-prose">
+      <h3>Thesis significance</h3>
+      <p>Lotman’s ‘explosion’ names qualitative reshaping, not louder word counts. After Montreal 1983 the memo phrase network gains new nodes («artificial famine», hostile «gathering») and new edges between them — the institution rewires which wording habits co-occur when the outside story ‘wins.’ The lower plane is the pre-rupture bundle; red upper-plane edges are co-occurrences that did not exist before.</p>
+      <p>Connections on the upper plane are <strong>internal to the fond</strong> — they do not prove outward press changed line-by-line. They prove the secret register’s phrase ecology bifurcated after the 1983 anchor. Pair this figure with L1 (outward relay) and L2 (operator skew) for the full argument: boundary non-equivalence at the shell edge <em>and</em> qualitative rewire inside the archive after the outside story wins.</p>
+    </div>
+    <div class="layman-block" style="margin-bottom:0.55rem;">
+      <div class="layman-label">Where things sit (fixed rules)</div>
+      <ul style="margin:0;padding-left:1.1rem;">
+        <li>Left/right/depth = graph layout from co-occurrence (topics that share memos sit nearer).</li><li>Lower vs upper plane = time only (before vs after 1983).</li><li>Grey vertical pillars = same topic continuing across the rupture.</li><li>Red lines = new co-occurrence after 1983; blue = links that already existed on the upper plane.</li>
+      </ul>
+    </div>
+    <div class="edge-key">
+      <span><i style="background:#8b6914"></i> Pre-1983 links (lower plane)</span>
+      <span><i style="background:#2a5f8f"></i> Carried link on upper plane</span>
+      <span><i style="background:#9a3b3b"></i> New co-occurrence after 1983</span>
+      <span><i style="background:#8d94a3;height:1px;border-top:2px dashed #8d94a3"></i> Same topic, lower → upper plane</span>
+    </div>
+    <p class="eq">Δ topics = 4 · Δ links = 16 · new topics: artificial_famine, hostile_gathering, pedagogy, symposium_recode</p>
+    <p class="chart-key"><strong>Try it:</strong> click the red line between «Quoted artificial famine» and «Hostile gathering» on the upper plane — read “What this connection tells us” and “Thesis significance.” Compare to the lower-plane triangle where that edge did not exist.</p>
+    <details class="verify">
+  <summary>Verify every line against the JSON (co-occurrence = same memo)</summary>
+  <table class="verify-table">
+    <thead><tr><th>Period</th><th>Topic A</th><th>Topic B</th><th>Shared memos</th><th>Status</th></tr></thead>
+    <tbody><tr><td>Pre-1983</td><td>Operational measures</td><td>OUN / nationalist actor</td><td>1</td><td class=''>carried</td></tr><tr><td>Pre-1983</td><td>Operational measures</td><td>Scare quotes</td><td>1</td><td class=''>carried</td></tr><tr><td>Pre-1983</td><td>OUN / nationalist actor</td><td>Scare quotes</td><td>2</td><td class=''>carried</td></tr><tr><td>Post-1983</td><td>Quoted «artificial famine»</td><td>Hostile «gathering»</td><td>3</td><td class='new'>NEW</td></tr><tr><td>Post-1983</td><td>Quoted «artificial famine»</td><td>Operational measures</td><td>5</td><td class='new'>NEW</td></tr><tr><td>Post-1983</td><td>Quoted «artificial famine»</td><td>OUN / nationalist actor</td><td>5</td><td class='new'>NEW</td></tr><tr><td>Post-1983</td><td>Quoted «artificial famine»</td><td>Scare quotes</td><td>6</td><td class='new'>NEW</td></tr><tr><td>Post-1983</td><td>Quoted «artificial famine»</td><td>Symposium recode</td><td>4</td><td class='new'>NEW</td></tr><tr><td>Post-1983</td><td>Hostile «gathering»</td><td>Operational measures</td><td>4</td><td class='new'>NEW</td></tr><tr><td>Post-1983</td><td>Hostile «gathering»</td><td>OUN / nationalist actor</td><td>5</td><td class='new'>NEW</td></tr><tr><td>Post-1983</td><td>Hostile «gathering»</td><td>Scare quotes</td><td>5</td><td class='new'>NEW</td></tr><tr><td>Post-1983</td><td>Hostile «gathering»</td><td>Symposium recode</td><td>4</td><td class='new'>NEW</td></tr><tr><td>Post-1983</td><td>Operational measures</td><td>OUN / nationalist actor</td><td>12</td><td class=''>carried</td></tr><tr><td>Post-1983</td><td>Operational measures</td><td>Pedagogy / counter-propaganda</td><td>4</td><td class='new'>NEW</td></tr><tr><td>Post-1983</td><td>Operational measures</td><td>Scare quotes</td><td>13</td><td class=''>carried</td></tr><tr><td>Post-1983</td><td>Operational measures</td><td>Symposium recode</td><td>6</td><td class='new'>NEW</td></tr><tr><td>Post-1983</td><td>OUN / nationalist actor</td><td>Pedagogy / counter-propaganda</td><td>4</td><td class='new'>NEW</td></tr><tr><td>Post-1983</td><td>OUN / nationalist actor</td><td>Scare quotes</td><td>13</td><td class=''>carried</td></tr><tr><td>Post-1983</td><td>OUN / nationalist actor</td><td>Symposium recode</td><td>7</td><td class='new'>NEW</td></tr><tr><td>Post-1983</td><td>Pedagogy / counter-propaganda</td><td>Scare quotes</td><td>4</td><td class='new'>NEW</td></tr><tr><td>Post-1983</td><td>Pedagogy / counter-propaganda</td><td>Symposium recode</td><td>1</td><td class='new'>NEW</td></tr><tr><td>Post-1983</td><td>Scare quotes</td><td>Symposium recode</td><td>7</td><td class='new'>NEW</td></tr></tbody>
+  </table>
+  <p style="margin:0.45rem 0 0;font-size:0.72rem;color:var(--muted);">Edge weight = memos where both phrase families appear. Source: bc_combined_experiments.json → c_explosion_rewire.</p>
+</details>
+    </div>
+
+  </section>
+  <p class="embed-back"><a href="../lotman_3d_evidence.html#fig-lotman-explosion-3d" target="_top">Open in 3D gallery →</a></p>
+</div>
+
+<script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>
+<script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://unpkg.com/three@0.128.0/examples/js/renderers/CSS2DRenderer.js"></script>
+<script>
+const OrbitControls = THREE.OrbitControls;
+const CSS2DRenderer = THREE.CSS2DRenderer;
+const CSS2DObject = THREE.CSS2DObject;
+
+
+
+const HUD_DEFAULT = '<p class="default">Hover a coloured dot, bar, or connection for a quick summary. Click it for what it is, what its position means, and why it matters to the dissertation.</p>';
+
+function renderHud(hud, info, toggleBtn) {
+  if (!info) {
+    hud.innerHTML = hud.dataset.defaultHtml || HUD_DEFAULT;
+    return;
+  }
+  if (hud.classList.contains('is-collapsed')) {
+    hud.classList.remove('is-collapsed');
+    if (toggleBtn) {
+      toggleBtn.setAttribute('aria-expanded', 'true');
+      toggleBtn.textContent = 'Hide panel';
+    }
+  }
+  let html = `<h3>${info.title || ''}</h3>`;
+  if (info.subtitle) html += `<p class="sub">${info.subtitle}</p>`;
+  if (info.pill) html += `<span class="pill">${info.pill}</span>`;
+  if (info.sections && info.sections.length) {
+    html += '<dl>';
+    info.sections.forEach(s => {
+      html += `<dt>${s.label}</dt><dd>${s.text}</dd>`;
+    });
+    html += '</dl>';
+  }
+  hud.innerHTML = html;
+}
+
+function setupHudToggle(hud, toggleBtn) {
+  if (!hud || !toggleBtn) return;
+  if (document.body.classList.contains('embed')) {
+    hud.classList.add('is-collapsed');
+    toggleBtn.setAttribute('aria-expanded', 'false');
+    toggleBtn.textContent = 'Show panel';
+  }
+  toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const collapsed = hud.classList.toggle('is-collapsed');
+    toggleBtn.setAttribute('aria-expanded', String(!collapsed));
+    toggleBtn.textContent = collapsed ? 'Show panel' : 'Hide panel';
+  });
+}
+
+function bindStageResize(stage, apply) {
+  function run() {
+    const w = Math.max(stage.clientWidth || 0, 280);
+    const h = Math.max(stage.clientHeight || 0, 240);
+    if (w < 40 || h < 40) return;
+    apply(w, h);
+  }
+  window.addEventListener('resize', run);
+  window.addEventListener('load', run);
+  if (window.ResizeObserver) new ResizeObserver(run).observe(stage);
+  requestAnimationFrame(run);
+  setTimeout(run, 80);
+  setTimeout(run, 300);
+}
+
+function fitThree(renderer, w, h, labelRenderer) {
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.setSize(w, h, true);
+  const canvas = renderer.domElement;
+  canvas.style.display = 'block';
+  canvas.style.width = '100%';
+  canvas.style.height = '100%';
+  canvas.style.maxWidth = '100%';
+  canvas.style.margin = '0';
+  if (labelRenderer) {
+    labelRenderer.setSize(w, h);
+    const overlay = labelRenderer.domElement;
+    overlay.style.position = 'absolute';
+    overlay.style.left = '0';
+    overlay.style.top = '0';
+    overlay.style.width = '100%';
+    overlay.style.height = '100%';
+    overlay.style.margin = '0';
+  }
+}
+
+function setupPickInteraction({ el, camera, renderer, controls, pickables, hud, tip, toggleBtn }) {
+  const ray = new THREE.Raycaster();
+  const mouse = new THREE.Vector2();
+  let hovered = null;
+  let selected = null;
+
+  function setHighlight(mesh, on) {
+    if (!mesh || !mesh.material) return;
+    if (!mesh.userData.baseEmissive) mesh.userData.baseEmissive = mesh.material.emissiveIntensity || 0;
+    if (!mesh.userData.baseScale) mesh.userData.baseScale = mesh.scale.x;
+    mesh.material.emissiveIntensity = on ? 0.55 : mesh.userData.baseEmissive;
+    const s = on ? mesh.userData.baseScale * 1.22 : mesh.userData.baseScale;
+    mesh.scale.set(s, s, s);
+  }
+
+  function clearHover() {
+    if (hovered && hovered !== selected) setHighlight(hovered, false);
+    hovered = null;
+    tip.classList.remove('visible');
+    tip.hidden = true;
+  }
+
+  function pick(clientX, clientY) {
+    const rect = el.getBoundingClientRect();
+    mouse.x = ((clientX - rect.left) / rect.width) * 2 - 1;
+    mouse.y = -((clientY - rect.top) / rect.height) * 2 + 1;
+    ray.setFromCamera(mouse, camera);
+    const hits = ray.intersectObjects(pickables, false);
+    return hits.length ? hits[0].object : null;
+  }
+
+  el.addEventListener('pointermove', (e) => {
+    const hit = pick(e.clientX, e.clientY);
+    if (hit === hovered) {
+      if (hit && hit.userData.tooltip) {
+        tip.style.left = (e.clientX + 14) + 'px';
+        tip.style.top = (e.clientY + 14) + 'px';
+      }
+      return;
+    }
+    if (hovered && hovered !== selected) setHighlight(hovered, false);
+    hovered = hit;
+    if (hit) {
+      setHighlight(hit, true);
+      if (hit.userData.tooltip) {
+        tip.innerHTML = hit.userData.tooltip;
+        tip.hidden = false;
+        tip.classList.add('visible');
+        tip.style.left = (e.clientX + 14) + 'px';
+        tip.style.top = (e.clientY + 14) + 'px';
+      }
+    } else {
+      tip.classList.remove('visible');
+      tip.hidden = true;
+    }
+  });
+
+  el.addEventListener('pointerleave', () => clearHover());
+
+  el.addEventListener('click', (e) => {
+    const hit = pick(e.clientX, e.clientY);
+    if (selected && selected !== hit) setHighlight(selected, false);
+    selected = hit;
+    if (hit && hit.userData.info) {
+      setHighlight(hit, true);
+      renderHud(hud, hit.userData.info, toggleBtn);
+    } else {
+      renderHud(hud, null, toggleBtn);
+    }
+  });
+}
+
+
+const DATA = {"pre": {"nodes": ["operational", "oun_actor", "scare_quotes"], "edges": [{"a": "operational", "b": "oun_actor", "weight": 1, "is_new": false, "layman": "\u00abOperational measures\u00bb and \u00abOUN / nationalist actor\u00bb appear together in 1 memo from this period. This link already existed before 1983 (same habit bundle).", "thesis": "This edge existed before 1983: the same wording habits already co-occurred in early memos. Post-1983 writing extends and recombines the bundle rather than inventing operators from nothing (compare Figure 6 curriculum baseline).", "a_label": "Operational measures", "b_label": "OUN / nationalist actor"}, {"a": "operational", "b": "scare_quotes", "weight": 1, "is_new": false, "layman": "\u00abOperational measures\u00bb and \u00abScare quotes\u00bb appear together in 1 memo from this period. This link already existed before 1983 (same habit bundle).", "thesis": "This edge existed before 1983: the same wording habits already co-occurred in early memos. Post-1983 writing extends and recombines the bundle rather than inventing operators from nothing (compare Figure 6 curriculum baseline).", "a_label": "Operational measures", "b_label": "Scare quotes"}, {"a": "oun_actor", "b": "scare_quotes", "weight": 2, "is_new": false, "layman": "\u00abOUN / nationalist actor\u00bb and \u00abScare quotes\u00bb appear together in 2 memos from this period. This link already existed before 1983 (same habit bundle).", "thesis": "This edge existed before 1983: the same wording habits already co-occurred in early memos. Post-1983 writing extends and recombines the bundle rather than inventing operators from nothing (compare Figure 6 curriculum baseline).", "a_label": "OUN / nationalist actor", "b_label": "Scare quotes"}], "edge_count": 3, "density": 1.0, "nodes_meta": [{"id": "operational", "label": "Operational measures", "layman": "Routine security-office vocabulary about enemy activity and operations.", "is_new": false, "x": -2.2, "z": -0.8}, {"id": "oun_actor", "label": "OUN / nationalist actor", "layman": "References to nationalist / OUN-linked actors as enemies.", "is_new": false, "x": 2.2, "z": -0.8}, {"id": "scare_quotes", "label": "Scare quotes", "layman": "Scare-quote habit bundling with other hostile operators.", "is_new": false, "x": 0.0, "z": 2.2}], "layout_note": "Triangle layout: all three pre-1983 topics co-occur in the same early memos (1976\u201377).", "plane_label": "Before 1983 \u00b7 2 memos (spr. 1127, 1128)"}, "post": {"nodes": ["artificial_famine", "hostile_gathering", "operational", "oun_actor", "pedagogy", "scare_quotes", "symposium_recode"], "edges": [{"a": "artificial_famine", "b": "hostile_gathering", "weight": 3, "is_new": true, "layman": "\u00abQuoted \u00abartificial famine\u00bb\u00bb and \u00abHostile \u00abgathering\u00bb\u00bb appear together in 3 memos from this period. This co-occurrence link is new after 1983.", "thesis": "After Montreal, memos begin bundling quoted \u00abartificial famine\u00bb with hostile \u00abgathering\u00bb language in the same documents \u2014 a new co-occurrence that did not appear in the pre-1983 pair. That is qualitative rewire (Lotman explosion), not merely more mentions.", "a_label": "Quoted \u00abartificial famine\u00bb", "b_label": "Hostile \u00abgathering\u00bb"}, {"a": "artificial_famine", "b": "operational", "weight": 5, "is_new": true, "layman": "\u00abQuoted \u00abartificial famine\u00bb\u00bb and \u00abOperational measures\u00bb appear together in 5 memos from this period. This co-occurrence link is new after 1983.", "thesis": "This co-occurrence edge appears only in post-1983 memos. The institution\u2019s internal phrase network rewired when the outside commemoration proceeded despite counter-measures \u2014 new habits travel together inside the fond.", "a_label": "Quoted \u00abartificial famine\u00bb", "b_label": "Operational measures"}, {"a": "artificial_famine", "b": "oun_actor", "weight": 5, "is_new": true, "layman": "\u00abQuoted \u00abartificial famine\u00bb\u00bb and \u00abOUN / nationalist actor\u00bb appear together in 5 memos from this period. This co-occurrence link is new after 1983.", "thesis": "This co-occurrence edge appears only in post-1983 memos. The institution\u2019s internal phrase network rewired when the outside commemoration proceeded despite counter-measures \u2014 new habits travel together inside the fond.", "a_label": "Quoted \u00abartificial famine\u00bb", "b_label": "OUN / nationalist actor"}, {"a": "artificial_famine", "b": "scare_quotes", "weight": 6, "is_new": true, "layman": "\u00abQuoted \u00abartificial famine\u00bb\u00bb and \u00abScare quotes\u00bb appear together in 6 memos from this period. This co-occurrence link is new after 1983.", "thesis": "This co-occurrence edge appears only in post-1983 memos. The institution\u2019s internal phrase network rewired when the outside commemoration proceeded despite counter-measures \u2014 new habits travel together inside the fond.", "a_label": "Quoted \u00abartificial famine\u00bb", "b_label": "Scare quotes"}, {"a": "artificial_famine", "b": "symposium_recode", "weight": 4, "is_new": true, "layman": "\u00abQuoted \u00abartificial famine\u00bb\u00bb and \u00abSymposium recode\u00bb appear together in 4 memos from this period. This co-occurrence link is new after 1983.", "thesis": "This co-occurrence edge appears only in post-1983 memos. The institution\u2019s internal phrase network rewired when the outside commemoration proceeded despite counter-measures \u2014 new habits travel together inside the fond.", "a_label": "Quoted \u00abartificial famine\u00bb", "b_label": "Symposium recode"}, {"a": "hostile_gathering", "b": "operational", "weight": 4, "is_new": true, "layman": "\u00abHostile \u00abgathering\u00bb\u00bb and \u00abOperational measures\u00bb appear together in 4 memos from this period. This co-occurrence link is new after 1983.", "thesis": "This co-occurrence edge appears only in post-1983 memos. The institution\u2019s internal phrase network rewired when the outside commemoration proceeded despite counter-measures \u2014 new habits travel together inside the fond.", "a_label": "Hostile \u00abgathering\u00bb", "b_label": "Operational measures"}, {"a": "hostile_gathering", "b": "oun_actor", "weight": 5, "is_new": true, "layman": "\u00abHostile \u00abgathering\u00bb\u00bb and \u00abOUN / nationalist actor\u00bb appear together in 5 memos from this period. This co-occurrence link is new after 1983.", "thesis": "This co-occurrence edge appears only in post-1983 memos. The institution\u2019s internal phrase network rewired when the outside commemoration proceeded despite counter-measures \u2014 new habits travel together inside the fond.", "a_label": "Hostile \u00abgathering\u00bb", "b_label": "OUN / nationalist actor"}, {"a": "hostile_gathering", "b": "scare_quotes", "weight": 5, "is_new": true, "layman": "\u00abHostile \u00abgathering\u00bb\u00bb and \u00abScare quotes\u00bb appear together in 5 memos from this period. This co-occurrence link is new after 1983.", "thesis": "This co-occurrence edge appears only in post-1983 memos. The institution\u2019s internal phrase network rewired when the outside commemoration proceeded despite counter-measures \u2014 new habits travel together inside the fond.", "a_label": "Hostile \u00abgathering\u00bb", "b_label": "Scare quotes"}, {"a": "hostile_gathering", "b": "symposium_recode", "weight": 4, "is_new": true, "layman": "\u00abHostile \u00abgathering\u00bb\u00bb and \u00abSymposium recode\u00bb appear together in 4 memos from this period. This co-occurrence link is new after 1983.", "thesis": "This co-occurrence edge appears only in post-1983 memos. The institution\u2019s internal phrase network rewired when the outside commemoration proceeded despite counter-measures \u2014 new habits travel together inside the fond.", "a_label": "Hostile \u00abgathering\u00bb", "b_label": "Symposium recode"}, {"a": "operational", "b": "oun_actor", "weight": 12, "is_new": false, "layman": "\u00abOperational measures\u00bb and \u00abOUN / nationalist actor\u00bb appear together in 12 memos from this period. This link already existed before 1983 (same habit bundle).", "thesis": "This edge existed before 1983: the same wording habits already co-occurred in early memos. Post-1983 writing extends and recombines the bundle rather than inventing operators from nothing (compare Figure 6 curriculum baseline).", "a_label": "Operational measures", "b_label": "OUN / nationalist actor"}, {"a": "operational", "b": "pedagogy", "weight": 4, "is_new": true, "layman": "\u00abOperational measures\u00bb and \u00abPedagogy / counter-propaganda\u00bb appear together in 4 memos from this period. This co-occurrence link is new after 1983.", "thesis": "This co-occurrence edge appears only in post-1983 memos. The institution\u2019s internal phrase network rewired when the outside commemoration proceeded despite counter-measures \u2014 new habits travel together inside the fond.", "a_label": "Operational measures", "b_label": "Pedagogy / counter-propaganda"}, {"a": "operational", "b": "scare_quotes", "weight": 13, "is_new": false, "layman": "\u00abOperational measures\u00bb and \u00abScare quotes\u00bb appear together in 13 memos from this period. This link already existed before 1983 (same habit bundle).", "thesis": "This edge existed before 1983: the same wording habits already co-occurred in early memos. Post-1983 writing extends and recombines the bundle rather than inventing operators from nothing (compare Figure 6 curriculum baseline).", "a_label": "Operational measures", "b_label": "Scare quotes"}, {"a": "operational", "b": "symposium_recode", "weight": 6, "is_new": true, "layman": "\u00abOperational measures\u00bb and \u00abSymposium recode\u00bb appear together in 6 memos from this period. This co-occurrence link is new after 1983.", "thesis": "This co-occurrence edge appears only in post-1983 memos. The institution\u2019s internal phrase network rewired when the outside commemoration proceeded despite counter-measures \u2014 new habits travel together inside the fond.", "a_label": "Operational measures", "b_label": "Symposium recode"}, {"a": "oun_actor", "b": "pedagogy", "weight": 4, "is_new": true, "layman": "\u00abOUN / nationalist actor\u00bb and \u00abPedagogy / counter-propaganda\u00bb appear together in 4 memos from this period. This co-occurrence link is new after 1983.", "thesis": "This co-occurrence edge appears only in post-1983 memos. The institution\u2019s internal phrase network rewired when the outside commemoration proceeded despite counter-measures \u2014 new habits travel together inside the fond.", "a_label": "OUN / nationalist actor", "b_label": "Pedagogy / counter-propaganda"}, {"a": "oun_actor", "b": "scare_quotes", "weight": 13, "is_new": false, "layman": "\u00abOUN / nationalist actor\u00bb and \u00abScare quotes\u00bb appear together in 13 memos from this period. This link already existed before 1983 (same habit bundle).", "thesis": "This edge existed before 1983: the same wording habits already co-occurred in early memos. Post-1983 writing extends and recombines the bundle rather than inventing operators from nothing (compare Figure 6 curriculum baseline).", "a_label": "OUN / nationalist actor", "b_label": "Scare quotes"}, {"a": "oun_actor", "b": "symposium_recode", "weight": 7, "is_new": true, "layman": "\u00abOUN / nationalist actor\u00bb and \u00abSymposium recode\u00bb appear together in 7 memos from this period. This co-occurrence link is new after 1983.", "thesis": "This co-occurrence edge appears only in post-1983 memos. The institution\u2019s internal phrase network rewired when the outside commemoration proceeded despite counter-measures \u2014 new habits travel together inside the fond.", "a_label": "OUN / nationalist actor", "b_label": "Symposium recode"}, {"a": "pedagogy", "b": "scare_quotes", "weight": 4, "is_new": true, "layman": "\u00abPedagogy / counter-propaganda\u00bb and \u00abScare quotes\u00bb appear together in 4 memos from this period. This co-occurrence link is new after 1983.", "thesis": "This co-occurrence edge appears only in post-1983 memos. The institution\u2019s internal phrase network rewired when the outside commemoration proceeded despite counter-measures \u2014 new habits travel together inside the fond.", "a_label": "Pedagogy / counter-propaganda", "b_label": "Scare quotes"}, {"a": "pedagogy", "b": "symposium_recode", "weight": 1, "is_new": true, "layman": "\u00abPedagogy / counter-propaganda\u00bb and \u00abSymposium recode\u00bb appear together in 1 memo from this period. This co-occurrence link is new after 1983.", "thesis": "This co-occurrence edge appears only in post-1983 memos. The institution\u2019s internal phrase network rewired when the outside commemoration proceeded despite counter-measures \u2014 new habits travel together inside the fond.", "a_label": "Pedagogy / counter-propaganda", "b_label": "Symposium recode"}, {"a": "scare_quotes", "b": "symposium_recode", "weight": 7, "is_new": true, "layman": "\u00abScare quotes\u00bb and \u00abSymposium recode\u00bb appear together in 7 memos from this period. This co-occurrence link is new after 1983.", "thesis": "This co-occurrence edge appears only in post-1983 memos. The institution\u2019s internal phrase network rewired when the outside commemoration proceeded despite counter-measures \u2014 new habits travel together inside the fond.", "a_label": "Scare quotes", "b_label": "Symposium recode"}], "edge_count": 19, "density": 0.905, "nodes_meta": [{"id": "artificial_famine", "label": "Quoted \u00abartificial famine\u00bb", "layman": "Quoted \u00ab\u0438\u0441\u043a\u0443\u0441\u0441\u0442\u0432\u0435\u043d\u043d\u044b\u0439 \u0433\u043e\u043b\u043e\u0434\u00bb label \u2014 becomes a central hub after 1983.", "is_new": true, "x": 2.199, "z": 0.98}, {"id": "hostile_gathering", "label": "Hostile \u00abgathering\u00bb", "layman": "Conference downgraded to hostile \u00abgathering\u00bb \u2014 new post-1983 bundle.", "is_new": true, "x": 1.497, "z": 2.554}, {"id": "operational", "label": "Operational measures", "layman": "Routine security-office vocabulary about enemy activity and operations.", "is_new": false, "x": -2.2, "z": -0.8}, {"id": "oun_actor", "label": "OUN / nationalist actor", "layman": "References to nationalist / OUN-linked actors as enemies.", "is_new": false, "x": 2.2, "z": -0.8}, {"id": "pedagogy", "label": "Pedagogy / counter-propaganda", "layman": "Outward pedagogical framing \u2014 teaching correct reading to audiences.", "is_new": true, "x": -0.614, "z": -2.52}, {"id": "scare_quotes", "label": "Scare quotes", "layman": "Scare-quote habit bundling with other hostile operators.", "is_new": false, "x": 0.0, "z": 2.2}, {"id": "symposium_recode", "label": "Symposium recode", "layman": "Symposium treated as propaganda genre, not scholarship.", "is_new": true, "x": -0.011, "z": 0.026}], "layout_note": "Shared nodes keep the same left-right position as the lower plane; new topics settle by co-occurrence.", "plane_label": "After 1983 \u00b7 14 memos (1983\u201388)"}, "shared_nodes": ["operational", "oun_actor", "scare_quotes"], "new_families": ["artificial_famine", "hostile_gathering", "pedagogy", "symposium_recode"], "interpretation": "Post-1983 adds families ['artificial_famine', 'hostile_gathering', 'pedagogy', 'symposium_recode'] and 16 new co-occurrence edges.", "layout_rules": ["Left/right/depth = graph layout from co-occurrence (topics that share memos sit nearer).", "Lower vs upper plane = time only (before vs after 1983).", "Grey vertical pillars = same topic continuing across the rupture.", "Red lines = new co-occurrence after 1983; blue = links that already existed on the upper plane."], "explosion_thesis": "Lotman\u2019s \u2018explosion\u2019 names qualitative reshaping, not louder word counts. After Montreal 1983 the memo phrase network gains new nodes (\u00abartificial famine\u00bb, hostile \u00abgathering\u00bb) and new edges between them \u2014 the institution rewires which wording habits co-occur when the outside story \u2018wins.\u2019 The lower plane is the pre-rupture bundle; red upper-plane edges are co-occurrences that did not exist before."};
+const stage = document.getElementById('viz-stage');
+const el = document.getElementById('viz3d');
+const hud = document.getElementById('viz-hud');
+const tip = document.getElementById('viz-tooltip');
+const toggleBtn = document.getElementById('viz-hud-toggle');
+setupHudToggle(hud, toggleBtn);
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xfaf8f4);
+const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 120);
+camera.position.set(0, 1.5, 11);
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+el.appendChild(renderer.domElement);
+const labelRenderer = new CSS2DRenderer();
+labelRenderer.domElement.style.position = 'absolute';
+labelRenderer.domElement.style.top = '0';
+labelRenderer.domElement.style.left = '0';
+labelRenderer.domElement.style.pointerEvents = 'none';
+stage.appendChild(labelRenderer.domElement);
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.target.set(0, 0, 0);
+scene.add(new THREE.DirectionalLight(0xffffff, 1.05), new THREE.AmbientLight(0xffffff, 0.58));
+const pickables = [];
+const Y_PRE = -3.0, Y_POST = 3.0;
+
+function addPlane(y, color, labelText) {
+  const mesh = new THREE.Mesh(
+    new THREE.PlaneGeometry(10, 10),
+    new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0.09, side: THREE.DoubleSide })
+  );
+  mesh.rotation.x = -Math.PI / 2;
+  mesh.position.y = y;
+  scene.add(mesh);
+  const lbl = document.createElement('div');
+  lbl.className = 'plane-label';
+  lbl.textContent = labelText;
+  const obj = new CSS2DObject(lbl);
+  obj.position.set(-4.6, y + 0.05, -3.8);
+  scene.add(obj);
+}
+
+function addEdgeTube(a, b, e, yLevel) {
+  const start = new THREE.Vector3(a.x, yLevel, a.z);
+  const end = new THREE.Vector3(b.x, yLevel, b.z);
+  const mid = start.clone().lerp(end, 0.5);
+  const len = start.distanceTo(end);
+  const cyl = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.04 + Math.min(0.08, e.weight * 0.012), 0.04 + Math.min(0.08, e.weight * 0.012), len, 8),
+    new THREE.MeshBasicMaterial({ color: e.is_new ? 0x9a3b3b : (yLevel < 0 ? 0x8b6914 : 0x2a5f8f), transparent: true, opacity: e.is_new ? 0.85 : 0.55 })
+  );
+  cyl.position.copy(mid);
+  cyl.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), end.clone().sub(start).normalize());
+  cyl.userData.info = {
+    title: `${e.a_label} ↔ ${e.b_label}`,
+    subtitle: yLevel < 0 ? DATA.pre.plane_label : DATA.post.plane_label,
+    pill: e.is_new ? 'New link after 1983' : 'Carried from pre-1983 bundle',
+    sections: [
+      { label: 'What this line means', text: e.layman },
+      { label: 'Shared memo count', text: `Weight ${e.weight} = both phrase families appear in ${e.weight} memo${e.weight === 1 ? '' : 's'} in this period.` },
+      { label: 'What this connection tells us', text: e.thesis || 'Co-occurrence inside the fond — which wording habits travel together in the same documents.' },
+      { label: 'Thesis significance (Lotman explosion)', text: DATA.explosion_thesis || 'Qualitative rewire of the internal phrase network after the 1983 rupture.' },
+      { label: 'Layout note', text: yLevel < 0 ? DATA.pre.layout_note : DATA.post.layout_note }
+    ]
+  };
+  cyl.userData.tooltip = `<strong>${e.a_label} — ${e.b_label}</strong>${e.weight} shared memo${e.weight === 1 ? '' : 's'}${e.is_new ? ' · NEW' : ''}`;
+  pickables.push(cyl);
+  scene.add(cyl);
+}
+
+function layoutNetwork(net, y, tint, eraLabel) {
+  const metaById = Object.fromEntries(net.nodes_meta.map(n => [n.id, n]));
+  const pos = {};
+  net.nodes_meta.forEach(meta => {
+    pos[meta.id] = { x: meta.x, z: meta.z };
+  });
+
+  net.nodes_meta.forEach(meta => {
+    const p = pos[meta.id];
+    const mesh = new THREE.Mesh(
+      new THREE.SphereGeometry(meta.is_new ? 0.28 : 0.22, 20, 16),
+      new THREE.MeshPhongMaterial({
+        color: tint,
+        emissive: meta.is_new ? 0x9a3b3b : 0x333333,
+        emissiveIntensity: meta.is_new ? 0.45 : 0.08
+      })
+    );
+    mesh.position.set(p.x, y, p.z);
+    const neighbors = net.edges.filter(e => e.a === meta.id || e.b === meta.id)
+      .map(e => (e.a === meta.id ? e.b_label : e.a_label) + ` (${e.weight})`).join('; ');
+    mesh.userData.info = {
+      title: meta.label,
+      subtitle: eraLabel,
+      pill: meta.is_new ? 'New topic after 1983' : (y < 0 ? 'Pre-1983 triangle' : 'Carried from pre-1983'),
+      sections: [
+        { label: 'Plain language', text: meta.layman },
+        { label: 'What left/right position means', text: 'Position is computed from co-occurrence: topics that share more memos are placed closer. Not chronological order around a circle.' },
+        { label: 'What up/down means', text: y < 0
+            ? 'Lower plane only — memos dated before 1983 (spr. 1127, 1128).'
+            : 'Upper plane — memos from 1983 onward. Shared topics stay at the same left-right spot as below.' },
+        { label: 'Lines to neighbors', text: neighbors || 'No co-occurrence link in this period (would be isolated — not the case here).' },
+        { label: 'Why it matters to the dissertation', text: meta.is_new
+            ? 'Lotman explosion: a new hub enters the memo network after anniversary pressure — qualitative rewire inside the fond when outward commemoration proceeds despite counter-measures.'
+            : 'Baseline enemy-language bundle that persists after 1983 but gets wired to new topics — shows continuity and change, not invention from zero.' },
+        { label: 'Thesis link (pair with L1/L2)', text: DATA.explosion_thesis || 'Internal phrase ecology bifurcates after Montreal; pair with semiosphere arcs (outward relay) and operator tensor (skew) for the full boundary-non-equivalence argument.' }
+      ]
+    };
+    mesh.userData.tooltip = `<strong>${meta.label}</strong>${eraLabel}${meta.is_new ? ' · new' : ''} · click lines for memo counts`;
+    pickables.push(mesh);
+    scene.add(mesh);
+    const lbl = document.createElement('div');
+    lbl.className = 'node-label' + (meta.is_new ? ' new-node' : '');
+    lbl.textContent = meta.label;
+    const labelObj = new CSS2DObject(lbl);
+    labelObj.position.set(p.x, y + 0.42, p.z);
+    scene.add(labelObj);
+  });
+
+  net.edges.forEach(e => {
+    addEdgeTube(pos[e.a], pos[e.b], e, y);
+  });
+  return pos;
+}
+
+addPlane(Y_PRE, 0x8b6914, DATA.pre.plane_label);
+addPlane(Y_POST, 0x2a5f8f, DATA.post.plane_label);
+const prePos = layoutNetwork(DATA.pre, Y_PRE, 0x8b6914, 'Before 1983');
+const postPos = layoutNetwork(DATA.post, Y_POST, 0x2a5f8f, 'After 1983');
+
+(DATA.shared_nodes || []).forEach(id => {
+  const a = prePos[id], b = postPos[id];
+  if (!a || !b) return;
+  scene.add(new THREE.Line(
+    new THREE.BufferGeometry().setFromPoints([
+      new THREE.Vector3(a.x, Y_PRE + 0.2, a.z),
+      new THREE.Vector3(b.x, Y_POST - 0.2, b.z)
+    ]),
+    new THREE.LineBasicMaterial({ color: 0x8d94a3, transparent: true, opacity: 0.45 })
+  ));
+});
+
+setupPickInteraction({ el: stage, camera, renderer, controls, pickables, hud, tip, toggleBtn });
+
+bindStageResize(stage, (w, h) => {
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
+  fitThree(renderer, w, h, labelRenderer);
+});
+(function animate() {
+  requestAnimationFrame(animate);
+  controls.update();
+  renderer.render(scene, camera);
+  labelRenderer.render(scene, camera);
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Lotman 3D evidence · spatial models</title>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,600&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+
+:root {
+  --paper:#f7f4ef; --ink:#1a1814; --muted:#5c564c; --accent:#8b6914; --line:#d8d0c4; --panel:#fffdfa;
+  --internal:#2a5f8f; --outward:#6b8f71; --press:#c45c26; --rival:#9a3b3b;
+  --serif: Georgia, "Times New Roman", serif; --sans: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+* { box-sizing:border-box; }
+:root, html, body { color-scheme: light; }
+html, body { overflow-x: hidden; max-width: 100%; }
+body { margin:0; font-family:var(--sans); background:var(--paper); color:var(--ink); line-height:1.5; }
+body.embed { background:#fff; }
+.wrap.embed-wrap { max-width:100%; padding:0.65rem 0.85rem 0.85rem; }
+h2 { font-family:var(--serif); font-size:1.05rem; margin:0 0 0.35rem; }
+.cap { font-size:0.84rem; color:var(--muted); max-width:72ch; margin:0 0 0.55rem; }
+.eq { font-family:Georgia,serif; font-size:0.82rem; background:#f3efe6; border:1px solid var(--line); border-radius:6px; padding:0.45rem 0.65rem; margin:0 0 0.55rem; }
+.chart-key { font-size:0.75rem; color:var(--muted); margin-top:0.55rem; padding-top:0.45rem; border-top:1px dashed var(--line); line-height:1.45; }
+.chart-key strong { color:var(--ink); }
+.embed-back { font-size:0.78rem; margin:0.75rem 0 0; }
+.embed-back a { color:var(--accent); }
+.legend { display:flex; flex-wrap:wrap; gap:0.45rem 0.85rem; font-size:0.72rem; margin:0.45rem 0 0; }
+.legend span { display:inline-flex; align-items:center; gap:0.3rem; }
+.legend i { width:10px; height:10px; border-radius:50%; display:inline-block; }
+.stats { display:flex; flex-wrap:wrap; gap:0.5rem; margin:0.45rem 0; }
+.stat { background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:0.4rem 0.55rem; font-size:0.78rem; }
+.stat strong { display:block; font-family:var(--serif); font-size:1rem; }
+.layman-grid { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:0.55rem; margin:0 0 0.55rem; }
+@media(max-width:900px) { .layman-grid { grid-template-columns:minmax(0,1fr); } }
+body.embed .layman-grid { grid-template-columns:minmax(0,1fr); }
+.layman-block { background:#f3efe6; border:1px solid var(--line); border-radius:8px; padding:0.65rem 0.75rem; font-size:0.82rem; }
+.layman-label { font-size:0.68rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:var(--accent); margin-bottom:0.3rem; }
+.layman-block p { margin:0; color:#2a2620; }
+.how-to { font-size:0.78rem; color:var(--muted); margin:0 0 0.45rem; padding:0.4rem 0.55rem; background:#faf8f4; border:1px dashed var(--line); border-radius:6px; }
+.viz-stage { position:relative; border:1px solid var(--line); border-radius:8px; overflow:hidden; background:#faf8f4;
+  width:100%; height:min(58vh,480px); min-height:320px; }
+body.embed .viz-stage { height:380px; min-height:280px; }
+body.embed .shell-caption, body.embed .surface-label, body.embed .node-label, body.embed .plane-label {
+  max-width: 7.5rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.52rem;
+}
+#viz3d { width:100%; height:100%; display:block; cursor:grab; position:absolute; inset:0; }
+#viz3d canvas { display:block !important; width:100% !important; height:100% !important; margin:0 !important; }
+#viz3d:active { cursor:grabbing; }
+.file-warn { margin:1rem; padding:0.85rem 1rem; background:#fffdfa; border:1px solid var(--line); border-radius:8px; font-size:0.84rem; line-height:1.5; }
+.file-warn code { font-size:0.8rem; }
+.viz-hud { position:absolute; top:42px; right:8px; width:min(280px,calc(100% - 16px)); max-height:calc(100% - 50px); overflow:auto;
+  background:rgba(255,253,250,0.96); border:1px solid var(--line); border-radius:8px; padding:0.65rem 0.75rem;
+  box-shadow:0 4px 18px rgba(0,0,0,0.08); font-size:0.78rem; z-index:2; transition:opacity 0.15s, transform 0.15s; }
+body.embed .viz-hud { top:auto; bottom:8px; left:8px; right:8px; width:auto; max-height:36%; }
+.viz-hud.is-collapsed { opacity:0; pointer-events:none; transform:translateX(12px); visibility:hidden; }
+.viz-hud-toggle { position:absolute; top:8px; right:8px; z-index:3; font-family:var(--sans); font-size:0.72rem; font-weight:600;
+  padding:0.3rem 0.55rem; border:1px solid var(--line); border-radius:6px; background:rgba(255,253,250,0.95); color:var(--ink);
+  cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.06); }
+.viz-hud-toggle:hover { border-color:var(--accent); color:var(--accent); }
+.demo-banner { font-size:0.78rem; background:#2c2820; color:#e8dcc0; padding:0.45rem 0.65rem; border-radius:6px; margin:0 0 0.55rem; }
+.demo-banner strong { color:#fff; }
+.shell-caption { color:#5c564c; font-size:0.62rem; font-weight:600; letter-spacing:0.04em; text-transform:uppercase;
+  padding:0.15rem 0.35rem; background:rgba(255,253,250,0.9); border:1px solid #d8d0c4; border-radius:4px; pointer-events:none; max-width:140px; line-height:1.25; }
+.surface-label { font-size:0.58rem; font-weight:600; padding:0.1rem 0.25rem; background:rgba(255,253,250,0.93);
+  border:1px solid #d8d0c4; border-radius:3px; pointer-events:none; white-space:nowrap; }
+.surface-label.ghost { opacity:0.55; border-style:dashed; color:var(--muted); }
+.viz-hud h3 { margin:0 0 0.25rem; font-family:var(--serif); font-size:0.92rem; line-height:1.25; }
+.viz-hud .sub { color:var(--muted); margin:0 0 0.45rem; font-size:0.72rem; }
+.viz-hud dl { margin:0; }
+.viz-hud dt { font-weight:600; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.04em; color:var(--accent); margin-top:0.4rem; }
+.viz-hud dt:first-child { margin-top:0; }
+.viz-hud dd { margin:0.12rem 0 0; color:#2a2620; line-height:1.4; }
+.viz-hud .pill { display:inline-block; font-size:0.65rem; font-weight:600; padding:0.1rem 0.35rem; border-radius:4px; background:#ede8df; margin-top:0.35rem; }
+.viz-hud .default { color:var(--muted); font-style:italic; }
+.viz-tooltip { position:fixed; pointer-events:none; z-index:9999; max-width:260px; padding:0.45rem 0.55rem;
+  background:#2c2820; color:#f0ece4; font-size:0.72rem; line-height:1.35; border-radius:6px;
+  box-shadow:0 6px 20px rgba(0,0,0,0.25); opacity:0; transition:opacity 0.12s; }
+.viz-tooltip.visible { opacity:1; }
+.viz-tooltip strong { display:block; color:#e8dcc0; margin-bottom:0.15rem; font-size:0.76rem; }
+.node-label { color:#1a1814; font-size:0.62rem; font-weight:600; padding:0.12rem 0.28rem; background:rgba(255,253,250,0.92);
+  border:1px solid #d8d0c4; border-radius:4px; white-space:nowrap; pointer-events:none; text-transform:capitalize; }
+.node-label.new-node { border-color:#9a3b3b; color:#7a2a2a; }
+.plane-label { color:#5c564c; font-size:0.72rem; font-weight:600; letter-spacing:0.03em; text-transform:uppercase;
+  padding:0.2rem 0.45rem; background:rgba(255,253,250,0.85); border-radius:4px; pointer-events:none; }
+.edge-key { display:flex; flex-wrap:wrap; gap:0.55rem 1rem; font-size:0.72rem; margin:0.45rem 0 0; }
+.edge-key span { display:inline-flex; align-items:center; gap:0.35rem; }
+.edge-key i { width:18px; height:3px; border-radius:2px; display:inline-block; }
+.verify-table { width:100%; border-collapse:collapse; font-size:0.72rem; margin-top:0.55rem; }
+.verify-table th, .verify-table td { border:1px solid var(--line); padding:0.35rem 0.45rem; text-align:left; }
+.verify-table th { background:#f3efe6; font-size:0.68rem; }
+.verify-table .new { color:#9a3b3b; font-weight:600; }
+details.verify { margin-top:0.55rem; font-size:0.78rem; }
+details.verify summary { cursor:pointer; color:var(--accent); font-weight:600; }
+.thesis-prose { background:#faf6ef; border:1px solid var(--line); border-radius:8px; padding:0.85rem 1rem; margin:0.55rem 0 0.65rem; font-size:0.84rem; line-height:1.62; max-width:100%; }
+.thesis-prose h3 { font-family:var(--serif); font-size:0.92rem; margin:0 0 0.45rem; color:var(--ink); font-weight:600; }
+.thesis-prose p { margin:0 0 0.65rem; color:#2a2620; }
+.thesis-prose p:last-child { margin-bottom:0; }
+.thesis-prose ul { margin:0.35rem 0 0.65rem; padding-left:1.25rem; }
+.thesis-prose li { margin-bottom:0.35rem; }
+.thesis-prose .ru { font-family:Georgia,serif; }
+.viz-after {
+  margin-top: 0.75rem;
+  padding-top: 0.65rem;
+  border-top: 1px dashed var(--line);
+}
+.gallery-intro { font-size:0.88rem; line-height:1.65; color:#2a2620; margin-bottom:1rem; max-width:72ch; }
+.gallery-section-note { font-size:0.84rem; line-height:1.6; color:var(--muted); margin:0 0 0.65rem; max-width:72ch; }
+
+header { background:#2c2820; color:#f0ece4; padding:1.1rem 1.25rem; border-bottom:3px solid #8b6914; }
+header h1 { margin:0; font-family:var(--serif); font-size:1.35rem; }
+header p { margin:0.4rem 0 0; font-size:0.9rem; color:#c8c0b0; max-width:72ch; line-height:1.55; }
+.wrap { max-width:960px; margin:0 auto; padding:1.25rem 1rem 2.5rem; }
+section { margin-bottom:2.5rem; scroll-margin-top:1rem; }
+section iframe { display:block; width:100%; max-width:100%; height:920px; border:1px solid var(--line); border-radius:8px; background:#fff; margin:0 auto; }
+section iframe.tall { height:980px; }
+.back a { color:var(--accent); font-size:0.88rem; }
+.intro { font-size:0.9rem; color:var(--muted); max-width:68ch; margin-bottom:1.25rem; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Lotman-aligned 3D evidence</h1>
+  <p>These four interactive models translate the dissertation’s core claim into spatial form: Soviet-era talking points on famine commemoration <strong>transform predictably</strong> across register boundaries (secret memo → embassy/Novosti → domestic news → diaspora/scholarly print), and that transformation is <strong>dated and measurable</strong> — Montreal 1983 as anchor, post-1983 phrase-network rewire as qualitative explosion. Hover any element for a quick label; click for verbose context including what each connection proves, what it cannot prove alone, and how it fits boundary non-equivalence. <a href="../docs/LOTMAN_3D_VIZ_BRAINSTORM.md" style="color:#e8dcc0">Brainstorm doc →</a></p>
+</header>
+<div class="wrap">
+  <p class="back"><a href="dissertation_proposal.html">← Dissertation proposal</a> · <a href="proposal_evidence_viz.html">Flat figures gallery</a></p>
+  <p class="gallery-intro">Each embed opens with several paragraphs on thesis significance — especially <strong>what connections mean</strong>. Connections are not decorative lines: they are pair-read adjudications with proof tiers stored in open JSON. Use <strong>Hide panel</strong> (top-right) to toggle the detail popout. Drag to rotate; scroll to zoom; click any dot, bar, arc, or line for the full argument in the side panel.</p>
+
+  <section id="fig-lotman-semiosphere-3d">
+    <h2 style="font-family:var(--serif);font-size:1.05rem;margin:0 0 0.35rem;">L1 · Empirical semiosphere (pilot corpus)</h2>
+    <p class="gallery-section-note">Thirteen ingested surfaces, <strong>five traced relay arcs</strong> (2 proven thematic, 1 verbatim outward packet, 2 Farisei-tier memo-claim links). Shell 2 (autocommunication) is empty until inward CC/KGB companions arrive — sparse by design. Click sky-blue thematic arcs from spr. 1206 to see how internal hostility transforms into outward denial without copying scare quotes. Pravda’s lack of outward arcs is itself the domestic-silence finding. CIUS 1986 and full dialogue arcs appear in L1-demo until CIUS is ingested into register-relay JSON.</p>
+    <iframe src="embed/fig-lotman-semiosphere-3d.html" title="Figure L1 · Semiosphere"></iframe>
+  </section>
+  <section id="fig-lotman-semiosphere-demo-3d">
+    <h2 style="font-family:var(--serif);font-size:1.05rem;margin:0 0 0.35rem;">L1-demo · Ideal semiosphere (fabricated illustration)</h2>
+    <p class="gallery-section-note">Target-state model with fabricated companions: autocommunication shell, silence voids, CIUS dialogue arc, exile broadcast. Same click-panel logic as L1 — use this to see what the full checklist produces when populated.</p>
+    <iframe class="tall" src="embed/fig-lotman-semiosphere-demo-3d.html" title="Figure L1-demo · Ideal semiosphere"></iframe>
+  </section>
+  <section id="fig-lotman-operator-tensor-3d">
+    <h2 style="font-family:var(--serif);font-size:1.05rem;margin:0 0 0.35rem;">L2 · Operator tensor</h2>
+    <p class="gallery-section-note">Spatial heatmap of operator skew — internal scare-quote towers vs flat embassy columns on the same row. Connections here are implicit comparisons between columns, not drawn arcs.</p>
+    <iframe src="embed/fig-lotman-operator-tensor-3d.html" title="Figure L2 · Operator tensor"></iframe>
+  </section>
+  <section id="fig-lotman-explosion-3d">
+    <h2 style="font-family:var(--serif);font-size:1.05rem;margin:0 0 0.35rem;">L3 · Explosion bifurcation</h2>
+    <p class="gallery-section-note">Pre/post 1983 phrase co-occurrence inside the fond. Red upper-plane edges = new co-occurrences after Montreal — qualitative rewire, not louder counts.</p>
+    <iframe src="embed/fig-lotman-explosion-3d.html" title="Figure L3 · Explosion"></iframe>
+  </section>
+</div>
+</body>
+</html>
