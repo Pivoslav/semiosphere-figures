@@ -1,19 +1,37 @@
 # Semiosphere figures (GitHub Pages)
 
-Static visualization export for dissertation work — **not** the [Vozmezdie](https://github.com/Pivoslav/vozmezdie) site.
+Static export of **current** dissertation visualizations (semiotic coordinate plain, relay geometry) — **not** the [Vozmezdie](https://github.com/Pivoslav/vozmezdie) site.
 
 ## Publish
 
-GitHub Pages: deploy from branch **`main`**, folder **`/docs`**.
+GitHub Pages: branch **`master`**, folder **`/docs`**.
 
-After push, the site is at `https://<user>.github.io/<repo>/`.
+Site: https://pivoslav.github.io/semiosphere-figures/
 
-## Contents
+## Sync from thesis lab
 
-- `docs/index.html` — home
-- `docs/proposal_evidence_viz.html` — proposal-linked charts
-- `docs/lotman_3d_evidence.html` — 3D Lotman gallery
-- `docs/filter_model.html`, `docs/fig-filter-l1.html`
-- `docs/embed/` — iframe targets for the galleries
+From repo root (Windows path in script points at `peter_htr_experiment`):
 
-Regenerate by copying from `peter_htr_experiment/report/` (and `lab/` for filter figures) when figures are rebuilt locally.
+```bash
+python scripts/sync_from_thesis_lab.py
+```
+
+Rebuild figures in the lab first when needed, e.g.:
+
+```bash
+cd path/to/peter_htr_experiment
+.venv/Scripts/python.exe scripts/build_status_visualizations.py
+.venv/Scripts/python.exe scripts/build_cognition_semiosphere_viz.py
+.venv/Scripts/python.exe scripts/build_lotman_3d_visualizations.py
+.venv/Scripts/python.exe scripts/build_filter_model.py
+```
+
+Then run `sync_from_thesis_lab.py` and commit `docs/`.
+
+## Layout
+
+- **`docs/index.html`** — home (points at current program)
+- **`docs/status_dashboard.html`** — hub for interactive figures
+- **`docs/theory/`** — LLM cognition / semiosphere theory HTML
+- **`docs/embed/`** — current embed figures (3D embedding, heatmaps, Lotman 3D, filters)
+- **`docs/legacy/`** — superseded Peter I proposal operator/press gallery

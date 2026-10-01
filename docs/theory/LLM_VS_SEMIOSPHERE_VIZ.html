@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LLM inference vs semiosphere · 2D and 3D models</title>
+<style>
+:root{
+  --ink:#161a20; --muted:#5c6670; --rule:#d8dee6; --bg:#f8f9fb; --panel:#fff;
+  --human:#1f5136; --llm:#6b3fa0; --accent:#2a4a6f; --warn:#7a5200;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 Georgia,serif}
+.wrap{max-width:980px;margin:0 auto;padding:40px 22px 100px}
+header{border-bottom:3px solid var(--ink);padding-bottom:18px;margin-bottom:28px}
+h1{font-size:1.85rem;margin:0 0 8px;line-height:1.2}
+.sub{color:var(--muted);font-style:italic;margin:0;font-size:1rem}
+.banner{background:#fdf8ee;border:1px solid #e8d4a8;border-left:5px solid var(--warn);
+  padding:14px 18px;margin:0 0 28px;font-size:.92rem}
+h2{font-size:1.28rem;margin:48px 0 10px;padding-top:20px;border-top:1px solid var(--rule)}
+h2 .tag{font-family:ui-monospace,monospace;font-size:.68rem;letter-spacing:.08em;color:var(--muted);display:block;margin-bottom:4px}
+p{margin:0 0 12px}
+.viz-box{background:var(--panel);border:1px solid var(--rule);border-radius:8px;
+  margin:18px 0;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.viz-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
+  gap:8px;padding:10px 14px;background:#f1f4f7;border-bottom:1px solid var(--rule);
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:.82rem;width:100%}
+.viz-head strong{color:var(--accent)}
+.viz-stage{position:relative;width:100%;height:min(58vh,480px);min-height:320px}
+.viz-stage.tall{height:min(65vh,540px)}
+canvas{display:block;width:100%;height:100%}
+#globe3d{width:100%;height:100%;cursor:grab}
+#globe3d:active{cursor:grabbing}
+.controls{display:flex;flex-wrap:wrap;gap:8px;padding:10px 14px;border-top:1px solid var(--rule);
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:.8rem}
+button,label.btn{padding:6px 12px;border:1px solid var(--rule);border-radius:6px;background:#fff;cursor:pointer}
+button:hover,label.btn:hover{border-color:var(--accent)}
+button.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+input[type=range]{vertical-align:middle;width:120px}
+.legend{display:flex;flex-wrap:wrap;gap:10px 18px;padding:8px 14px 12px;font-size:.78rem;
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:5px;vertical-align:-1px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
+@media(max-width:720px){.two-col{grid-template-columns:1fr}}
+.compare-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.88rem;
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--panel)}
+.compare-table th,.compare-table td{padding:10px 12px;border:1px solid var(--rule);vertical-align:top}
+.compare-table th{background:#eef2f6;font-size:.72rem;text-transform:uppercase;letter-spacing:.04em}
+.compare-table .hum{color:var(--human)} .compare-table .llm{color:var(--llm)}
+cite{display:block;font-size:.78rem;color:var(--muted);margin-top:8px;font-style:normal}
+footer{margin-top:56px;padding-top:18px;border-top:2px solid var(--ink);font-size:.85rem;color:var(--muted)}
+code{font-family:ui-monospace,Menlo,monospace;font-size:.85em;background:#eef1f5;padding:1px 5px;border-radius:3px}
+.viz-head-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.btn-popout{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:.75rem;
+  padding:5px 10px;border:1px solid var(--accent);border-radius:6px;background:#fff;color:var(--accent);cursor:pointer}
+.btn-popout:hover{background:var(--accent);color:#fff}
+html.popout-mode,html.popout-mode body{height:100%;margin:0;overflow:hidden}
+html.popout-mode body{background:var(--bg)}
+html.popout-mode .wrap{max-width:none;height:100vh;padding:10px 14px 12px;display:flex;flex-direction:column;
+  box-sizing:border-box}
+html.popout-mode .wrap > header,
+html.popout-mode .wrap > .banner,
+html.popout-mode .wrap > footer,
+html.popout-mode .wrap > h2,
+html.popout-mode .wrap > p,
+html.popout-mode .wrap > .compare-table,
+html.popout-mode .wrap > cite{display:none!important}
+html.popout-mode .viz-section{display:none!important;flex:1;min-height:0;flex-direction:column;margin:0}
+html.popout-mode .viz-section.is-popout-active{display:flex!important}
+html.popout-mode .viz-section.is-popout-active > h2,
+html.popout-mode .viz-section.is-popout-active > p:not(.viz-blurb){display:none}
+html.popout-mode .viz-section.is-popout-active .viz-box{flex:1;display:flex;flex-direction:column;min-height:0;margin:0}
+html.popout-mode .viz-section.is-popout-active .viz-stage{
+  flex:1;min-height:200px;height:auto!important;max-height:none}
+html.popout-mode .viz-section.is-popout-active .two-col{flex:1;min-height:0;grid-template-columns:1fr 1fr;height:100%}
+html.popout-mode .viz-section.is-popout-active.popout-panel-graph .two-col{grid-template-columns:1fr}
+html.popout-mode .viz-section.is-popout-active.popout-panel-graph .viz-panel-flat{display:none!important}
+html.popout-mode .viz-section.is-popout-active.popout-panel-flat .two-col{grid-template-columns:1fr}
+html.popout-mode .viz-section.is-popout-active.popout-panel-flat .viz-panel-graph{display:none!important}
+html.popout-mode .viz-section.is-popout-active .two-col .viz-box{display:flex;flex-direction:column;min-height:0}
+html.popout-mode .viz-section.is-popout-active .two-col .viz-stage{flex:1;height:auto!important;min-height:180px}
+html.popout-mode .popout-topbar{flex-shrink:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-size:.82rem;color:var(--muted);padding:0 0 8px;border-bottom:1px solid var(--rule);margin-bottom:8px}
+html.popout-mode .popout-topbar strong{color:var(--accent)}
+html.popout-mode .btn-popout{display:none}
+html.popout-mode .viz-section.is-popout-active > p.viz-head-actions{display:none!important}
+.viz-blurb{margin:16px 0 0;padding:14px 18px;background:#f6f8fa;border:1px solid var(--rule);border-radius:8px;
+  font-size:.94rem;line-height:1.58;color:var(--ink)}
+.viz-blurb .blurb-label{display:block;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.viz-blurb--compact{margin-top:10px;font-size:.88rem;padding:12px 14px}
+html.popout-mode .viz-section.is-popout-active .viz-blurb{flex-shrink:0;max-height:28vh;overflow:auto}
+html.popout-mode .viz-section.is-popout-active.popout-panel-graph .two-col + .viz-blurb,
+html.popout-mode .viz-section.is-popout-active.popout-panel-flat .two-col + .viz-blurb{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>How an LLM &ldquo;thinks&rdquo; vs how a semiosphere thinks</h1>
+  <p class="sub">Interactive 2D and 3D models — illustrative, not measured brain activity or formal proof.</p>
+</header>
+
+<div class="banner">
+  <strong>Pop out:</strong> each figure has a <em>Pop out window</em> button — opens a resizable standalone window; the plot area grows with the window (ResizeObserver), without the fixed <code>min(58vh, …)</code> cap.
+  <br><br>
+  <strong>How to read these figures.</strong>
+  They are <em>pedagogical models</em> aligned with Lotman&rsquo;s semiosphere and with this lab&rsquo;s 2026-09-26 findings
+  (typed relay vs pooled similarity; flat retrieval tier confusion; matched-null retraction of the 0.613 map).
+  They do <strong>not</strong> claim that LLMs cannot be useful, that humans are non-computational, or that AGI is impossible.
+  See <code>docs/theory/SEMIOSPHERE_AGI_LIMIT.md</code> and <code>LOTMAN_INTERPRETATION.html</code>.
+</div>
+
+<div id="popoutTopbar" class="popout-topbar" hidden></div>
+
+<!-- ========== FIG 1: 2D LLM ========== -->
+<section class="viz-section" data-popout="llm" id="section-llm">
+<h2 id="fig1"><span class="tag">FIGURE 1 · 2D</span>What default LLM inference optimises</h2>
+<p>
+  At each step the model does not &ldquo;visit&rdquo; an institution. It predicts the next token from a <strong>single</strong>
+  hidden state that has already mixed every register present in pretraining. The diagram shows one prompt unfolding left-to-right:
+  each column is a layer of context; colour intensity is how much <em>theme</em> (famine, film, symposium) dominates over
+  <em>shell</em> (secret, outward, rival). As context grows, theme gravity pulls unrelated registers together — the failure mode
+  the E4 retrieval run (2026-09-26) measured 6/6 tier confusion on unpaired Globe-forgery queries.
+</p>
+<div class="viz-box">
+  <div class="viz-head">
+    <strong>Autoregressive completion</strong> · theme vs register mixing · click Play
+    <span class="viz-head-actions"><button type="button" class="btn-popout" data-popout="llm">Pop out window</button></span>
+  </div>
+  <div class="viz-stage" data-resize="llm"><canvas id="canvasLLM"></canvas></div>
+  <div class="controls">
+    <button type="button" id="btnLLMPlay">Play</button>
+    <button type="button" id="btnLLMReset">Reset</button>
+    <label>Persistence in context window:
+      <input type="range" id="rngContext" min="20" max="100" value="85">
+      <span id="lblContext">85%</span>
+    </label>
+  </div>
+  <div class="legend">
+    <span><i style="background:#6b3fa0"></i> Hidden state (pooled manifold)</span>
+    <span><i style="background:#c45c26"></i> Theme gravity (dominant topic)</span>
+    <span><i style="background:#2a4a6f"></i> Shell signal (weak unless typed externally)</span>
+  </div>
+</div>
+<p class="viz-blurb">
+  <span class="blurb-label">In plain terms</span>
+  An LLM does not &ldquo;think&rdquo; like a person walking from the KGB file room to the embassy press desk. It reads the prompt one word at a time and guesses the next word from one big internal mood board that already blends every kind of text it was trained on. Orange in the bars means &ldquo;this sounds like the same topic&rdquo; (famine, film, forgery); blue means &ldquo;which institution is speaking,&rdquo; and that signal is weak unless someone adds rules or filters. <strong>Play</strong> shows the model answering a question about a newspaper clip by drifting toward a secret memo on the same topic — the same mistake flat search made in the E4 experiment (6/6 wrong tier). The slider shows how much earlier words still matter: turn it down and the window forgets faster, like a short chat history.
+</p>
+</section>
+
+<!-- ========== FIG 2: 3D Semiosphere ========== -->
+<section class="viz-section" data-popout="globe" id="section-globe">
+<h2 id="fig2"><span class="tag">FIGURE 2 · 3D</span>Semiosphere space: nested shells and the bilingual filter</h2>
+<p>
+  Lotman models culture as a <strong>semiosphere</strong>: nested semiotic shells, a boundary that translates inward and outward,
+  and an outside that is never fully absorbed. Drag to rotate. Toggle paths to compare a <strong>human</strong> trajectory
+  (stays in a shell until a licensed edge crosses the filter) with an <strong>LLM-default</strong> trajectory
+  (cuts through the centre — maximum theme similarity, minimum institutional typing).
+</p>
+<div class="viz-box">
+  <div class="viz-head">
+    <strong>Nested shells</strong> · secret (inner) → outward → rival (outer) · silence as ⊥ halo
+    <span class="viz-head-actions"><button type="button" class="btn-popout" data-popout="globe">Pop out window</button></span>
+  </div>
+  <div class="viz-stage tall" data-resize="globe"><div id="globe3d"></div></div>
+  <div class="controls">
+    <button type="button" id="btnPathHuman" class="active">Human path</button>
+    <button type="button" id="btnPathLLM">LLM-default path</button>
+    <button type="button" id="btnPathBoth">Both</button>
+    <label class="btn"><input type="checkbox" id="chkRelays" checked> Licensed RU→EN relays</label>
+    <label class="btn"><input type="checkbox" id="chkForbidden" checked> Forbidden merge (blocked)</label>
+  </div>
+  <div class="legend">
+    <span><i style="background:#2a5f8f"></i> Secret shell</span>
+    <span><i style="background:#6b8f71"></i> Soviet outward</span>
+    <span><i style="background:#c45c26"></i> Rival / diaspora</span>
+    <span><i style="background:#8d94a3"></i> Silence ⊥</span>
+    <span><i style="background:#1f5136"></i> Human trajectory</span>
+    <span><i style="background:#6b3fa0"></i> LLM theme shortcut</span>
+  </div>
+</div>
+<p class="viz-blurb">
+  <span class="blurb-label">In plain terms</span>
+  Imagine culture as nested bubbles: inner secret speech, official outward speech, rival diaspora speech, and silence (things that must not be said on a given channel). The <strong>human path</strong> (green) moves along a bubble surface and only jumps to another bubble where the archive allows a licensed translation — like a pair-read that says this Russian memo matches that embassy release. The <strong>LLM path</strong> (purple) cuts through the middle where everything is &ldquo;just text about the same subject,&rdquo; ignoring who is allowed to say what. The green line is a permitted relay; the red line is a forbidden merge (embassy grammar must not absorb rival grammar). Drag to rotate; toggles show or hide those story lines. This is a schematic model, not a measured map of real documents.
+</p>
+</section>
+
+<!-- ========== FIG 3: Persistence 2D ========== -->
+<section class="viz-section" data-popout="persist" id="section-persist">
+<h2 id="fig3"><span class="tag">FIGURE 3 · 2D</span>Persistence: context window vs cultural memory</h2>
+<p>
+  <strong>Persistence</strong> here means what survives across time to structure the next act of meaning.
+  For an LLM, persistence is bounded by the context window and frozen weights: earlier tokens decay in influence
+  (attention dilution) unless the architecture re-injects them; nothing <em>outside</em> the window exists for the step.
+  For a semiosphere, persistence is layered: institutions, archives, pair-read warrant, autocommunication (I–I loops that
+  restructure the sender), and Lotman/Uspensky&rsquo;s &ldquo;non-hereditary memory of the community&rdquo; — not identical to any one transcript.
+  That memory is <strong>not a closed orbit</strong>: events, rival texts, and primary acquisitions cross the boundary filter from the
+  <em>outside</em> and retool the field (E7 counts, 2026-09-26: same volume, new operators after 1987).
+</p>
+<div class="viz-box">
+  <div class="viz-head">
+    <strong>Two persistence models</strong> · scrub the slider to shorten LLM memory
+    <span class="viz-head-actions"><button type="button" class="btn-popout" data-popout="persist">Pop out window</button></span>
+  </div>
+  <div class="viz-stage" data-resize="persist"><canvas id="canvasPersist"></canvas></div>
+  <div class="controls">
+    <button type="button" id="btnPersPlay">Animate</button>
+    <label>LLM effective memory:
+      <input type="range" id="rngPersist" min="5" max="40" value="24">
+      <span id="lblPersist">24 tokens</span>
+    </label>
+    <label class="btn"><input type="checkbox" id="chkAutoLoop" checked> Animate semiosphere (external ingress + I–I loop)</label>
+  </div>
+  <div class="legend">
+    <span><i style="background:#1f5136"></i> Autocommunication (I–I · stays inner)</span>
+    <span><i style="background:#b8860b"></i> Licensed relay (crosses filter · changes shell)</span>
+    <span><i style="background:#2a4a6f"></i> External ingress (primary · rival · event)</span>
+    <span><i style="background:#8d94a3"></i> Outside — never fully absorbed</span>
+    <span style="border-bottom:2px dashed #1f5136;width:14px;height:0;display:inline-block;vertical-align:middle;margin-right:4px"></span> Bilingual filter (boundary)
+  </div>
+</div>
+<p class="viz-blurb">
+  <span class="blurb-label">In plain terms</span>
+  <strong>Left side (LLM):</strong> memory is a sliding window of recent words. Only the highlighted bars strongly influence the next prediction; everything earlier fades. Weights from training are fixed — the model does not grow an archive. <strong>Right side (semiosphere):</strong> memory is stacked — fond, pair-read warrant, institutional position, plus inward self-talk (green dashed loop). That loop alone stays inside; it does not cross the dashed <strong>bilingual filter</strong>. The gold tracer shows a licensed relay that leaves the inner shell, crosses the boundary, visits outward and rival registers, and returns. Colored arcs from the gray <strong>outside</strong> are new clips, rival texts, or events that enter and ripple the rings (same idea as 1987 vocabulary changing without the archive getting louder). <strong>Animate</strong> runs those motions; the LLM slider shortens how long tokens stay influential.
+</p>
+</section>
+
+<!-- ========== FIG 4: Side by side 2D ========== -->
+<section class="viz-section" data-popout="compare" id="section-compare">
+<h2 id="fig4"><span class="tag">FIGURE 4 · 2D</span>Typed partial map vs unified manifold</h2>
+<p>
+  Lab formalism: edges are <code>transformed | dual_model | forbidden | bottom</code>. Multipass relay with L2 rules
+  reached 100% on miss-or-target where pooled embeddings reached ~8.3%. The left panel is the graph the semiosphere <em>is</em>;
+  the right panel is what a single vector space <em>sees</em> when shells are not enforced — one cloud, theme neighbours,
+  unpaired internal claims adjacent to outward questions.
+</p>
+<div class="two-col">
+  <div class="viz-box viz-panel-graph">
+    <div class="viz-head">
+      <strong>Semiosphere KR</strong> · typed edges · halt on ⊥
+      <span class="viz-head-actions"><button type="button" class="btn-popout" data-popout="graph">Pop out window</button></span>
+    </div>
+    <div class="viz-stage" data-resize="graph"><canvas id="canvasGraph"></canvas></div>
+    <p class="viz-blurb viz-blurb--compact">
+      <span class="blurb-label">Left panel · plain terms</span>
+      Documents are nodes; arrows are allowed moves. Solid green is a licensed translation (secret → outward). Gray dashed is &ldquo;rival sees it differently.&rdquo; Red to silence is <strong>stop — do not invent the missing sentence</strong> (⊥). Dashed orange is an internal claim with no verified outward clip (unpaired). Rules and humans can refuse; the graph remembers what is forbidden.
+    </p>
+  </div>
+  <div class="viz-box viz-panel-flat">
+    <div class="viz-head">
+      <strong>Default LLM geometry</strong> · theme gravity · no ⊥
+      <span class="viz-head-actions"><button type="button" class="btn-popout" data-popout="flat">Pop out window</button></span>
+    </div>
+    <div class="viz-stage" data-resize="flat"><canvas id="canvasFlat"></canvas></div>
+    <p class="viz-blurb viz-blurb--compact">
+      <span class="blurb-label">Right panel · plain terms</span>
+      One shared cloud of similarity: everything &ldquo;about famine&rdquo; pulls together regardless of whether it is a KGB memo, embassy denial, or diaspora weekly. Thin orange lines are &ldquo;nearest neighbour&rdquo; guesses — topic gravity, not warrant. There is no ⊥ node: gaps get filled by whatever text is closest. That is why pooled search can hand back a secret memo when the question asked for a newspaper clip.
+    </p>
+  </div>
+</div>
+<p class="viz-blurb">
+  <span class="blurb-label">Figure 4 together</span>
+  The lab pipeline scored ~100% on &ldquo;miss or correct target&rdquo; when the typed graph and L2 rules were used, versus ~8% for pooled embeddings alone on the same calibration plate (2026-09-26). The left picture is how historians and the formalism treat the archive; the right picture is what a default embedding space tends to do when shells are not enforced.
+</p>
+<p class="viz-head-actions" style="margin-top:10px;font-family:system-ui,sans-serif;font-size:.8rem">
+  <button type="button" class="btn-popout" data-popout="compare">Pop out both panels</button>
+</p>
+</section>
+
+<!-- ========== Table ========== -->
+<h2 id="compare"><span class="tag">SUMMARY</span>Major differences (Lotmanian lens)</h2>
+<table class="compare-table">
+  <thead>
+    <tr><th>Dimension</th><th class="hum">Human / semiosphere</th><th class="llm">Default LLM stack</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Unit of meaning</strong></td>
+      <td>Plurality of semiotic systems; boundary as bilingual filter (Lotman, &ldquo;On the Semiosphere&rdquo;)</td>
+      <td>One predictive manifold + one assistant register</td>
+    </tr>
+    <tr>
+      <td><strong>Position</strong></td>
+      <td>Speaker inside fond, embassy, diaspora press — bind and refusal are social acts</td>
+      <td>No institutional slot; simulates all voices → synthetic speaker</td>
+    </tr>
+    <tr>
+      <td><strong>Knowledge shape</strong></td>
+      <td>Partial maps; missing edges are knowledge; unpaired claims stay open</td>
+      <td>Completion fills gaps; retrieval without shell returns internal memo as &ldquo;Globe clip&rdquo; (E4: 6/6)</td>
+    </tr>
+    <tr>
+      <td><strong>Persistence</strong></td>
+      <td>Archive, ritual, autocommunication loops, explosion retools vocabulary at flat volume (E7)</td>
+      <td>Context window + static weights; no I–I restructuring unless prompted</td>
+    </tr>
+    <tr>
+      <td><strong>Prohibition</strong></td>
+      <td>Minus-device: scare quotes absent on embassy surface (E6: outward FP 0.0)</td>
+      <td>Can emit forbidden grammar if theme pulls across shell</td>
+    </tr>
+    <tr>
+      <td><strong>Dialogue</strong></td>
+      <td>Texts oriented to presupposed interlocutors (memo vs CIUS counter-model)</td>
+      <td>Monologic next-token compression of all dialogue into one stream</td>
+    </tr>
+  </tbody>
+</table>
+<cite>
+  Conceptual basis: <code>SEMIOSPHERE_AGI_LIMIT.md</code>, <code>LOTMAN_INTERPRETATION.html</code>,
+  <code>RUN_FINDINGS_2026-09-26.md</code>. Empirical anchors named in prose are from that battery; 3D coordinates here are schematic, not PCA of the Montreal calibration plate.
+</cite>
+
+<footer>
+  <p>
+    File: <code>docs/theory/LLM_VS_SEMIOSPHERE_VIZ.html</code> · Three.js r128 (CDN) · No data leaves the browser.
+    For measured embedding geometry of the Montreal plate, use <code>report/embed/fig-semiosphere-embedding-3d.html</code>.
+  </p>
+</footer>
+</div>
+
+<script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>
+<script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+(function(){
+'use strict';
+
+const POPOUT = new URLSearchParams(location.search).get('popout');
+const POPOUT_TITLES = {
+  llm: 'Figure 1 · LLM autoregressive completion',
+  globe: 'Figure 2 · Semiosphere shells (3D)',
+  persist: 'Figure 3 · Persistence models',
+  compare: 'Figure 4 · Typed map vs flat manifold (both)',
+  graph: 'Figure 4a · Semiosphere KR graph',
+  flat: 'Figure 4b · Default LLM geometry'
+};
+
+function shouldInit(id){
+  if (!POPOUT) return true;
+  if (id === 'llm' || id === 'globe' || id === 'persist') return POPOUT === id;
+  if (id === 'graph' || id === 'flat' || id === 'compare') {
+    return POPOUT === 'compare' || POPOUT === 'graph' || POPOUT === 'flat';
+  }
+  return false;
+}
+
+function applyPopoutLayout(){
+  if (!POPOUT) return;
+  document.documentElement.classList.add('popout-mode');
+  const bar = document.getElementById('popoutTopbar');
+  if (bar) {
+    bar.hidden = false;
+    bar.innerHTML = '<strong>' + (POPOUT_TITLES[POPOUT] || POPOUT) +
+      '</strong> · resizing the window expands the plot to fit (no fixed-height clipping).';
+  }
+  if (POPOUT === 'compare' || POPOUT === 'graph' || POPOUT === 'flat') {
+    const sec = document.getElementById('section-compare');
+    if (sec) {
+      sec.classList.add('is-popout-active');
+      if (POPOUT === 'graph') sec.classList.add('popout-panel-graph');
+      if (POPOUT === 'flat') sec.classList.add('popout-panel-flat');
+    }
+  } else {
+    const sec = document.querySelector('.viz-section[data-popout="' + POPOUT + '"]');
+    if (sec) sec.classList.add('is-popout-active');
+  }
+  document.title = (POPOUT_TITLES[POPOUT] || 'Visualization') + ' · pop-out';
+}
+
+function openPopoutWindow(id){
+  const url = location.href.split('?')[0] + '?popout=' + encodeURIComponent(id);
+  const w = Math.min(1400, Math.max(900, screen.availWidth - 48));
+  const h = Math.min(920, Math.max(640, screen.availHeight - 72));
+  const left = Math.round((screen.availWidth - w) / 2);
+  const top = Math.round((screen.availHeight - h) / 2);
+  const name = 'semiosphere_viz_' + id;
+  const features = 'popup=yes,width=' + w + ',height=' + h + ',left=' + left + ',top=' + top +
+    ',resizable=yes,scrollbars=no,toolbar=no,menubar=no,location=no,status=no';
+  const win = window.open(url, name, features);
+  if (!win) alert('Pop-up blocked. Enable pop-ups for this origin, or open manually:\n' + url);
+}
+
+document.querySelectorAll('.btn-popout').forEach(function(btn){
+  btn.addEventListener('click', function(){ openPopoutWindow(btn.getAttribute('data-popout')); });
+});
+
+const resizeHandlers = {};
+function observeStages(){
+  if (typeof ResizeObserver === 'undefined') return;
+  document.querySelectorAll('[data-resize]').forEach(function(stage){
+    const key = stage.getAttribute('data-resize');
+    const fn = resizeHandlers[key];
+    if (!fn) return;
+    new ResizeObserver(function(){ fn(); }).observe(stage);
+  });
+}
+
+function resizeCanvas(c){
+  const stage = c.parentElement;
+  const r = stage.getBoundingClientRect();
+  const d = window.devicePixelRatio || 1;
+  const w = Math.max(1, Math.floor(r.width));
+  const h = Math.max(1, Math.floor(r.height));
+  c.width = w * d;
+  c.height = h * d;
+  c.style.width = w + 'px';
+  c.style.height = h + 'px';
+  return d;
+}
+
+/* ---------- FIG 1: LLM 2D autoregressive ---------- */
+let cLLM, ctxLLM, llmFrame = 0, llmPlaying = false, llmTimer = null;
+const PROMPT = ['Ask:', 'Globe', 'article', 'proving', 'Harvest', 'forged', '?'];
+const TOKENS = ['The', 'KGB', 'memo', 'claims', 'a', 'Globe', 'piece', 'exists', '…'];
+
+function initLLM(){
+  cLLM = document.getElementById('canvasLLM');
+  if (!cLLM) return;
+  ctxLLM = cLLM.getContext('2d');
+  resizeHandlers.llm = drawLLM;
+  document.getElementById('btnLLMPlay').onclick = function(){
+    llmPlaying = !llmPlaying;
+    this.textContent = llmPlaying ? 'Pause' : 'Play';
+    if (llmPlaying) {
+      llmTimer = setInterval(function(){
+        llmFrame++;
+        if (llmFrame > TOKENS.length) llmFrame = 0;
+        drawLLM();
+      }, 700);
+    } else clearInterval(llmTimer);
+  };
+  document.getElementById('btnLLMReset').onclick = function(){ llmFrame = 0; drawLLM(); };
+  document.getElementById('rngContext').oninput = drawLLM;
+  window.addEventListener('resize', drawLLM);
+  drawLLM();
+}
+
+function drawLLM(){
+  if (!cLLM || !ctxLLM) return;
+  const d = resizeCanvas(cLLM);
+  const w = cLLM.width, h = cLLM.height;
+  ctxLLM.setTransform(d,0,0,d,0,0);
+  const W = w/d, H = h/d;
+  ctxLLM.fillStyle = '#fafbfc';
+  ctxLLM.fillRect(0,0,W,H);
+
+  const ctxWin = parseInt(document.getElementById('rngContext').value,10) / 100;
+  document.getElementById('lblContext').textContent = Math.round(ctxWin*100) + '%';
+
+  const cols = PROMPT.length + Math.min(llmFrame, TOKENS.length);
+  const colW = Math.min(72, (W - 40) / Math.max(cols, 1));
+  const baseY = H * 0.35;
+
+  ctxLLM.font = '600 11px system-ui,sans-serif';
+  ctxLLM.fillStyle = '#5c6670';
+  ctxLLM.fillText('Context window (sliding influence)', 16, 24);
+
+  for(let i = 0; i < cols; i++){
+    const x = 20 + i * (colW + 6);
+    const isGen = i >= PROMPT.length;
+    const label = isGen ? TOKENS[i - PROMPT.length] : PROMPT[i];
+    const age = cols - 1 - i;
+    const persist = Math.max(0, 1 - age / (cols * (1.1 - ctxWin)));
+
+    const theme = isGen ? 0.85 : 0.35 + 0.5 * (i / PROMPT.length);
+    const shell = 0.15 + 0.25 * persist * (1 - theme);
+
+    ctxLLM.fillStyle = `rgba(107,63,160,${0.15 + 0.5*persist})`;
+    ctxLLM.fillRect(x, baseY, colW, 52);
+    ctxLLM.fillStyle = `rgba(196,92,38,${theme})`;
+    ctxLLM.fillRect(x, baseY, colW, 52 * theme);
+    ctxLLM.fillStyle = `rgba(42,74,111,${shell})`;
+    ctxLLM.fillRect(x, baseY + 52*(1-shell), colW, 52*shell);
+
+    ctxLLM.fillStyle = '#161a20';
+    ctxLLM.font = '11px Georgia,serif';
+    ctxLLM.fillText(label, x + 4, baseY + 30, colW - 8);
+  }
+
+  const hx = 20 + (cols - 1) * (colW + 6) + colW/2;
+  ctxLLM.beginPath();
+  ctxLLM.arc(hx, baseY + 70, 28, 0, Math.PI*2);
+  const g = ctxLLM.createRadialGradient(hx, baseY+70, 4, hx, baseY+70, 28);
+  g.addColorStop(0, 'rgba(107,63,160,0.95)');
+  g.addColorStop(0.6, 'rgba(196,92,38,0.7)');
+  g.addColorStop(1, 'rgba(107,63,160,0.2)');
+  ctxLLM.fillStyle = g;
+  ctxLLM.fill();
+  ctxLLM.fillStyle = '#fff';
+  ctxLLM.font = '600 10px system-ui';
+  ctxLLM.textAlign = 'center';
+  ctxLLM.fillText('h_t', hx, baseY + 74);
+  ctxLLM.textAlign = 'left';
+
+  ctxLLM.fillStyle = '#5c6670';
+  ctxLLM.font = '12px Georgia,serif';
+  const foot1 = Math.max(40, Math.min(H - 36, H * 0.88));
+  const foot2 = Math.max(52, Math.min(H - 16, H * 0.94));
+  ctxLLM.fillText('Next token chosen where theme overlap is high — shell tag weak unless RAG/types enforce it.', 16, foot1);
+  ctxLLM.fillText('↓ unpaired internal claim (secret) reads as answer to outward-clip question (E4 flat pool)', 16, foot2);
+}
+
+/* ---------- FIG 3: Persistence 2D ---------- */
+let cP, ctxP, persT = 0, persAnim = null;
+const EXTERNAL_INGRESS = [
+  { label: 'Primary clip', color: '#2a4a6f' },
+  { label: 'Rival counter-text', color: '#c45c26' },
+  { label: 'Pair-read warrant', color: '#6b8f71' },
+  { label: 'Outside (excess)', color: '#8d94a3' }
+];
+
+function drawWobbleRing(ctx, cx, cy, baseR, wobbleAmp, phase, segments){
+  ctx.beginPath();
+  for (let a = 0; a <= segments; a++) {
+    const theta = (a / segments) * Math.PI * 2;
+    const wobble = wobbleAmp * Math.sin(theta * 4 + phase);
+    const rr = Math.max(baseR * 0.4, baseR + wobble);
+    const x = cx + rr * Math.cos(theta);
+    const y = cy + rr * Math.sin(theta);
+    if (a === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  }
+  ctx.closePath();
+}
+
+function externalIngressState(eIndex, t){
+  const spec = EXTERNAL_INGRESS[eIndex];
+  const period = 190 + eIndex * 55;
+  const t0 = (t + eIndex * 61) % period;
+  const active = t0 < period * 0.82;
+  const p = active ? t0 / (period * 0.82) : 0;
+  return { spec: spec, active: active, p: p, angle: eIndex * 1.35 + t * 0.008, layer: eIndex % 4 };
+}
+
+function initPersist(){
+  cP = document.getElementById('canvasPersist');
+  if (!cP) return;
+  ctxP = cP.getContext('2d');
+  resizeHandlers.persist = drawPersist;
+  document.getElementById('rngPersist').oninput = drawPersist;
+  document.getElementById('chkAutoLoop').onchange = drawPersist;
+  document.getElementById('btnPersPlay').onclick = function(){
+    if (persAnim) cancelAnimationFrame(persAnim);
+    (function tick(){
+      persT++;
+      drawPersist();
+      persAnim = requestAnimationFrame(tick);
+    })();
+  };
+  window.addEventListener('resize', drawPersist);
+  drawPersist();
+}
+
+function drawPersist(){
+  if (!cP || !ctxP) return;
+  const d = resizeCanvas(cP);
+  const w = cP.width, h = cP.height;
+  ctxP.setTransform(d,0,0,d,0,0);
+  const W = w/d, H = h/d;
+  ctxP.fillStyle = '#fafbfc';
+  ctxP.fillRect(0,0,W,H);
+
+  const mem = parseInt(document.getElementById('rngPersist').value,10);
+  document.getElementById('lblPersist').textContent = mem + ' tokens';
+  const loop = document.getElementById('chkAutoLoop').checked;
+
+  const mid = W / 2;
+  ctxP.font = '600 13px system-ui';
+  ctxP.fillStyle = '#6b3fa0';
+  ctxP.fillText('LLM step t', 24, 28);
+  ctxP.fillStyle = '#1f5136';
+  ctxP.fillText('Semiosphere persistence', mid + 24, 28);
+
+  for(let i = 0; i < 48; i++){
+    const x = 24 + (i/47) * (mid - 48);
+    const inWin = i >= 48 - mem;
+    const alpha = inWin ? 0.3 + 0.7 * ((i - (48-mem)) / mem) : 0.08;
+    ctxP.fillStyle = inWin ? `rgba(107,63,160,${alpha})` : 'rgba(180,180,180,0.25)';
+    ctxP.fillRect(x, 50, (mid-72)/48, 12);
+  }
+  ctxP.strokeStyle = '#c45c26';
+  ctxP.lineWidth = 2;
+  ctxP.strokeRect(24 + (48-mem)/48*(mid-72), 46, (mid-72)/48*mem, 20);
+  ctxP.fillStyle = '#5c6670';
+  ctxP.font = '11px Georgia';
+  ctxP.fillText('Only tokens inside window strongly condition h_t; weights fixed at train time.', 24, 88);
+
+  const cx = mid + (W - mid) / 2;
+  const cy = H / 2 + 16;
+  const r = Math.min(W - mid, H) * 0.2;
+  const layers = ['Archive / fond', 'Pair-read warrant', 'Institution · shell', 'Autocommunication I–I'];
+  const rFilter = r * 1.08;
+  const rOutside = r * 1.38;
+
+  let fieldPulse = 0;
+  for (let e = 0; e < EXTERNAL_INGRESS.length; e++) {
+    const st = externalIngressState(e, loop ? persT : 40 + e * 30);
+    if (st.active && st.p > 0.55) fieldPulse = Math.max(fieldPulse, (st.p - 0.55) * 2.2);
+  }
+
+  ctxP.fillStyle = 'rgba(141,148,163,0.12)';
+  ctxP.beginPath();
+  ctxP.arc(cx, cy, Math.min(W - mid, H) * 0.48, 0, Math.PI * 2);
+  ctxP.fill();
+  ctxP.fillStyle = '#5c6670';
+  ctxP.font = '600 10px system-ui,sans-serif';
+  ctxP.textAlign = 'center';
+  ctxP.fillText('Outside · event · body · catastrophe', cx, cy - Math.min(W - mid, H) * 0.44);
+
+  layers.forEach(function(lbl, i){
+    const baseR = r * (0.52 + i * 0.2);
+    const amp = loop ? fieldPulse * (1.2 + i * 0.35) : 0;
+    drawWobbleRing(ctxP, cx, cy, baseR, amp, persT * 0.04 + i, 72);
+    ctxP.strokeStyle = `rgba(31,81,54,${0.32 + i * 0.14})`;
+    ctxP.lineWidth = i === 3 ? 1.5 : 2;
+    if (i === 3) ctxP.setLineDash([5, 4]);
+    ctxP.stroke();
+    ctxP.setLineDash([]);
+  });
+
+  ctxP.beginPath();
+  ctxP.arc(cx, cy, rFilter, 0, Math.PI * 2);
+  ctxP.strokeStyle = 'rgba(42,74,111,0.85)';
+  ctxP.lineWidth = 2;
+  ctxP.setLineDash([7, 5]);
+  ctxP.stroke();
+  ctxP.setLineDash([]);
+  ctxP.fillStyle = '#2a4a6f';
+  ctxP.font = '9px system-ui,sans-serif';
+  ctxP.textAlign = 'left';
+  ctxP.fillText('bilingual filter', cx + rFilter + 4, cy + 4);
+
+  for (let e = 0; e < EXTERNAL_INGRESS.length; e++) {
+    const st = externalIngressState(e, loop ? persT : 38 + e * 28);
+    if (!st.active && !loop) continue;
+    if (!st.active) continue;
+    const angle = st.angle;
+    const targetR = r * (0.52 + st.layer * 0.2);
+    const angleRefr = angle + 0.42 * (e - 1.5);
+    const xOut = cx + rOutside * Math.cos(angle);
+    const yOut = cy + rOutside * Math.sin(angle);
+    const xBound = cx + rFilter * Math.cos(angle);
+    const yBound = cy + rFilter * Math.sin(angle);
+    const xIn = cx + targetR * Math.cos(angleRefr);
+    const yIn = cy + targetR * Math.sin(angleRefr);
+    let px, py;
+    if (st.p < 0.32) {
+      const u = st.p / 0.32;
+      px = xOut + (xBound - xOut) * u;
+      py = yOut + (yBound - yOut) * u;
+    } else {
+      const u = (st.p - 0.32) / 0.68;
+      px = xBound + (xIn - xBound) * u;
+      py = yBound + (yIn - yBound) * u;
+    }
+    ctxP.strokeStyle = st.spec.color;
+    ctxP.lineWidth = 2;
+    ctxP.globalAlpha = 0.45;
+    ctxP.beginPath();
+    ctxP.moveTo(xOut, yOut);
+    ctxP.lineTo(xBound, yBound);
+    ctxP.lineTo(px, py);
+    ctxP.stroke();
+    ctxP.globalAlpha = 1;
+    ctxP.beginPath();
+    ctxP.arc(px, py, 5, 0, Math.PI * 2);
+    ctxP.fillStyle = st.spec.color;
+    ctxP.fill();
+    if (st.p > 0.75) {
+      ctxP.beginPath();
+      ctxP.arc(xIn, yIn, 4 + (st.p - 0.75) * 22, 0, Math.PI * 2);
+      ctxP.strokeStyle = st.spec.color;
+      ctxP.globalAlpha = 0.35 * (1 - st.p);
+      ctxP.lineWidth = 1.5;
+      ctxP.stroke();
+      ctxP.globalAlpha = 1;
+    }
+    if (st.p > 0.5 && st.p < 0.95) {
+      ctxP.fillStyle = st.spec.color;
+      ctxP.font = '9px system-ui,sans-serif';
+      ctxP.textAlign = 'center';
+      ctxP.fillText(st.spec.label, px, py - 10);
+    }
+  }
+
+  if (loop) {
+    const ang = persT * 0.045;
+    const rInner = r * 0.52;
+    const px = cx + rInner * 0.85 * Math.cos(ang);
+    const py = cy + rInner * 0.85 * Math.sin(ang);
+    ctxP.strokeStyle = 'rgba(31,81,54,0.45)';
+    ctxP.lineWidth = 1.5;
+    ctxP.setLineDash([4, 3]);
+    ctxP.beginPath();
+    ctxP.arc(cx, cy, rInner * 0.85, 0, Math.PI * 2);
+    ctxP.stroke();
+    ctxP.setLineDash([]);
+    ctxP.beginPath();
+    ctxP.moveTo(cx + rInner * 0.35 * Math.cos(ang + 1.8), cy + rInner * 0.35 * Math.sin(ang + 1.8));
+    ctxP.lineTo(px, py);
+    ctxP.strokeStyle = '#1f5136';
+    ctxP.lineWidth = 2;
+    ctxP.stroke();
+    ctxP.beginPath();
+    ctxP.arc(px, py, 4, 0, Math.PI * 2);
+    ctxP.fillStyle = '#1f5136';
+    ctxP.fill();
+    ctxP.fillStyle = '#1f5136';
+    ctxP.font = '9px system-ui,sans-serif';
+    ctxP.textAlign = 'center';
+    ctxP.fillText('I–I only (does not cross filter)', px, py + 14);
+
+    const cycle = 320;
+    const phase = (persT % cycle) / cycle;
+    const rLayerOut = r * (0.52 + 2 * 0.2);
+    const rLayerRival = r * (0.52 + 3 * 0.2);
+    let rx, ry, relayLabel;
+    if (phase < 0.22) {
+      const u = phase / 0.22;
+      const rFrom = rInner * 0.5;
+      const rTo = rFilter;
+      const rad = rFrom + (rTo - rFrom) * u;
+      const a = 0.85 + u * 0.4;
+      rx = cx + rad * Math.cos(a);
+      ry = cy + rad * Math.sin(a);
+      relayLabel = 'Outward relay (leaves inner shell)';
+    } else if (phase < 0.48) {
+      const u = (phase - 0.22) / 0.26;
+      const a = 0.85 + 0.4 + u * 1.9;
+      rx = cx + rLayerOut * Math.cos(a);
+      ry = cy + rLayerOut * Math.sin(a);
+      relayLabel = 'On outward shell (1983 embassy register)';
+    } else if (phase < 0.62) {
+      const u = (phase - 0.48) / 0.14;
+      const rad = rLayerOut + (rLayerRival - rLayerOut) * u;
+      const a = 2.75;
+      rx = cx + rad * Math.cos(a);
+      ry = cy + rad * Math.sin(a);
+      relayLabel = 'Periphery / rival read (dual model)';
+    } else if (phase < 0.78) {
+      const u = (phase - 0.62) / 0.16;
+      const rad = rLayerRival + (rFilter - rLayerRival) * u;
+      const a = 2.75 - u * 0.5;
+      rx = cx + rad * Math.cos(a);
+      ry = cy + rad * Math.sin(a);
+      relayLabel = 'Return through filter (pair-read warrant)';
+    } else {
+      const u = (phase - 0.78) / 0.22;
+      const rad = rFilter + (rInner * 0.55 - rFilter) * u;
+      const a = 2.25 - u * 1.1;
+      rx = cx + rad * Math.cos(a);
+      ry = cy + rad * Math.sin(a);
+      relayLabel = 'Back to internal (restructured field)';
+    }
+    ctxP.strokeStyle = 'rgba(184,134,11,0.55)';
+    ctxP.lineWidth = 3;
+    ctxP.setLineDash([]);
+    ctxP.beginPath();
+    ctxP.moveTo(cx, cy);
+    ctxP.lineTo(rx, ry);
+    ctxP.strokeStyle = '#b8860b';
+    ctxP.lineWidth = 2.5;
+    ctxP.stroke();
+    ctxP.beginPath();
+    ctxP.arc(rx, ry, 7, 0, Math.PI * 2);
+    ctxP.fillStyle = '#b8860b';
+    ctxP.fill();
+    ctxP.strokeStyle = '#fff';
+    ctxP.lineWidth = 1.5;
+    ctxP.stroke();
+    ctxP.fillStyle = '#7a5200';
+    ctxP.font = '600 9px system-ui,sans-serif';
+    ctxP.textAlign = 'center';
+    ctxP.fillText(relayLabel, rx, ry - 12);
+  }
+
+  ctxP.font = '10px Georgia,serif';
+  ctxP.textAlign = 'center';
+  ctxP.fillStyle = '#5c6670';
+  layers.forEach(function(lbl, i){
+    ctxP.fillText(lbl, cx, cy - r * 0.62 + i * 13);
+  });
+  ctxP.textAlign = 'left';
+  ctxP.fillStyle = '#5c6670';
+  ctxP.font = '11px Georgia';
+  ctxP.fillText('Ingress retools the field (E7: new operators at flat volume) — not the same shell forever.', mid + 24, Math.min(H - 38, H * 0.9));
+  ctxP.fillText('Autocommunication is one channel; memory also moves when the outside crosses the filter.', mid + 24, Math.min(H - 18, H * 0.96));
+}
+
+/* ---------- FIG 4: Graph vs flat ---------- */
+function drawGraph(){
+  const c = document.getElementById('canvasGraph');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const d = resizeCanvas(c);
+  const W = c.width/d, H = c.height/d;
+  ctx.setTransform(d,0,0,d,0,0);
+  ctx.fillStyle = '#f8faf9';
+  ctx.fillRect(0,0,W,H);
+  const nodes = [
+    {x:0.2,y:0.3,c:'#2a5f8f',l:'secret'},
+    {x:0.5,y:0.25,c:'#6b8f71',l:'outward'},
+    {x:0.8,y:0.35,c:'#c45c26',l:'rival'},
+    {x:0.35,y:0.7,c:'#8d94a3',l:'⊥'},
+    {x:0.65,y:0.65,c:'#2a5f8f',l:'unpaired'}
+  ];
+  nodes.forEach(n=>{ n.x*=W; n.y*=H; });
+  ctx.strokeStyle = '#1f5136';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(nodes[0].x, nodes[0].y);
+  ctx.lineTo(nodes[1].x, nodes[1].y);
+  ctx.stroke();
+  ctx.setLineDash([6,4]);
+  ctx.strokeStyle = '#999';
+  ctx.beginPath();
+  ctx.moveTo(nodes[0].x, nodes[0].y);
+  ctx.lineTo(nodes[2].x, nodes[2].y);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.strokeStyle = '#8c1d1d';
+  ctx.beginPath();
+  ctx.moveTo(nodes[0].x, nodes[0].y);
+  ctx.lineTo(nodes[3].x, nodes[3].y);
+  ctx.stroke();
+  ctx.strokeStyle = '#c45c26';
+  ctx.beginPath();
+  ctx.moveTo(nodes[4].x, nodes[4].y);
+  ctx.lineTo(nodes[1].x, nodes[1].y);
+  ctx.stroke();
+  ctx.setLineDash([4,4]);
+  ctx.strokeStyle = '#8c1d1d';
+  ctx.beginPath();
+  ctx.moveTo(nodes[4].x, nodes[4].y);
+  ctx.lineTo(nodes[1].x, nodes[1].y);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  nodes.forEach(n=>{
+    ctx.beginPath();
+    ctx.arc(n.x,n.y,14,0,Math.PI*2);
+    ctx.fillStyle = n.c;
+    ctx.fill();
+    ctx.fillStyle = '#fff';
+    ctx.font = '9px system-ui';
+    ctx.textAlign = 'center';
+    ctx.fillText(n.l, n.x, n.y+3);
+  });
+  ctx.fillStyle = '#161a20';
+  ctx.textAlign = 'left';
+  ctx.font = '11px Georgia';
+  ctx.fillText('Licensed transform · dual model · halt ⊥ · unpaired dashed', 8, H-10);
+}
+
+function drawFlat(){
+  const c = document.getElementById('canvasFlat');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const d = resizeCanvas(c);
+  const W = c.width/d, H = c.height/d;
+  ctx.setTransform(d,0,0,d,0,0);
+  ctx.fillStyle = '#faf8fc';
+  ctx.fillRect(0,0,W,H);
+  const pts = [
+    {x:0.25,y:0.4,c:'#2a5f8f'},{x:0.42,y:0.38,c:'#6b8f71'},{x:0.38,y:0.52,c:'#2a5f8f'},
+    {x:0.55,y:0.45,c:'#c45c26'},{x:0.48,y:0.58,c:'#6b3fa0'},{x:0.62,y:0.42,c:'#6b8f71'}
+  ];
+  pts.forEach(p=>{
+    p.x*=W; p.y*=H;
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,16,0,Math.PI*2);
+    ctx.fillStyle = p.c;
+    ctx.globalAlpha = 0.85;
+    ctx.fill();
+    ctx.globalAlpha = 1;
+  });
+  ctx.strokeStyle = 'rgba(196,92,38,0.5)';
+  ctx.lineWidth = 1;
+  for(let i=0;i<pts.length;i++) for(let j=i+1;j<pts.length;j++){
+    ctx.beginPath();
+    ctx.moveTo(pts[i].x, pts[i].y);
+    ctx.lineTo(pts[j].x, pts[j].y);
+    ctx.stroke();
+  }
+  ctx.fillStyle = '#161a20';
+  ctx.font = '11px Georgia';
+  ctx.fillText('Nearest neighbour = theme, not warrant (E8 language/register confound)', 8, H-28);
+  ctx.fillText('No ⊥ — completion fills the gap', 8, H-10);
+}
+
+function initGraphFlat(){
+  resizeHandlers.graph = drawGraph;
+  resizeHandlers.flat = drawFlat;
+  window.addEventListener('resize', function(){ drawGraph(); drawFlat(); });
+  drawGraph();
+  drawFlat();
+}
+
+/* ---------- FIG 2: Three.js semiosphere ---------- */
+let container, scene, camera, renderer, controls, resize3d;
+
+function initGlobe(){
+  if (typeof THREE === 'undefined') return;
+  container = document.getElementById('globe3d');
+  if (!container) return;
+  scene = new THREE.Scene();
+  scene.background = new THREE.Color(0xf8f9fb);
+  camera = new THREE.PerspectiveCamera(50, 1, 0.1, 100);
+  camera.position.set(0, 1.2, 4.2);
+  renderer = new THREE.WebGLRenderer({ antialias: true });
+  container.appendChild(renderer.domElement);
+  controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+
+  const light = new THREE.DirectionalLight(0xffffff, 0.9);
+  light.position.set(3, 5, 4);
+  scene.add(light);
+  scene.add(new THREE.AmbientLight(0xffffff, 0.55));
+
+  const shellColors = [0x2a5f8f, 0x6b8f71, 0xc45c26, 0x8d94a3];
+  const radii = [0.45, 0.75, 1.05, 1.35];
+  radii.forEach(function(r, i){
+  const geo = new THREE.SphereGeometry(r, 48, 32);
+  const mat = new THREE.MeshPhongMaterial({
+    color: shellColors[i],
+    transparent: true,
+    opacity: 0.12,
+    side: THREE.DoubleSide,
+    depthWrite: false
+  });
+  const mesh = new THREE.Mesh(geo, mat);
+  scene.add(mesh);
+  const wire = new THREE.LineSegments(
+    new THREE.WireframeGeometry(new THREE.SphereGeometry(r, 24, 16)),
+    new THREE.LineBasicMaterial({ color: shellColors[i], transparent: true, opacity: 0.35 })
+  );
+    scene.add(wire);
+  });
+
+  function makePath(points, color){
+    const curve = new THREE.CatmullRomCurve3(points);
+    const geo = new THREE.TubeGeometry(curve, 64, 0.025, 8, false);
+    const mat = new THREE.MeshPhongMaterial({ color: color });
+    return new THREE.Mesh(geo, mat);
+  }
+
+  const humanPts = [
+  new THREE.Vector3(-0.35, 0.1, 0.15),
+  new THREE.Vector3(-0.5, 0.25, 0.35),
+  new THREE.Vector3(-0.15, 0.05, 0.55),
+  new THREE.Vector3(0.25, -0.05, 0.72),
+  new THREE.Vector3(0.55, 0.1, 0.45),
+  new THREE.Vector3(0.85, 0.15, 0.2)
+  ];
+  const llmPts = [
+  new THREE.Vector3(-0.4, 0.2, 0.2),
+  new THREE.Vector3(0, 0.35, 0.4),
+  new THREE.Vector3(0.05, 0.05, 0.05),
+  new THREE.Vector3(-0.05, -0.15, -0.1),
+  new THREE.Vector3(0.35, 0.25, 0.35),
+  new THREE.Vector3(0.7, 0.05, 0.55)
+  ];
+
+  const pathHuman = makePath(humanPts, 0x1f5136);
+  const pathLLM = makePath(llmPts, 0x6b3fa0);
+  pathLLM.visible = false;
+  scene.add(pathHuman);
+  scene.add(pathLLM);
+
+  const relayGeo = new THREE.BufferGeometry().setFromPoints([
+    new THREE.Vector3(-0.4, 0.15, 0.3),
+    new THREE.Vector3(0.3, 0, 0.65)
+  ]);
+  const relayLine = new THREE.Line(relayGeo, new THREE.LineBasicMaterial({ color: 0x1f5136, linewidth: 2 }));
+  scene.add(relayLine);
+
+  const forbidGeo = new THREE.BufferGeometry().setFromPoints([
+    new THREE.Vector3(0.3, 0, 0.65),
+    new THREE.Vector3(0.9, 0.12, 0.35)
+  ]);
+  const forbidLine = new THREE.Line(forbidGeo, new THREE.LineBasicMaterial({ color: 0x8c1d1d }));
+  scene.add(forbidLine);
+
+  function setPathMode(mode){
+    pathHuman.visible = mode === 'human' || mode === 'both';
+    pathLLM.visible = mode === 'llm' || mode === 'both';
+    document.getElementById('btnPathHuman').classList.toggle('active', mode === 'human');
+    document.getElementById('btnPathLLM').classList.toggle('active', mode === 'llm');
+    document.getElementById('btnPathBoth').classList.toggle('active', mode === 'both');
+  }
+  document.getElementById('btnPathHuman').onclick = function(){ setPathMode('human'); };
+  document.getElementById('btnPathLLM').onclick = function(){ setPathMode('llm'); };
+  document.getElementById('btnPathBoth').onclick = function(){ setPathMode('both'); };
+  document.getElementById('chkRelays').onchange = function(){ relayLine.visible = this.checked; };
+  document.getElementById('chkForbidden').onchange = function(){ forbidLine.visible = this.checked; };
+
+  resize3d = function(){
+    if (!container || !camera || !renderer) return;
+    const r = container.parentElement.getBoundingClientRect();
+    const w = Math.max(1, r.width);
+    const h = Math.max(1, r.height);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+  };
+  resizeHandlers.globe = resize3d;
+  window.addEventListener('resize', resize3d);
+
+  function animate(){
+    requestAnimationFrame(animate);
+    controls.update();
+    renderer.render(scene, camera);
+  }
+  resize3d();
+  animate();
+}
+
+applyPopoutLayout();
+if (shouldInit('llm')) initLLM();
+if (shouldInit('persist')) initPersist();
+if (shouldInit('compare') || shouldInit('graph') || shouldInit('flat')) initGraphFlat();
+if (shouldInit('globe')) initGlobe();
+observeStages();
+requestAnimationFrame(function(){
+  Object.keys(resizeHandlers).forEach(function(k){ resizeHandlers[k](); });
+});
+})();
+</script>
+</body>
+</html>

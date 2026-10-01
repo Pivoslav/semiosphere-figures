@@ -3,56 +3,87 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="description" content="Static figures for dissertation research on registers, filters, and Lotman-style semiosphere models."/>
-  <title>Semiosphere figures · home</title>
+  <meta name="description" content="Semiotic coordinate plain — relay geometry, bilingual filters, Lotman models (not the Vozmezdie site)."/>
+  <title>Semiosphere research · figures</title>
   <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,600&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet"/>
   <style>
-    :root { --paper:#f7f4ef; --ink:#1a1814; --muted:#5c564c; --line:#d8d0c4; --accent:#8b6914; }
+    :root { --paper:#f7f4ef; --ink:#1a1814; --muted:#5c564c; --line:#d8d0c4; --accent:#2a4a6f; --wash:#f6f4ef; }
     * { box-sizing: border-box; }
     body { margin: 0; font-family: "Source Sans 3", system-ui, sans-serif; background: var(--paper); color: var(--ink); line-height: 1.55; }
-    header { background: #2c2820; color: #f0ece4; padding: 1.75rem 1.25rem; border-bottom: 3px solid var(--accent); text-align: center; }
+    header { background: #2c2820; color: #f0ece4; padding: 1.75rem 1.25rem; border-bottom: 3px solid #8b6914; }
     header h1 { margin: 0; font-family: Literata, Georgia, serif; font-size: 1.45rem; }
-    header p { margin: 0.6rem auto 0; max-width: 40rem; font-size: 0.95rem; color: #c8c0b0; }
+    header p { margin: 0.65rem 0 0; max-width: 44rem; font-size: 0.95rem; color: #c8c0b0; }
     main { max-width: 52rem; margin: 0 auto; padding: 1.75rem 1.15rem 2.5rem; }
-    h2 { font-family: Literata, Georgia, serif; font-size: 1.15rem; margin: 1.75rem 0 0.65rem; border-bottom: 1px solid var(--line); padding-bottom: 0.3rem; }
+    .lede { background: var(--wash); border: 1px solid var(--line); padding: 0.85rem 1rem; margin-bottom: 1.25rem; font-size: 0.92rem; }
+    h2 { font-family: Literata, Georgia, serif; font-size: 1.12rem; margin: 1.5rem 0 0.65rem; border-bottom: 1px solid var(--line); padding-bottom: 0.25rem; }
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 0.85rem; }
     .card { background: #fffdfa; border: 1px solid var(--line); border-radius: 8px; padding: 1rem; }
+    .card.primary { border-color: var(--accent); box-shadow: 0 2px 10px rgba(42,74,111,0.08); }
     .card h3 { margin: 0 0 0.35rem; font-size: 1rem; color: var(--accent); }
-    .card p { margin: 0 0 0.65rem; font-size: 0.88rem; color: var(--muted); }
-    .card a { display: inline-block; font-weight: 600; font-size: 0.88rem; color: var(--ink); text-decoration: underline; text-underline-offset: 2px; }
+    .card p { margin: 0 0 0.65rem; font-size: 0.86rem; color: var(--muted); }
+    .card a { font-weight: 600; font-size: 0.88rem; color: var(--ink); }
+    .legacy { font-size: 0.88rem; color: var(--muted); }
+    .legacy a { color: var(--ink); }
     footer { text-align: center; padding: 1.25rem; font-size: 0.8rem; color: var(--muted); border-top: 1px solid var(--line); }
   </style>
 </head>
 <body>
   <header>
-    <h1>Semiosphere figures</h1>
-    <p>Public mirror of dissertation visualization pages (proposal evidence, 3D Lotman models, filter shells). Separate from the Vozmezdie research site.</p>
+    <h1>Semiotic coordinate plain · figures</h1>
+    <p>Current dissertation visualizations: typed relay across shells and languages (Montreal 1983 pilot), not the early Peter I operator-only gallery. Separate from the CIUS Vozmezdie research site.</p>
   </header>
   <main>
-    <h2>Galleries</h2>
+    <div class="lede">
+      <strong>Start here:</strong> the <a href="status_dashboard.html">status dashboard</a> lists the interactive figures that match today’s claim — 3D semiosphere embedding, honest-plain heatmap, theme vs register, probe controls, partial Montreal map, relay cards, and links into theory write-ups.
+    </div>
+
+    <h2>Current program</h2>
     <div class="grid">
-      <article class="card">
-        <h3>Proposal evidence</h3>
-        <p>Charts tied to specific proposal claims: operators, press registers, network rewire, phase lags, and related tests.</p>
-        <a href="proposal_evidence_viz.html">Open gallery</a>
+      <article class="card primary">
+        <h3>Status dashboard</h3>
+        <p>North star, phase checklist, and links to every current figure.</p>
+        <a href="status_dashboard.html">Open dashboard →</a>
       </article>
       <article class="card">
-        <h3>Lotman 3D models</h3>
-        <p>Interactive semiosphere, operator tensor, and explosion figures (Three.js embeds).</p>
-        <a href="lotman_3d_evidence.html">Open 3D gallery</a>
+        <h3>Semiosphere 3D · embedding</h3>
+        <p>Nested shells, PCA, RU→EN relay arcs — primary entry figure.</p>
+        <a href="embed/fig-semiosphere-embedding-3d.html">Open →</a>
       </article>
       <article class="card">
-        <h3>Filter model</h3>
-        <p>L1 shell diagram and pair-or-miss table from the unified filter record.</p>
-        <a href="filter_model.html">Open filter model</a>
+        <h3>LLM cognition in semiosphere space</h3>
+        <p>Plotly suite: generation path, persistence, human vs machine semiosis (grounded + illustrative).</p>
+        <a href="theory/LLM_COGNITION_SEMIOSPHERE.html">Open →</a>
       </article>
       <article class="card">
-        <h3>Figure L1 (embed)</h3>
-        <p>Standalone L1 filter shells figure for embedding or citation.</p>
-        <a href="fig-filter-l1.html">Open L1</a>
+        <h3>LLM inference vs semiosphere</h3>
+        <p>2D/3D comparative models (inference stack vs typed relay).</p>
+        <a href="theory/LLM_VS_SEMIOSPHERE_VIZ.html">Open →</a>
+      </article>
+      <article class="card">
+        <h3>Filter model (L1/L2)</h3>
+        <p>CIUS fond as sociolinguistic semiosphere — pair-or-miss shells.</p>
+        <a href="filter_model.html">Open →</a>
+      </article>
+      <article class="card">
+        <h3>Lotman 3D gallery</h3>
+        <p>Semiosphere, operator tensor, explosion (interactive Three.js).</p>
+        <a href="lotman_3d_evidence.html">Open →</a>
+      </article>
+      <article class="card">
+        <h3>Lotman evidence dashboard</h3>
+        <p>Multi-method corpus evidence suite (Vozmezdie-aligned metrics).</p>
+        <a href="lotman_evidence_dashboard.html">Open →</a>
+      </article>
+      <article class="card">
+        <h3>Theory · semiotic coordinate plain</h3>
+        <p>Glossary, equations, readable theory page.</p>
+        <a href="theory/SEMIOTIC_COORDINATE_PLAIN.html">Open →</a>
       </article>
     </div>
+
+    <h2>Earlier proposal gallery (superseded framing)</h2>
+    <p class="legacy">The <a href="legacy/proposal_evidence_viz.html">Peter I operator / press register charts</a> supported an earlier proposal spine. They remain for reference but do not state the current relay-geometry claim. Regenerate the current set from <code>peter_htr_experiment</code> with <code>scripts/sync_from_thesis_lab.py</code>.</p>
   </main>
-  <footer>Sean Martin Lis · static export for GitHub Pages · not the CIUS Vozmezdie site</footer>
+  <footer>Sean Martin Lis · GitHub Pages mirror · not Vozmezdie</footer>
 </body>
 </html>

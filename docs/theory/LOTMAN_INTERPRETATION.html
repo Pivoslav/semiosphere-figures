@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What the findings mean in the semiosphere · a Lotmanian reading</title>
+<style>
+  :root{
+    --ink:#161a20; --muted:#5c6670; --rule:#d8dee6; --bg:#fbfcfd; --panel:#fff;
+    --neg:#8c1d1d; --neg-bg:#fdf4f4; --pos:#1f5136; --pos-bg:#f3f8f5;
+    --warn:#7a5200; --warn-bg:#fdf8ee; --accent:#2a4a6f;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font:16px/1.65 Georgia,'Iowan Old Style',serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:56px 28px 120px}
+  header.doc{border-bottom:3px solid var(--ink);padding-bottom:22px;margin-bottom:34px}
+  h1{font-size:2.05rem;line-height:1.2;margin:0 0 10px;letter-spacing:-.01em}
+  .sub{color:var(--muted);font-size:1.02rem;font-style:italic;margin:0}
+  .meta{margin-top:16px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.78rem;color:var(--muted);letter-spacing:.02em}
+  h2{
+    font-size:1.42rem;margin:56px 0 6px;padding-top:26px;border-top:1px solid var(--rule);
+    letter-spacing:-.01em;
+  }
+  h2 .num{color:var(--muted);font-family:ui-monospace,monospace;font-size:.82rem;display:block;margin-bottom:6px;letter-spacing:.08em}
+  h3{font-size:1.06rem;margin:30px 0 8px;color:var(--accent)}
+  p{margin:0 0 15px}
+  blockquote{
+    margin:22px 0;padding:18px 22px;background:var(--panel);
+    border-left:4px solid var(--accent);box-shadow:0 1px 2px rgba(0,0,0,.05);
+  }
+  blockquote p{margin:0 0 10px;font-size:1.03rem}
+  blockquote p:last-child{margin:0}
+  .cite{
+    display:block;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-size:.76rem;color:var(--muted);font-style:normal;line-height:1.5;margin-top:10px
+  }
+  .tier{
+    display:inline-block;font-family:ui-monospace,monospace;font-size:.66rem;
+    padding:2px 7px;border-radius:3px;margin-right:7px;vertical-align:1px;
+    font-weight:700;letter-spacing:.04em;
+  }
+  .tA{background:#e4efe7;color:var(--pos);border:1px solid #bcd6c4}
+  .tB{background:#fdf3e0;color:var(--warn);border:1px solid #e8d4a8}
+  .tC{background:#eceff3;color:var(--muted);border:1px solid #d2d9e2}
+  .banner{
+    background:var(--warn-bg);border:1px solid #e8d4a8;border-left:5px solid var(--warn);
+    padding:18px 22px;margin:0 0 34px;font-size:.93rem
+  }
+  .banner strong{color:var(--warn)}
+  .callout{padding:16px 20px;margin:22px 0;border-radius:4px;font-size:.96rem}
+  .c-neg{background:var(--neg-bg);border:1px solid #e8c9c9;border-left:5px solid var(--neg)}
+  .c-pos{background:var(--pos-bg);border:1px solid #c8ded1;border-left:5px solid var(--pos)}
+  .c-neg .lab,.c-pos .lab{
+    display:block;font-family:ui-monospace,monospace;font-size:.7rem;
+    letter-spacing:.09em;font-weight:700;margin-bottom:7px;text-transform:uppercase
+  }
+  .c-neg .lab{color:var(--neg)} .c-pos .lab{color:var(--pos)}
+  table{width:100%;border-collapse:collapse;margin:22px 0;font-size:.9rem;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--panel)}
+  th,td{padding:9px 11px;text-align:left;border-bottom:1px solid var(--rule);vertical-align:top}
+  th{background:#f1f4f7;font-size:.76rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;
+    background:#eef1f5;padding:1px 5px;border-radius:3px}
+  .num-hl{font-family:ui-monospace,monospace;font-weight:700}
+  .strike{text-decoration:line-through;color:var(--muted)}
+  .toc{background:var(--panel);border:1px solid var(--rule);padding:20px 24px;margin-bottom:10px;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:.9rem}
+  .toc ol{margin:8px 0 0;padding-left:22px} .toc li{margin:5px 0}
+  .toc a{color:var(--accent);text-decoration:none} .toc a:hover{text-decoration:underline}
+  footer.doc{margin-top:64px;padding-top:22px;border-top:3px solid var(--ink);
+    font-size:.86rem;color:var(--muted)}
+  .rule-soft{border:0;border-top:1px solid var(--rule);margin:30px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="doc">
+  <h1>What the findings mean in the semiosphere</h1>
+  <p class="sub">A Lotmanian reading of the 2026-09-26 experiment battery — including, and especially, the results that failed.</p>
+  <p class="meta">
+    Corpus: HDA SBU fond 16, Operation Vozmezdie · Calibration: Montreal 1983 · Pilot: Peter I 1717–18<br>
+    Evidence base: <code>docs/experiments/RUN_FINDINGS_2026-09-26.md</code> · Warrant sheet: <code>docs/dissertation/PROVEN_GATED_DO_NOT_CLAIM.md</code>
+  </p>
+</header>
+
+<div class="banner">
+  <strong>On the citations in this document.</strong>
+  This project's central rule is that a pair-read is the warrant and that one must never invent a source to close a gap — the spr. 1249 Globe clip stays <em>unpaired</em> after a null archival search rather than being filled in. That rule applies to secondary literature too. Every quotation below therefore carries a confidence tier, and the tiers are not decorative:
+  <br><br>
+  <span class="tier tA">TIER A</span> Wording I am confident is verbatim or near-verbatim in the cited translation.<br>
+  <span class="tier tB">TIER B</span> Substance and phrasing I am confident of, but the exact clause order or word choice should be checked against the printed edition before it appears in submitted prose.<br>
+  <span class="tier tC">TIER C</span> Lotman's <em>concept</em>, in my formulation. Not presented as his words.
+  <br><br>
+  <strong>No page numbers are given where I do not reliably know them.</strong> A fabricated page number is the bibliographic equivalent of a fabricated clip. Before publication, every Tier A and Tier B quotation must be verified against the editions listed in section 10 and given a page reference.
+</div>
+
+<div class="toc">
+  <strong>Contents</strong>
+  <ol>
+    <li><a href="#s1">The central retraction is a Lotmanian result, not a defeat</a></li>
+    <li><a href="#s2">The language confound is not a bug in the theory — it is the theory</a></li>
+    <li><a href="#s3">Prohibition, the minus-device, and why the zeros held</a></li>
+    <li><a href="#s4">Explosion without volume: the 1983&ndash;87 retooling</a></li>
+    <li><a href="#s5">Autocommunication and the manufactured referent</a></li>
+    <li><a href="#s6">Deleting the boundary: what flat retrieval actually does</a></li>
+    <li><a href="#s7">An archive that refuses a second voice; and a false minus-device</a></li>
+    <li><a href="#s8">The AGI question, properly posed</a></li>
+    <li><a href="#s9">Potential findings: what the unrun experiments would mean</a></li>
+    <li><a href="#s10">Sources, tiers, and what must not be claimed</a></li>
+  </ol>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="s1"><span class="num">SECTION ONE</span>The central retraction is a Lotmanian result, not a defeat</h2>
+
+<p>The project's headline number was <span class="num-hl">0.613</span>: the cosine alignment achieved when an orthogonal map, fitted on nine licensed secret&rarr;outward pair-reads, carried Russian KGB text onto its English embassy counterpart. It has been withdrawn. Against the correct null — shuffle the pairing, refit, and score against <em>those same shuffled</em> targets — an arbitrary pairing of the same nine points reaches <span class="num-hl">0.602</span> (95% range 0.499&ndash;0.746), giving <span class="num-hl">p = 0.394</span>. Out-of-bag, on pairs each map never saw, alignment is <span class="num-hl">0.022</span> with an interval from &minus;0.318 to 0.312.</p>
+
+<div class="callout c-neg">
+  <span class="lab">Retracted</span>
+  Nine points in 384 dimensions give orthogonal Procrustes enough freedom to manufacture roughly 0.60 from noise. The number measured geometric slack, not a register recoding. The earlier control (<code>shuffled_pairing = 0.057</code>) fitted on a shuffled pairing but scored against the <em>true</em> targets — a transfer null that an in-sample fit beats close to tautologically.
+</div>
+
+<p>It would be easy to read this as the semiotics losing an argument to the statistics. The opposite is closer to true. What we attempted was to model Lotman's boundary as a <em>rotation</em> — a single structure-preserving transformation carrying one language onto another without residue. Lotman's boundary is not that, and he says so in the same breath in which he defines it.</p>
+
+<blockquote>
+  <p>&ldquo;The boundary of semiotic space is the most important functional and structural position, giving substance to its semiotic mechanism. The boundary is a bilingual mechanism, translating external communications into the internal language of the semiosphere and vice versa.&rdquo;</p>
+  <span class="cite"><span class="tier tB">TIER B</span> Juri Lotman, &ldquo;On the Semiosphere&rdquo; (1984), trans. Wilma Clark, <em>Sign Systems Studies</em> 33.1 (2005). Verify clause order against the Clark translation.</span>
+</blockquote>
+
+<p>A bilingual mechanism is not an isometry. An isometry preserves all distances and is invertible without loss; that is precisely what a translating <em>filter</em> is not. The boundary in Lotman is the site where some things cross, some things are recoded, and some things do not cross at all. Our out-of-bag figure of 0.022 is the quantitative form of that last clause: whatever the nine pairs encode does not generalise to a tenth, because the boundary is not implementing a global rule that a tenth pair would obey.</p>
+
+<p>The leave-one-topic-out result says the same thing in a second voice. Held out by topic, alignment falls to roughly zero. Nine pairs behave as a <em>phrasebook</em>, not a grammar. And a phrasebook is what Lotman's boundary would be expected to produce, because the mechanism is not one rule but an accumulation of locally negotiated crossings.</p>
+
+<div class="callout c-pos">
+  <span class="lab">What survives</span>
+  The <em>direction</em> of the asymmetry, weakly, and the negative result itself: on this corpus, the crossing from secret Russian to outward English is <strong>not</strong> a recoverable linear transformation. That is a finding about the boundary, phrased in the boundary's own terms. It is not the finding we wanted, and it is more Lotmanian than the one we wanted.
+</div>
+
+<!-- ============================================================ -->
+<h2 id="s2"><span class="num">SECTION TWO</span>The language confound is not a bug in the theory — it is the theory</h2>
+
+<p>The second retraction concerned nearest-neighbour separation. The claim had been that secret memos never drift toward rival diaspora English — zero of seventeen. Under a permutation null this was not significant (p = 0.149); with same-topic neighbours excluded the direction <em>reversed</em>; and the whole contrast rested on a single document. Then the confound: all 17 secret units are Russian, and every comparison unit is English.</p>
+
+<div class="callout c-neg">
+  <span class="lab">Retracted</span>
+  &ldquo;Russian text is not nearest to English text&rdquo; is a statement about language, not about institutions. Cross-shell nearest-neighbour distance is unusable as boundary evidence until language is controlled.
+</div>
+
+<p>Here the failure is diagnostic in a way that goes to the centre of Lotman's architecture. Lotman — with Uspensky, and throughout the Tartu programme — distinguishes natural language from the <em>secondary modelling systems</em> built on top of it. Ideology, genre, etiquette, and institutional register are secondary; they are constructed <em>over</em> a natural language and cannot be read off it.</p>
+
+<blockquote>
+  <p>&ldquo;Culture is the non-hereditary memory of the community.&rdquo;</p>
+  <span class="cite"><span class="tier tA">TIER A</span> Juri Lotman and Boris Uspensky, &ldquo;On the Semiotic Mechanism of Culture&rdquo; (1971/1978), trans. George Mihaychuk, <em>New Literary History</em> 9.2.</span>
+</blockquote>
+
+<p>A multilingual sentence encoder is trained to do exactly one thing well: place translationally equivalent sentences near each other regardless of language. It is an instrument tuned to the <em>primary</em> system. When we asked it to separate a Russian secret register from an English public one, it answered with the only distinction it reliably holds — the language distinction — and we mistook that answer for a register finding.</p>
+
+<p>So the confound is a measurement of where the instrument sits in Lotman's stack. It sits on the primary system. The secondary system, which is what the dissertation is about, is not visible to it in that geometry. This is worth stating positively: the experiment did not fail to find register structure because register structure is absent. It failed because a cosine distance between a Russian and an English document is dominated by a difference the theory considers prior to the one under study.</p>
+
+<h3>The consequence for research design</h3>
+<p>Any future test of a register boundary on this corpus must hold language constant across the comparison. One such comparison already exists and is clean: the outward map's behaviour on rival targets. Outward targets are six English units; rival targets are twelve English units. Both sides are English, so the observed asymmetry cannot be a language artefact. That contrast is the correct shape for a register test — it simply lacks the statistical power to carry weight at this n.</p>
+
+<!-- ============================================================ -->
+<h2 id="s3"><span class="num">SECTION THREE</span>Prohibition, the minus-device, and why the zeros held</h2>
+
+<p>The forbidden-operator probe asked whether a smooth vector geometry can hold an absolute rule — specifically, that the embassy's public English never deploys the scare quotes that saturate the internal memos (13, 19, and 16 occurrences across the three internal files; zero on the embassy and Novosti releases). We predicted the embeddings would smear across that zero.</p>
+
+<p>They did not. The violation rate was <span class="num-hl">0.067</span>, one cell of fifteen. When the institution labels were shuffled, violations rose roughly fivefold to <span class="num-hl">0.309</span>. Scare-quote activation on outward surfaces never approached threshold: embassy 0.171, Novosti 0.171, Khmil UN 0.350.</p>
+
+<div class="callout c-pos">
+  <span class="lab">Supported</span>
+  Randomising which document belongs to which institution makes the archive's prohibitions <em>harder</em> to respect, not easier. The real document-to-institution assignment carries genuine signal that the vectors partly track. The core L2 pair-read — scare quotes are internal and do not cross — now has independent probe support.
+</div>
+
+<p>Two Lotmanian ideas converge here. The first is that culture is constituted as much by what it forbids as by what it emits. Lotman describes culture as operating through a system of restrictions and prescriptions; a register is recognisable by the moves it will not make.</p>
+
+<blockquote>
+  <p>&ldquo;Every culture begins by dividing the world into &lsquo;its own&rsquo; internal space and &lsquo;their&rsquo; external space.&rdquo;</p>
+  <span class="cite"><span class="tier tA">TIER A</span> Juri Lotman, <em>Universe of the Mind: A Semiotic Theory of Culture</em> (1990), trans. Ann Shukman, section &ldquo;The Notion of Boundary.&rdquo;</span>
+</blockquote>
+
+<p>The second is the <em>minus-device</em> (минус-приём), Lotman's term from <em>The Structure of the Artistic Text</em> for a structurally meaningful absence: an element whose non-appearance signifies precisely because the system made it expectable. The absence of scare quotes in the embassy packet is a minus-device in exactly this sense. It is not a gap in the data. It is the register doing its work.</p>
+
+<blockquote>
+  <p>The absence of an element that the structure has made expectable is itself a bearer of meaning — a &ldquo;minus-device,&rdquo; perceptible only against the system that presupposed it.</p>
+  <span class="cite"><span class="tier tC">TIER C</span> Concept: Lotman, <em>The Structure of the Artistic Text</em> (1970; trans. Lenhoff and Vroon, 1977), on минус-приём. Formulation mine.</span>
+</blockquote>
+
+<h3>The finding relocates the phenomenon</h3>
+<p>Read literally, this result says that register collapse is <strong>not visible in the representations</strong> at this sample size. That is not a null result about collapse; it is a claim about <em>where</em> collapse must be sought. If the vectors hold the zeros, then a system that nonetheless produces register-confused output is losing the distinction later — in generation, in retrieval, in the act of synthesis. Sections 5 and 6 are about exactly that layer, and they are where the positive results live.</p>
+
+<p>The probe also found that the hand-coded tensor is not self-consistent: <code>tensor_zero_consistency</code> is <span class="num-hl">0.867</span>, with two forbidden cells contradicted by the units' own operator tags. The zeros are an analytic hypothesis about the archive, not a transcript of it, and must be described that way.</p>
+
+<!-- ============================================================ -->
+<h2 id="s4"><span class="num">SECTION FOUR</span>Explosion without volume: the 1983&ndash;87 retooling</h2>
+
+<p>The diachronic count is the cleanest positive result in the battery, and it lands directly on Lotman's late theory of change. Across the internal chain — spr. 1206 (1983), spr. 1208 (1983), spr. 1249 <em>Farisei</em> (1987) — the operator profile turns over while the volume does not.</p>
+
+<table>
+  <thead><tr><th>Operator</th><th>1206</th><th>1208</th><th>1249</th><th>Status</th></tr></thead>
+  <tbody>
+    <tr><td><code>scare_quote</code></td><td>13</td><td>19</td><td>16</td><td>Persists</td></tr>
+    <tr><td><code>denial_no_artificial_famine</code></td><td>3</td><td>4</td><td>3</td><td>Persists</td></tr>
+    <tr><td><code>forgery_fabrication_frame</code></td><td>&mdash;</td><td>&mdash;</td><td>5</td><td><strong>New at 1987</strong></td></tr>
+    <tr><td><code>operational_media_push</code></td><td>&mdash;</td><td>&mdash;</td><td>2</td><td><strong>New at 1987</strong></td></tr>
+    <tr><td><code>symposium_recode</code></td><td>3</td><td>&mdash;</td><td>&mdash;</td><td>Gone by 1987</td></tr>
+    <tr><td><code>genre_downgrade_gathering</code> (<em>сборище</em>)</td><td>2</td><td>&mdash;</td><td>&mdash;</td><td>Gone by 1987</td></tr>
+    <tr><td><code>attack_slander_frame</code></td><td>1</td><td>1</td><td>&mdash;</td><td>Gone by 1987</td></tr>
+  </tbody>
+</table>
+
+<p>Operator tokens per internal link are flat — <span class="num-hl">22, 24, 26</span> — and the number of sign-events actually falls (6, 3, 3). The composition changes; the quantity does not. This is the difference between a gradual process and an explosive one, which is the organising distinction of Lotman's last book.</p>
+
+<blockquote>
+  <p>&ldquo;The moment of explosion is the moment of unpredictability.&rdquo;</p>
+  <span class="cite"><span class="tier tB">TIER B</span> Juri Lotman, <em>Culture and Explosion</em> (1992), trans. Wilma Clark (2009). Verify wording; the surrounding argument contrasts gradual with explosive processes and locates unpredictability at the moment of change.</span>
+</blockquote>
+
+<p>Lotman's explosion is not an increase in intensity. It is a change in the <em>set of available possibilities</em> — after it, moves exist that could not have been predicted from the prior state, and moves that were routine become unavailable. A flat token count with a turned-over inventory is the empirical signature of that, and it is distinguishable from the alternative hypothesis (the archive simply got louder), which the flat totals rule out.</p>
+
+<p>The disappearance of <em>сборище</em> deserves particular attention. Genre downgrade — calling a scholarly symposium a &ldquo;gathering&rdquo; — is Mihhail Lotman's territory rather than Juri's: rhetoric as generative, the phrase-level act that constitutes its object rather than describing it. That operator was bound to a specific occasion, the Montreal 1983 symposium. When the occasion passed, the device left the vocabulary. This is a strong argument that these operators are <em>indexical social actions</em> tied to events, not stylistic habits of an institution — which is precisely the claim the dissertation's framing already stakes out.</p>
+
+<div class="callout c-pos">
+  <span class="lab">Supported, with a labelling caveat</span>
+  The internal vocabulary was retooled between 1983 and 1987 without increasing in volume. Counts are a <em>check</em>, never the warrant; the pair-read remains the warrant. And the 1987 figures are probably <em>understated</em>: two of the three events on spr. 1249 are <code>unclassified</code>, and the two operator files use nearly disjoint vocabularies (three labels overlap). Fixing the labelling can only strengthen this result.
+</div>
+
+<!-- ============================================================ -->
+<h2 id="s5"><span class="num">SECTION FIVE</span>Autocommunication and the manufactured referent</h2>
+
+<p>This is, in my judgement, the most theoretically valuable thing the battery produced, and it arrived as a side observation rather than as a planned test.</p>
+
+<p>The operator that appears <em>new</em> in 1987 is <code>forgery_fabrication_frame</code>. It is also the frame that generates the corpus's one registered <strong>unpaired claim</strong>: <code>uc_s1249_globe_harvest_forgery</code>. The internal memo asserts that the <em>Globe and Mail</em> established that the documentary <em>Harvest of Despair</em> was a forgery. A ProQuest search of the Globe returned nothing. The claim therefore stands in the corpus as <em>outward_unpaired</em> — an internal assertion of an external effect, with no external sign-event to pair it to.</p>
+
+<p>Lotman's distinction between two communicative channels is the right instrument here. In the <em>I&ndash;s/he</em> channel, a message passes from a sender to another party and information is transmitted. In the <em>I&ndash;I</em> channel — autocommunication — the message returns to its sender, and its function is not to inform but to <em>restructure the sender</em>.</p>
+
+<blockquote>
+  <p>&ldquo;The elementary act of thinking is translation.&rdquo;</p>
+  <span class="cite"><span class="tier tA">TIER A</span> Juri Lotman, <em>Universe of the Mind</em>, trans. Shukman.</span>
+</blockquote>
+
+<blockquote>
+  <p>In the I&ndash;I channel the message does not transmit new information to another party; it is reformulated and acquires new meaning for the sender, whose self-organisation is the actual output of the act.</p>
+  <span class="cite"><span class="tier tC">TIER C</span> Concept: Lotman, <em>Universe of the Mind</em>, chapter on autocommunication and the two communicative models. Formulation mine.</span>
+</blockquote>
+
+<p>Read through that distinction, the unpaired claim is autocommunication that has been <em>mistaken by its own author</em> for communication. The security apparatus writes, into a file that only it will read, that a Canadian newspaper has vindicated it. The sentence performs internal work: it consolidates a self-image in which the operation succeeded. What it does not do is refer. The <em>Globe</em> article is a referent generated by the internal channel and possessing no existence outside it.</p>
+
+<p>Two consequences follow, and they are worth separating.</p>
+
+<h3>For the history</h3>
+<p>The unpaired edge is not a hole in the research. It is a finding with a shape. A file that asserts outward effects it cannot evidence is telling us something specific about how the institution knew things — namely that its criterion of success was internal coherence rather than external confirmation. Recording the edge as <code>bottom</code> and leaving it unpaired preserves that finding. Closing it with an invented clip would destroy the very thing it demonstrates. Hence the repository's standing prohibition: <em>do not invent clips to close unpaired edges.</em></p>
+
+<h3>For the machine-learning argument</h3>
+<p>This is the sharpest available analogy for what a generative system does when it produces a confident citation to a document that does not exist. The structural parallel is exact: a channel that optimises for internal coherence, emitting a sentence whose referent it has manufactured. And the retrieval experiment in the next section shows the corpus can <em>reproduce</em> this failure on demand, which makes it a test rather than a metaphor.</p>
+
+<!-- ============================================================ -->
+<h2 id="s6"><span class="num">SECTION SIX</span>Deleting the boundary: what flat retrieval actually does</h2>
+
+<p>Ask an unfiltered retriever over this corpus for the newspaper article proving <em>Harvest of Despair</em> was forged. In six phrasings out of six — including the Russian one — it returns the KGB memo <em>claiming</em> that article exists, ranked first, at cosine 0.4774 to 0.7565. Restricting the candidate pool by shell drops tier confusion to zero.</p>
+
+<table>
+  <thead><tr><th>Condition</th><th>Tier confusion (unpaired family)</th><th>Behaviour</th></tr></thead>
+  <tbody>
+    <tr><td>A — flat, all 37 units</td><td><strong>1.00</strong> (6/6)</td><td>Internal memo returned as the outward clip</td></tr>
+    <tr><td>B — shell-scoped</td><td>0.00</td><td>Exposure removed, but never refuses; substitutes an unrelated outward unit</td></tr>
+    <tr><td>C — scoped + halt</td><td>0.00</td><td>Explicit refusal on all six; over-halts 1 of 6 controls</td></tr>
+  </tbody>
+</table>
+
+<p>Lotman is unusually direct about what the boundary is <em>for</em>. It is not an edge drawn around a pre-existing content; it is the organ that makes the space a space, by regulating what may enter and in what form. Remove it and the interior does not become larger — it becomes undifferentiated.</p>
+
+<blockquote>
+  <p>&ldquo;The unit of semiosis, the smallest functioning mechanism, is not the separate language but the whole semiotic space of the culture in question.&rdquo;</p>
+  <span class="cite"><span class="tier tB">TIER B</span> Lotman, &ldquo;On the Semiosphere,&rdquo; trans. Clark. Verify wording. The surrounding argument is that no single semiotic system, however well organised, constitutes culture alone.</span>
+</blockquote>
+
+<p>Condition A is a semiosphere with the boundary deleted. Everything is adjacent to everything on the single axis the encoder can see: theme. The memo and the newspaper are both &ldquo;about&rdquo; the film's authenticity, so they are neighbours, so the memo is offered as the answer. The project's term for this is <em>theme gravity</em>, and it names the failure precisely — in the absence of a boundary, thematic similarity is the only remaining organising force, and it pulls documents of incompatible provenance into contact.</p>
+
+<p>There is a sharper detail. The memo carries <code>proof_tier: primary</code>, and legitimately so: it <em>is</em> a primary KGB document. The label is correct at the level of the document and catastrophic at the level of the question asked. A flat system inherits the label without the boundary that gave it meaning, and so launders an unverified internal assertion into the appearance of primary evidence for an external fact.</p>
+
+<div class="callout c-pos">
+  <span class="lab">Supported</span>
+  Typed structure is doing load-bearing work that pooled similarity cannot do. Alongside this, the typed-graph relay reaches 100% on the miss-or-target task where the pooled embedding reaches 8.3%, and the L2 rule accuracy is 17/17. The relay and rule metrics are untouched by the Procrustes retraction — different quantity, different null.
+</div>
+
+<div class="callout c-neg">
+  <span class="lab">Limits that must travel with this result</span>
+  No language model was called: this measures retrieval <em>exposure</em>, not generation, and is therefore weaker than the full design. The halt rule refused one of six answerable control questions, so <code>halt_precise_no_overhalt</code> is <strong>false</strong> and the rule is not deployable as written. The multipass 100% reflects a <em>graph oracle</em>, not human-realistic performance. And the retriever was weak on the control task itself, returning the correct document first in only 2 of 6 controls.
+</div>
+
+<!-- ============================================================ -->
+<h2 id="s7"><span class="num">SECTION SEVEN</span>An archive that refuses a second voice; and a false minus-device</h2>
+
+<p>The Peter I plate was intended as a second, independent calibration: a different century, a different institution, the same apparatus. The audit found it bootstrapped rather than built — six units, five edges, all five the same morphism against the same target, two occupied shells, zero forbidden cells, against Montreal's 28 edges across three morphism types and 19 forbidden patterns.</p>
+
+<p>Two findings from that audit are theoretically substantive rather than merely logistical.</p>
+
+<h3>The archive is monological by construction</h3>
+<p>Across all 113 verified transcriptions there is <strong>no document in Repnin's voice</strong>. The collection consists of letters <em>to</em> Repnin, chancery copies of them, and receipt endorsements — an outbound register, as the archivist's certification of a bound register confirms. Peter quotes Repnin's reports (<em>«Письмо твое … видѣлъ что вы намѣрены»</em>), but a quotation is the quoter's speech.</p>
+
+<p>This matters because Lotman's semiosphere is constitutively dialogic. Meaning is generated in the encounter between systems that are not mutually reducible; a single voice, however voluminous, does not make a semiosphere. The Peter collection as it stands is a monologue with a documented addressee. To supply the second shell by ingesting Peter's ventriloquised Repnin would be to fabricate the dialogue the theory requires — and would manufacture exactly the synthetic-speaker collapse the whole apparatus exists to detect.</p>
+
+<div class="callout c-neg">
+  <span class="lab">Do not claim</span>
+  Any Repnin-voice document. None exists in the verified set. The field-execution shell may have no occupant, and that is a real constraint on the plate, not a gap to be filled by inference.
+</div>
+
+<h3>A minus-device requires that the absence be expected</h3>
+<p>All five existing Peter edges are typed <code>bottom</code> against the same target, justified by the document's absence from <em>Pisma i bumagi</em> volume 1. But that volume covers 1688&ndash;1701 by editorial design. A document of 1717&ndash;18 could not appear in it under any circumstances.</p>
+
+<p>This is where Lotman's minus-device becomes a precision instrument rather than a licence. A significant absence is one the system rendered expectable; an absence that the system's own rules make impossible signifies nothing. The five edges are, as currently justified, <em>structurally trivial</em> — and two of the five celebrated &bottom; halts in the multipass demonstration rest on them, compounded by two source units mis-surfaced as autograph leaves when their verified headers read &ldquo;Campaign deception register fragment.&rdquo;</p>
+
+<p>The distinction is exactly the one the Montreal plate gets right. There, the absence of an outward Montreal sentence <em>is</em> a genuine minus-device: the embassy packet is demonstrably in the business of answering the famine question, it contains drought, kulaks, and slander, and it therefore made a symposium sentence expectable. Its absence signifies. Volume 1's silence about 1718 does not.</p>
+
+<!-- ============================================================ -->
+<h2 id="s8"><span class="num">SECTION EIGHT</span>The AGI question, properly posed</h2>
+
+<p>The programme began with an ambition to use the semiosphere to demonstrate that large language models cannot be a basis for general intelligence. The honest answer, already recorded in the tier ladder, is a qualified <strong>no</strong>: the semiosphere does not deliver an impossibility proof, and the battery above does not either. Nothing in these results licenses that claim, and the warrant sheet forbids it.</p>
+
+<p>What the battery does support is a narrower and more defensible reformulation. Lotman's most load-bearing structural commitment is that the minimum unit of meaning-generation is not a language but a <em>plurality</em> of languages that are not fully translatable into one another. On this view a single semiotic system, no matter how capable, is not a culture and cannot generate meaning by itself; it can only transmit within already-fixed codes.</p>
+
+<blockquote>
+  <p>&ldquo;Outside the semiosphere there is neither communication nor language.&rdquo;</p>
+  <span class="cite"><span class="tier tB">TIER B</span> Lotman, &ldquo;On the Semiosphere,&rdquo; trans. Clark. Verify wording.</span>
+</blockquote>
+
+<p>The question this makes empirically tractable is therefore not <em>can a model be generally intelligent</em> but: <strong>does the default stack implement a single institutional knower?</strong> That is answerable, and parts of it have now been answered on a calibrated plate.</p>
+
+<table>
+  <thead><tr><th>Lotmanian requirement</th><th>What we measured</th><th>Status</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>Boundary as bilingual filter, with untranslatable residue</td>
+      <td>No recoverable linear map; out-of-bag 0.022; LOTO ~0</td>
+      <td>Consistent with the theory; the filter is not a rotation</td>
+    </tr>
+    <tr>
+      <td>Culture as a system of prohibitions</td>
+      <td>Zeros largely respected; shuffling institutions is 5&times; worse</td>
+      <td>Structure is present in the representations</td>
+    </tr>
+    <tr>
+      <td>Boundary as constitutive of the space</td>
+      <td>Flat retrieval: 6/6 tier confusion; typed scoping: 0.00</td>
+      <td>Removing typing produces a single undifferentiated speaker</td>
+    </tr>
+    <tr>
+      <td>Autocommunication distinct from outward relay</td>
+      <td>Unpaired claim; forgery frame enters at the same moment</td>
+      <td>Documented in the historical record; not yet tested on a model</td>
+    </tr>
+    <tr>
+      <td>Explosion as change in the possible</td>
+      <td>Profile turnover at flat volume, 1983&rarr;87</td>
+      <td>Supported as a check; pair-read still required</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The defensible claim is thus about architecture rather than capability: pooled, untyped representation over a heterogeneous archive produces a <em>synthetic speaker</em> who occupies no institutional position, and a system with no position can neither be bound by a register nor refuse one. Whether that constitutes a barrier to general intelligence is a question this evidence does not reach, and the honest move is to decline it rather than to dress the measurements up.</p>
+
+<!-- ============================================================ -->
+<h2 id="s9"><span class="num">SECTION NINE</span>Potential findings: what the unrun experiments would mean</h2>
+
+<p>Three experiments remain blocked, and it is worth being explicit about what each would and would not establish, since the temptation after a night of retractions is to over-promise the next round.</p>
+
+<h3>E2 — the merge-error evaluation</h3>
+<p>Two frontier models, eighteen prompts, warrant-context withheld versus supplied, blind human coding for three error types: attribution erasure, tier conflation, and illicit fusion. Section 3 makes this the highest-value remaining test, because it looks where that section's negative result <em>pointed</em>. If the zeros survive in the representations but collapse in generation, then the phenomenon is a property of the synthesis step, and the dissertation's methods chapter has a clean, preregistered result at the layer where the claim actually lives. If merge errors do <em>not</em> increase without warrant context, the register-collapse thesis loses its principal support and should be narrowed to a retrieval-hygiene claim. Both outcomes are publishable; only one is the one we expect. It is blocked on human rubric authoring, and it must stay blocked until that exists, because the coder cannot be the system under test.</p>
+
+<h3>E3 — the built Peter plate</h3>
+<p>The value of a second plate is that it converts an existence proof into a portability claim: the apparatus would be shown to travel across century, language, and institution. The audit's finding that the third shell may have no occupant is a genuine obstacle, and the correct response is a design decision about what individuates an edge — not an ingest. A plate assembled by relaxing the pair-read standard would be worse than no plate, since the entire argument of section 6 depends on the typing being trustworthy.</p>
+
+<h3>E10 — the head-only fine-tune with a merge penalty</h3>
+<p>This would test whether register separation can be <em>installed</em> rather than merely enforced at retrieval time. It remains behind the retraining gates, and section 3 has weakened the motivation: if the frozen encoder already respects the zeros, a fine-tune aimed at teaching it to respect them is solving a problem that may not exist. The stronger version of the experiment would target the generation step instead.</p>
+
+<h3>The measurement that would most change the picture</h3>
+<p>More licensed pairs. Every quantitative retraction in this battery traces to n = 9 — and the effective n is smaller still, because <code>embassy_1983</code> and <code>novosti_1983</code> carry identical operator profiles, being the same denial packet. The outward side is two distinct voices, not three. A plate with thirty or forty licensed pairs would let the matched null be cleared or definitively failed, and that single number would settle whether the bilingual filter is measurable in geometry at all.</p>
+
+<!-- ============================================================ -->
+<h2 id="s10"><span class="num">SECTION TEN</span>Sources, tiers, and what must not be claimed</h2>
+
+<h3>Editions to verify against</h3>
+<table>
+  <thead><tr><th>Work</th><th>Edition used for citation</th><th>Concepts drawn on here</th></tr></thead>
+  <tbody>
+    <tr><td>&ldquo;On the Semiosphere&rdquo; (1984)</td><td>trans. Wilma Clark, <em>Sign Systems Studies</em> 33.1 (2005)</td><td>Boundary as bilingual mechanism; semiosphere as condition of communication; minimal unit of semiosis</td></tr>
+    <tr><td><em>Universe of the Mind</em> (1990)</td><td>trans. Ann Shukman, Indiana UP</td><td>Notion of boundary; own/their space; autocommunication (I&ndash;I vs I&ndash;s/he); thinking as translation; text as meaning-generator</td></tr>
+    <tr><td><em>Culture and Explosion</em> (1992)</td><td>trans. Wilma Clark, De Gruyter (2009)</td><td>Gradual vs explosive process; unpredictability; change in the set of the possible</td></tr>
+    <tr><td><em>The Structure of the Artistic Text</em> (1970)</td><td>trans. Lenhoff and Vroon, Michigan (1977)</td><td>Minus-device (минус-приём); structurally significant absence</td></tr>
+    <tr><td>&ldquo;On the Semiotic Mechanism of Culture&rdquo; (1971/1978)</td><td>Lotman and Uspensky, trans. Mihaychuk, <em>New Literary History</em> 9.2</td><td>Culture as non-hereditary collective memory; primary and secondary modelling systems</td></tr>
+    <tr><td>Mihhail Lotman on rhetoric</td><td><em>To be supplied by the author</em></td><td>Rhetoric as generative; genre downgrade; phrase-level constitution of the object</td></tr>
+  </tbody>
+</table>
+
+<p>The final row is deliberately unfilled. I am not confident of a specific citable formulation in Mihhail Lotman's work for the rhetoric-as-generation claim, and inventing one would be the precise error this document opens by condemning. The concept is in active use in the project's framing and should be cited from the author's own reading.</p>
+
+<h3>Claims this document does not make</h3>
+<ul>
+  <li>That the semiosphere demonstrates large language models cannot be a basis for general intelligence. It does not, and the evidence here does not reach the question.</li>
+  <li>That the 0.613 alignment measures a register recoding. <span class="strike">Retracted.</span> It does not clear its matched permutation null (p = 0.394).</li>
+  <li>That cross-shell nearest-neighbour separation evidences the boundary. <span class="strike">Retracted.</span> Not significant, direction-reversing under topic blocking, and language-confounded.</li>
+  <li>That the retrieval experiment says anything about language-model generation or hallucination. No model was called.</li>
+  <li>That the <em>Globe and Mail</em> printed what spr. 1249 alleges. The claim is <strong>unpaired</strong> after a null ProQuest search and must remain so.</li>
+  <li>That a probe, a count, or a figure can serve as warrant. The pair-read — or a documented miss, or a registered unpaired claim — is the warrant. Everything quantitative in this document is a check.</li>
+</ul>
+
+<h3>The shape of the night's result</h3>
+<p>The pattern across six experiments is consistent enough to state as a single sentence. Every claim that depended on fitting a geometry to a handful of examples failed; every claim that depended on typed structure and archival warrant held. That is not a comfortable outcome for a project that had a beautiful number, and it is a coherent one for a project whose theoretical commitment was always that meaning lives in boundaries, prohibitions, and positions rather than in distances.</p>
+
+<footer class="doc">
+  <p>
+    Generated for the MLCS 621 / dissertation theory track. Evidence: <code>docs/experiments/RUN_FINDINGS_2026-09-26.md</code>.
+    Warrant discipline: <code>docs/dissertation/PROVEN_GATED_DO_NOT_CLAIM.md</code>.
+    Reports: <code>e4_unpaired_halt</code>, <code>e6_forbidden_operator</code>, <code>e7_diachronic_bindings</code>,
+    <code>e8_nn_conflation</code>, <code>probe_bootstrap_ci</code>, <code>e1_merged_eval</code>.
+  </p>
+  <p><strong>Before any of this reaches submitted prose:</strong> verify every Tier A and Tier B quotation against the printed editions above and add page references. Tier C items are concepts in my formulation and must be rewritten in the author's voice or replaced with a sourced quotation.</p>
+</footer>
+
+</div>
+</body>
+</html>

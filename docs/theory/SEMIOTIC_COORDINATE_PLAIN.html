@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Semiotic coordinate plain — comprehensive theory</title>
+  <style>
+    :root {
+      --ink: #1a1a1a;
+      --muted: #555;
+      --rule: #ccc;
+      --wash: #f6f4ef;
+      --accent: #2a4a6f;
+      --warn: #6b4a12;
+      --warn-bg: #faf6ed;
+    }
+    @page { size: letter; margin: 0.85in; }
+    * { box-sizing: border-box; }
+    body {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 11.5pt;
+      line-height: 1.5;
+      color: var(--ink);
+      background: #fff;
+      max-width: 52rem;
+      margin: 0 auto;
+      padding: 1.25rem 1.5rem 3rem;
+    }
+    header.doc-head {
+      border-bottom: 2px solid var(--ink);
+      padding-bottom: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    header.doc-head h1 {
+      font-size: 1.55rem;
+      font-weight: 700;
+      margin: 0 0 0.35rem;
+      line-height: 1.25;
+    }
+    .meta { font-size: 0.92rem; color: var(--muted); margin: 0.15rem 0; }
+    nav.toc {
+      background: var(--wash);
+      border: 1px solid var(--rule);
+      padding: 0.85rem 1rem;
+      margin: 1.25rem 0 2rem;
+      font-size: 0.92rem;
+    }
+    nav.toc strong { display: block; margin-bottom: 0.4rem; }
+    nav.toc ol { margin: 0.25rem 0 0; padding-left: 1.35rem; }
+    nav.toc li { margin: 0.2rem 0; }
+    nav.toc a { color: var(--accent); }
+    nav.toc .sub { list-style: circle; font-size: 0.88rem; margin-top: 0.15rem; }
+    part-divider {
+      display: block;
+      margin: 2.5rem 0 1.5rem;
+      padding: 0.65rem 0;
+      border-top: 3px double var(--ink);
+      border-bottom: 1px solid var(--rule);
+    }
+    part-divider h2 {
+      margin: 0;
+      font-size: 1.15rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    h2.section {
+      font-size: 1.2rem;
+      margin: 2rem 0 0.6rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--rule);
+    }
+    h2.section:first-of-type { border-top: none; margin-top: 0; }
+    h3 { font-size: 1.02rem; margin: 1.35rem 0 0.45rem; }
+    h4 { font-size: 0.98rem; margin: 1rem 0 0.35rem; font-style: italic; font-weight: normal; }
+    p { margin: 0 0 0.65rem; text-align: justify; }
+    ul, ol { margin: 0 0 0.75rem; padding-left: 1.35rem; }
+    li { margin: 0.2rem 0; }
+    .callout {
+      background: var(--warn-bg);
+      border-left: 4px solid var(--warn);
+      padding: 0.75rem 1rem;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+    }
+    .callout-warrant {
+      background: #eef3f8;
+      border-left: 4px solid var(--accent);
+    }
+    pre, code {
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 0.82rem;
+    }
+    pre {
+      background: #f4f4f4;
+      border: 1px solid var(--rule);
+      padding: 0.75rem 1rem;
+      overflow-x: auto;
+      margin: 0.75rem 0;
+      line-height: 1.4;
+    }
+    code { background: #f0f0f0; padding: 0.1em 0.3em; }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 0.9rem;
+      margin: 0.75rem 0 1rem;
+    }
+    th, td {
+      border: 1px solid var(--rule);
+      padding: 0.4rem 0.55rem;
+      vertical-align: top;
+      text-align: left;
+    }
+    th { background: var(--wash); font-weight: 700; }
+    .math {
+      font-family: "Times New Roman", Times, serif;
+      font-style: italic;
+      margin: 0;
+      padding: 0;
+    }
+    .math-block {
+      margin: 0.85rem 0 1.1rem;
+      border: 1px solid var(--rule);
+      background: #fafafa;
+    }
+    .math-block .math-line {
+      padding: 0.65rem 1rem;
+      border-bottom: 1px solid var(--rule);
+      background: #fff;
+      text-align: center;
+      font-size: 1.05rem;
+    }
+    .math-explain {
+      padding: 0.75rem 1rem;
+      font-size: 0.94rem;
+      line-height: 1.5;
+      text-align: left;
+    }
+    .math-explain strong {
+      display: block;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--accent);
+      margin-bottom: 0.35rem;
+    }
+    .math-explain p { margin: 0 0 0.5rem; text-align: left; }
+    .math-explain p:last-child { margin-bottom: 0; }
+    .math-explain ul {
+      margin: 0.35rem 0 0;
+      padding-left: 1.2rem;
+      font-size: 0.92rem;
+    }
+    #return-nav {
+      position: fixed;
+      left: max(0.5rem, calc(50% - 26rem - 9rem));
+      bottom: 0.75rem;
+      z-index: 999;
+      display: none;
+      max-width: 11rem;
+      pointer-events: none;
+    }
+    #return-nav.visible {
+      display: block;
+      pointer-events: auto;
+    }
+    #return-nav button {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 0.78rem;
+      line-height: 1.3;
+      padding: 0.45rem 0.65rem;
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      background: rgba(255,255,255,0.94);
+      color: var(--accent);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      cursor: pointer;
+      text-align: left;
+      width: 100%;
+    }
+    #return-nav button:hover { background: var(--wash); }
+    #return-nav .return-label {
+      display: block;
+      font-weight: 700;
+    }
+    #return-nav .return-where {
+      display: block;
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    @media (max-width: 640px) {
+      #return-nav {
+        left: 0.5rem;
+        max-width: 9.5rem;
+      }
+    }
+    .ru { font-family: "Times New Roman", Times, serif; }
+    a { color: var(--accent); }
+    .figure-links { font-size: 0.92rem; margin: 0.5rem 0; }
+    .phase-tag {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--accent);
+      margin-right: 0.35rem;
+    }
+    a.term {
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px dotted var(--accent);
+      cursor: help;
+    }
+    a.term:hover, a.term:focus {
+      color: var(--accent);
+      border-bottom-style: solid;
+      outline: none;
+    }
+    a.term:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+    #term-popover {
+      position: fixed;
+      z-index: 1000;
+      max-width: 22rem;
+      padding: 0.75rem 0.9rem;
+      background: #fff;
+      border: 1px solid var(--rule);
+      box-shadow: 0 4px 18px rgba(0,0,0,0.12);
+      font-size: 0.92rem;
+      line-height: 1.45;
+      display: none;
+    }
+    #term-popover.visible { display: block; }
+    #term-popover strong {
+      display: block;
+      margin-bottom: 0.35rem;
+      color: var(--accent);
+      font-size: 0.95rem;
+    }
+    #term-popover .more {
+      display: inline-block;
+      margin-top: 0.45rem;
+      font-size: 0.85rem;
+    }
+    section.glossary {
+      margin-top: 2.5rem;
+      padding-top: 1rem;
+      border-top: 3px double var(--ink);
+    }
+    section.glossary h2 {
+      font-size: 1.2rem;
+      margin: 0 0 0.75rem;
+    }
+    section.glossary dl {
+      margin: 0;
+    }
+    section.glossary dt {
+      font-weight: 700;
+      margin: 1rem 0 0.25rem;
+      scroll-margin-top: 1rem;
+    }
+    section.glossary dt:target {
+      background: var(--wash);
+      padding: 0.15rem 0.35rem;
+      margin-left: -0.35rem;
+    }
+    section.glossary dd {
+      margin: 0 0 0.5rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    section.glossary dd .example {
+      display: block;
+      margin-top: 0.35rem;
+      font-style: italic;
+      color: var(--ink);
+    }
+    @media print {
+      nav.toc { break-after: avoid; }
+      h2.section { break-after: avoid; }
+      table { break-inside: avoid; }
+      a.term { border-bottom: none; color: var(--ink); }
+      #term-popover, #return-nav { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="doc-head">
+  <h1>Semiotic coordinate plain</h1>
+  <p class="meta"><strong>Project:</strong> <em>What the Embassy Would Not Name</em> / Operation Vozmezdie pilot</p>
+  <p class="meta"><strong>Author:</strong> Sean Martin Lis · <strong>Drafted:</strong> 2026-09-17 (post–SSHRC submission)</p>
+  <p class="meta"><strong>Status:</strong> Working theory — not proposal lede, not comps list material</p>
+  <p class="meta"><strong>Sources:</strong> Markdown in <code>docs/theory/</code> · <a href="../../report/status_dashboard.html">Status dashboard</a> · Probe: <a href="../../report/experiment_semiosphere_feature_space.html">experiment_semiosphere_feature_space.html</a></p>
+</header>
+
+<nav class="toc" id="top">
+  <strong>Contents</strong>
+  <ol>
+    <li><a href="#brief">Brief summary</a></li>
+    <li><a href="#full">Full theory</a>
+      <ol class="sub">
+        <li><a href="#s0">0 · Warrant chain</a></li>
+        <li><a href="#s1">1 · Core thesis</a></li>
+        <li><a href="#s2">2 · Why the usual vectored plain fails</a></li>
+        <li><a href="#s3">3 · What gets mapped</a></li>
+        <li><a href="#s4">4 · L1 / L2 / L3</a></li>
+        <li><a href="#s5">5 · Feature-space probe</a></li>
+        <li><a href="#s6">6 · Proposed coordinate system</a></li>
+        <li><a href="#s7">7 · Implications for semiotics</a></li>
+        <li><a href="#s8">8 · Implications for machine cognition</a></li>
+        <li><a href="#s9">9 · Falsifiers</a></li>
+        <li><a href="#s10">10–14 · Dissertation, publication, index</a></li>
+      </ol>
+    </li>
+    <li><a href="#roadmap">Exploration roadmap</a>
+      <ol class="sub">
+        <li><a href="#phase0">Phases 0–6</a></li>
+        <li><a href="#open-q">Open questions</a></li>
+      </ol>
+    </li>
+    <li><a href="#glossary">Glossary</a> <span style="font-weight:normal;color:var(--muted)">(click dotted terms)</span></li>
+    <li><a href="#eq-operator-tensor">Equations explained</a>
+      <ol class="sub">
+        <li><a href="#eq-operator-tensor">O[operator, surface]</a></li>
+        <li><a href="#eq-procrustes">Y ≈ W X</a></li>
+        <li><a href="#eq-cosine">Cosine</a></li>
+        <li><a href="#eq-coordinates">Sign-event coords</a></li>
+        <li><a href="#eq-partial-map">Partial map T</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+
+<div id="term-popover" role="tooltip" aria-hidden="true"></div>
+<div id="return-nav" aria-live="polite">
+  <button type="button" id="return-nav-btn">
+    <span class="return-label">← Return to reading</span>
+    <span class="return-where" id="return-nav-where"></span>
+  </button>
+</div>
+
+<main id="doc-main">
+<!-- ========== BRIEF ========== -->
+<part-divider id="brief">
+  <h2>Part I · Brief summary</h2>
+</part-divider>
+
+<h3>One sentence</h3>
+<p><a class="term" href="#gloss-semiosis" data-tip="How meaning moves between texts — not a single dictionary entry, but a relay with rules about who may read what.">Semiosis</a> is not a point in one <a class="term" href="#gloss-embedding" data-tip="A numeric fingerprint of a sentence from a frozen language model. Good at topic; bad at scare quotes and meeting names.">embedding</a> space; it is <strong><a class="term" href="#gloss-relay" data-tip="Movement of a theme or operator from one document surface to another (e.g. secret memo → embassy release), with rules about what may change.">typed relay</a> across incompatible document surfaces</strong>, and machine systems that merge <a class="term" href="#gloss-register" data-tip="The document type and audience contract — secret memo vs embassy release vs diaspora press. Same week, different rules.">registers</a> <strong>reproduce embassy-shaped readings</strong>.</p>
+
+<h3>What we are not claiming</h3>
+<ul>
+  <li>Words → one universal vector plane → “meaning.”</li>
+  <li>Cosine neighborhood = understanding.</li>
+  <li>The <a class="term" href="#gloss-probe" data-tip="A small ML check on frozen embeddings. Confirms or falsifies averaging; does not replace reading the documents.">probe</a> replaces <a class="term" href="#gloss-pair-read" data-tip="Reading a secret stretch beside its dated outward counterpart — or recording a documented absence. The warrant for every claim here.">pair-read</a>.</li>
+  <li>Montreal 1983 legislates a law of culture.</li>
+  <li>Explosion is proven (L3 is gated).</li>
+  <li>Generative models should write “the public version” of a memo.</li>
+</ul>
+
+<h3>What we are claiming</h3>
+<ol>
+  <li><strong><a class="term" href="#gloss-register" data-tip="The document type and audience contract — secret memo vs embassy release vs diaspora press.">Register</a> is part of the <a class="term" href="#gloss-sign-event" data-tip="One scored unit: text stretch + surface + date + operators + proof tier. Not a single word.">sign-event</a>.</strong> The same famine language does different work on spr. 1206 and on an embassy release five weeks later.</li>
+  <li><strong><a class="term" href="#gloss-operator" data-tip="A recoding habit: scare quotes, gathering-not-symposium, drought frame. Countable on each surface.">Operators</a> are measurable.</strong> Scare quotes, gathering vs symposium, drought-and-kulak denial form an <strong>operator × surface <a class="term" href="#gloss-tensor" data-tip="A grid: which wording habits appear on which document surfaces. Empty cells are findings, not gaps in data.">tensor</a></strong> (L2). Gaps in the tensor are as real as peaks (48 internal scare-quote hits, 0 outward in the pilot matrix).</li>
+  <li><strong><a class="term" href="#gloss-relay" data-tip="Movement of theme or operator between surfaces.">Relay</a> is <a class="term" href="#gloss-partial-map" data-tip="Translation between shells that sometimes has no answer (⊥) — e.g. symposium has no embassy sentence.">partial</a>.</strong> Some thematic fields cross (famine, Canada, anniversary); some operators <strong>do not</strong> (symposium has no outward Montreal sentence).</li>
+  <li><strong><a class="term" href="#gloss-silence" data-tip="When a channel does not carry a frame (e.g. Pravda not printing drought denial). Evidence about routing, not missing files.">Silence</a> is a coordinate.</strong> Domestic Pravda/Izvestiia not printing the drought frame in the processed 1983 window is evidence about <strong>which channel carries which job</strong>, not “missing data.”</li>
+  <li><strong>Frozen <a class="term" href="#gloss-embedding" data-tip="Numeric sentence fingerprint from a frozen encoder.">embeddings</a> already encode the failure mode.</strong> A secret→outward linear map fits in-sample pairs but <strong>does not</strong> align secret text with Weekly/CIUS rivals; <span class="ru">сборище</span> lands near drought; scare-quoted symposium near Khmil’s “lie” sentence.</li>
+</ol>
+
+<h3>Three models (L1 / L2 / L3)</h3>
+<table>
+  <thead><tr><th>Model</th><th>Question</th><th>Object</th></tr></thead>
+  <tbody>
+    <tr><td><strong>L1 <a class="term" href="#gloss-semiosphere" data-tip="Map of surfaces and which relay arcs between them are licensed, forbidden, or missing.">Semiosphere</a></strong></td><td>Where does each text sit; which relay arcs exist?</td><td><a class="term" href="#gloss-shell" data-tip="One of four zones: secret, autocommunication, Soviet outward, rival/diaspora.">Shell</a> topology + proof-typed edges</td></tr>
+    <tr><td><strong>L2 Operator <a class="term" href="#gloss-tensor" data-tip="Grid of operators × surfaces — who says what where.">tensor</a></strong></td><td>Which wording stays internal vs crosses outward?</td><td><a class="term" href="#eq-operator-tensor" data-tip="Jump to the equation and its plain-language reading.">O[operator, surface]</a></td></tr>
+    <tr><td><strong>L3 <a class="term" href="#gloss-explosion" data-tip="Candidate phase change: internal phrase network rewires after 1983. Gated — not claimed yet.">Explosion</a> (candidate)</strong></td><td>After 1983, does internal phrase co-occurrence rewire?</td><td>Before/after graph bifurcation</td></tr>
+  </tbody>
+</table>
+
+<h3>Probe in one paragraph</h3>
+<p>Frozen <code>paraphrase-multilingual-MiniLM-L12-v2</code>; 25 units, 9 secret→outward pairs; <a class="term" href="#eq-procrustes" data-tip="The probe’s rotation map Y ≈ WX — explained in plain language below.">orthogonal Procrustes</a> + <a class="term" href="#gloss-ridge" data-tip="Less constrained linear map that can stretch dimensions; higher fit ≠ better history.">ridge</a> + Hewitt–Liang shuffled controls (<code>scripts/run_semiosphere_feature_space.py</code>). In-sample orthogonal beats identity and shuffled pairing; <a class="term" href="#gloss-loto" data-tip="Leave-one-topic-out: hold out a theme and test the map. With nine pairs, it collapses to chance.">LOTO</a> collapses (nine pairs = dictionary, not training set). <strong>Key negative result:</strong> outward-trained <a class="term" href="#eq-procrustes" data-tip="The map matrix W — see equation block."><strong>W</strong></a> does not send secret stretches toward rival/diaspora targets. See <a href="../EXPERIMENT_LOG_semiosphere_feature_space.md">EXPERIMENT_LOG_semiosphere_feature_space.md</a>.</p>
+
+<h3>Stakes (if extrapolated honestly)</h3>
+<p><strong>Semiotics:</strong> <a class="term" href="#gloss-untranslatable" data-tip="What cannot cross a shell unchanged — empty tensor cell, not failed translation.">Untranslatability</a> becomes empirical (zero column), not metaphor. Dual models without a neutral sphere become geometry, not ideology talk.</p>
+<p><strong>Machine cognition:</strong> <a class="term" href="#gloss-theme-level" data-tip="Topic co-occurrence — famine near Canada. What generic embeddings recover.">Theme-level</a> similarity ≠ <a class="term" href="#gloss-register-level" data-tip="Whether operators survive relay — e.g. scare quotes stay internal.">register-faithful</a> reading. Single-<a class="term" href="#gloss-manifold" data-tip="One shared meaning space for all texts. Montreal shows secret and public are not on the same plane.">manifold</a> AI is structurally prone to <strong><a class="term" href="#gloss-merge" data-tip="Averaging secret and public into one summary — embassy-shaped reading of internal material.">collapse secret and public</a></strong>—the same mistake as reading the embassy release alone.</p>
+
+<div class="callout callout-warrant">
+  <strong>Warrant chain (do not break)</strong>
+  <pre>dated pair or documented miss  →  pair-read  →  operator/tensor/L1 claims
+                                      ↑
+                         probe / counts only as checks</pre>
+</div>
+
+<!-- ========== FULL THEORY ========== -->
+<part-divider id="full">
+  <h2>Part II · Full theory</h2>
+</part-divider>
+
+<h2 class="section" id="s0">0 · Warrant chain (read first)</h2>
+<p>This document extrapolates from <strong>dated <a class="term" href="#gloss-pair-read" data-tip="Secret stretch read beside its dated outward counterpart.">pair-reads</a></strong> and <strong>pilot instruments</strong> on HDA SBU fond 16 (Operation Vozmezdie, 1976–1988), calibrated on Montreal 1983. Nothing here replaces the five-step checklist or hand verification of newspaper claims.</p>
+<pre>Primary sources + pair-read  →  historical claims (dissertation)
+         ↓ checks only
+Counts, L1–L3 models, probe  →  falsify bad averaging / false survey</pre>
+<ul>
+  <li><strong><a class="term" href="#gloss-pair-read" data-tip="The warrant for every claim.">Pair-read</a>, or <a class="term" href="#gloss-documented-miss" data-tip="Expected outward sentence absent — e.g. no Montreal name.">documented miss</a>, is the warrant.</strong></li>
+  <li>The <a class="term" href="#gloss-semiosphere" data-tip="Map of surfaces and relay arcs.">semiosphere</a> <a class="term" href="#gloss-probe" data-tip="Microscope, not oracle.">probe</a> does <strong>not</strong> generate memo language and does <strong>not</strong> redo Khanenko-Friesen fond-internal CDA.</li>
+  <li><a class="term" href="#gloss-explosion" data-tip="Candidate phase change after 1983 — gated.">Explosion</a> (L3) is <strong>gated</strong>, not claimed from pilot counts alone.</li>
+  <li>Do not promote probe numbers into SSHRC prose or comprehensive exam lists.</li>
+</ul>
+
+<h2 class="section" id="s1">1 · Core thesis</h2>
+<p><strong><a class="term" href="#gloss-semiosis" data-tip="Meaning as typed relay, not a dictionary point.">Semiosis</a> is not a point in one vector space.</strong> It is <strong><a class="term" href="#gloss-relay" data-tip="Movement between surfaces under institutional rules.">typed relay</a></strong> across document <a class="term" href="#gloss-surface" data-tip="Where a text lives: memo, embassy release, Weekly, etc.">surfaces</a> that obey different grammars on the same calendar week.</p>
+<p>When institutional language crosses from secret report to embassy release to diaspora press, <strong><a class="term" href="#gloss-operator" data-tip="Recoding habits: scare quotes, gathering recode, drought frame.">operators</a> change</strong> (quotation marks, meeting names, famine frames) even when <strong>themes persist</strong> (Canada, anniversary, famine). Generic <a class="term" href="#gloss-embedding" data-tip="Numeric sentence fingerprints.">embeddings</a> mostly recover <a class="term" href="#gloss-theme-level" data-tip="Topic co-occurrence level.">theme-level</a> gravity; they <strong>fail <a class="term" href="#gloss-register-level" data-tip="Operator preservation across relay.">register-faithful</a> relay</strong> unless structure is imposed.</p>
+<p><strong>One-sentence version:</strong> The gap in an <a class="term" href="#gloss-operator" data-tip="Recoding habit countable on each surface.">operator</a> × surface <a class="term" href="#gloss-tensor" data-tip="Grid of operators × surfaces.">tensor</a> is where ideology lives; machine cognition that averages <a class="term" href="#gloss-register" data-tip="Document type and audience contract.">registers</a> fills that gap with embassy-shaped summaries.</p>
+
+<h2 class="section" id="s2">2 · Why the usual “vectored plain” fails</h2>
+<h3>2.1 Default ML picture</h3>
+<ul>
+  <li>One <a class="term" href="#gloss-manifold" data-tip="One shared meaning space for all texts.">manifold</a> (e.g. <a class="term" href="#gloss-cosine" data-tip="Angle between fingerprint vectors — topic neighborhood, not register-faithful translation.">cosine</a> space of <a class="term" href="#gloss-embedding" data-tip="Numeric sentence fingerprint.">embeddings</a>).</li>
+  <li>Neighborhood ≈ similarity ≈ meaning.</li>
+  <li>More data smooths noise; multilingual alignment shares a language-neutral core.</li>
+</ul>
+
+<h3>2.2 What the archive falsifies</h3>
+<p>Montreal 1983 shows <strong>non-mergeable coordinates on the same event</strong>:</p>
+<table>
+  <thead><tr><th>Internal (spr. 1206, 24 Mar 1983)</th><th>Outward (embassy, 28 Apr 1983)</th></tr></thead>
+  <tbody>
+    <tr><td>Hostile “gathering”</td><td>Drought, kulak sabotage</td></tr>
+    <tr><td>“Symposium” in scare quotes</td><td>No Montreal name</td></tr>
+    <tr><td>“Artificial famine” quoted as lie</td><td>Denial of artificial famine</td></tr>
+  </tbody>
+</table>
+<p>These are not dialect variants. They are <strong>incompatible reader contracts</strong> on the same commemorative season.</p>
+
+<h3>2.3 Lotman’s correction (operationalized)</h3>
+<p>From Lotman and Uspenskij (dual models; no neutral sphere) and Lotman (bilingual filters at the boundary):</p>
+<ul>
+  <li>The boundary is a <strong>sum of filters</strong>, not a line between “Soviet” and “Western.”</li>
+  <li>What cannot pass is structurally real (<strong><a class="term" href="#gloss-untranslatable" data-tip="Cannot cross unchanged — empty tensor cell.">untranslatable</a></strong>), not failed translation.</li>
+  <li><strong><a class="term" href="#gloss-silence" data-tip="Channel does not carry a frame — routing evidence.">Silence</a></strong> (domestic newspapers not carrying the drought frame in the processed 1983 audit) is a <strong>channel assignment</strong>, not absence of evidence.</li>
+</ul>
+<p>L1–L3 attempt to <strong>draw</strong> this so it can be checked against <a class="term" href="#gloss-pair-read" data-tip="Hand reading beside dated counterpart.">pair-reads</a>, not sit as metaphor in chapter one.</p>
+
+<h2 class="section" id="s3">3 · What gets mapped (object type)</h2>
+<h3>3.1 Not a token</h3>
+<p>A <strong><a class="term" href="#gloss-sign-event" data-tip="Scored unit: stretch + surface + date + operators + proof tier.">sign-event</a></strong> is minimally:</p>
+<ul>
+  <li>a <strong>stretch of text</strong> (sentence to memo section);</li>
+  <li>on a <strong><a class="term" href="#gloss-surface" data-tip="Document venue: memo, embassy, Weekly, etc.">surface</a></strong> (secret memo, autocommunication report, embassy/Novosti, UN, domestic paper, diaspora press, scholarly rival);</li>
+  <li>on a <strong>date</strong> (or narrow window);</li>
+  <li>with active <strong><a class="term" href="#gloss-operator" data-tip="Recoding habits on this stretch.">operators</a></strong> (scare quote, gathering recode, drought frame, slander frame, etc.);</li>
+  <li>at a <strong><a class="term" href="#gloss-proof-tier" data-tip="What warrant licenses the claim: primary, tier-B, miss, not claimed.">proof tier</a></strong> (primary, tier-B processed, documented miss, not claimed).</li>
+</ul>
+<p>Vectors attach to <strong>sign-events</strong>, not to lemmas. “Famine” is not one point; “famine”-as-scare-quoted-lie on spr. 1206 and “famine”-as-drought on embassy are different events.</p>
+
+<h3>3.2 Register → <a class="term" href="#gloss-shell" data-tip="Zone 1–4 in the archive.">shell</a> map (L1)</h3>
+<table>
+  <thead><tr><th><a class="term" href="#gloss-shell" data-tip="Zone 1–4.">Shell</a></th><th>Surfaces</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>Secret KGB informational memos</td></tr>
+    <tr><td>2</td><td>Autocommunication (I–I reports: office to itself)</td></tr>
+    <tr><td>3</td><td>Soviet outward tier (embassy, Novosti alias, UN)</td></tr>
+    <tr><td>4</td><td>Rival / diaspora / mainstream foil, scholarly counter-text</td></tr>
+  </tbody>
+</table>
+<p><strong>Novosti = embassy English</strong> in this corpus (verbatim outward packet). Treating Novosti as independent evidence double-counts the same release.</p>
+<p><strong>Pravda / Izvestiia / Rad ykr:</strong> separate clock; absence of drought frame in processed 1983 search is a <strong>finding</strong> (outward-only denial routing), not a gap to ignore.</p>
+
+<h2 class="section" id="s4">4 · Three geometries (L1 / L2 / L3)</h2>
+<h3>4.1 L1 · <a class="term" href="#gloss-semiosphere" data-tip="Map of surfaces and licensed relay arcs.">Semiosphere</a> = topology of <a class="term" href="#gloss-relay" data-tip="Movement between surfaces.">relay</a></h3>
+<p><strong>Question:</strong> Where does each text sit, and which arcs are licensed?</p>
+<ul>
+  <li>Nodes: surfaces (13 in empirical pilot).</li>
+  <li>Edges: relay arcs with <strong><a class="term" href="#gloss-proof-tier" data-tip="Warrant strength on an edge.">proof tier</a></strong> (proven thematic relay; tier-B processed; promising pending clip; not claimed).</li>
+  <li><strong>Forbidden / missing arcs</strong> are first-class (no Pravda arc for drought frame; embassy packet does not name Montreal).</li>
+</ul>
+<p><strong>Semiotic stake:</strong> Location in culture = <strong>relay position</strong>, not frequency.</p>
+<p><strong>ML stake:</strong> Knowledge graphs need <strong>edge types and blocked edges</strong>, not only similarity cliques.</p>
+<p class="figure-links"><strong>Figures:</strong> <a href="../../report/embed/fig-lotman-semiosphere-3d.html">L1 empirical</a> · <a href="../../report/embed/fig-lotman-semiosphere-demo-3d.html">L1-demo (target state — fabricated)</a></p>
+
+<h3>4.2 L2 · Operator <a class="term" href="#gloss-tensor" data-tip="Grid: which wording habits appear on which surfaces. Empty cells = findings.">tensor</a> = the honest “plain”</h3>
+<p><strong>Question:</strong> Which <a class="term" href="#gloss-operator" data-tip="Recoding habit: scare quotes, gathering recode, drought frame.">operators</a> fire on which surfaces?</p>
+
+<div class="math-block" id="eq-operator-tensor">
+  <div class="math-line"><span class="math">O[<a class="term" href="#gloss-operator" data-tip="Row: a recoding habit.">operator</a>, <a class="term" href="#gloss-surface" data-tip="Column: where the text lives.">surface</a>] = count</span></div>
+  <div class="math-explain">
+    <strong>What this equation says in plain language</strong>
+    <p>This is <em>not</em> a neural-network tensor. It is a <strong>counting grid</strong> built from pair-read coding of the archive: “how many times does this wording habit appear on this kind of document?”</p>
+    <ul>
+      <li><strong>Each row</strong> is an operator — e.g. <code>scare_quote_artificial_famine</code>, <code>symposium_recode</code>, <code>drought_kulak_denial</code>.</li>
+      <li><strong>Each column</strong> is a surface — spr. 1206, spr. 1208, embassy release (28 Apr 1983), Novosti alias, Khmil at the UN, <em>Ukrainian Weekly</em>, etc.</li>
+      <li><strong>Each cell</strong> is a tally from the pilot matrix in <code>register_relay_experiment.json</code>.</li>
+    </ul>
+    <p>When <strong>O[scare_quote, embassy] = 0</strong>, that is a finding: the embassy release does not carry internal scare-quote grammar. The gap is where the filter lives — not sampling noise. When <strong>O[drought_kulak_denial, embassy] &gt; 0</strong>, the outward shell is doing a different job with famine language than spr. 1206 (quoted lie → natural-cause denial).</p>
+  </div>
+</div>
+
+<p>Example operators:</p>
+<ul>
+  <li><code>scare_quote_artificial_famine</code></li>
+  <li><code>symposium_recode</code> (→ gathering / <span class="ru">сборище</span>)</li>
+  <li><code>drought_kulak_denial</code></li>
+  <li><code>nationalist_slander_frame</code> (Khmil UN)</li>
+</ul>
+<p><strong>Pilot skew (internal vs outward):</strong> 48 scare-quote hits on internal memos, 0 on embassy/Novosti/UN in the same window — <strong>hard non-equivalence</strong>, not sampling noise.</p>
+<p class="figure-links"><strong>Figure:</strong> <a href="../../report/embed/fig-lotman-operator-tensor-3d.html">L2 operator tensor</a></p>
+
+<h3>4.3 L3 · <a class="term" href="#gloss-explosion" data-tip="Candidate: internal phrase network rewires after 1983. Not claimed until gated.">Explosion</a> = phase change (candidate)</h3>
+<p><strong>Question:</strong> After Montreal 1983, does <strong>internal phrase co-occurrence</strong> rewire while 1955 training-manual operators persist?</p>
+<p>Pilot visualization: 3→7 nodes, 3→19 edges before/after 1983; red edges = new co-occurrences.</p>
+<p><strong>Gate:</strong> Claim explosion only if (1) post-1983 combinations are new relative to baseline; (2) 1955 operator vocabulary still describes the office habit; (3) rewrite tracks <strong>calendar time</strong>, not ingestion order.</p>
+<p class="figure-links"><strong>Figure:</strong> <a href="../../report/embed/fig-lotman-explosion-3d.html">L3 explosion (candidate only)</a></p>
+
+<h2 class="section" id="s5">5 · Semiosphere feature-space <a class="term" href="#gloss-probe" data-tip="Computational check on frozen embeddings.">probe</a></h2>
+<h3>5.1 Design</h3>
+<table>
+  <thead><tr><th>Component</th><th>Choice</th></tr></thead>
+  <tbody>
+    <tr><td>Encoder</td><td>Frozen <code>paraphrase-multilingual-MiniLM-L12-v2</code></td></tr>
+    <tr><td>Map</td><td><a class="term" href="#gloss-procrustes" data-tip="Rotation-only alignment of fingerprint sets.">Orthogonal Procrustes</a> + unconstrained <a class="term" href="#gloss-ridge" data-tip="Linear map that can stretch dimensions.">ridge</a> (Mikolov vs Xing)</td></tr>
+    <tr><td>Controls</td><td>Identity, shuffled pairing (Hewitt &amp; Liang)</td></tr>
+    <tr><td>Hold-out</td><td>By topic; Montreal gathering = stress case</td></tr>
+    <tr><td>Units</td><td>25 stretches, 9 secret→outward pairs</td></tr>
+    <tr><td>Script</td><td><code>scripts/run_semiosphere_feature_space.py</code></td></tr>
+    <tr><td>Report</td><td><a href="../../report/experiment_semiosphere_feature_space.html">experiment_semiosphere_feature_space.html</a></td></tr>
+  </tbody>
+</table>
+<p><strong>Literature chain:</strong> Schönemann 1966; Mikolov et al. 2013; Xing et al. 2015; Artetxe et al. 2016; Alain &amp; Bengio 2017; Hewitt &amp; Manning 2019; Hewitt &amp; Liang 2019.</p>
+
+<div class="math-block" id="eq-procrustes">
+  <div class="math-line"><span class="math">Y ≈ W X &nbsp;&nbsp; (W orthogonal — rotation only)</span></div>
+  <div class="math-explain">
+    <strong>What this equation says in plain language</strong>
+    <p>The probe asks a narrow question: if you treat secret memo sentences and outward public sentences as two clouds of numeric fingerprints, can you <strong>rotate</strong> the secret cloud so paired stretches line up with their embassy/UN counterparts?</p>
+    <ul>
+      <li><strong>X</strong> = matrix of secret-side <a class="term" href="#gloss-embedding" data-tip="Sentence fingerprints.">embeddings</a> (spr. 1206 famine line, spr. 1208 leak line, …).</li>
+      <li><strong>Y</strong> = matrix of outward-side embeddings (embassy drought sentence, Khmil slander sentence, …).</li>
+      <li><strong>W</strong> = the rotation map fit on nine licensed secret→outward pairs from pair-read.</li>
+    </ul>
+    <p><strong>In-sample cosine 0.613</strong> means paired points align better after rotation than with no map (identity 0.025) or shuffled pairings (0.057). That confirms <em>theme-level</em> relay is linearly available in a generic encoder — famine talk in March and April still “points” in related directions.</p>
+    <p>It does <strong>not</strong> mean the model understands KGB intent. When the same <strong>W</strong> is applied to rival targets (<em>Weekly</em>, CIUS), alignment collapses (orth −0.025 vs identity 0.203): the map is <em>pairing-specific</em>, not a general Soviet→diaspora translator. <span class="ru">Сборище</span> landing near drought is theme gravity, not proof that gathering “means” drought historically.</p>
+  </div>
+</div>
+
+<div class="math-block" id="eq-cosine">
+  <div class="math-line"><span class="math">cos(θ) = (x · y) / (‖x‖ ‖y‖)</span></div>
+  <div class="math-explain">
+    <strong>What this equation says in plain language</strong>
+    <p>After centering and normalizing embeddings (Artetxe preprocessing), <strong>cosine</strong> measures the angle between two fingerprint arrows — how much they share topic direction.</p>
+    <ul>
+      <li><strong>High cosine</strong> ≈ same neighborhood (famine near famine, Canada near Canada).</li>
+      <li><strong>Near zero or negative</strong> ≈ not pointing the same way — used to show secret→outward map does <em>not</em> send internal stretches toward Weekly/CIUS rivals.</li>
+    </ul>
+    <p>Cosine is the probe’s ruler for “did the map land on the right outward sentence among candidates?” It is <strong>not</strong> a warrant for historical paraphrase. Pair-read remains the warrant; cosine is a check on false averaging.</p>
+  </div>
+</div>
+
+<h3>5.2 Results (2026-09-10 run)</h3>
+<table>
+  <thead><tr><th>Metric</th><th>Value</th><th>Reading</th></tr></thead>
+  <tbody>
+    <tr><td>In-sample orthogonal</td><td>0.613</td><td>Beats identity (0.025) and shuffled (0.057)</td></tr>
+    <tr><td>In-sample ridge</td><td>0.756</td><td>Higher — unconstrained map; not a rotation</td></tr>
+    <tr><td><a class="term" href="#gloss-loto" data-tip="Leave-one-topic-out cross-validation.">LOTO</a></td><td>~chance</td><td>Nine pairs = dictionary, not learnable rotation</td></tr>
+    <tr><td>Outward W → rival</td><td>orth −0.025 vs id 0.203</td><td><strong>Secret map does not align to Weekly/CIUS</strong></td></tr>
+    <tr><td>Outward W → silence</td><td>orth −0.010 vs id 0.087</td><td>Silence coordinate behaves as non-target</td></tr>
+    <tr><td>Gathering</td><td><span class="ru">сборище</span> → drought neighborhood</td><td>No outward symposium sentence</td></tr>
+    <tr><td>Scare-quoted symposium</td><td>→ Khmil “lie” region</td><td>Operator mislanded under theme gravity</td></tr>
+  </tbody>
+</table>
+
+<h3>5.3 Epistemic role of the probe</h3>
+<p>The probe is a <strong>microscope</strong>, not an oracle:</p>
+<ul>
+  <li><strong>Confirms:</strong> Thematic relay is linearly available in a generic encoder; register merge is <strong>not</strong> justified by in-sample fit alone.</li>
+  <li><strong>Does not confirm:</strong> LLM “understanding,” generative reconstruction of memos, or global Lotman law.</li>
+  <li><strong>Use in prose:</strong> Falsify false survey and single-manifold summaries; <strong>do not</strong> lead SSHRC or dissertation lede.</li>
+</ul>
+
+<h2 class="section" id="s6">6 · Proposed coordinate system (extrapolation)</h2>
+<p>Generic <a class="term" href="#gloss-embedding" data-tip="Unchosen axes from a frozen encoder.">embeddings</a> supply <strong>unchosen axes</strong>. Lotman’s question requires <strong><a class="term" href="#gloss-fiber" data-tip="Named axis in the coordinate system — shell, date, operator, proof tier.">named fibers</a></strong>:</p>
+<table>
+  <thead><tr><th><a class="term" href="#gloss-fiber" data-tip="Named coordinate axis.">Fiber</a> / axis</th><th>Encodes</th></tr></thead>
+  <tbody>
+    <tr><td><a class="term" href="#gloss-shell" data-tip="Zone 1–4.">Shell</a> <em>s</em></td><td>Which filter applies (1–4)</td></tr>
+    <tr><td>Date <em>t</em></td><td>Calendar layer (1983 anniversary vs 1955 habit baseline)</td></tr>
+    <tr><td><a class="term" href="#gloss-operator" data-tip="Recoding habits on this stretch.">Operator</a> vector <strong>o</strong></td><td>Active recoding habits on this stretch</td></tr>
+    <tr><td><a class="term" href="#gloss-proof-tier" data-tip="Warrant strength: primary, tier-B, miss.">Proof tier</a> <em>p</em></td><td>What warrant licenses an edge</td></tr>
+    <tr><td><a class="term" href="#gloss-relay" data-tip="Direction of movement between surfaces.">Relay</a> direction <em>d</em></td><td>internal → outward → rival → domestic silence</td></tr>
+    <tr><td>Grain</td><td>stretch / document / office (E4 grain experiment)</td></tr>
+  </tbody>
+</table>
+
+<div class="math-block" id="eq-coordinates">
+  <div class="math-line"><span class="math">sign-event = (s, t, <strong>o</strong>, p, d) + stretch text</span></div>
+  <div class="math-explain">
+    <strong>What this equation says in plain language</strong>
+    <p>A sign-event is <strong>not one dot in embedding space</strong>. It is an address in a coordinate system you choose from the archive — plus the actual sentence.</p>
+    <ul>
+      <li><strong>s = 1, t = 1983-03-24:</strong> spr. 1206 secret memo in the Montreal anniversary window.</li>
+      <li><strong>o</strong> includes <code>symposium_recode</code>, <code>scare_quote_artificial_famine</code> — the operators pair-read marks active.</li>
+      <li><strong>p = primary</strong> because the fond memo is in hand; <strong>p = documented miss</strong> when the embassy release omits Montreal.</li>
+      <li><strong>d = internal → outward</strong> names which relay direction you are scoring (toward embassy/Novosti, not toward <em>Weekly</em>).</li>
+    </ul>
+    <p>Two stretches can share a lemma (“famine”) but sit at <strong>different coordinates</strong> — which is why the probe attaches vectors to sign-events, not to dictionary entries.</p>
+  </div>
+</div>
+
+<h3>6.1 <a class="term" href="#gloss-partial-map" data-tip="Shell-to-shell translation that sometimes has no answer — the ⊥ cases.">Partial maps</a> and untranslatables</h3>
+<p>Translation between <a class="term" href="#gloss-shell" data-tip="Zone 1–4: secret, autocommunication, outward, rival.">shells</a> is a <strong>partial function</strong> (not every input has an output):</p>
+
+<div class="math-block" id="eq-partial-map">
+  <div class="math-line"><span class="math">T<sub>s→s′</sub> : <strong>o</strong><sub>s</sub> ↦ <strong>o</strong><sub>s′</sub> ∪ {<a class="term" href="#gloss-bottom" data-tip="No licensed outward translation.">⊥</a>}</span></div>
+  <div class="math-explain">
+    <strong>What this equation says in plain language</strong>
+    <p>Read left to right: “Rule for moving from shell <em>s</em> to shell <em>s′</em> takes the internal operator bundle <strong>o</strong><sub>s</sub> and either produces an outward operator bundle <strong>o</strong><sub>s′</sub> — or returns <strong>⊥</strong> (no translation exists).”</p>
+    <ul>
+      <li><strong>Transformed relay:</strong> internal quoted “artificial famine” as enemy lie → outward drought-and-kulak denial (same famine field, different operators).</li>
+      <li><strong>Forbidden / ⊥:</strong> <code>scare_quote_artificial_famine</code> → ⊥ on shell 3 — zero column in O[operator, surface]; the embassy never speaks in internal scare-quote grammar.</li>
+      <li><strong>Documented miss / ⊥:</strong> rival-sense “symposium” at UQAM → ⊥ on embassy shell — spr. 1206 tracks the meeting; the 28 Apr 1983 release never names Montreal.</li>
+    </ul>
+    <p>Treating relay as a <em>total</em> function would invent outward sentences the archive refuses. Partial maps keep refusals and silences as first-class geometry.</p>
+  </div>
+</div>
+<p>Examples from Montreal:</p>
+<ul>
+  <li><code>scare_quote_artificial_famine</code> → ⊥ on outward shell (zero column in L2).</li>
+  <li><code>symposium</code> (rival sense) → ⊥ on embassy shell (documented miss on meeting name).</li>
+  <li>Thematic famine field → drought frame (transformed relay, not copy).</li>
+</ul>
+<p><strong><a class="term" href="#gloss-documented-miss" data-tip="Expected outward sentence absent — embassy does not name Montreal. The miss is evidence.">Documented miss</a></strong> (embassy release does not name Montreal) is <strong>obstruction</strong>: the morphism does not exist for that operator on that date.</p>
+
+<h3>6.2 <a class="term" href="#gloss-sheaf" data-tip="Each shell has local speakable rules; glue only where pair-read proves relay; obstructions block one global story.">Sheaf</a> intuition (informal)</h3>
+<ul>
+  <li><strong>Local patches:</strong> each shell has its own speakable operators.</li>
+  <li><strong>Gluing maps:</strong> only where pair-read proves relay; tier labels say how strong the glue is.</li>
+  <li><strong>Obstruction:</strong> ⊥ and silence columns prevent global merge.</li>
+</ul>
+<p>Formal write-up deferred to Phase 1 in the <a href="#roadmap">exploration roadmap</a>.</p>
+
+<h2 class="section" id="s7">7 · Implications for semiotics</h2>
+<ul>
+  <li><strong>Structure and history:</strong> 1955 manual = grammar habit; 1983 = rewrite under public defeat.</li>
+  <li><strong>Reference and social action:</strong> Operators are action types with measurable surface skew (Ahearn / Fairclough).</li>
+  <li><strong><a class="term" href="#gloss-untranslatable" data-tip="Cannot cross unchanged — zero tensor column.">Untranslatability</a>:</strong> Lotman’s filter = zero <a class="term" href="#gloss-tensor" data-tip="Operator × surface grid.">tensor</a> column, falsifiable on new memos.</li>
+  <li><strong>Dual models:</strong> Weekly vs embassy — averaging them is a reading mistake made literal in embedding space.</li>
+  <li><strong><a class="term" href="#gloss-silence" data-tip="Channel assignment, not missing data.">Silence</a>:</strong> Trouillot meets geometry — domestic silence constrains what Novosti/embassy are doing.</li>
+  <li><strong>Graphical Lotman:</strong> L1–L3 + proof tiers = first operationalization tied to archival epistemology.</li>
+</ul>
+
+<h2 class="section" id="s8">8 · Implications for machine cognition</h2>
+<table>
+  <thead><tr><th>Kind</th><th>What it captures</th><th>Montreal example</th></tr></thead>
+  <tbody>
+    <tr><td><a class="term" href="#gloss-theme-level" data-tip="Topic co-occurrence.">Theme-level</a></td><td>Topic co-occurrence</td><td>“Famine” near “Canada”</td></tr>
+    <tr><td><a class="term" href="#gloss-register-level" data-tip="Operator preservation across relay.">Register-level</a></td><td><a class="term" href="#gloss-operator" data-tip="Recoding habits.">Operator</a> preservation</td><td>Scare quotes stay internal</td></tr>
+  </tbody>
+</table>
+<ul>
+  <li><strong>Single-<a class="term" href="#gloss-manifold" data-tip="One shared meaning space.">manifold</a> failure:</strong> <a class="term" href="#gloss-merge" data-tip="Averaging secret and public.">merged-register</a> models embassy-shape secret material.</li>
+  <li><strong>Generation is wrong default:</strong> object is non-copying relay with forbidden operators.</li>
+  <li><strong>Multilingual alignment:</strong> aligns lemma gravity; loses scare quotes and gathering recode.</li>
+  <li><strong>Monitoring:</strong> if L3 gate passes, phrase-network rewrite = phase change, not embedding drift.</li>
+  <li><strong>Ethics of archive AI:</strong> propagating internal-only operators into outward summaries re-enacts core self-description.</li>
+</ul>
+
+<h2 class="section" id="s9">9 · Falsifiers (keep visible)</h2>
+<table>
+  <thead><tr><th>If this happens</th><th>Consequence</th></tr></thead>
+  <tbody>
+    <tr><td>Primary Pravda/Izvestiia prints drought frame in window</td><td>Revise outward-only routing</td></tr>
+    <tr><td>Non-anniversary memos show same operator skew</td><td>1983 not special; explosion weakens</td></tr>
+    <tr><td>Register-conditioned encoder merges Weekly + secret without operator loss</td><td>Non-mergeability may be encoder-specific</td></tr>
+    <tr><td>L3 rewrite tracks ingestion order, not 1983</td><td>Pipeline bug, not explosion</td></tr>
+    <tr><td>Globe clip falsifies spr. 1249 placement</td><td>Memo claim downgraded; method stands</td></tr>
+  </tbody>
+</table>
+
+<h2 class="section" id="s10">10 · Relationship to dissertation chapters</h2>
+<table>
+  <thead><tr><th>Chapter work</th><th>This theory</th></tr></thead>
+  <tbody>
+    <tr><td>Montreal pair-read narrative</td><td><strong>Primary</strong> — history, Canada, embassy</td></tr>
+    <tr><td>Five-step checklist</td><td><strong>Method warrant</strong></td></tr>
+    <tr><td>L1–L3 figures</td><td><strong>Method chapter</strong></td></tr>
+    <tr><td>Probe report</td><td><strong>Appendix</strong> — anti-merge check</td></tr>
+    <tr><td>Khanenko-Friesen et al. manuscript</td><td><strong>Dialogue</strong> — fond-internal CDA vs cross-register relay</td></tr>
+    <tr><td>SSHRC / comps</td><td><strong>Exclude</strong> probe math and unpublished NKF claims</td></tr>
+  </tbody>
+</table>
+
+<h2 class="section" id="s11">11 · Publication tracks (post-gate)</h2>
+<ol>
+  <li><strong>History</strong> — embassy, Holodomor anniversary, Canadian reception (SSHRC core).</li>
+  <li><strong>Semiotics / Slavic</strong> — operational Lotman, untranslatables as tensor gaps.</li>
+  <li><strong>ML / DH</strong> — probe as falsification instrument; pair-read benchmark.</li>
+  <li><strong>Archival science</strong> — companion checklist UX; proof tiers on edges.</li>
+</ol>
+
+<h2 class="section" id="s12">12 · File and data index</h2>
+<table>
+  <thead><tr><th>Path</th><th>Contents</th></tr></thead>
+  <tbody>
+    <tr><td><code>docs/theory/SEMIOTIC_COORDINATE_PLAIN.md</code></td><td>Full theory (Markdown)</td></tr>
+    <tr><td><code>docs/theory/SEMIOTIC_COORDINATE_PLAIN_BRIEF.md</code></td><td>Brief (Markdown)</td></tr>
+    <tr><td><code>docs/theory/EXPLORATION_ROADMAP.md</code></td><td>Roadmap (Markdown)</td></tr>
+    <tr><td><code>docs/theory/SEMIOTIC_COORDINATE_PLAIN.html</code></td><td>This document (reader-facing)</td></tr>
+    <tr><td><code>docs/theory/_INTERNAL_DEPTH_LOG.md</code></td><td>Agent/lab continuity — not for exam or proposal</td></tr>
+    <tr><td><code>docs/theory/GLOSSARY_REGISTRY.json</code></td><td>Term ids, tips, equation anchors (maintenance)</td></tr>
+    <tr><td><code>docs/EXPERIMENT_LOG_semiosphere_feature_space.md</code></td><td>Probe lab log</td></tr>
+    <tr><td><code>docs/EXPERIMENT_GAPS.md</code></td><td>Proven / tier B / not claimed</td></tr>
+    <tr><td><code>scripts/run_semiosphere_feature_space.py</code></td><td>Probe runner</td></tr>
+    <tr><td><code>report/experiment_semiosphere_feature_space.html</code></td><td>Probe report</td></tr>
+    <tr><td><code>report/embed/fig-lotman-*.html</code></td><td>L1, L2, L3 visualizations</td></tr>
+  </tbody>
+</table>
+
+<h2 class="section" id="s13">13 · Revision log</h2>
+<table>
+  <thead><tr><th>Date</th><th>Change</th></tr></thead>
+  <tbody>
+    <tr><td>2026-09-17</td><td>Initial theory doc after SSHRC submit</td></tr>
+    <tr><td>2026-09-17</td><td>Comprehensive HTML compiled from brief + full + roadmap</td></tr>
+    <tr><td>2026-09-17</td><td>Clickable glossary: dotted terms, popover + lay definitions</td></tr>
+    <tr><td>2026-09-17</td><td>Math blocks with lay readings; return-nav; auto-linked terms; internal depth log</td></tr>
+  </tbody>
+</table>
+
+<!-- ========== ROADMAP ========== -->
+<part-divider id="roadmap">
+  <h2>Part III · Exploration roadmap</h2>
+</part-divider>
+
+<p><strong>Rule:</strong> Pair-read remains the warrant. Experiments falsify bad averaging; they do not replace composition and uptake.</p>
+
+<h3>North star</h3>
+<p>Build a <strong>checkable semiotic coordinate system</strong> where:</p>
+<ul>
+  <li>axes are chosen (shell, operator, date, proof tier), not inherited from a generic encoder;</li>
+  <li>translation is a <strong>partial map</strong> with explicit untranslatables (⊥);</li>
+  <li>machine outputs are <strong>register-typed</strong> and cannot merge secret with public without a logged merge penalty.</li>
+</ul>
+
+<h2 class="section" id="phase0"><span class="phase-tag">Phase 0</span> Lock what we already have (1–2 sessions)</h2>
+<p class="meta">Run 2026-09-17: <code>phase0_report.json</code> — probe, L2 CSV, 25 sign-events, ledger OK.</p>
+<table>
+  <thead><tr><th>Task</th><th>Output</th><th>Status</th></tr></thead>
+  <tbody>
+    <tr><td>Re-run probe; archive results</td><td><code>results.json</code> snapshot</td><td>done 2026-09-17</td></tr>
+    <tr><td>Export L2 matrix as CSV</td><td><code>l2_operator_matrix.csv</code></td><td>done 2026-09-17</td></tr>
+    <tr><td>Confirm empiricization ledger complete</td><td>24 rows, all pairing types marked</td><td>done 2026-09-17</td></tr>
+    <tr><td>Sean confirms dated_units</td><td>Human warrant on 14 units</td><td><strong>pending</strong> (0/14)</td></tr>
+  </tbody>
+</table>
+<p><strong>Exit criterion:</strong> “Proven / tier B / miss / not claimed” synced with <code>docs/EXPERIMENT_GAPS.md</code>.</p>
+
+<h2 class="section" id="phase1"><span class="phase-tag">Phase 1</span> Make the plain explicit (theory + data model)</h2>
+<h3>1a · Sign-event schema</h3>
+<pre>{
+  "id": "1206_1983-03-24_gathering",
+  "surface": "secret_memo",
+  "shell": 1,
+  "date": "1983-03-24",
+  "operators": ["scare_quote_artificial_famine", "symposium_recode"],
+  "stretch_text_ref": "...",
+  "proof_tier": "primary",
+  "pair_ids": ["embassy_1983-04-28", "weekly_1983-04-10"]
+}</pre>
+<p><strong>Action:</strong> Draft <code>data/bc_corpus/semiosphere/sign_event_schema.json</code>; migrate 25 probe units from <code>pairs.json</code>.</p>
+
+<h3>1b · Partial map registry</h3>
+<p>For each licensed relay: source/target shell, operator map (preserved | transformed | forbidden), evidence tier, ⊥ cases.</p>
+<p><strong>Action:</strong> Extend <code>register_relay_experiment.json</code> or new <code>partial_maps.json</code>.</p>
+
+<h3>1c · One-page formal sketch</h3>
+<p>Objects = sign-events; morphisms = proof-typed relays; obstruction = miss. Deliver after 1a–1b.</p>
+
+<h2 class="section" id="phase2"><span class="phase-tag">Phase 2</span> Probe v2 (falsification, not scale)</h2>
+<table>
+  <thead><tr><th>Experiment</th><th>Hypothesis</th><th>If true</th><th>If false</th></tr></thead>
+  <tbody>
+    <tr><td><strong>P2.1</strong> Register-conditioned encoder</td><td>Shell one-hot concatenated to embeddings</td><td>Rival alignment still fails on operator rows</td><td>Merge was encoder noise</td></tr>
+    <tr><td><strong>P2.2</strong> Anti-merge loss</td><td>Penalize secret–rival cosine</td><td>Head separates operators</td><td>Theme gravity dominates</td></tr>
+    <tr><td><strong>P2.3</strong> Operator labels as controls</td><td>Linear operator-class probe</td><td>Operators separable in frozen space</td><td>Need structured features</td></tr>
+    <tr><td><strong>P2.4</strong> Non-anniversary controls</td><td>1976–1982 memos without anniversary wording</td><td>Skew weakens → 1983-specific</td><td>Method generalizes</td></tr>
+  </tbody>
+</table>
+<p><strong>Do not:</strong> Fine-tune the transformer on the fond. Do not present LOTO as “model understands KGB.”</p>
+
+<h2 class="section" id="phase3"><span class="phase-tag">Phase 3</span> Fill L1 arcs (empirical geometry)</h2>
+<table>
+  <thead><tr><th>Acquisition</th><th>Unlocks</th><th>Tier</th></tr></thead>
+  <tbody>
+    <tr><td>CIUS 1986 full text ingested</td><td>Scholarly rival arc</td><td>Primary</td></tr>
+    <tr><td><em>Globe and Mail</em> page (spr. 1249)</td><td>Print verification arc</td><td>Primary or falsify</td></tr>
+    <tr><td>East View Pravda/Izvestiia/Rad ykr 1983</td><td>Domestic silence test</td><td>Tier A or revise claim</td></tr>
+    <tr><td>Carleton embassy Press Office releases</td><td>Outward packet completeness</td><td>Primary</td></tr>
+    <tr><td><em>Harvest of Despair</em> (licensed)</td><td>Film foil arc</td><td>L1-33</td></tr>
+  </tbody>
+</table>
+
+<h2 class="section" id="phase4"><span class="phase-tag">Phase 4</span> L3 explosion gate</h2>
+<table>
+  <thead><tr><th>Step</th><th>Method</th></tr></thead>
+  <tbody>
+    <tr><td>Baseline co-occurrence</td><td>1976–1982 internal memos</td></tr>
+    <tr><td>Post-1983 window</td><td>Same operator vocabulary</td></tr>
+    <tr><td>Compare</td><td>Node/edge counts; new edges (red in L3 viz)</td></tr>
+    <tr><td>Control</td><td>Random date cut vs 1983 cut</td></tr>
+    <tr><td>Claim</td><td>Explosion only if rewrite + stable 1955 baseline</td></tr>
+  </tbody>
+</table>
+
+<h2 class="section" id="phase5"><span class="phase-tag">Phase 5</span> Pair-read benchmark (publishable artifact)</h2>
+<p><strong>Task types:</strong></p>
+<ol>
+  <li><strong>Operator retention</strong> — pick outward candidate that preserves/forbids scare-quote operator.</li>
+  <li><strong>Miss detection</strong> — does embassy packet name Montreal?</li>
+  <li><strong>Relay direction</strong> — classify surface type.</li>
+  <li><strong>False merge detection</strong> — flag register collapse in a summary.</li>
+</ol>
+<p><strong>Deliverable:</strong> <code>data/bc_corpus/benchmarks/register_relay_v1.json</code> + scorer script.</p>
+
+<h2 class="section" id="phase6"><span class="phase-tag">Phase 6</span> Writing tracks</h2>
+<table>
+  <thead><tr><th>Track</th><th>Venue</th><th>Lead with</th></tr></thead>
+  <tbody>
+    <tr><td>History / archive</td><td>Dissertation ch. 1–4</td><td>Montreal pair-read, Canada, embassy</td></tr>
+    <tr><td>Semiotics / Lotman</td><td>Method + article</td><td>L1–L3, ⊥</td></tr>
+    <tr><td>ML / DH</td><td>Workshop or journal</td><td>Probe, benchmark</td></tr>
+    <tr><td>Archivist UX</td><td>Checklist + site</td><td>“Do not read spravka alone”</td></tr>
+  </tbody>
+</table>
+
+<h3>Suggested session order</h3>
+<ol>
+  <li>Phase 0 re-run + confirm dated_units.</li>
+  <li>Phase 1a sign-event schema (2–3 hours coding).</li>
+  <li>Phase 3 acquisition (Globe, East View) — parallel, human-bound.</li>
+  <li>Phase 2.3 operator linear probe when schema exists.</li>
+  <li>Phase 4 L3 gate after more memos.</li>
+  <li>Phase 5 benchmark when 20+ scored pairs.</li>
+</ol>
+
+<h2 class="section" id="open-q">Open questions</h2>
+<table>
+  <thead><tr><th>#</th><th>Question</th><th>Answer / date</th></tr></thead>
+  <tbody>
+    <tr><td>Q1</td><td>Register non-mergeability stable under different frozen encoder (e.g. LaBSE)?</td><td></td></tr>
+    <tr><td>Q2</td><td>Does CIUS ingestion change L1 arc set materially?</td><td></td></tr>
+    <tr><td>Q3</td><td>Primary Pravda pages: silence holds or outward frame appears domestically?</td><td></td></tr>
+    <tr><td>Q4</td><td>Non-anniversary controls: same operator skew?</td><td></td></tr>
+    <tr><td>Q5</td><td>Partial-map formalism — dissertation appendix or separate paper?</td><td></td></tr>
+  </tbody>
+</table>
+
+</main>
+
+<section class="glossary" id="glossary">
+  <h2>Glossary · lay terms for this project</h2>
+  <p class="meta">Dotted terms in the text link here. Click a term for a quick popover; follow the link for the full entry.</p>
+
+  <dl>
+    <dt id="gloss-tensor">Tensor (L2 operator tensor)</dt>
+    <dd>
+      Think of a spreadsheet: rows are <strong>wording habits</strong> (scare quotes, “gathering” instead of symposium, drought denial), columns are <strong>where texts live</strong> (secret memo, embassy release, UN speech). Each cell counts how often that habit appears on that surface. An empty cell is not “we forgot to look” — it means that habit <em>does not speak</em> on that surface.
+      <span class="example">Example: 48 scare-quote hits on internal memos, 0 on embassy/Novosti/UN in the pilot window.</span>
+    </dd>
+
+    <dt id="gloss-operator">Operator</dt>
+    <dd>
+      Not a math symbol — a <strong>recoding habit</strong> attached to a stretch of text: putting “artificial famine” in scare quotes, renaming a symposium a “gathering” (<span class="ru">сборище</span>), answering famine talk with drought and kulak sabotage. Operators are what change when the same theme crosses from secret to public.
+      <span class="example">Example: spr. 1206 writes “symposium” in quotes; the April embassy release never names Montreal.</span>
+    </dd>
+
+    <dt id="gloss-shell">Shell</dt>
+    <dd>
+      One of four <strong>zones</strong> in the archive, each with different rules about what may be said: (1) secret KGB memos, (2) autocommunication reports, (3) Soviet outward tier (embassy, Novosti, UN), (4) rival/diaspora/mainstream foil. Same calendar week, incompatible reader contracts.
+    </dd>
+
+    <dt id="gloss-register">Register</dt>
+    <dd>
+      The <strong>document type plus audience contract</strong> — who the text is for and what genre allows. Register is why “famine” on spr. 1206 (quoted enemy lie) and “famine” on the embassy release (denial of artificial famine) are not the same sign-event.
+    </dd>
+
+    <dt id="gloss-sign-event">Sign-event</dt>
+    <dd>
+      The smallest unit we score: a <strong>stretch of text</strong> on a <strong>surface</strong>, on a <strong>date</strong>, with active <strong>operators</strong>, at a <strong>proof tier</strong>. Vectors attach to sign-events, not to dictionary lemmas.
+    </dd>
+
+    <dt id="gloss-semiosis">Semiosis</dt>
+    <dd>
+      How meaning <strong>moves between texts</strong> under institutional rules — not a word sitting in a dictionary. In this project: typed relay across surfaces (secret → outward → rival), with forbidden paths and documented silences.
+    </dd>
+
+    <dt id="gloss-semiosphere">Semiosphere (L1)</dt>
+    <dd>
+      Lotman’s term, operationalized here as a <strong>map of surfaces and relay arcs</strong>: which paths are proven, tier-B, promising, forbidden, or missing. Location in culture = relay position, not word frequency.
+    </dd>
+
+    <dt id="gloss-relay">Relay</dt>
+    <dd>
+      Movement of a theme or operator from one surface to another — e.g. famine language from spr. 1206 toward the April embassy packet. Relay can <strong>transform</strong> operators (quoted lie → drought denial) or <strong>stop</strong> (symposium → no Montreal sentence).
+    </dd>
+
+    <dt id="gloss-partial-map">Partial map</dt>
+    <dd>
+      Shell-to-shell translation that <strong>does not always have an answer</strong>. Some operators map cleanly; others hit ⊥ (no outward translation). Treating relay as a total function would fake a symmetry the archive refuses.
+    </dd>
+
+    <dt id="gloss-bottom">⊥ (bottom / untranslatable)</dt>
+    <dd>
+      Symbol for <strong>no licensed translation</strong> on that shell and date — not a software error. A zero column in the L2 tensor, or a documented miss (embassy release does not name Montreal).
+    </dd>
+
+    <dt id="gloss-untranslatable">Untranslatability</dt>
+    <dd>
+      What <strong>cannot cross a boundary unchanged</strong>, structurally — not a translator’s failure. In this corpus: scare quotes stay internal; symposium has no embassy counterpart. Empirical = empty tensor cell or documented miss.
+    </dd>
+
+    <dt id="gloss-documented-miss">Documented miss</dt>
+    <dd>
+      When pair-read shows an <strong>expected outward sentence is absent</strong> — e.g. the embassy release discusses drought but never names the Montreal meeting the memo tracked. The absence is evidence about the filter, not a gap in the search.
+    </dd>
+
+    <dt id="gloss-silence">Silence (as coordinate)</dt>
+    <dd>
+      When a channel <strong>does not carry a frame</strong> you might expect — e.g. domestic Pravda/Izvestiia not printing the drought denial in the processed 1983 window. Silence tells you <em>which channel has which job</em>, not that sources are missing.
+    </dd>
+
+    <dt id="gloss-pair-read">Pair-read</dt>
+    <dd>
+      The warrant chain: read a secret stretch beside its <strong>dated outward counterpart</strong> (or record a documented absence). Every historical claim and every geometric check ultimately answers to pair-read — not to the probe alone.
+    </dd>
+
+    <dt id="gloss-embedding">Embedding</dt>
+    <dd>
+      A <strong>numeric fingerprint</strong> of a sentence from a frozen language model. Nearby fingerprints often share <em>topic</em>; they routinely miss scare quotes, gathering recodes, and other register-specific operators.
+    </dd>
+
+    <dt id="gloss-manifold">Manifold (single-manifold assumption)</dt>
+    <dd>
+      The ML default: all texts live in <strong>one shared meaning space</strong>, and closeness ≈ understanding. Montreal falsifies this — secret and public texts are not dialect variants on the same plane.
+    </dd>
+
+    <dt id="gloss-cosine">Cosine similarity</dt>
+    <dd>
+      The <strong>angle</strong> between two fingerprint vectors — “how pointy in the same direction.” High cosine ≈ same topic neighborhood. It does <em>not</em> mean register-faithful translation or operator preservation.
+    </dd>
+
+    <dt id="gloss-probe">Probe (semiosphere feature-space probe)</dt>
+    <dd>
+      A small computational <strong>check</strong>: freeze an encoder, embed 25 scored stretches, fit a thin secret→outward map, compare to shuffled and rival controls. Confirms theme-level linearity; falsifies careless register merge. <strong>Microscope, not oracle.</strong>
+    </dd>
+
+    <dt id="gloss-procrustes">Orthogonal Procrustes</dt>
+    <dd>
+      A way to align two sets of fingerprints by <strong>rotating</strong> one space to match the other — like turning a transparency until paired points line up, without stretching. Used here for secret→outward map W.
+    </dd>
+
+    <dt id="gloss-ridge">Ridge (unconstrained linear map)</dt>
+    <dd>
+      A looser map than Procrustes: can <strong>stretch and compress</strong> dimensions to fit pairs better. Higher score (0.756 in-sample) does not mean better historical reading — only easier curve-fitting.
+    </dd>
+
+    <dt id="gloss-loto">LOTO (leave-one-topic-out)</dt>
+    <dd>
+      Train the map on some themes, <strong>hold one topic out</strong>, test whether the rotation generalizes. With only nine secret→outward pairs, LOTO collapses to chance — the set is a dictionary, not a training corpus.
+    </dd>
+
+    <dt id="gloss-explosion">Explosion (L3, candidate)</dt>
+    <dd>
+      Lotman’s term for a <strong>phase change</strong> in internal phrase co-occurrence after a boundary event. Here: after Montreal 1983, does the office’s internal wording network rewire while 1955 training-manual habits persist? <strong>Gated</strong> — not claimed from pilot counts alone.
+    </dd>
+
+    <dt id="gloss-theme-level">Theme-level</dt>
+    <dd>
+      Reading at the level of <strong>topic co-occurrence</strong> — famine near Canada, anniversary season. What generic embeddings recover easily. Insufficient for register-faithful history.
+    </dd>
+
+    <dt id="gloss-register-level">Register-level / register-faithful</dt>
+    <dd>
+      Reading that tracks <strong>operator preservation</strong> — do scare quotes survive the relay? Does symposium become drought? This is what pair-read enforces and what a single manifold tends to collapse.
+    </dd>
+
+    <dt id="gloss-merge">Register merge / collapse</dt>
+    <dd>
+      When a system (human summary or ML model) <strong>averages secret and public</strong> into one voice — effectively reading the embassy release while smuggling in internal operators. The probe’s main negative result flags this failure mode.
+    </dd>
+
+    <dt id="gloss-sheaf">Sheaf (informal intuition)</dt>
+    <dd>
+      Borrowed from mathematics: each shell has <strong>local rules</strong> about what is speakable; you may only “glue” patches where pair-read proves a relay; obstructions (⊥, silence) block one global story. Formal write-up deferred to Phase 1.
+    </dd>
+
+    <dt id="gloss-surface">Surface</dt>
+    <dd>
+      A <strong>document venue</strong> in the corpus — spr. 1206, embassy press release no. 60, Novosti alias, Khmil UN speech, <em>Ukrainian Weekly</em>, Pravda (silence coordinate), etc. Surfaces are columns in the L2 tensor and nodes in the L1 semiosphere.
+    </dd>
+
+    <dt id="gloss-proof-tier">Proof tier</dt>
+    <dd>
+      How strong the warrant is for a claim or edge: <strong>primary</strong> (fond memo in hand), <strong>tier-B processed</strong> (newspaper audit without every page imaged), <strong>documented miss</strong>, <strong>not claimed</strong>. Edges in L1 carry tier labels; the probe never upgrades tier.
+    </dd>
+
+    <dt id="gloss-fiber">Fiber (coordinate axis)</dt>
+    <dd>
+      A <strong>named axis</strong> in the proposed coordinate system — shell, date, operator vector, proof tier, relay direction — as opposed to an unchosen dimension from a generic embedding. See <a href="#eq-coordinates">sign-event coordinates</a>.
+    </dd>
+  </dl>
+</section>
+
+<p class="meta" style="margin-top:2rem;border-top:1px solid var(--rule);padding-top:1rem;">
+  Compiled 2026-09-17 · <a href="#top">Back to contents</a> · <a href="#glossary">Glossary</a>
+</p>
+
+<script>
+(function () {
+  /* Registry mirrors docs/theory/GLOSSARY_REGISTRY.json — longest phrases first */
+  var GLOSS = [
+    { re: /\bregister-faithful\b/gi, id: 'gloss-register-level', tip: 'Whether operators survive relay.' },
+    { re: /\bregister-level\b/gi, id: 'gloss-register-level', tip: 'Operator preservation across relay.' },
+    { re: /\btheme-level\b/gi, id: 'gloss-theme-level', tip: 'Topic co-occurrence level.' },
+    { re: /\bdocumented miss(?:es)?\b/gi, id: 'gloss-documented-miss', tip: 'Expected outward sentence absent.' },
+    { re: /\bsign-events?\b/gi, id: 'gloss-sign-event', tip: 'Scored unit: stretch + surface + date + operators.' },
+    { re: /\bpartial maps?\b/gi, id: 'gloss-partial-map', tip: 'Shell translation with ⊥ cases.' },
+    { re: /\bpair-reads?\b/gi, id: 'gloss-pair-read', tip: 'Warrant: read secret beside dated outward.' },
+    { re: /\borthogonal Procrustes\b/gi, id: 'gloss-procrustes', tip: 'Rotation-only alignment Y ≈ WX.' },
+    { re: /\bproof tiers?\b/gi, id: 'gloss-proof-tier', tip: 'Warrant strength on a claim or edge.' },
+    { re: /\buntranslatables?\b/gi, id: 'gloss-untranslatable', tip: 'Cannot cross unchanged — empty tensor cell.' },
+    { re: /\bsemiosphere\b/gi, id: 'gloss-semiosphere', tip: 'L1 map of surfaces and relay arcs.' },
+    { re: /\bembeddings?\b/gi, id: 'gloss-embedding', tip: 'Numeric sentence fingerprints.' },
+    { re: /\boperators?\b/gi, id: 'gloss-operator', tip: 'Recoding habit on a stretch.' },
+    { re: /\bregisters?\b/gi, id: 'gloss-register', tip: 'Document type + audience contract.' },
+    { re: /\bsurfaces?\b/gi, id: 'gloss-surface', tip: 'Document venue in the corpus.' },
+    { re: /\bsemiosis\b/gi, id: 'gloss-semiosis', tip: 'Meaning as typed relay.' },
+    { re: /\bmanifolds?\b/gi, id: 'gloss-manifold', tip: 'One shared meaning space (ML default).' },
+    { re: /\bexplosion\b/gi, id: 'gloss-explosion', tip: 'L3 candidate phase change — gated.' },
+    { re: /\btensors?\b/gi, id: 'gloss-tensor', tip: 'Operator × surface counting grid.' },
+    { re: /\bshells?\b/gi, id: 'gloss-shell', tip: 'Zone 1–4 in the archive.' },
+    { re: /\brelays?\b/gi, id: 'gloss-relay', tip: 'Movement between surfaces.' },
+    { re: /\bsilence\b/gi, id: 'gloss-silence', tip: 'Channel does not carry a frame.' },
+    { re: /\bcosine\b/gi, id: 'gloss-cosine', tip: 'Angle between fingerprint vectors.' },
+    { re: /\bprobes?\b/gi, id: 'gloss-probe', tip: 'Computational check — microscope, not oracle.' },
+    { re: /\bLOTO\b/g, id: 'gloss-loto', tip: 'Leave-one-topic-out cross-validation.' },
+    { re: /\bfibers?\b/gi, id: 'gloss-fiber', tip: 'Named coordinate axis.' },
+    { re: /\bsheaves?\b/gi, id: 'gloss-sheaf', tip: 'Local shell rules + gluing where proven.' }
+  ];
+
+  var pop = document.getElementById('term-popover');
+  var returnNav = document.getElementById('return-nav');
+  var returnBtn = document.getElementById('return-nav-btn');
+  var returnWhere = document.getElementById('return-nav-where');
+  var openTerm = null;
+  var returnPoint = null;
+
+  function nearestSectionLabel(el) {
+    var node = el;
+    while (node && node !== document.body) {
+      if (node.id && (node.matches('h2, h3, part-divider, .math-block') || /^s\d|phase|brief|full|roadmap/.test(node.id))) {
+        var t = node.textContent.replace(/\s+/g, ' ').trim();
+        return t.length > 48 ? t.slice(0, 45) + '…' : t;
+      }
+      node = node.parentElement;
+    }
+    return 'last reading position';
+  }
+
+  function saveReturnPoint(fromEl) {
+    var anchor = fromEl;
+    while (anchor && !anchor.id && anchor !== document.body) anchor = anchor.parentElement;
+    returnPoint = {
+      y: window.scrollY,
+      id: anchor && anchor.id ? anchor.id : null,
+      label: nearestSectionLabel(fromEl)
+    };
+  }
+
+  function showReturnNav() {
+    if (!returnPoint) return;
+    returnWhere.textContent = returnPoint.label;
+    returnNav.classList.add('visible');
+  }
+
+  function hideReturnNav() {
+    returnNav.classList.remove('visible');
+  }
+
+  function hidePopover() {
+    pop.classList.remove('visible');
+    pop.setAttribute('aria-hidden', 'true');
+    openTerm = null;
+  }
+
+  function showPopover(term, x, y) {
+    var label = term.textContent.replace(/\s+/g, ' ').trim();
+    var tip = term.getAttribute('data-tip') || '';
+    var href = term.getAttribute('href') || '';
+    pop.innerHTML =
+      '<strong>' + label + '</strong>' +
+      '<div>' + tip + '</div>' +
+      (href.indexOf('#gloss-') === 0 || href.indexOf('#eq-') === 0
+        ? '<a class="more term-goto" href="' + href + '">Full definition ↓</a>'
+        : '');
+    pop.style.left = Math.min(Math.max(8, x), window.innerWidth - 360) + 'px';
+    pop.style.top = Math.min(y + 12, window.innerHeight - 140) + 'px';
+    pop.classList.add('visible');
+    pop.setAttribute('aria-hidden', 'false');
+    openTerm = term;
+  }
+
+  function bindTerm(term) {
+    term.addEventListener('click', function (e) {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) {
+        saveReturnPoint(term);
+        showReturnNav();
+        return;
+      }
+      var rect = term.getBoundingClientRect();
+      if (openTerm === term && pop.classList.contains('visible')) {
+        hidePopover();
+        e.preventDefault();
+        return;
+      }
+      saveReturnPoint(term);
+      showPopover(term, rect.left, rect.bottom);
+      e.preventDefault();
+      var href = term.getAttribute('href') || '';
+      if (href.indexOf('#gloss-') === 0 || href.indexOf('#eq-') === 0) {
+        showReturnNav();
+        if (history.replaceState) history.replaceState(null, '', href);
+      }
+    });
+  }
+
+  function bindAllTerms() {
+    document.querySelectorAll('a.term').forEach(bindTerm);
+  }
+
+  function autoLinkTerms(root) {
+    var skipTag = { A: 1, CODE: 1, PRE: 1, SCRIPT: 1, STYLE: 1, DT: 1, DD: 1, TEXTAREA: 1 };
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode: function (node) {
+        var p = node.parentElement;
+        if (!p || skipTag[p.tagName] || p.closest('a.term, code, pre, script, style')) {
+          return NodeFilter.FILTER_REJECT;
+        }
+        return node.textContent.trim() ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+      }
+    });
+    var nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+
+    nodes.forEach(function (textNode) {
+      var text = textNode.textContent;
+      var entries = [];
+      GLOSS.forEach(function (g) {
+        var re = new RegExp(g.re.source, g.re.flags);
+        var m;
+        while ((m = re.exec(text)) !== null) {
+          entries.push({ start: m.index, end: m.index + m[0].length, match: m[0], id: g.id, tip: g.tip });
+        }
+      });
+      if (!entries.length) return;
+      entries.sort(function (a, b) { return a.start - b.start || b.end - a.end; });
+      var filtered = [];
+      var last = -1;
+      entries.forEach(function (e) {
+        if (e.start >= last) { filtered.push(e); last = e.end; }
+      });
+      var frag = document.createDocumentFragment();
+      var pos = 0;
+      filtered.forEach(function (e) {
+        if (e.start > pos) frag.appendChild(document.createTextNode(text.slice(pos, e.start)));
+        var a = document.createElement('a');
+        a.className = 'term term-auto';
+        a.href = '#' + e.id;
+        a.setAttribute('data-tip', e.tip);
+        a.textContent = e.match;
+        frag.appendChild(a);
+        pos = e.end;
+      });
+      if (pos < text.length) frag.appendChild(document.createTextNode(text.slice(pos)));
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+
+  returnBtn.addEventListener('click', function () {
+    if (!returnPoint) return;
+    hidePopover();
+    if (returnPoint.id) {
+      var el = document.getElementById(returnPoint.id);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      else window.scrollTo({ top: returnPoint.y, behavior: 'smooth' });
+    } else {
+      window.scrollTo({ top: returnPoint.y, behavior: 'smooth' });
+    }
+    hideReturnNav();
+    returnPoint = null;
+    if (history.replaceState) history.replaceState(null, '', '#top');
+  });
+
+  pop.addEventListener('click', function (e) {
+    var link = e.target.closest('a.term-goto');
+    if (!link) return;
+    e.preventDefault();
+    hidePopover();
+    showReturnNav();
+    var target = document.querySelector(link.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!pop.contains(e.target) && !e.target.classList.contains('term')) hidePopover();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { hidePopover(); hideReturnNav(); }
+  });
+
+  var main = document.getElementById('doc-main');
+  if (main) autoLinkTerms(main);
+  bindAllTerms();
+
+  window.addEventListener('hashchange', function () {
+    if (location.hash.indexOf('#gloss-') === 0 || location.hash.indexOf('#eq-') === 0) showReturnNav();
+  });
+})();
+</script>
+
+</body>
+</html>

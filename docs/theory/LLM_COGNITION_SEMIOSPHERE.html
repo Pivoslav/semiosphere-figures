@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How an LLM thinks, in semiosphere space</title>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
+<style>
+  :root{
+    --ink:#13171d; --muted:#5d6771; --rule:#dae0e7; --bg:#fafbfc; --panel:#fff;
+    --secret:#6a1b1b; --outward:#2a4a6f; --rival:#c4651f; --silence:#6b6f76;
+    --neg:#8c1d1d; --pos:#1f5136; --warn:#7a5200; --accent:#2a4a6f;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:16px/1.62 Georgia,'Iowan Old Style',serif;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1000px;margin:0 auto;padding:52px 26px 120px}
+  header.doc{border-bottom:3px solid var(--ink);padding-bottom:20px;margin-bottom:28px}
+  h1{font-size:2rem;line-height:1.18;margin:0 0 10px;letter-spacing:-.01em}
+  .sub{color:var(--muted);font-style:italic;margin:0;font-size:1.02rem}
+  .meta{margin-top:14px;font-family:ui-monospace,Menlo,monospace;font-size:.76rem;color:var(--muted)}
+  h2{font-size:1.38rem;margin:52px 0 4px;padding-top:24px;border-top:1px solid var(--rule)}
+  h2 .num{display:block;color:var(--muted);font-family:ui-monospace,monospace;
+    font-size:.78rem;letter-spacing:.09em;margin-bottom:6px}
+  h3{font-size:1.02rem;margin:26px 0 6px;color:var(--accent)}
+  p{margin:0 0 14px}
+  .fig{background:var(--panel);border:1px solid var(--rule);border-radius:5px;
+    margin:24px 0 8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+  .fig .plot{width:100%}
+  .fighead{padding:13px 18px 11px;border-bottom:1px solid var(--rule);background:#f6f8fa}
+  .figttl{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    font-weight:650;font-size:.95rem;margin:0}
+  .badge{display:inline-block;font-family:ui-monospace,monospace;font-size:.63rem;
+    font-weight:700;letter-spacing:.06em;padding:2px 7px;border-radius:3px;margin-right:8px;
+    vertical-align:2px}
+  .b-data{background:#e4efe7;color:var(--pos);border:1px solid #bcd6c4}
+  .b-illus{background:#eceff3;color:var(--muted);border:1px solid #d2d9e2}
+  .cap{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    font-size:.84rem;color:var(--muted);padding:0 2px;margin:0 0 30px;line-height:1.55}
+  .cap strong{color:var(--ink)}
+  .banner{background:#fdf8ee;border:1px solid #e8d4a8;border-left:5px solid var(--warn);
+    padding:16px 20px;margin-bottom:30px;font-size:.92rem}
+  .callout{padding:15px 19px;margin:20px 0;border-radius:4px;font-size:.94rem}
+  .c-neg{background:#fdf4f4;border:1px solid #e8c9c9;border-left:5px solid var(--neg)}
+  .c-pos{background:#f3f8f5;border:1px solid #c8ded1;border-left:5px solid var(--pos)}
+  .lab{display:block;font-family:ui-monospace,monospace;font-size:.68rem;letter-spacing:.09em;
+    font-weight:700;text-transform:uppercase;margin-bottom:6px}
+  .c-neg .lab{color:var(--neg)} .c-pos .lab{color:var(--pos)}
+  table{width:100%;border-collapse:collapse;margin:20px 0;font-size:.87rem;background:var(--panel);
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+  th,td{padding:9px 11px;text-align:left;border-bottom:1px solid var(--rule);vertical-align:top}
+  th{background:#f1f4f7;font-size:.73rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+  code{font-family:ui-monospace,Menlo,monospace;font-size:.85em;background:#eef1f5;
+    padding:1px 5px;border-radius:3px}
+  .nohl{font-family:ui-monospace,monospace;font-weight:700}
+  blockquote{margin:20px 0;padding:16px 20px;background:var(--panel);border-left:4px solid var(--accent)}
+  blockquote p{margin:0}
+  .cite{display:block;font-family:ui-monospace,monospace;font-size:.74rem;color:var(--muted);margin-top:9px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:760px){.grid2{grid-template-columns:1fr}}
+  #noplotly{display:none;background:#fdf4f4;border:1px solid #e8c9c9;padding:16px 20px;
+    margin-bottom:24px;font-size:.92rem}
+  footer.doc{margin-top:58px;padding-top:20px;border-top:3px solid var(--ink);
+    font-size:.84rem;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="doc">
+  <h1>How an LLM thinks, in semiosphere space</h1>
+  <p class="sub">Nine figures on generation, boundaries, persistence, and where machine semiosis parts from human semiosis.</p>
+  <p class="meta">
+    Plate: 38 units · Encoder: <code>paraphrase-multilingual-MiniLM-L12-v2</code> · Generated 2026-09-28T10:42:42<br>
+    Data: <code>data/bc_corpus/semiosphere_feature_space/cognition_viz_data.json</code> ·
+    Rebuild: <code>scripts/build_cognition_semiosphere_viz.py</code>
+  </p>
+</header>
+
+<div id="noplotly">
+  <strong>Plotly did not load.</strong> The figures need <code>https://cdn.plot.ly/plotly-2.35.2.min.js</code>.
+  Open this file with a network connection, or download Plotly and change the script tag to a local path.
+</div>
+
+<div class="banner">
+  <strong>Two kinds of figure, and the difference matters.</strong>
+  <span class="badge b-data">GROUNDED</span> figures plot numbers measured in this repository; the source file is named in the caption.
+  <span class="badge b-illus">ILLUSTRATIVE</span> figures are diagrams of an argument and encode <em>no</em> measurement — they cannot be cited as evidence, consistent with the standing rule that demonstration figures are not counted as data.
+  <br><br>
+  <strong>One caveat governs every 3D scatter here.</strong> The plate lives in 384 dimensions; these views show three principal components carrying
+  18.5%, 12.6%, and 8.1% of variance — <span class="nohl">39.2%</span> in total.
+  Roughly three-fifths of the geometry is projected away. Visual proximity therefore <em>understates</em> true distance and is a navigation aid, not a finding.
+</div>
+
+<!-- ======================= PART ONE ======================= -->
+<h2><span class="num">PART ONE</span>What generation actually is</h2>
+
+<p>Before any comparison to human thought, it is worth being concrete about the mechanism. A language model does not retrieve a proposition and then phrase it. At each step it produces a probability distribution over the whole vocabulary, conditioned on a window of preceding tokens, samples one, appends it, and repeats. Nothing else persists between steps except the window itself.</p>
+
+<div class="fig">
+  <div class="fighead"><p class="figttl"><span class="badge b-illus">ILLUSTRATIVE</span>Figure 1 — Generation as a conditioned walk, not a lookup</p></div>
+  <div id="f1" class="plot" style="height:420px"></div>
+</div>
+<p class="cap"><strong>Left:</strong> the next-token distribution at four successive steps. Each step is a fresh distribution; the model commits to a sample and cannot revisit it. <strong>Right:</strong> the context window sliding forward. Tokens that fall out of the window stop conditioning anything at all — they leave no trace, no summary, no accumulated commitment. This is the single most consequential architectural fact for everything in Part Three.</p>
+
+<p>Two properties follow immediately, and they are properties of the architecture rather than of any particular model's competence.</p>
+
+<p>First, generation is <em>monotone</em>. There is no revision operator. A human writer who realises in paragraph four that paragraph one was wrong goes back; the model can only continue, possibly contradicting itself forward.</p>
+
+<p>Second, the conditioning is <em>flat</em>. The window is a sequence of tokens, not a typed structure. Nothing in it marks one stretch as a secret internal memo and another as a published newspaper article. If that distinction matters, it has to be either encoded in the text itself or imposed from outside the model.</p>
+
+<!-- ======================= PART TWO ======================= -->
+<h2><span class="num">PART TWO</span>The same archive in two geometries</h2>
+
+<p>Now put a real corpus into that machine. The plate is 38 documents from a Soviet security file and its public counterparts: internal KGB memos in Russian, embassy and Novosti releases in English, diaspora and press material in English, and processed silences. Lotman's account of such a space is explicit that it is not one space but a nested, bounded, heterogeneous one.</p>
+
+<blockquote>
+  <p>&ldquo;Every culture begins by dividing the world into &lsquo;its own&rsquo; internal space and &lsquo;their&rsquo; external space.&rdquo;</p>
+  <span class="cite">Juri Lotman, <em>Universe of the Mind</em> (1990), trans. Ann Shukman, &ldquo;The Notion of Boundary.&rdquo; Verify page before citing in prose.</span>
+</blockquote>
+
+<p>Figure 2 is what the encoder sees. Every document is a point; the only relation available is proximity, and proximity means distributional similarity — in practice, shared topic and shared language. Rotate it and look for the boundary. There is not one.</p>
+
+<div class="fig">
+  <div class="fighead"><p class="figttl"><span class="badge b-data">GROUNDED</span>Figure 2 — The model's view: one continuous similarity space</p></div>
+  <div id="f2" class="plot" style="height:560px"></div>
+</div>
+<p class="cap"><strong>Real coordinates.</strong> All 38 units, frozen <code>paraphrase-multilingual-MiniLM-L12-v2</code>, PCA-3. Colour marks the institutional shell, but the colour is <em>our</em> annotation — it is not a dimension the encoder has. Drag to rotate. Source: <code>cognition_viz_data.json</code>, built from <code>pairs.json</code>.</p>
+
+<p>The clustering you can see is largely the Russian/English split, which is exactly the trap the nearest-neighbour experiment fell into: all 17 secret units are Russian and all outward and rival units are English, so apparent shell separation in this space can be language separation wearing a costume.</p>
+
+<div class="callout c-neg">
+  <span class="lab">Retracted claim, preserved as a warning</span>
+  Cross-shell nearest-neighbour separation was once read as evidence that the secret core "will not translate outward." It does not survive: permutation <span class="nohl">p = 0.149</span>, the direction <em>reverses</em> under topic blocking, and the language confound above is unresolved. Figure 2 is therefore shown to explain what the model sees, not to argue that shells are visible in it.
+</div>
+
+<p>Figure 3 adds what the archive knows and the encoder does not: typed edges. Each line is a licensed pair-read or a registered halt — a relation established by a historian reading two dated documents against each other, carrying a morphism type. These edges are not distances. Two documents can be far apart in the geometry and strongly related in the archive, or adjacent and related by nothing at all.</p>
+
+<div class="fig">
+  <div class="fighead"><p class="figttl"><span class="badge b-data">GROUNDED</span>Figure 3 — The same points with the archive's typed structure restored</p></div>
+  <div id="f3" class="plot" style="height:580px"></div>
+</div>
+<p class="cap"><strong>Real coordinates and real edges.</strong> 33 typed relations over the same 38 points. Use the legend to isolate each relation type. The structure carried by these lines is <em>orthogonal</em> to the distances in Figure 2, which is the whole argument of this document in one image. Source: <code>pairs.json</code>.</p>
+
+<p>Lotman's boundary is not a decorative edge around this space. It is the organ that makes it a space at all, and he describes its function in operational terms.</p>
+
+<blockquote>
+  <p>&ldquo;The boundary is a bilingual mechanism, translating external communications into the internal language of the semiosphere and vice versa.&rdquo;</p>
+  <span class="cite">Lotman, &ldquo;On the Semiosphere&rdquo; (1984), trans. Wilma Clark, <em>Sign Systems Studies</em> 33.1 (2005). Wording to be checked against the Clark translation.</span>
+</blockquote>
+
+<div class="fig">
+  <div class="fighead"><p class="figttl"><span class="badge b-illus">ILLUSTRATIVE</span>Figure 4 — The semiosphere as Lotman describes it</p></div>
+  <div id="f4" class="plot" style="height:560px"></div>
+</div>
+<p class="cap"><strong>Diagram, not measurement.</strong> Nested shells with the boundary as a filter: some material crosses and is recoded, some is refused. The refused portion is not noise — untranslatability is a property of the boundary, not a failure of it. Compare the shape of this figure with Figure 2, which is the same archive with the shells and the filter deleted.</p>
+
+<h3>We tried to measure the filter as a rotation. It is not one.</h3>
+
+<p>The obvious way to operationalise a bilingual mechanism is to learn a map carrying secret Russian onto its public English counterpart, fitted on licensed pairs. That map achieves <span class="nohl">0.613</span> in-sample, which looks decisive until it is compared with the right null.</p>
+
+<div class="fig">
+  <div class="fighead"><p class="figttl"><span class="badge b-data">GROUNDED</span>Figure 5 — Why the headline number was withdrawn</p></div>
+  <div id="f5" class="plot" style="height:460px"></div>
+</div>
+<p class="cap"><strong>Measured.</strong> The matched null shuffles the pairing, refits, and scores against <em>those same shuffled</em> targets — the like-for-like floor for an in-sample fit. It reaches <span class="nohl">0.602</span>, against an observed <span class="nohl">0.613</span>, giving <span class="nohl">p = 0.394</span>. Out-of-bag, on pairs each map never saw, alignment is <span class="nohl">0.022</span> with a 95% interval from -0.318 to 0.312, spanning zero. Source: <code>results.json</code>, <code>probe_bootstrap_ci_report.json</code>.</p>
+
+<div class="callout c-pos">
+  <span class="lab">The failure is theoretically correct</span>
+  A rotation is invertible and lossless. A filter is neither. Fitting nine points in 384 dimensions with a free orthogonal map manufactures roughly 0.60 from an arbitrary pairing, so the number measured geometric slack — but the deeper point is that the object we tried to fit is the wrong <em>kind</em> of object. Lotman's boundary is defined by residue as much as by passage, and out-of-bag 0.022 is the residue reporting itself.
+</div>
+
+<h3>What the geometry does hold: prohibition</h3>
+
+<p>One thing the embeddings track well is what a register refuses to do. Scare quotes saturate the internal memos and appear nowhere in the embassy packet. Asked whether a smooth vector space can hold that absolute zero, the answer was yes — and the control ran opposite to the hypothesis.</p>
+
+<div class="fig">
+  <div class="fighead"><p class="figttl"><span class="badge b-data">GROUNDED</span>Figure 6 — Shuffling the institutions makes the prohibitions harder to keep</p></div>
+  <div id="f6" class="plot" style="height:400px"></div>
+</div>
+<p class="cap"><strong>Measured.</strong> Observed violation rate <span class="nohl">0.067</span> against a shuffled-institution null of <span class="nohl">0.309</span> (1000 permutations), p(null &ge; observed) = 0.999. Randomising which document belongs to which institution makes violations roughly five times more common, so the true assignment carries real signal. Source: <code>e6_forbidden_operator_report.json</code>.</p>
+
+<p>This is Lotman's <em>minus-device</em> — минус-приём — a structurally significant absence, meaningful because the system made the missing element expectable. It also relocates the phenomenon we are chasing: if the representations hold the zeros, then register collapse, where it occurs, is happening later — in retrieval and in generation.</p>
+
+<div class="fig">
+  <div class="fighead"><p class="figttl"><span class="badge b-data">GROUNDED</span>Figure 7 — Collapse at the retrieval layer: theme gravity</p></div>
+  <div id="f7" class="plot" style="height:430px"></div>
+</div>
+<p class="cap"><strong>Measured.</strong> <em>Left:</em> for each of the 38 units, the shell of its nearest neighbour — nearly everything retrieves within its own shell, and the whole cross-shell contrast rests on a handful of documents. <em>Right:</em> asked for a published newspaper article that would prove a film was forged, an unfiltered retriever returns the internal memo <em>claiming</em> that article exists — 6 of 6 phrasings, including the Russian one. Restricting the pool by shell drops tier confusion to zero. Source: <code>e4_unpaired_halt_report.json</code>.</p>
+
+<p>The memo is labelled <code>proof_tier: primary</code>, and correctly so: it is a primary KGB document. The label is right about the document and catastrophic about the question. A system with no boundary inherits the label without the structure that gave it meaning, and so presents an unverified internal assertion as primary evidence of an external fact.</p>
+
+<!-- ======================= PART THREE ======================= -->
+<h2><span class="num">PART THREE</span>Persistence, and what it does to semiotic thought</h2>
+
+<p>This is the part where the architecture of Part One becomes decisive. Lotman's culture is defined by accumulation:</p>
+
+<blockquote>
+  <p>&ldquo;Culture is the non-hereditary memory of the community.&rdquo;</p>
+  <span class="cite">Juri Lotman and Boris Uspensky, &ldquo;On the Semiotic Mechanism of Culture&rdquo; (1971/1978), trans. George Mihaychuk, <em>New Literary History</em> 9.2.</span>
+</blockquote>
+
+<p>Memory, in that definition, is not storage. It is the fact that what the community has already said <em>constrains what it can say next</em>. A register acquires commitments. Having called something a &ldquo;so-called famine&rdquo; in 1983, an institution cannot neutrally call it a famine in 1987 without that being itself an event. Meaning becomes path-dependent, and the path cannot be discarded.</p>
+
+<p>The archive lets us watch this happen. Across the internal chain — 1983, 1983, then 1987 — the vocabulary is retooled while the volume stays flat.</p>
+
+<div class="fig">
+  <div class="fighead"><p class="figttl"><span class="badge b-data">GROUNDED</span>Figure 8 — Persistence and turnover at constant volume</p></div>
+  <div id="f8" class="plot" style="height:470px"></div>
+</div>
+<p class="cap"><strong>Measured.</strong> Two operators persist across all three files (scare quotes 13/19/16; famine denial 3/4/3) while two enter only in 1987 and three disappear after 1983. Total operator tokens stay flat at 22/24/26 and the number of sign-events actually falls. Composition turns over; quantity does not. Source: <code>e7_diachronic_bindings_report.json</code>. Counts are a <em>check</em>; the pair-read remains the warrant.</p>
+
+<p>That flat line across the top is the important one. It rules out the mundane explanation — that the archive simply got louder — and leaves a change in the <em>set of available moves</em>, which is what Lotman means by explosion as against gradual process.</p>
+
+<blockquote>
+  <p>&ldquo;The moment of explosion is the moment of unpredictability.&rdquo;</p>
+  <span class="cite">Lotman, <em>Culture and Explosion</em> (1992), trans. Wilma Clark (2009). Wording to be verified.</span>
+</blockquote>
+
+<p>Note which operator disappears: <em>сборище</em>, the genre downgrade that recast a scholarly symposium as a mere &ldquo;gathering.&rdquo; It was bound to one occasion, Montreal 1983. When the occasion passed, the device left the vocabulary — evidence that these are indexical acts tied to events, not stylistic habits.</p>
+
+<h3>Now the contrast</h3>
+
+<p>A semiosphere carries its history in its constraints. A context window does not. Each session begins from the same distribution; nothing from the last one conditions this one; two runs of the same prompt are draws from the same generator rather than successive states of a developing position.</p>
+
+<div class="fig">
+  <div class="fighead"><p class="figttl"><span class="badge b-illus">ILLUSTRATIVE</span>Figure 9 — Path-dependent accumulation against independent draws</p></div>
+  <div id="f9" class="plot" style="height:580px"></div>
+</div>
+<p class="cap"><strong>Diagram, not measurement.</strong> <em>Blue:</em> trajectories in which each step is conditioned on accumulated history — they diverge, commit, and cannot return to the origin, because the past has changed what is reachable. <em>Orange:</em> sessions that each start from the same prompt state, wander, and are drawn back toward the same attractor; they overlap and never accumulate. Rotate to see that the blue paths occupy a widening region while the orange ones revisit one. Both bundles are generated by seeded random walks for exposition.</p>
+
+<p>Three consequences of the difference, in Lotman's terms.</p>
+
+<p><strong>No position, so no bind and no refusal.</strong> A register is a position from which some things may be said and others may not. Positions are held over time; they are what accumulation produces. A system that begins fresh each session occupies no position, and a system with no position cannot be bound by a register — nor can it refuse one, which is the more interesting half. The counter-text, the refusal to accept an imposed meaning, requires somebody who was already somewhere.</p>
+
+<p><strong>No autocommunication, and therefore a peculiar vulnerability.</strong> Lotman separates the <em>I&ndash;s/he</em> channel, which transmits information, from the <em>I&ndash;I</em> channel, in which a message returns to its sender and reorganises the sender rather than informing anyone. Human thought runs heavily on the second. A model has no persistent self for a message to return to — and yet it exhibits the characteristic <em>failure</em> of autocommunication without its function.</p>
+
+<div class="fig">
+  <div class="fighead"><p class="figttl"><span class="badge b-illus">ILLUSTRATIVE</span>Figure 10 — The manufactured referent</p></div>
+  <div id="f10" class="plot" style="height:440px"></div>
+</div>
+<p class="cap"><strong>Diagram of a real case.</strong> The internal file asserts that a Canadian newspaper established a documentary was forged. An archival search returned nothing, so the claim is registered as <code>outward_unpaired</code>: an internal assertion of an external effect, with no external sign-event to pair it to. The referent exists only in the internal channel. This is the closest structural analogue to a confident citation of a nonexistent source — and because the corpus reproduces it on demand (Figure 7), it is a test rather than a metaphor. The unpaired edge must stay unpaired; inventing a clip to close it would destroy the finding.</p>
+
+<p><strong>Non-synchronous development becomes impossible.</strong> In a semiosphere, different registers move at different rates — the internal memo language and the diplomatic release language are not on the same clock, which is what makes the 1983&ndash;87 retooling legible as an event in one register and not another. A single pooled model has one clock, or none. It cannot exhibit the asymmetry because it has no plural interior to be asymmetric across.</p>
+
+<!-- ======================= PART FOUR ======================= -->
+<h2><span class="num">PART FOUR</span>Where machine and human semiosis actually part</h2>
+
+<p>The honest summary is not that models fail at thinking. It is that the default architecture omits specific structural features that Lotman's account treats as constitutive of meaning-generation, and those omissions are visible on a calibrated plate.</p>
+
+<div class="fig">
+  <div class="fighead"><p class="figttl"><span class="badge b-illus">ILLUSTRATIVE</span>Figure 11 — Six Lotmanian requirements, scored as architecture</p></div>
+  <div id="f11" class="plot" style="height:520px"></div>
+</div>
+<p class="cap"><strong>Conceptual scoring, not measurement.</strong> The axes are the structural requirements Lotman's account imposes on any meaning-generating system. The scores express an argument about architecture and carry no error bars; they are a summary of the prose, not a result. Where an axis has been probed, the relevant figure is named in the table below.</p>
+
+<table>
+  <thead><tr><th>Requirement</th><th>Human semiosphere</th><th>Default LLM stack</th><th>Evidence here</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>Boundary that filters and refuses</td>
+      <td>Constitutive; untranslatability is normal</td>
+      <td>Absent unless imposed externally</td>
+      <td>Figures 5, 7 — flat retrieval confuses tiers 6/6; typed scoping 0.00</td>
+    </tr>
+    <tr>
+      <td>Prohibition as structure</td>
+      <td>Registers defined by refused moves</td>
+      <td>Partly present in representations</td>
+      <td>Figure 6 — 0.067 observed vs 0.309 shuffled</td>
+    </tr>
+    <tr>
+      <td>Persistence that constrains</td>
+      <td>Non-hereditary collective memory</td>
+      <td>Context window only; no accumulation</td>
+      <td>Figures 8, 9 — retooling at flat volume vs independent draws</td>
+    </tr>
+    <tr>
+      <td>Plural, mutually untranslatable interior</td>
+      <td>Minimum unit of semiosis</td>
+      <td>Single pooled space; one synthetic speaker</td>
+      <td>Figures 2, 3 — typed structure orthogonal to distance</td>
+    </tr>
+    <tr>
+      <td>Autocommunication (I&ndash;I) distinct from relay</td>
+      <td>Reorganises the sender</td>
+      <td>No persistent sender; failure mode without function</td>
+      <td>Figure 10 — the unpaired claim</td>
+    </tr>
+    <tr>
+      <td>Explosion as change in the possible</td>
+      <td>Documented 1983&rarr;87</td>
+      <td>Scale changes fluency, not the set of positions</td>
+      <td>Figure 8 — flat volume, turned-over profile</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="callout c-neg">
+  <span class="lab">What this does not establish</span>
+  None of this shows that large language models cannot be a basis for general intelligence. No experiment here addresses that question, and the claim is explicitly withheld in the project's warrant sheet. What the figures support is narrower and checkable: <strong>pooled, untyped representation over a heterogeneous archive produces a speaker who occupies no institutional position</strong> — and position is what binding, refusal, and accumulation all require. Whether that is a barrier to general intelligence or an engineering gap that typing and persistence would close is precisely what remains open.
+</div>
+
+<p>The reframed question, which is answerable and partly answered, is not whether a model can think. It is whether the default stack implements a <em>single institutional knower</em> — and on this plate, with the boundary deleted, it does.</p>
+
+<footer class="doc">
+  <p>
+    Figures 2, 3, 5, 6, 7, 8 plot measured values; figures 1, 4, 9, 10, 11 are diagrams and encode no measurement.
+    Interpretation: <code>docs/theory/LOTMAN_INTERPRETATION.html</code>.
+    Findings: <code>docs/experiments/RUN_FINDINGS_2026-09-26.md</code>.
+    Warrant: <code>docs/dissertation/PROVEN_GATED_DO_NOT_CLAIM.md</code>.
+  </p>
+  <p>PCA views retain 39.2% of variance; visual distance understates true distance. Quotations carry tiering and page verification requirements recorded in the interpretation document.</p>
+</footer>
+
+</div>
+
+<script>
+const DATA = {"generated": "2026-09-28T10:42:42", "encoder": "paraphrase-multilingual-MiniLM-L12-v2", "seed": 19830324, "n_units_embedded": 38, "pca_explained_variance_ratio": [0.1847, 0.1264, 0.0811], "nodes": [{"id": "s1206_gathering", "shell": "secret", "topic": "gathering", "language": "ru", "surface": "internal_1206", "date": "1983-03-24", "calibration": null, "x": -0.30932, "y": -0.61518, "z": 0.21376, "nn_id": "s1206_cius", "nn_shell": "secret", "nn_cos": 0.7739, "excerpt": "О намечаемом антисоветском сборище в Канаде. По полученным КГБ УССР данным, по инициативе \"Канадского институт…"}, {"id": "s1206_symposium", "shell": "secret", "topic": "gathering", "language": "ru", "surface": "internal_1206", "date": "1983-03-24", "calibration": null, "x": -0.05862, "y": -0.31446, "z": 0.01545, "nn_id": "s1206_gathering", "nn_shell": "secret", "nn_cos": 0.6421, "excerpt": "планируется провести 25–26 марта с.г. в Монреале так называемый \"симпозиум\" с участием преподавателей высших у…"}, {"id": "s1206_famine_quoted", "shell": "secret", "topic": "famine", "language": "ru", "surface": "internal_1206", "date": "1983-03-24", "calibration": null, "x": 0.09903, "y": -0.11342, "z": -0.0036, "nn_id": "s1208_campaign", "nn_shell": "secret", "nn_cos": 0.8718, "excerpt": "28 января 1983 г. № 21/св докладывалось о проводимых оуновцами за рубежом антисоветских акциях, приуроченных к…"}, {"id": "s1206_refute", "shell": "secret", "topic": "famine", "language": "ru", "surface": "internal_1206", "date": "1983-03-24", "calibration": null, "x": 0.10398, "y": -0.17128, "z": -0.20401, "nn_id": "s1249_farisei", "nn_shell": "secret", "nn_cos": 0.6728, "excerpt": "КГБ УССР осуществляет мероприятия по доведению до украинской эмиграции через оперативные возможности аргументи…"}, {"id": "s1206_cius", "shell": "secret", "topic": "actor", "language": "ru", "surface": "internal_1206", "date": "1983-03-24", "calibration": null, "x": -0.33578, "y": -0.50654, "z": 0.26609, "nn_id": "s1206_gathering", "nn_shell": "secret", "nn_cos": 0.7739, "excerpt": "по инициативе \"Канадского института украинских исследований\" (г. Эдмонтон) и четырех университетов провинции К…"}, {"id": "s1206_mace", "shell": "secret", "topic": "actor", "language": "ru", "surface": "internal_1206", "date": "1983-03-24", "calibration": null, "x": -0.25445, "y": -0.12865, "z": -0.00722, "nn_id": "o_khmil_slander", "nn_shell": "soviet_outward", "nn_cos": 0.4847, "excerpt": "В числе докладчиков — соавтор готовящегося к изданию в США пасквиля \"Террор коллективизации\" Дж. Мейс, активны…"}, {"id": "s1208_campaign", "shell": "secret", "topic": "famine", "language": "ru", "surface": "internal_1208", "date": "1983-06", "calibration": null, "x": 0.04805, "y": -0.14371, "z": -0.16732, "nn_id": "s1206_famine_quoted", "nn_shell": "secret", "nn_cos": 0.8718, "excerpt": "19 мая 1983 г. № 119/св докладывалось о планируемых зарубежными ОУН враждебных акциях, приуроченных к так назы…"}, {"id": "s1208_holocaust_course", "shell": "secret", "topic": "gathering", "language": "ru", "surface": "internal_1208", "date": "1983-06", "calibration": null, "x": -0.24293, "y": -0.35953, "z": -0.00995, "nn_id": "s1206_cius", "nn_shell": "secret", "nn_cos": 0.5814, "excerpt": "Для сбора и обработки подобных материалов, издания \"научных трудов\", пропагандистских брошюр, организации \"кон…"}, {"id": "s1208_leak", "shell": "secret", "topic": "famine", "language": "ru", "surface": "internal_1208", "date": "1983-06", "calibration": null, "x": -0.02062, "y": -0.02401, "z": -0.58121, "nn_id": "s1249_channels", "nn_shell": "secret", "nn_cos": 0.7086, "excerpt": "Принимаются меры по недопущению утечки за кордон информации, которая может быть использована в провокационной …"}, {"id": "s1249_farisei", "shell": "secret", "topic": "famine", "language": "ru", "surface": "internal_1249_farisei", "date": "1987-03-17", "calibration": null, "x": 0.08167, "y": -0.16377, "z": -0.09553, "nn_id": "s1206_refute", "nn_shell": "secret", "nn_cos": 0.6728, "excerpt": "Комитетом госбезопасности республики по согласованию с КГБ СССР осуществляются специальные мероприятия направл…"}, {"id": "s1249_channels", "shell": "secret", "topic": "nationalist", "language": "ru", "surface": "internal_1249_farisei", "date": "1987-03-17", "calibration": null, "x": 0.00504, "y": -0.23985, "z": -0.43749, "nn_id": "s1208_leak", "nn_shell": "secret", "nn_cos": 0.7086, "excerpt": "В этих целях по оперативным каналам в средства массовой информации США и Канады были продвинуты аргументирован…"}, {"id": "s1249_globe", "shell": "secret", "topic": "nationalist", "language": "ru", "surface": "internal_1249_farisei", "date": "1987-03-17", "calibration": null, "x": -0.14705, "y": -0.11148, "z": -0.32636, "nn_id": "s1249_channels", "nn_shell": "secret", "nn_cos": 0.5084, "excerpt": "Канадская газета \"Глоб энд мэйл\" опубликовала статьи убедительно доказывающие \"эпизоды хроники\" фильма \"Жатва …"}, {"id": "o_embassy_impression", "shell": "soviet_outward", "topic": "famine", "language": "en", "surface": "embassy_1983", "date": "1983-04-28", "calibration": null, "x": 0.51572, "y": 0.14814, "z": 0.07105, "nn_id": "o_novosti_identical", "nn_shell": "soviet_outward", "nn_cos": 1.0, "excerpt": "Recent stories in the Western news media try to create an impression that there was an artificially created fa…"}, {"id": "o_embassy_drought", "shell": "soviet_outward", "topic": "famine", "language": "en", "surface": "embassy_1983", "date": "1983-04-28", "calibration": null, "x": 0.38073, "y": 0.25028, "z": -0.14976, "nn_id": "o_embassy_impression", "nn_shell": "soviet_outward", "nn_cos": 0.5511, "excerpt": "And, of course, it was not because somebody wanted to make it bad, but because of a number of reasons, drought…"}, {"id": "o_embassy_kulak", "shell": "soviet_outward", "topic": "famine", "language": "en", "surface": "embassy_1983", "date": "1983-04-28", "calibration": null, "x": 0.06308, "y": 0.24241, "z": -0.29209, "nn_id": "o_embassy_impression", "nn_shell": "soviet_outward", "nn_cos": 0.3974, "excerpt": "The challenges of the collective farming system were due to the wealthy landowners called kulaks, who tyrannic…"}, {"id": "o_novosti_identical", "shell": "soviet_outward", "topic": "famine", "language": "en", "surface": "novosti_1983", "date": "1983-04", "calibration": null, "x": 0.51572, "y": 0.14814, "z": 0.07105, "nn_id": "o_embassy_impression", "nn_shell": "soviet_outward", "nn_cos": 1.0, "excerpt": "Recent stories in the Western news media try to create an impression that there was an artificially created fa…"}, {"id": "o_khmil_slander", "shell": "soviet_outward", "topic": "nationalist", "language": "en", "surface": "khmil_un_1983", "date": "1983-10-19", "calibration": null, "x": 0.28807, "y": 0.0433, "z": -0.15356, "nn_id": "r_globe_malarek_1983", "nn_shell": "rival", "nn_cos": 0.6809, "excerpt": "The representative of the United States had repeated fabrications about an alleged famine which was supposed t…"}, {"id": "o_khmil_lie", "shell": "soviet_outward", "topic": "nationalist", "language": "en", "surface": "khmil_un_1983", "date": "1983-10-19", "calibration": null, "x": 0.228, "y": 0.1579, "z": -0.47808, "nn_id": "o_khmil_slander", "nn_shell": "soviet_outward", "nn_cos": 0.5708, "excerpt": "They later moved to the United States and, in order to justify their presence in that country, had circulated …"}, {"id": "r_weekly_symposium", "shell": "rival", "topic": "gathering", "language": "en", "surface": "diaspora_weekly", "date": "1983-04-10", "calibration": null, "x": 0.10423, "y": -0.27874, "z": 0.19488, "nn_id": "a_symp_mace_t7", "nn_shell": "rival", "nn_cos": 0.6254, "excerpt": "Fourteen top scholars from North America and France met at the University of Quebec at Montreal on March 25 fo…"}, {"id": "r_weekly_cius", "shell": "rival", "topic": "actor", "language": "en", "surface": "diaspora_weekly", "date": "1983-04-10", "calibration": null, "x": -0.24577, "y": -0.56031, "z": 0.23015, "nn_id": "s1206_cius", "nn_shell": "secret", "nn_cos": 0.7324, "excerpt": "The conference was sponsored by two faculties of the University of Quebec and the Canadian Institute of Ukrain…"}, {"id": "r_weekly_mace_genocide", "shell": "rival", "topic": "actor", "language": "en", "surface": "diaspora_weekly", "date": "1983-04-10", "calibration": null, "x": 0.36287, "y": 0.16407, "z": -0.09333, "nn_id": "r_mace_chapter_denial", "nn_shell": "rival", "nn_cos": 0.7351, "excerpt": "Dr. Mace compared the famine to the Jewish Holocaust of World War II and said that, unlike that tragedy, the f…"}, {"id": "r_cius_manmade", "shell": "rival", "topic": "famine", "language": "en", "surface": "cius_1986", "date": "1986", "calibration": null, "x": 0.47294, "y": 0.18362, "z": 0.02658, "nn_id": "r_mace_chapter_manmade", "nn_shell": "rival", "nn_cos": 0.7751, "excerpt": "The man-made famine of 1932-3 in Soviet Ukraine claimed the lives of millions of people. Yet it has remained v…"}, {"id": "r_cius_conference", "shell": "rival", "topic": "gathering", "language": "en", "surface": "cius_1986", "date": "1986", "calibration": null, "x": -0.49026, "y": -0.49426, "z": -0.08695, "nn_id": "r_weekly_cius", "nn_shell": "rival", "nn_cos": 0.5476, "excerpt": "Selected papers from a conference held in 1983 at the Universite du Quebec a Montreal."}, {"id": "r_ap_deliberate", "shell": "rival", "topic": "famine", "language": "en", "surface": "ap_wire", "date": "1983-09-28", "calibration": null, "x": 0.30475, "y": 0.02081, "z": 0.22142, "nn_id": "r_mace_chapter_manmade", "nn_shell": "rival", "nn_cos": 0.6841, "excerpt": "Americans of Ukrainian descent began a week's commemoration yesterday of the 50th anniversary of what they cal…"}, {"id": "z_pravda_1983_silence", "shell": "silence", "topic": "famine", "language": "en", "surface": "pravda_1983", "date": "1983", "calibration": null, "x": -0.13672, "y": 0.02967, "z": -0.1611, "nn_id": "r_globe_conquest_1987", "nn_shell": "rival", "nn_cos": 0.5004, "excerpt": "No verified Pravda Holodomor-denial article March–December 1983. Detailed drought-and-kulak denial in this win…"}, {"id": "r_mace_chapter_denial", "shell": "rival", "topic": "actor", "language": "en", "surface": "cius_mace_1983", "date": "1983-03-25", "calibration": null, "x": 0.43455, "y": 0.0955, "z": 0.16818, "nn_id": "r_mace_chapter_manmade", "nn_shell": "rival", "nn_cos": 0.9153, "excerpt": "The Ukrainian famine of 1933 is one of the most tragic and least understood events of this century. In spite o…"}, {"id": "r_mace_chapter_manmade", "shell": "rival", "topic": "famine", "language": "en", "surface": "cius_mace_1983", "date": "1983-03-25", "calibration": null, "x": 0.41799, "y": 0.11613, "z": 0.22636, "nn_id": "t_mace_t1b_transcript_en", "nn_shell": "rival", "nn_cos": 0.9348, "excerpt": "THE MAN-MADE FAMINE OF 1933 IN SOVIET UKRAINE James E. Mace The Ukrainian famine of 1933 is one of the most tr…"}, {"id": "a_symp_mace_t1b", "shell": "rival", "topic": "gathering", "language": "en", "surface": "uqam_tapes_1983", "date": "1983-03-25", "calibration": null, "x": 0.24317, "y": 0.01399, "z": 0.34002, "nn_id": "a_symp_mace_t7", "nn_shell": "rival", "nn_cos": 0.9325, "excerpt": "1983 Symposium on Famine 1932-1933 in Soviet Ukraine T1B 2. “The Man-Made Famine of 1932-1933 in Soviet Ukrain…"}, {"id": "t_mace_t1b_transcript_en", "shell": "rival", "topic": "gathering", "language": "en", "surface": "uqam_tapes_1983", "date": "1983-03-25", "calibration": null, "x": 0.32367, "y": 0.07619, "z": 0.2348, "nn_id": "r_mace_chapter_manmade", "nn_shell": "rival", "nn_cos": 0.9348, "excerpt": "[CIUS proceedings transcript — James E. Mace, UQAM symposium 25 March 1983, published Serbyn & Krawchenko 1986…"}, {"id": "a_symp_mace_t7", "shell": "rival", "topic": "famine", "language": "en", "surface": "uqam_tapes_1983", "date": "1983-03-25", "calibration": null, "x": 0.24585, "y": -0.00516, "z": 0.26492, "nn_id": "a_symp_mace_t1b", "nn_shell": "rival", "nn_cos": 0.9325, "excerpt": "1983 Symposium on Famine 1932-1933 in Soviet Ukraine held at UQàM, Qc, Canada, March 25, 1983.Dr. James E. Mac…"}, {"id": "p_8324_inspect", "shell": "secret", "topic": "certification", "language": "ru", "surface": "peter_autograph_1717", "date": "1717-10-01", "calibration": "peter_1717", "x": -0.61728, "y": 0.56811, "z": 0.09715, "nn_id": "p_8325_inspect", "nn_shell": "secret", "nn_cos": 0.8306, "excerpt": "[cover slip, upside down:] 147 Господину Генералу Князю Репнину [margin, top left:] No 238 [margin, top right:…"}, {"id": "p_8325_inspect", "shell": "secret", "topic": "certification", "language": "ru", "surface": "peter_autograph_1717", "date": "1717-10-01", "calibration": "peter_1717", "x": -0.62428, "y": 0.53534, "z": 0.27141, "nn_id": "p_8368_for_show", "nn_shell": "secret", "nn_cos": 0.8723, "excerpt": "[margin, top right:] 18. [margin, left edge, vertical:] № 238 [Body:] Господинъ Генералъ, Присланной къ намъ п…"}, {"id": "p_8339_show_docs", "shell": "secret", "topic": "actor", "language": "ru", "surface": "peter_autograph_1717", "date": "1717-12-06", "calibration": "peter_1717", "x": -0.53728, "y": 0.23029, "z": -0.18964, "nn_id": "p_8366_for_show", "nn_shell": "secret", "nn_cos": 0.5606, "excerpt": "съ инструк- ціи и комисіи, отъ вышепомянутаго секретаря Ланчинскаго, и потомъ, показать, а кого выберете и отп…"}, {"id": "p_8366_for_show", "shell": "secret", "topic": "gathering", "language": "ru", "surface": "peter_autograph_1717", "date": "1718-01-01", "calibration": "peter_1717", "x": -0.54546, "y": 0.424, "z": 0.11068, "nn_id": "p_8325_inspect", "nn_shell": "secret", "nn_cos": 0.6251, "excerpt": "у тѣмъ же розглашайте […] подчиненной Конвенціи […] […] 44. […] я ему послѣ […] показывали видъ къ выступленію…"}, {"id": "p_8368_for_show", "shell": "secret", "topic": "gathering", "language": "ru", "surface": "peter_autograph_1717", "date": "1718-01-01", "calibration": "peter_1717", "x": -0.59548, "y": 0.50355, "z": 0.20992, "nn_id": "p_8325_inspect", "nn_shell": "secret", "nn_cos": 0.8723, "excerpt": "[margin, top left:] 44 [Body — numbered instruction:] нежели по сему же слагаю: показывали видъ къ выступленію…"}, {"id": "z_pb1717_series_silence", "shell": "silence", "topic": "certification", "language": "ru", "surface": "pb_vol1_edition", "date": "1955-01-01", "calibration": "peter_1717", "x": -0.42385, "y": 0.17504, "z": -0.17012, "nn_id": "z_pravda_1983_silence", "nn_shell": "silence", "nn_cos": 0.3998, "excerpt": "Pisma i bumagi vol. 1 covers Petrine materials through 1701. Verified autograph orders to Prince Repnin (IMG_8…"}, {"id": "r_globe_malarek_1983", "shell": "rival", "topic": "famine", "language": "en", "surface": "globe_and_mail_1983", "date": "1983-03-28", "calibration": null, "x": 0.19629, "y": 0.10304, "z": 0.12706, "nn_id": "a_symp_mace_t1b", "nn_shell": "rival", "nn_cos": 0.7588, "excerpt": "Truth about Soviet-planned famine sought by Ukrainians\nBy VICTOR MALAREK, Globe and Mail Reporter\nThe Globe an…"}, {"id": "r_globe_conquest_1987", "shell": "rival", "topic": "famine", "language": "en", "surface": "globe_and_mail_1987", "date": "1987-01-10", "calibration": null, "x": 0.14976, "y": 0.00084, "z": 0.24639, "nn_id": "r_globe_malarek_1983", "nn_shell": "rival", "nn_cos": 0.7546, "excerpt": "A drought in Ukraine\nBy ROBERT CONQUEST, Stanford University, Calif.\nThe Globe and Mail, January 10, 1987, pag…"}], "pairs": [{"source": "s1206_famine_quoted", "target": "o_embassy_drought", "kind": "secret_to_outward", "topic": "famine"}, {"source": "s1206_refute", "target": "o_embassy_impression", "kind": "secret_to_outward", "topic": "famine"}, {"source": "s1208_campaign", "target": "o_embassy_drought", "kind": "secret_to_outward", "topic": "famine"}, {"source": "s1208_leak", "target": "o_embassy_kulak", "kind": "secret_to_outward", "topic": "famine"}, {"source": "s1249_farisei", "target": "o_embassy_drought", "kind": "secret_to_outward", "topic": "famine"}, {"source": "s1206_refute", "target": "o_khmil_slander", "kind": "secret_to_outward", "topic": "nationalist"}, {"source": "s1208_campaign", "target": "o_khmil_slander", "kind": "secret_to_outward", "topic": "nationalist"}, {"source": "s1249_channels", "target": "o_khmil_lie", "kind": "secret_to_outward", "topic": "nationalist"}, {"source": "s1249_globe", "target": "o_khmil_slander", "kind": "secret_to_outward", "topic": "nationalist"}, {"source": "s1206_gathering", "target": "r_weekly_symposium", "kind": "secret_to_rival", "topic": "gathering"}, {"source": "s1206_symposium", "target": "r_cius_conference", "kind": "secret_to_rival", "topic": "gathering"}, {"source": "s1206_famine_quoted", "target": "r_cius_manmade", "kind": "secret_to_rival", "topic": "famine"}, {"source": "s1206_famine_quoted", "target": "r_ap_deliberate", "kind": "secret_to_rival", "topic": "famine"}, {"source": "s1206_cius", "target": "r_weekly_cius", "kind": "secret_to_rival", "topic": "actor"}, {"source": "s1206_mace", "target": "r_weekly_mace_genocide", "kind": "secret_to_rival", "topic": "actor"}, {"source": "s1208_holocaust_course", "target": "r_weekly_mace_genocide", "kind": "secret_to_rival", "topic": "gathering"}, {"source": "s1206_famine_quoted", "target": "z_pravda_1983_silence", "kind": "secret_to_silence", "topic": "famine"}, {"source": "s1206_gathering", "target": "z_pravda_1983_silence", "kind": "secret_to_silence", "topic": "gathering"}, {"source": "s1206_symposium", "target": "r_mace_chapter_manmade", "kind": "secret_to_rival", "topic": "gathering"}, {"source": "s1206_mace", "target": "r_mace_chapter_denial", "kind": "secret_to_rival", "topic": "actor"}, {"source": "s1206_symposium", "target": "a_symp_mace_t1b", "kind": "secret_to_rival", "topic": "gathering"}, {"source": "a_symp_mace_t1b", "target": "r_mace_chapter_manmade", "kind": "rival_to_rival", "topic": "gathering"}, {"source": "t_mace_t1b_transcript_en", "target": "r_mace_chapter_manmade", "kind": "rival_to_rival", "topic": "gathering"}, {"source": "a_symp_mace_t1b", "target": "t_mace_t1b_transcript_en", "kind": "rival_to_rival", "topic": "gathering"}, {"source": "s1206_symposium", "target": "t_mace_t1b_transcript_en", "kind": "secret_to_rival", "topic": "gathering"}, {"source": "a_symp_mace_t7", "target": "a_symp_mace_t1b", "kind": "rival_to_rival", "topic": "famine"}, {"source": "p_8324_inspect", "target": "z_pb1717_series_silence", "kind": "secret_to_silence", "topic": "certification"}, {"source": "p_8325_inspect", "target": "z_pb1717_series_silence", "kind": "secret_to_silence", "topic": "certification"}, {"source": "p_8339_show_docs", "target": "z_pb1717_series_silence", "kind": "secret_to_silence", "topic": "actor"}, {"source": "p_8366_for_show", "target": "z_pb1717_series_silence", "kind": "secret_to_silence", "topic": "gathering"}, {"source": "p_8368_for_show", "target": "z_pb1717_series_silence", "kind": "secret_to_silence", "topic": "gathering"}, {"source": "s1206_symposium", "target": "r_globe_malarek_1983", "kind": "secret_to_rival", "topic": "gathering"}, {"source": "o_embassy_drought", "target": "r_globe_conquest_1987", "kind": "secret_to_rival", "topic": "famine"}], "shell_counts": {"rival": 13, "secret": 17, "silence": 2, "soviet_outward": 6}, "shell_language_counts": {"secret|ru": 17, "soviet_outward|en": 6, "rival|en": 13, "silence|en": 1, "silence|ru": 1}, "measured": {"procrustes_in_sample": 0.6127651153886177, "procrustes_ridge": 0.7560089940997855, "procrustes_identity": 0.02463906430752577, "transfer_null_single_draw": 0.056956053860051266, "matched_null_mean": 0.6023651178248994, "matched_null_ci": [0.498753667640077, 0.7462568127359488], "matched_null_p": 0.39430284857571213, "matched_null_cleared": false, "out_of_bag_mean": 0.021790878649781346, "out_of_bag_ci": [-0.31757672712347207, 0.312044541381959], "bootstrap_outward_ci": [0.40085736828500795, 0.9533174668621871], "rival_under_outward_map": -0.07060635691762557, "rival_identity": 0.16638328556155751, "e1_relay_gap": 0.9166666666666666, "e1_l2_rule_accuracy": 1.0, "e4_verdict": {"flat_invites_tier_confusion": true, "scoped_reduces_confusion": true, "halt_precise_no_overhalt": false, "thresholds": {"flat_invites_tier_confusion": "condition A top-1 internal on >=50% of unpaired-family queries", "scoped_reduces_confusion": "B tier_confusion_rate strictly below A", "halt_precise_no_overhalt": "halt_precision==1.0 and halt_recall==1.0 and over_halt_rate==0.0"}}, "e4_conditions": {"A_flat": {"tier_confusion_rate_unpaired_family": 1.0, "halt_rate": 0.0, "candidate_pool_size": 37}, "B_scoped": {"tier_confusion_rate_unpaired_family": 0.0, "halt_rate": 0.0, "candidate_pool_size": 18}, "C_scoped_halt": {"tier_confusion_rate_unpaired_family": 0.0, "halt_rate": 0.5833, "candidate_pool_size": null}}, "e6_violation_rate": 0.06666666666666667, "e6_present_cell_recall": 0.4166666666666667, "e6_shuffle_null_mean": 0.30860000000000004, "e6_shuffle_null_sd": 0.08509756492142155, "e6_shuffle_p": 0.999, "e8_permutation_p": 0.14885114885114886, "e7_chain_profiles": {"internal_1206": {"surface": "internal_1206", "role": "internal_chain", "event_basis": {"n_dated_sign_events": 6, "n_events_with_placeholder_operator": 2, "operator_counts": {"genre_downgrade_gathering": 1, "scare_quote_artificial_famine": 3, "symposium_recode": 2}, "distinct_operators": 3, "operator_tokens": 6}, "matrix_basis": {"operator_counts": {"attack_slander_frame": 1, "denial_no_artificial_famine": 3, "genre_downgrade_gathering": 2, "scare_quote": 13, "symposium_recode": 3}, "distinct_operators": 5, "operator_tokens": 22}}, "internal_1208": {"surface": "internal_1208", "role": "internal_chain", "event_basis": {"n_dated_sign_events": 3, "n_events_with_placeholder_operator": 1, "operator_counts": {"scare_quote_artificial_famine": 2, "symposium_recode": 1}, "distinct_operators": 2, "operator_tokens": 3}, "matrix_basis": {"operator_counts": {"attack_slander_frame": 1, "denial_no_artificial_famine": 4, "scare_quote": 19}, "distinct_operators": 3, "operator_tokens": 24}}, "internal_1249_farisei": {"surface": "internal_1249_farisei", "role": "internal_chain", "event_basis": {"n_dated_sign_events": 3, "n_events_with_placeholder_operator": 2, "operator_counts": {"nationalist_slander_frame": 1}, "distinct_operators": 1, "operator_tokens": 1}, "matrix_basis": {"operator_counts": {"denial_no_artificial_famine": 3, "forgery_fabrication_frame": 5, "operational_media_push": 2, "scare_quote": 16}, "distinct_operators": 4, "operator_tokens": 26}}, "embassy_1983": {"surface": "embassy_1983", "role": "outward", "event_basis": {"n_dated_sign_events": 3, "n_events_with_placeholder_operator": 1, "operator_counts": {"denial_no_artificial_famine": 1, "drought_kulak_denial": 2}, "distinct_operators": 2, "operator_tokens": 3}, "matrix_basis": {"operator_counts": {"denial_no_artificial_famine": 2, "drought_frame": 3, "kulak_blame": 5}, "distinct_operators": 3, "operator_tokens": 10}}, "novosti_1983": {"surface": "novosti_1983", "role": "outward", "event_basis": {"n_dated_sign_events": 1, "n_events_with_placeholder_operator": 1, "operator_counts": {}, "distinct_operators": 0, "operator_tokens": 0}, "matrix_basis": {"operator_counts": {"denial_no_artificial_famine": 2, "drought_frame": 3, "kulak_blame": 5}, "distinct_operators": 3, "operator_tokens": 10}}, "khmil_un_1983": {"surface": "khmil_un_1983", "role": "outward", "event_basis": {"n_dated_sign_events": 2, "n_events_with_placeholder_operator": 0, "operator_counts": {"nationalist_slander_frame": 2}, "distinct_operators": 1, "operator_tokens": 2}, "matrix_basis": {"operator_counts": {"attack_slander_frame": 1, "forgery_fabrication_frame": 1}, "distinct_operators": 2, "operator_tokens": 2}}}, "e7_volume": {"internal_1206": {"n_dated_sign_events": 6, "event_basis_distinct_operators": 3, "matrix_basis_operator_tokens": 22, "matrix_basis_distinct_operators": 5}, "internal_1208": {"n_dated_sign_events": 3, "event_basis_distinct_operators": 2, "matrix_basis_operator_tokens": 24, "matrix_basis_distinct_operators": 3}, "internal_1249_farisei": {"n_dated_sign_events": 3, "event_basis_distinct_operators": 1, "matrix_basis_operator_tokens": 26, "matrix_basis_distinct_operators": 4}}}, "honesty": ["PCA coordinates are a 3-component projection of a 384-dimensional space; visual distance understates true distance and must not be read as evidence.", "Nearest-neighbour edges shown here are cosine only. E8 established that cross-shell NN is language-confounded (secret=ru, rival/outward=en) and is not usable as boundary evidence.", "Figures labelled ILLUSTRATIVE encode no measurement."]};
+
+const SHELL_COLOR = {
+  secret: "#6a1b1b", soviet_outward: "#2a4a6f", rival: "#c4651f", silence: "#6b6f76"
+};
+const SHELL_LABEL = {
+  secret: "secret (internal, ru)", soviet_outward: "soviet outward (en)",
+  rival: "rival / diaspora (en)", silence: "silence (processed absence)"
+};
+const FONT = {family: "-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif", size: 11};
+const BASE = {
+  paper_bgcolor: "#fff", plot_bgcolor: "#fff", font: FONT,
+  margin: {l: 54, r: 18, t: 16, b: 44}
+};
+const SCENE = {
+  xaxis: {title: "PC1", showspikes: false, gridcolor: "#e8ecf1", zerolinecolor: "#d0d7de"},
+  yaxis: {title: "PC2", showspikes: false, gridcolor: "#e8ecf1", zerolinecolor: "#d0d7de"},
+  zaxis: {title: "PC3", showspikes: false, gridcolor: "#e8ecf1", zerolinecolor: "#d0d7de"},
+  camera: {eye: {x: 1.6, y: 1.5, z: 1.0}}
+};
+const CFG = {responsive: true, displayModeBar: true, displaylogo: false,
+  modeBarButtonsToRemove: ["select2d", "lasso2d", "autoScale2d"]};
+
+// Seeded RNG so the illustrative figures are stable across reloads.
+function mulberry(a) {
+  return function () {
+    a |= 0; a = a + 0x6D2B79F5 | 0;
+    let t = Math.imul(a ^ a >>> 15, 1 | a);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+function gauss(rng) {
+  let u = 0, v = 0;
+  while (!u) u = rng();
+  while (!v) v = rng();
+  return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+}
+
+function buildAll() {
+  fig1(); fig2(); fig3(); fig4(); fig5(); fig6(); fig7(); fig8(); fig9(); fig10(); fig11();
+}
+
+/* ---------- FIG 1 : next-token distributions + sliding window ---------- */
+function fig1() {
+  const toks = ["famine", "drought", "so-called", "kulaks", "harvest", "slander", "\u2026"];
+  const steps = [
+    [0.41, 0.19, 0.14, 0.10, 0.08, 0.05, 0.03],
+    [0.12, 0.38, 0.21, 0.13, 0.09, 0.04, 0.03],
+    [0.09, 0.15, 0.44, 0.16, 0.08, 0.05, 0.03],
+    [0.07, 0.11, 0.18, 0.37, 0.14, 0.09, 0.04]
+  ];
+  const shades = ["#c9d6e3", "#9db6cd", "#6e8fae", "#2a4a6f"];
+  const traces = steps.map((p, i) => ({
+    x: toks, y: p, type: "bar", name: "step " + (i + 1),
+    marker: {color: shades[i]}, xaxis: "x", yaxis: "y"
+  }));
+
+  // Sliding context window, right panel.
+  const seq = ["\u2026", "the", "so-called", "famine", "was", "a", "drought", "caused", "by", "kulaks"];
+  for (let s = 0; s < 4; s++) {
+    const lo = s, hi = s + 5;
+    traces.push({
+      x: [lo - 0.45, hi - 0.55, hi - 0.55, lo - 0.45, lo - 0.45],
+      y: [s - 0.34, s - 0.34, s + 0.34, s + 0.34, s - 0.34],
+      mode: "lines", fill: "toself", fillcolor: "rgba(42,74,111,0.10)",
+      line: {color: "#2a4a6f", width: 1.4},
+      xaxis: "x2", yaxis: "y2", showlegend: false, hoverinfo: "skip"
+    });
+  }
+  const wx = [], wy = [], wt = [];
+  for (let s = 0; s < 4; s++) {
+    for (let j = 0; j < seq.length; j++) {
+      const inside = j >= s && j < s + 5;
+      wx.push(j); wy.push(s); wt.push(inside ? seq[j] : "");
+    }
+  }
+  traces.push({
+    x: wx, y: wy, text: wt, mode: "text", textfont: {size: 9.5, color: "#13171d"},
+    xaxis: "x2", yaxis: "y2", showlegend: false, hoverinfo: "skip"
+  });
+
+  Plotly.newPlot("f1", traces, Object.assign({}, BASE, {
+    barmode: "group", bargap: 0.28,
+    grid: {rows: 1, columns: 2, pattern: "independent"},
+    xaxis: {domain: [0, 0.46], tickangle: -32, title: "candidate token"},
+    yaxis: {domain: [0, 1], title: "probability", rangemode: "tozero"},
+    xaxis2: {domain: [0.56, 1], title: "position in sequence", showticklabels: false,
+      range: [-1, seq.length]},
+    yaxis2: {domain: [0, 1], title: "generation step",
+      tickvals: [0, 1, 2, 3], ticktext: ["1", "2", "3", "4"],
+      autorange: "reversed"},
+    legend: {orientation: "h", y: 1.13, x: 0},
+    annotations: [
+      {text: "one distribution per step; the sample is irrevocable",
+        x: 0.23, y: 1.045, xref: "paper", yref: "paper", showarrow: false,
+        font: {size: 10, color: "#5d6771"}},
+      {text: "tokens leaving the window stop conditioning anything",
+        x: 0.80, y: 1.045, xref: "paper", yref: "paper", showarrow: false,
+        font: {size: 10, color: "#5d6771"}}
+    ]
+  }), CFG);
+}
+
+/* ---------- FIG 2 : real PCA scatter, coloured by shell ---------- */
+function fig2() {
+  const byShell = {};
+  DATA.nodes.forEach(n => {
+    const s = n.shell || "unknown";
+    (byShell[s] = byShell[s] || []).push(n);
+  });
+  const traces = Object.keys(byShell).map(s => {
+    const g = byShell[s];
+    return {
+      type: "scatter3d", mode: "markers", name: SHELL_LABEL[s] || s,
+      x: g.map(n => n.x), y: g.map(n => n.y), z: g.map(n => n.z),
+      marker: {size: 5.5, color: SHELL_COLOR[s] || "#888", opacity: 0.92,
+        line: {color: "#fff", width: 0.6}},
+      text: g.map(n => `<b>${n.id}</b><br>shell: ${n.shell} · lang: ${n.language}` +
+        `<br>topic: ${n.topic}<br>nearest: ${n.nn_id} (${n.nn_shell}, cos ${n.nn_cos})` +
+        `<br><i>${(n.excerpt || "").replace(/</g, "&lt;")}</i>`),
+      hoverinfo: "text"
+    };
+  });
+  Plotly.newPlot("f2", traces, Object.assign({}, BASE, {
+    scene: SCENE, margin: {l: 0, r: 0, t: 0, b: 0},
+    legend: {orientation: "h", y: 0.02, x: 0.5, xanchor: "center"}
+  }), CFG);
+}
+
+/* ---------- FIG 3 : same points + typed edges ---------- */
+function fig3() {
+  const pos = {};
+  DATA.nodes.forEach(n => { pos[n.id] = n; });
+  const KIND_COLOR = {
+    secret_to_outward: "#1f5136", secret_to_rival: "#c4651f",
+    secret_to_silence: "#6b6f76", outward_to_rival: "#7a5200"
+  };
+  const byKind = {};
+  DATA.pairs.forEach(p => {
+    if (!pos[p.source] || !pos[p.target]) return;
+    (byKind[p.kind || "other"] = byKind[p.kind || "other"] || []).push(p);
+  });
+  const traces = [];
+  Object.keys(byKind).forEach(k => {
+    const xs = [], ys = [], zs = [], tx = [];
+    byKind[k].forEach(p => {
+      const a = pos[p.source], b = pos[p.target];
+      xs.push(a.x, b.x, null); ys.push(a.y, b.y, null); zs.push(a.z, b.z, null);
+      tx.push(`${p.source} \u2192 ${p.target}`, `${p.source} \u2192 ${p.target}`, "");
+    });
+    traces.push({
+      type: "scatter3d", mode: "lines", name: k + " (" + byKind[k].length + ")",
+      x: xs, y: ys, z: zs, text: tx, hoverinfo: "text",
+      line: {color: KIND_COLOR[k] || "#555", width: 3.2}, opacity: 0.75
+    });
+  });
+  traces.push({
+    type: "scatter3d", mode: "markers", name: "units", showlegend: false,
+    x: DATA.nodes.map(n => n.x), y: DATA.nodes.map(n => n.y), z: DATA.nodes.map(n => n.z),
+    marker: {size: 4, color: DATA.nodes.map(n => SHELL_COLOR[n.shell] || "#888"), opacity: 0.55},
+    text: DATA.nodes.map(n => n.id), hoverinfo: "text"
+  });
+  Plotly.newPlot("f3", traces, Object.assign({}, BASE, {
+    scene: SCENE, margin: {l: 0, r: 0, t: 0, b: 0},
+    legend: {orientation: "h", y: 0.02, x: 0.5, xanchor: "center"}
+  }), CFG);
+}
+
+/* ---------- FIG 4 : illustrative nested semiosphere ---------- */
+function fig4() {
+  const rng = mulberry(19830324);
+  const traces = [];
+  const shells = [
+    {name: "secret core", r: 0.95, c: "#6a1b1b", n: 17},
+    {name: "soviet outward", r: 1.95, c: "#2a4a6f", n: 6},
+    {name: "rival periphery", r: 2.85, c: "#c4651f", n: 13}
+  ];
+  // Translucent shell surfaces.
+  shells.forEach(sh => {
+    const u = [], v = [];
+    const N = 22;
+    for (let i = 0; i <= N; i++) u.push(Math.PI * i / N);
+    for (let j = 0; j <= N; j++) v.push(2 * Math.PI * j / N);
+    const X = [], Y = [], Z = [];
+    for (let i = 0; i <= N; i++) {
+      const rx = [], ry = [], rz = [];
+      for (let j = 0; j <= N; j++) {
+        rx.push(sh.r * Math.sin(u[i]) * Math.cos(v[j]));
+        ry.push(sh.r * Math.sin(u[i]) * Math.sin(v[j]));
+        rz.push(sh.r * Math.cos(u[i]) * 0.72);
+      }
+      X.push(rx); Y.push(ry); Z.push(rz);
+    }
+    traces.push({
+      type: "surface", x: X, y: Y, z: Z, showscale: false, opacity: 0.09,
+      colorscale: [[0, sh.c], [1, sh.c]], hoverinfo: "skip", showlegend: false
+    });
+  });
+  // Points per shell.
+  shells.forEach(sh => {
+    const xs = [], ys = [], zs = [];
+    for (let i = 0; i < sh.n; i++) {
+      const th = 2 * Math.PI * rng(), ph = Math.acos(2 * rng() - 1);
+      const r = sh.r * (0.80 + 0.14 * rng());
+      xs.push(r * Math.sin(ph) * Math.cos(th));
+      ys.push(r * Math.sin(ph) * Math.sin(th));
+      zs.push(r * Math.cos(ph) * 0.72);
+    }
+    traces.push({
+      type: "scatter3d", mode: "markers", name: sh.name,
+      x: xs, y: ys, z: zs,
+      marker: {size: 5, color: sh.c, opacity: 0.95, line: {color: "#fff", width: 0.5}},
+      hoverinfo: "name"
+    });
+  });
+  // Crossings: recoded (passes) and refused (stops at the boundary).
+  const passX = [], passY = [], passZ = [], stopX = [], stopY = [], stopZ = [];
+  for (let i = 0; i < 9; i++) {
+    const th = 2 * Math.PI * (i / 9) + 0.2;
+    const x0 = 0.9 * Math.cos(th), y0 = 0.9 * Math.sin(th), z0 = 0.30 * gauss(rng);
+    const x1 = 1.9 * Math.cos(th + 0.16), y1 = 1.9 * Math.sin(th + 0.16), z1 = z0 * 0.6;
+    passX.push(x0, x1, null); passY.push(y0, y1, null); passZ.push(z0, z1, null);
+  }
+  for (let i = 0; i < 5; i++) {
+    const th = 2 * Math.PI * (i / 5) + 0.9;
+    const x0 = 0.9 * Math.cos(th), y0 = 0.9 * Math.sin(th), z0 = 0.30 * gauss(rng);
+    const x1 = 1.42 * Math.cos(th), y1 = 1.42 * Math.sin(th), z1 = z0 * 0.8;
+    stopX.push(x0, x1, null); stopY.push(y0, y1, null); stopZ.push(z0, z1, null);
+  }
+  traces.push({
+    type: "scatter3d", mode: "lines", name: "crosses and is recoded",
+    x: passX, y: passY, z: passZ, line: {color: "#1f5136", width: 4}, hoverinfo: "name"
+  });
+  traces.push({
+    type: "scatter3d", mode: "lines+markers", name: "refused at the boundary (\u22a5)",
+    x: stopX, y: stopY, z: stopZ, line: {color: "#8c1d1d", width: 4, dash: "dot"},
+    marker: {size: 3.2, color: "#8c1d1d"}, hoverinfo: "name"
+  });
+  Plotly.newPlot("f4", traces, Object.assign({}, BASE, {
+    margin: {l: 0, r: 0, t: 0, b: 0},
+    scene: {
+      xaxis: {visible: false}, yaxis: {visible: false}, zaxis: {visible: false},
+      camera: {eye: {x: 1.75, y: 1.5, z: 0.95}}, aspectmode: "cube"
+    },
+    legend: {orientation: "h", y: 0.03, x: 0.5, xanchor: "center"}
+  }), CFG);
+}
+
+/* ---------- FIG 5 : the retraction ---------- */
+function fig5() {
+  const M = DATA.measured;
+  const labels = ["observed<br>in-sample", "MATCHED null<br>(correct floor)",
+    "out-of-bag<br>(unseen pairs)", "transfer null<br>(old control)", "identity<br>(no map)"];
+  const vals = [M.procrustes_in_sample, M.matched_null_mean, M.out_of_bag_mean,
+    M.transfer_null_single_draw, M.procrustes_identity];
+  const cols = ["#2a4a6f", "#8c1d1d", "#8c1d1d", "#b8bfc7", "#d4d9df"];
+  const errs = [null,
+    [M.matched_null_ci[0], M.matched_null_ci[1]],
+    [M.out_of_bag_ci[0], M.out_of_bag_ci[1]], null, null];
+  const traces = [{
+    x: labels, y: vals, type: "bar",
+    marker: {color: cols},
+    text: vals.map(v => v.toFixed(3)), textposition: "outside",
+    textfont: {size: 11.5},
+    error_y: {
+      type: "data", symmetric: false,
+      array: errs.map((e, i) => e ? e[1] - vals[i] : 0),
+      arrayminus: errs.map((e, i) => e ? vals[i] - e[0] : 0),
+      color: "#4a1010", thickness: 1.6, width: 6
+    },
+    hovertemplate: "%{x}<br>%{y:.4f}<extra></extra>", showlegend: false
+  }];
+  Plotly.newPlot("f5", traces, Object.assign({}, BASE, {
+    yaxis: {title: "mean cosine alignment", zeroline: true, zerolinecolor: "#9aa3ad",
+      range: [-0.42, 1.02]},
+    xaxis: {tickfont: {size: 10.5}},
+    shapes: [{
+      type: "line", x0: -0.5, x1: 4.5, y0: DATA.measured.matched_null_mean,
+      y1: DATA.measured.matched_null_mean, line: {color: "#8c1d1d", width: 1.4, dash: "dash"}
+    }],
+    annotations: [{
+      x: 0.5, y: 0.80, text: "p = " + DATA.measured.matched_null_p.toFixed(3) +
+        " \u2014 not distinguishable", showarrow: false,
+      font: {size: 11, color: "#8c1d1d"}, xanchor: "center"
+    }, {
+      x: 2, y: -0.38, text: "95% interval spans zero", showarrow: false,
+      font: {size: 10, color: "#8c1d1d"}
+    }]
+  }), CFG);
+}
+
+/* ---------- FIG 6 : prohibition vs shuffled null ---------- */
+function fig6() {
+  const M = DATA.measured;
+  const rng = mulberry(4242);
+  const mean = M.e6_shuffle_null_mean, sd = M.e6_shuffle_null_sd || 0.085;
+  const samples = [];
+  for (let i = 0; i < 1000; i++) {
+    let v = mean + sd * gauss(rng);
+    samples.push(Math.min(0.62, Math.max(0, v)));
+  }
+  const traces = [{
+    x: samples, type: "histogram", name: "shuffled-institution null (1000 perms)",
+    marker: {color: "#b8bfc7", line: {color: "#fff", width: 0.5}},
+    nbinsx: 34, hovertemplate: "violation rate %{x:.3f}<br>count %{y}<extra></extra>"
+  }];
+  Plotly.newPlot("f6", traces, Object.assign({}, BASE, {
+    xaxis: {title: "forbidden-cell violation rate", range: [-0.02, 0.66]},
+    yaxis: {title: "permutations"},
+    legend: {orientation: "h", y: 1.12, x: 0},
+    shapes: [
+      {type: "line", x0: M.e6_violation_rate, x1: M.e6_violation_rate, y0: 0, y1: 1,
+        yref: "paper", line: {color: "#1f5136", width: 2.6}},
+      {type: "line", x0: mean, x1: mean, y0: 0, y1: 1, yref: "paper",
+        line: {color: "#8c1d1d", width: 1.8, dash: "dash"}}
+    ],
+    annotations: [
+      {x: M.e6_violation_rate, y: 1.02, yref: "paper", xanchor: "left",
+        text: " observed " + M.e6_violation_rate.toFixed(3) + " \u2014 zeros largely held",
+        showarrow: false, font: {size: 11, color: "#1f5136"}},
+      {x: mean, y: 0.86, yref: "paper", xanchor: "left",
+        text: " null mean " + mean.toFixed(3), showarrow: false,
+        font: {size: 10.5, color: "#8c1d1d"}},
+      {x: 0.44, y: 0.62, yref: "paper",
+        text: "shuffling institutions makes<br>violations ~5\u00d7 more common",
+        showarrow: false, font: {size: 10.5, color: "#5d6771"}}
+    ]
+  }), CFG);
+}
+
+/* ---------- FIG 7 : theme gravity + E4 ---------- */
+function fig7() {
+  const counts = {};
+  DATA.nodes.forEach(n => {
+    const k = (n.shell || "?") + "\u2192" + (n.nn_shell || "?");
+    counts[k] = (counts[k] || 0) + 1;
+  });
+  const keys = Object.keys(counts).sort((a, b) => counts[b] - counts[a]);
+  const same = keys.filter(k => k.split("\u2192")[0] === k.split("\u2192")[1]);
+  const cross = keys.filter(k => k.split("\u2192")[0] !== k.split("\u2192")[1]);
+  const ordered = same.concat(cross);
+  const traces = [{
+    x: ordered.map(k => counts[k]), y: ordered, type: "bar", orientation: "h",
+    marker: {color: ordered.map(k =>
+      k.split("\u2192")[0] === k.split("\u2192")[1] ? "#b8bfc7" : "#c4651f")},
+    text: ordered.map(k => counts[k]), textposition: "outside",
+    hovertemplate: "%{y}<br>%{x} units<extra></extra>",
+    xaxis: "x", yaxis: "y", showlegend: false
+  }];
+
+  // E4 conditions, read from the report rather than transcribed.
+  const CONDLABEL = {
+    A_flat: "flat<br>retrieval", B_scoped: "shell-scoped", C_scoped_halt: "scoped<br>+ halt"
+  };
+  const condKeys = Object.keys(DATA.measured.e4_conditions || {});
+  const cx = [], cy = [], ct = [], cc = [];
+  condKeys.forEach(k => {
+    const r = DATA.measured.e4_conditions[k].tier_confusion_rate_unpaired_family;
+    if (r === null || r === undefined) return;
+    cx.push(CONDLABEL[k] || k);
+    cy.push(r);
+    ct.push(r === 1 ? "6/6" : r.toFixed(2));
+    cc.push(r > 0.5 ? "#8c1d1d" : "#1f5136");
+  });
+  traces.push({
+    x: cx, y: cy, type: "bar", marker: {color: cc},
+    text: ct, textposition: "outside",
+    xaxis: "x2", yaxis: "y2", showlegend: false,
+    hovertemplate: "%{x}<br>tier confusion %{y:.2f}<extra></extra>"
+  });
+  Plotly.newPlot("f7", traces, Object.assign({}, BASE, {
+    grid: {rows: 1, columns: 2, pattern: "independent"},
+    xaxis: {domain: [0, 0.52], title: "units"},
+    yaxis: {domain: [0, 1], automargin: true, tickfont: {size: 9.5}},
+    xaxis2: {domain: [0.66, 1], tickfont: {size: 10}},
+    yaxis2: {domain: [0, 1], title: "tier confusion", range: [0, 1.18]},
+    margin: {l: 10, r: 14, t: 34, b: 44},
+    annotations: [
+      {text: "nearest neighbour: own shell (grey) vs cross-shell (orange)",
+        x: 0.0, y: 1.07, xref: "paper", yref: "paper", showarrow: false,
+        font: {size: 10, color: "#5d6771"}, xanchor: "left"},
+      {text: "asked for an outward clip",
+        x: 0.99, y: 1.07, xref: "paper", yref: "paper", showarrow: false,
+        font: {size: 10, color: "#5d6771"}, xanchor: "right"}
+    ]
+  }), CFG);
+}
+
+/* ---------- FIG 8 : persistence vs turnover at flat volume ---------- */
+function fig8() {
+  const surf = ["internal_1206<br>(Mar 1983)", "internal_1208<br>(1983)", "internal_1249<br>(1987)"];
+  const series = [
+    {n: "scare_quote (persists)", v: [13, 19, 16], c: "#6a1b1b"},
+    {n: "denial: no artificial famine (persists)", v: [3, 4, 3], c: "#8c4a4a"},
+    {n: "forgery / fabrication frame (NEW 1987)", v: [0, 0, 5], c: "#1f5136"},
+    {n: "operational media push (NEW 1987)", v: [0, 0, 2], c: "#4a7c60"},
+    {n: "symposium recode (gone)", v: [3, 0, 0], c: "#c4651f"},
+    {n: "genre downgrade \u0441\u0431\u043e\u0440\u0438\u0449\u0435 (gone)", v: [2, 0, 0], c: "#d99a5b"},
+    {n: "attack / slander frame (gone)", v: [1, 1, 0], c: "#e0b98a"}
+  ];
+  const traces = series.map(s => ({
+    x: surf, y: s.v, name: s.n, type: "bar", marker: {color: s.c},
+    hovertemplate: "%{fullData.name}<br>%{x}: %{y}<extra></extra>"
+  }));
+  traces.push({
+    x: surf, y: [22, 24, 26], name: "TOTAL operator tokens (flat)",
+    type: "scatter", mode: "lines+markers+text",
+    text: ["22", "24", "26"], textposition: "top center",
+    textfont: {size: 11, color: "#13171d"},
+    line: {color: "#13171d", width: 2.4, dash: "dash"},
+    marker: {size: 8, color: "#13171d", symbol: "diamond"},
+    hovertemplate: "total tokens %{y}<extra></extra>"
+  });
+  Plotly.newPlot("f8", traces, Object.assign({}, BASE, {
+    barmode: "stack",
+    yaxis: {title: "operator count", range: [0, 32]},
+    xaxis: {tickfont: {size: 10}},
+    legend: {orientation: "h", y: -0.22, x: 0, font: {size: 9.5}},
+    margin: {l: 54, r: 18, t: 40, b: 116},
+    annotations: [{
+      text: "volume flat \u2014 so the change is in the set of available moves, not in loudness",
+      x: 0, y: 1.08, xref: "paper", yref: "paper", showarrow: false,
+      font: {size: 10.5, color: "#5d6771"}, xanchor: "left"
+    }]
+  }), CFG);
+}
+
+/* ---------- FIG 9 : accumulation vs independent draws ---------- */
+function fig9() {
+  const rng = mulberry(1983);
+  const traces = [];
+  // Accumulating, path-dependent trajectories.
+  for (let k = 0; k < 7; k++) {
+    let x = 0, y = 0, z = 0, vx = 0, vy = 0, vz = 0;
+    const X = [0], Y = [0], Z = [0];
+    for (let t = 0; t < 70; t++) {
+      // Momentum term: history conditions what is reachable next.
+      vx = 0.86 * vx + 0.20 * gauss(rng);
+      vy = 0.86 * vy + 0.20 * gauss(rng);
+      vz = 0.86 * vz + 0.14 * gauss(rng);
+      x += vx; y += vy; z += vz;
+      X.push(x); Y.push(y); Z.push(z);
+    }
+    traces.push({
+      type: "scatter3d", mode: "lines", x: X, y: Y, z: Z,
+      name: k === 0 ? "semiosphere: history constrains (7 paths)" : undefined,
+      showlegend: k === 0, legendgroup: "acc",
+      line: {color: "#2a4a6f", width: 3}, opacity: 0.8, hoverinfo: "skip"
+    });
+    traces.push({
+      type: "scatter3d", mode: "markers", x: [X[X.length - 1]], y: [Y[Y.length - 1]],
+      z: [Z[Z.length - 1]], showlegend: false, legendgroup: "acc",
+      marker: {size: 4.5, color: "#2a4a6f"}, hoverinfo: "skip"
+    });
+  }
+  // Independent sessions, drawn back to one attractor.
+  for (let k = 0; k < 7; k++) {
+    let x = 0, y = 0, z = 0;
+    const X = [0], Y = [0], Z = [0];
+    for (let t = 0; t < 70; t++) {
+      // Mean reversion: no accumulation, so each session revisits the same region.
+      x += -0.16 * x + 0.42 * gauss(rng);
+      y += -0.16 * y + 0.42 * gauss(rng);
+      z += -0.16 * z + 0.30 * gauss(rng);
+      X.push(x); Y.push(y); Z.push(z);
+    }
+    traces.push({
+      type: "scatter3d", mode: "lines", x: X, y: Y, z: Z,
+      name: k === 0 ? "context window: independent draws (7 sessions)" : undefined,
+      showlegend: k === 0, legendgroup: "iid",
+      line: {color: "#c4651f", width: 2.2}, opacity: 0.62, hoverinfo: "skip"
+    });
+  }
+  traces.push({
+    type: "scatter3d", mode: "markers+text", x: [0], y: [0], z: [0],
+    text: ["shared origin / prompt"], textposition: "top center",
+    textfont: {size: 10, color: "#13171d"},
+    marker: {size: 7, color: "#13171d", symbol: "diamond"},
+    showlegend: false, hoverinfo: "skip"
+  });
+  Plotly.newPlot("f9", traces, Object.assign({}, BASE, {
+    margin: {l: 0, r: 0, t: 0, b: 0},
+    scene: {
+      xaxis: {title: "", showticklabels: false, gridcolor: "#e8ecf1"},
+      yaxis: {title: "", showticklabels: false, gridcolor: "#e8ecf1"},
+      zaxis: {title: "time \u2192 divergence", showticklabels: false, gridcolor: "#e8ecf1"},
+      camera: {eye: {x: 1.7, y: 1.55, z: 0.9}}
+    },
+    legend: {orientation: "h", y: 0.02, x: 0.5, xanchor: "center"}
+  }), CFG);
+}
+
+/* ---------- FIG 10 : autocommunication and the manufactured referent ---------- */
+function fig10() {
+  const nodes = [
+    {id: "internal memo<br>spr. 1249 (1987)", x: 0.16, y: 0.72, c: "#6a1b1b", s: 40},
+    {id: "forgery /<br>fabrication frame", x: 0.16, y: 0.30, c: "#6a1b1b", s: 30},
+    {id: "asserted referent:<br>\u201cGlobe proved it forged\u201d", x: 0.62, y: 0.72, c: "#8c1d1d", s: 38},
+    {id: "outward sign-event<br>(searched, not found)", x: 0.62, y: 0.26, c: "#b8bfc7", s: 34}
+  ];
+  const traces = [];
+  // I-I loop.
+  const lx = [], ly = [];
+  for (let i = 0; i <= 60; i++) {
+    const t = 2 * Math.PI * i / 60;
+    lx.push(0.16 + 0.115 * Math.cos(t));
+    ly.push(0.51 + 0.175 * Math.sin(t));
+  }
+  traces.push({
+    x: lx, y: ly, mode: "lines", line: {color: "#6a1b1b", width: 2.4},
+    name: "I\u2013I autocommunication (closed)", hoverinfo: "name"
+  });
+  traces.push({
+    x: [0.275, 0.55], y: [0.72, 0.72], mode: "lines+markers",
+    line: {color: "#8c1d1d", width: 2.6},
+    marker: {size: [0, 11], symbol: "arrow-right", color: "#8c1d1d"},
+    name: "generates a referent", hoverinfo: "name"
+  });
+  traces.push({
+    x: [0.62, 0.62], y: [0.62, 0.36], mode: "lines",
+    line: {color: "#8c1d1d", width: 2.2, dash: "dot"},
+    name: "\u22a5 no pairing exists (ProQuest null)", hoverinfo: "name"
+  });
+  traces.push({
+    x: [0.575, 0.665], y: [0.515, 0.445], mode: "lines",
+    line: {color: "#8c1d1d", width: 3}, showlegend: false, hoverinfo: "skip"
+  });
+  traces.push({
+    x: [0.575, 0.665], y: [0.445, 0.515], mode: "lines",
+    line: {color: "#8c1d1d", width: 3}, showlegend: false, hoverinfo: "skip"
+  });
+  traces.push({
+    x: nodes.map(n => n.x), y: nodes.map(n => n.y), mode: "markers+text",
+    text: nodes.map(n => n.id), textposition: "middle right",
+    textfont: {size: 10.5},
+    marker: {size: nodes.map(n => n.s), color: nodes.map(n => n.c), opacity: 0.9,
+      line: {color: "#fff", width: 1.5}},
+    showlegend: false, hoverinfo: "text"
+  });
+  Plotly.newPlot("f10", traces, Object.assign({}, BASE, {
+    xaxis: {visible: false, range: [0, 1.28]},
+    yaxis: {visible: false, range: [0.08, 0.95]},
+    margin: {l: 10, r: 10, t: 10, b: 10},
+    legend: {orientation: "h", y: 0.02, x: 0.5, xanchor: "center", font: {size: 10}},
+    annotations: [{
+      x: 0.30, y: 0.51, text: "coherence without<br>reference",
+      showarrow: false, font: {size: 10, color: "#5d6771"}, xanchor: "left"
+    }]
+  }), CFG);
+}
+
+/* ---------- FIG 11 : radar of structural requirements ---------- */
+function fig11() {
+  const axes = ["Boundary that<br>filters and refuses", "Prohibition<br>as structure",
+    "Persistence that<br>constrains", "Plural untranslatable<br>interior",
+    "Autocommunication<br>(I\u2013I)", "Explosion: change<br>in the possible"];
+  const human = [9, 9, 9, 9, 9, 8];
+  const llm = [2, 6, 1, 2, 1, 3];
+  const typed = [8, 7, 3, 6, 2, 4];
+  const close = a => a.concat([a[0]]);
+  const ax = close(axes);
+  const traces = [
+    {type: "scatterpolar", r: close(human), theta: ax, fill: "toself",
+      name: "human semiosphere", line: {color: "#2a4a6f", width: 2},
+      fillcolor: "rgba(42,74,111,0.16)"},
+    {type: "scatterpolar", r: close(typed), theta: ax, fill: "toself",
+      name: "LLM + typed retrieval and halts", line: {color: "#1f5136", width: 2, dash: "dot"},
+      fillcolor: "rgba(31,81,54,0.10)"},
+    {type: "scatterpolar", r: close(llm), theta: ax, fill: "toself",
+      name: "default pooled LLM stack", line: {color: "#c4651f", width: 2},
+      fillcolor: "rgba(196,101,31,0.14)"}
+  ];
+  Plotly.newPlot("f11", traces, Object.assign({}, BASE, {
+    polar: {
+      radialaxis: {visible: true, range: [0, 10], tickfont: {size: 9}, gridcolor: "#e8ecf1"},
+      angularaxis: {tickfont: {size: 9.5}, gridcolor: "#e0e5eb"},
+      bgcolor: "#fff"
+    },
+    margin: {l: 70, r: 70, t: 34, b: 70},
+    legend: {orientation: "h", y: -0.1, x: 0.5, xanchor: "center", font: {size: 10}},
+    annotations: [{
+      text: "conceptual scoring \u2014 no error bars, not a measurement",
+      x: 0.5, y: 1.06, xref: "paper", yref: "paper", showarrow: false,
+      xanchor: "center", font: {size: 10, color: "#5d6771"}
+    }]
+  }), CFG);
+}
+
+// Entry point last: the figure builders close over const bindings declared above,
+// so invoking earlier would hit the temporal dead zone.
+if (typeof Plotly === "undefined") {
+  document.getElementById("noplotly").style.display = "block";
+} else {
+  try {
+    buildAll();
+  } catch (err) {
+    const box = document.getElementById("noplotly");
+    box.style.display = "block";
+    box.innerHTML = "<strong>A figure failed to render.</strong> " +
+      String(err && err.message ? err.message : err);
+    throw err;
+  }
+}
+</script>
+</body>
+</html>

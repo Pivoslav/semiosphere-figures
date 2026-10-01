@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Lotman evidence suite · findings dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Literata&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+body { font-family: 'DM Sans', sans-serif; background:#f4f1ea; color:#1e1c18; margin:0; line-height:1.5; }
+header { background:#2c2820; color:#f0ece4; padding:1.25rem 1.5rem; border-bottom:3px solid #8a6d1a; }
+header h1 { font-family: Literata, serif; margin:0; font-size:1.35rem; }
+.wrap { max-width:960px; margin:0 auto; padding:1.5rem 1.25rem 3rem; }
+section { margin-bottom:2rem; }
+h2 { font-family: Literata, serif; border-bottom:1px solid #d8d2c6; padding-bottom:.35rem; }
+.stats { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:.65rem; }
+.stat { background:#fff; border:1px solid #d8d2c6; border-radius:8px; padding:.75rem; text-align:center; }
+.stat .n { font-family: Literata, serif; font-size:1.5rem; color:#8a6d1a; font-weight:600; }
+.claim { background:#fff; border:1px solid #d8d2c6; border-left:3px solid #8a6d1a; border-radius:8px; padding:1rem; margin-bottom:.75rem; }
+.claim h3 { margin:0 0 .35rem; font-size:.95rem; }
+.claim .meta { font-size:.82rem; color:#5c574d; margin:0; }
+table { width:100%; border-collapse:collapse; font-size:.88rem; background:#fff; }
+th,td { border:1px solid #d8d2c6; padding:.4rem .55rem; text-align:left; vertical-align:top; }
+th { background:#f3f0ea; font-size:.72rem; text-transform:uppercase; }
+td.ru { font-family: Literata, serif; color:#1a3d2e; }
+.callout { background:#f8f3e4; border:1px solid #dcc99a; border-radius:8px; padding:1rem; }
+.nav { margin-top:.75rem; }
+.nav a { color:#e8dcc0; margin-right:.75rem; font-size:.85rem; }
+</style></head><body>
+<header>
+  <h1>Lotman evidence suite · multi-method findings</h1>
+  <p style="margin:.4rem 0 0;font-size:.9rem;color:#c8c0b0;">Contested binding · phrase relay · dialogue graph · genre strata · boundary drift</p>
+  <div class="nav">
+    <a href="evidence_dashboard.html">Prior evidence dashboard</a>
+    <a href="dissertation_proposal.html">Dissertation proposal</a>
+    <a href="../docs/FINDINGS_READY.md">Findings brief</a>
+  </div>
+</header>
+<div class="wrap">
+  <section>
+    <h2>Headline stats</h2>
+    <div class="stats">
+      <div class="stat"><div class="n">16</div><div>Corpus docs</div></div>
+      <div class="stat"><div class="n">933</div><div>Expert rows</div></div>
+      <div class="stat"><div class="n">16</div><div>Dialogue edges</div></div>
+      <div class="stat"><div class="n">8</div><div>Cross-doc phrase families</div></div>
+      <div class="stat"><div class="n">8/8 (machine); human pending</div><div>Montreal pair-read</div></div>
+    </div>
+  </section>
+  <section>
+    <h2>Findings (for proposal rewrite)</h2>
+    
+        <article class="claim">
+          <h3>Contested Binding</h3>
+          <p>KGB utterances attempt binding (action + required reading) under conditions of rival uptake — CIUS published, conference held, Farisei follows.</p>
+          <p class="meta"><strong>Evidence:</strong> reception_timeline, 1206↔cius pair-read, dialogue escalation to 1249 · <strong>Lotman:</strong> boundary_translation, dialogue_of_texts, explosion</p>
+        </article>
+        <article class="claim">
+          <h3>Phrase Relay</h3>
+          <p>8 phrase families recur across multiple documents/years — binding units travel, not isolated spin.</p>
+          <p class="meta"><strong>Evidence:</strong> artificial_famine, scare_quotes, hostile_gathering, symposium_recode, oun_actor, operational · <strong>Lotman:</strong> text_as_mechanism, secondary_modeling</p>
+        </article>
+        <article class="claim">
+          <h3>Multi Audience</h3>
+          <p>Same fond addresses distinct semiospheres: CC/KGB relay (autocommunication) vs operational/emigré vs foreign media markers.</p>
+          <p class="meta"><strong>Evidence:</strong> autocommunication_markers, 1245 downstream press · <strong>Lotman:</strong> autocommunication, semiosphere_boundary</p>
+        </article>
+        <article class="claim">
+          <h3>Genre Vs Binding</h3>
+          <p>Memoranda vs bulletins differ in binding density (memorandum proxy 0.363 vs bulletin 0.296) — genre stratification separates habit from prescriptive attempt.</p>
+          <p class="meta"><strong>Evidence:</strong> genre_binding_study · <strong>Lotman:</strong> multi_code_utterance</p>
+        </article>
+        <article class="claim">
+          <h3>Anniversary Rupture</h3>
+          <p>artificial_famine family hits in 1983 corpus files: 8; post-1986 Farisei/1245 show remedial/media pedagogy layers.</p>
+          <p class="meta"><strong>Evidence:</strong> explosion_diachronic · <strong>Lotman:</strong> explosion, static_vs_dynamic_modeling</p>
+        </article>
+        <article class="claim">
+          <h3>Boundary Drift</h3>
+          <p>Bilingual alignment on 1206 shows systematic translation choices at the edge (10 keyword pairs sampled).</p>
+          <p class="meta"><strong>Evidence:</strong> bilingual_drift_1206 · <strong>Lotman:</strong> translation_non_equivalence</p>
+        </article>
+  </section>
+  <section>
+    <h2>Phrase genealogy summary</h2>
+    <table><thead><tr><th>Family</th><th>Hits</th><th>Docs</th><th>Year span</th></tr></thead><tbody><tr><td>Scare-quoted recode</td><td>149</td><td>16</td><td>[1976, 1988]</td></tr><tr><td>OUN / nationalist actor</td><td>95</td><td>15</td><td>[1976, 1988]</td></tr><tr><td>Operational measures</td><td>80</td><td>14</td><td>[1977, 1988]</td></tr><tr><td>Internal routing / autocommunication</td><td>46</td><td>12</td><td>[1976, 1988]</td></tr><tr><td>Quoted «artificial famine»</td><td>20</td><td>6</td><td>[1983, 1988]</td></tr><tr><td>Mass pedagogy / counter-propaganda</td><td>20</td><td>4</td><td>[1985, 1987]</td></tr><tr><td>Symposium downgrade</td><td>19</td><td>7</td><td>[1983, 1988]</td></tr><tr><td>Hostile gathering label</td><td>13</td><td>5</td><td>[1983, 1988]</td></tr><tr><td>Ideological subversion frame</td><td>8</td><td>1</td><td>[1986, 1986]</td></tr></tbody></table>
+  </section>
+  <section>
+    <h2>Genre vs binding proxy</h2>
+    <table><thead><tr><th>Genre</th><th>Rows</th><th>Binding rate</th><th>Discrediting rate</th><th>Institutional rate</th></tr></thead>
+    <tbody><tr><td>informational_bulletin</td><td>291</td><td>0.296</td>
+        <td>0.337</td><td>0.416</td></tr><tr><td>letter</td><td>45</td><td>0.333</td>
+        <td>0.356</td><td>0.578</td></tr><tr><td>memorandum</td><td>597</td><td>0.363</td>
+        <td>0.38</td><td>0.293</td></tr></tbody></table>
+  </section>
+  <section>
+    <h2>Dialogue graph (sample edges)</h2>
+    <ul><li><code>ref_21sv_jan1983</code> → <code>1206</code> (prior_report): 50th anniversary frame</li><li><code>1206</code> → <code>1208</code> (follow_up): 119/sv cites May planning; Jun remedial ops</li><li><code>1208</code> → <code>1249-0046-0047</code> (escalation): Farisei media campaign</li><li><code>1206</code> → <code>cius_1986</code> (counter_text): Rival binding in print</li><li><code>1206</code> → <code>embassy_1983</code> (public_translation): Boundary drift to Canadian public</li><li><code>1245</code> → <code>emigre_press</code> (downstream): 630 materials → 23 emigré outlets</li><li><code>kgb_school_1955</code> → <code>1206</code> (modeling_stack): Curriculum → memo phrase families</li><li><code>1128</code> → <code>ref_449sv</code> (cross_reference): 4 декабря 1976 года № 449/св докладывалось о смерти оперуполномоченного Киевско</li><li><code>1128</code> → <code>ref_449sv</code> (cross_reference):  и распространению (докладывалось № 449/св 14 декабря 1976 года), продолжает привл</li><li><code>1206</code> → <code>ref_21sv</code> (cross_reference): м сборище в Канаде  28 января 1983 г. № 21/св докладывалось о проводимых оуновцами за рубе</li><li><code>1206</code> → <code>ref_28sv</code> (cross_reference):  Полтавская область 4 февраля 1983 г. № 28/св докладывалось о возбуждении Управлением КГБ </li><li><code>1208</code> → <code>ref_119sv</code> (cross_reference): пании за рубежом    19 мая 1983 г. № 119/св докладывалось о планируемых зарубежными ОУН вр</li><li><code>1208</code> → <code>ref_126sv</code> (cross_reference): тровская область    25 мая 1983 г. № 126/св докладывалось о хищении из цеха № 4 Криворожск</li><li><code>1209</code> → <code>ref_244sv</code> (cross_reference): й печи г. Запорожье 10 октября 1983 г. № 244/св докладывалось о происшедшей 7 октября с.г.</li><li><code>1249-80-83</code> → <code>ref_69sv</code> (cross_reference): еступного прошлого (докладывалось № 69/св 29 марта 1985 г.).   По полученным КГБ </li><li><code>1249-80-83</code> → <code>ref_56sv</code> (cross_reference):  судебного процесса докладывалось № 56/св от 9 марта с.г.).   Ткаченко и Марков п</li></ul>
+  </section>
+  <section>
+    <h2>Bilingual drift · file 1206 (sample)</h2>
+    <table><thead><tr><th>Russian</th><th>English (GT segment)</th><th>Drift note</th></tr></thead><tbody><tr><td class="ru">докладывалось о проводимых</td><td>report [...] described [...] conducted</td>
+        <td>Boundary translation (pair-read candidate)</td></tr><tr><td class="ru">оуновцами</td><td>by OUNites</td>
+        <td>Actor label stabilized</td></tr><tr><td class="ru">&quot;искусственного голода на Украине&quot;.</td><td>of the &quot;artificial famine in Ukraine.&quot;</td>
+        <td>Direct calque; quotes preserved in GT</td></tr><tr><td class="ru">по инициативе &quot;Канадского института украинских исследований&quot;</td><td>initiated by the “Canadian Institute of Ukrainian Studies”</td>
+        <td>Institutional actor; boundary institution named</td></tr><tr><td class="ru">На сборище будут заслушаны доклады</td><td>The gathering will feature reports</td>
+        <td>Genre downgrade: gathering not conference</td></tr><tr><td class="ru">активные оуновцы</td><td>active OUNites</td>
+        <td>Actor label stabilized</td></tr><tr><td class="ru">Материалы &quot;симпозиума&quot;</td><td>The materials from the &quot;symposium&quot;</td>
+        <td>Symposium retained; scare quotes may drop in EN segment</td></tr><tr><td class="ru">об &quot;искусственном голоде&quot;</td><td>regarding the &quot;artificial famine&quot;</td>
+        <td>Direct calque; quotes preserved in GT</td></tr><tr><td class="ru">№ 28/св докладывалось</td><td>report No. 28/sv detailed</td>
+        <td>Boundary translation (pair-read candidate)</td></tr><tr><td class="ru">* туристов - 529
+в Ялте - 220, Киеве - 197, Львове - 50, Одессе - 34, других городах - 26. Из США - 53, Англии - 14, ФРГ - 126, Канада - 14, других стран НАТО - 28, иных государств - 294;</td><td>Tourists – 529
+ In Yalta – 220, Kyiv – 197, Lviv – 50, Odesa – 34, other cities – 26. From the USA – 53, UK – 14, FRG – 126, Canada – 14, other NATO countries – 28, other countries – 294.</td>
+        <td>Boundary translation (pair-read candidate)</td></tr></tbody></table>
+  </section>
+  <section>
+    <div class="callout"><strong>Ready for rewrite?</strong> True. 
+    Still required: Human eight-part coding on Montreal (human_protocol_1206_coded.json), Comparative official-genre case (non-KGB) for PhD breadth, Primary embassy/Novosti full texts where possible</div>
+  </section>
+</div></body></html>
