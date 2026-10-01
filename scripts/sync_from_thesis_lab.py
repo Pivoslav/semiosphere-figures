@@ -4,7 +4,7 @@
 Run from repo root:
   python scripts/sync_from_thesis_lab.py
 
-Does not touch vozmezdie or any other repo.
+Run only against the thesis lab path configured in this script.
 """
 from __future__ import annotations
 
