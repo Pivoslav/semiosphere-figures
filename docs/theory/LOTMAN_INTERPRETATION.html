@@ -71,9 +71,56 @@
     font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:.9rem}
   .toc ol{margin:8px 0 0;padding-left:22px} .toc li{margin:5px 0}
   .toc a{color:var(--accent);text-decoration:none} .toc a:hover{text-decoration:underline}
+  .toc .hint{font-weight:normal;color:var(--muted);font-size:.82rem}
   footer.doc{margin-top:64px;padding-top:22px;border-top:3px solid var(--ink);
     font-size:.86rem;color:var(--muted)}
   .rule-soft{border:0;border-top:1px solid var(--rule);margin:30px 0}
+  a.term{
+    color:var(--ink);text-decoration:none;border-bottom:1px dotted var(--accent);cursor:help;
+  }
+  a.term:hover, a.term:focus{color:var(--accent);border-bottom-style:solid;outline:none}
+  a.term:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  #term-popover{
+    position:fixed;z-index:1000;max-width:22rem;padding:.7rem .85rem;background:#fff;
+    border:1px solid var(--rule);box-shadow:0 4px 18px rgba(0,0,0,.12);
+    font-size:.92rem;line-height:1.45;display:none;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  }
+  #term-popover.visible{display:block}
+  #term-popover strong{display:block;margin-bottom:.35rem;color:var(--accent);font-size:.95rem}
+  #term-popover .more{display:inline-block;margin-top:.45rem;font-size:.85rem;color:var(--accent)}
+  #return-nav{
+    position:fixed;left:.75rem;bottom:.75rem;z-index:999;display:none;max-width:11.5rem;
+  }
+  #return-nav.visible{display:block}
+  #return-nav button{
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:.78rem;
+    line-height:1.3;padding:.45rem .65rem;border:1px solid var(--rule);border-radius:4px;
+    background:rgba(255,255,255,.96);color:var(--accent);box-shadow:0 2px 10px rgba(0,0,0,.08);
+    cursor:pointer;text-align:left;width:100%;
+  }
+  #return-nav button:hover{background:#f1f4f7}
+  #return-nav .return-label{display:block;font-weight:700}
+  #return-nav .return-where{
+    display:block;font-size:.72rem;color:var(--muted);margin-top:.15rem;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  section.glossary{margin-top:64px;padding-top:26px;border-top:3px solid var(--ink)}
+  section.glossary h2{border-top:none;margin-top:0;padding-top:0}
+  section.glossary dl{margin:0}
+  section.glossary dt{
+    font-weight:700;margin:1.15rem 0 .25rem;scroll-margin-top:1rem;color:var(--accent);
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:.98rem;
+  }
+  section.glossary dt:target{background:#eef3f8;padding:.15rem .4rem;margin-left:-.4rem}
+  section.glossary dd{margin:0 0 .45rem;color:var(--muted);font-size:.95rem}
+  section.glossary dd .example{
+    display:block;margin-top:.35rem;font-style:italic;color:var(--ink);
+  }
+  @media print{
+    a.term{border-bottom:none;color:var(--ink)}
+    #term-popover, #return-nav{display:none !important}
+  }
 </style>
 </head>
 <body>
@@ -97,29 +144,39 @@
     <li><a href="#s8">The AGI question, properly posed</a></li>
     <li><a href="#s9">Potential findings: what the unrun experiments would mean</a></li>
     <li><a href="#s10">Sources, tiers, and what must not be claimed</a></li>
+    <li><a href="#glossary">Glossary</a> <span class="hint">(click dotted terms)</span></li>
   </ol>
 </div>
 
+<div id="term-popover" role="tooltip" aria-hidden="true"></div>
+<div id="return-nav" aria-live="polite">
+  <button type="button" id="return-nav-btn">
+    <span class="return-label">&larr; Return to reading</span>
+    <span class="return-where" id="return-nav-where"></span>
+  </button>
+</div>
+
+<main id="doc-main">
 <!-- ============================================================ -->
 <h2 id="s1"><span class="num">SECTION ONE</span>The central retraction is a Lotmanian result, not a defeat</h2>
 
-<p>The project's headline number was <span class="num-hl">0.613</span>: the cosine alignment achieved when an orthogonal map, fitted on nine licensed secret&rarr;outward pair-reads, carried Russian KGB text onto its English embassy counterpart. It has been withdrawn. Against the correct null - shuffle the pairing, refit, and score against <em>those same shuffled</em> targets - an arbitrary pairing of the same nine points reaches <span class="num-hl">0.602</span> (95% range 0.499&ndash;0.746), giving <span class="num-hl">p = 0.394</span>. Out-of-bag, on pairs each map never saw, alignment is <span class="num-hl">0.022</span> with an interval from &minus;0.318 to 0.312.</p>
+<p>The project's headline number was <span class="num-hl">0.613</span>: the <a class="term" href="#gloss-cosine" data-tip="How similar two sentence fingerprints point. High cosine means shared topic, not a faithful translation of register.">cosine alignment</a> achieved when an <a class="term" href="#gloss-procrustes" data-tip="A rotation that lines one set of fingerprints up with another - like turning a transparency until paired dots match, without stretching.">orthogonal map</a>, fitted on nine licensed secret&rarr;outward <a class="term" href="#gloss-pair-read" data-tip="Reading a secret stretch beside its dated public counterpart - or recording that the counterpart is missing. The warrant for every claim here.">pair-reads</a>, carried Russian KGB text onto its English embassy counterpart. It has been withdrawn. Against the correct <a class="term" href="#gloss-matched-null" data-tip="A fair comparison: shuffle the pairings, refit the same way, and score against those shuffled targets. If noise scores almost as well, the original number was slack, not a finding.">null</a> - shuffle the pairing, refit, and score against <em>those same shuffled</em> targets - an arbitrary pairing of the same nine points reaches <span class="num-hl">0.602</span> (95% range 0.499&ndash;0.746), giving <span class="num-hl">p = 0.394</span>. <a class="term" href="#gloss-oob" data-tip="Tested on pairs the map never saw. If the fit collapses here, it was a phrasebook, not a general rule.">Out-of-bag</a>, on pairs each map never saw, alignment is <span class="num-hl">0.022</span> with an interval from &minus;0.318 to 0.312.</p>
 
 <div class="callout c-neg">
   <span class="lab">Retracted</span>
-  Nine points in 384 dimensions give orthogonal Procrustes enough freedom to manufacture roughly 0.60 from noise. The number measured geometric slack, not a register recoding. The earlier control (<code>shuffled_pairing = 0.057</code>) fitted on a shuffled pairing but scored against the <em>true</em> targets - a transfer null that an in-sample fit beats close to tautologically.
+  Nine points in 384 dimensions give <a class="term" href="#gloss-procrustes" data-tip="Rotation-only alignment of two fingerprint sets. With few points in many dimensions it can fake a high score from noise.">orthogonal Procrustes</a> enough freedom to manufacture roughly 0.60 from noise. The number measured geometric slack, not a <a class="term" href="#gloss-register" data-tip="The document type and audience contract - secret memo vs embassy release vs diaspora press. Same week, different rules.">register</a> recoding. The earlier control (<code>shuffled_pairing = 0.057</code>) fitted on a shuffled pairing but scored against the <em>true</em> targets - a transfer null that an in-sample fit beats close to tautologically.
 </div>
 
-<p>It would be easy to read this as the semiotics losing an argument to the statistics. The opposite is closer to true. What we attempted was to model Lotman's boundary as a <em>rotation</em> - a single structure-preserving transformation carrying one language onto another without residue. Lotman's boundary is not that, and he says so in the same breath in which he defines it.</p>
+<p>It would be easy to read this as the semiotics losing an argument to the statistics. The opposite is closer to true. What we attempted was to model Lotman's <a class="term" href="#gloss-boundary" data-tip="Not a decorative edge. The bilingual filter that decides what may cross from one zone to another, what gets recoded, and what is refused.">boundary</a> as a <em>rotation</em> - a single structure-preserving transformation carrying one language onto another without residue. Lotman's boundary is not that, and he says so in the same breath in which he defines it.</p>
 
 <blockquote>
   <p>&ldquo;The boundary of semiotic space is the most important functional and structural position, giving substance to its semiotic mechanism. The boundary is a bilingual mechanism, translating external communications into the internal language of the semiosphere and vice versa.&rdquo;</p>
   <span class="cite"><span class="tier tB">TIER B</span> Juri Lotman, &ldquo;On the Semiosphere&rdquo; (1984), trans. Wilma Clark, <em>Sign Systems Studies</em> 33.1 (2005). Verify clause order against the Clark translation.</span>
 </blockquote>
 
-<p>A bilingual mechanism is not an isometry. An isometry preserves all distances and is invertible without loss; that is precisely what a translating <em>filter</em> is not. The boundary in Lotman is the site where some things cross, some things are recoded, and some things do not cross at all. Our out-of-bag figure of 0.022 is the quantitative form of that last clause: whatever the nine pairs encode does not generalise to a tenth, because the boundary is not implementing a global rule that a tenth pair would obey.</p>
+<p>A <a class="term" href="#gloss-bilingual" data-tip="Lotman's name for the boundary: it translates some incoming messages into the culture's own language, recodes others, and refuses the rest. Not a lossless dictionary.">bilingual mechanism</a> is not an <a class="term" href="#gloss-isometry" data-tip="A transformation that keeps all distances and can be undone without leftover. A rotation is an isometry; Lotman's filter is not.">isometry</a>. An isometry preserves all distances and is invertible without loss; that is precisely what a translating <em>filter</em> is not. The boundary in Lotman is the site where some things cross, some things are recoded, and some things do not cross at all. Our out-of-bag figure of 0.022 is the quantitative form of that last clause: whatever the nine pairs encode does not generalise to a tenth, because the boundary is not implementing a global rule that a tenth pair would obey.</p>
 
-<p>The leave-one-topic-out result says the same thing in a second voice. Held out by topic, alignment falls to roughly zero. Nine pairs behave as a <em>phrasebook</em>, not a grammar. And a phrasebook is what Lotman's boundary would be expected to produce, because the mechanism is not one rule but an accumulation of locally negotiated crossings.</p>
+<p>The <a class="term" href="#gloss-loto" data-tip="Train the map on some themes, hold one topic out, and test whether the rotation still works. With nine pairs it collapses to chance - a phrasebook, not a grammar.">leave-one-topic-out</a> result says the same thing in a second voice. Held out by topic, alignment falls to roughly zero. Nine pairs behave as a <em>phrasebook</em>, not a grammar. And a phrasebook is what Lotman's boundary would be expected to produce, because the mechanism is not one rule but an accumulation of locally negotiated crossings.</p>
 
 <div class="callout c-pos">
   <span class="lab">What survives</span>
@@ -129,21 +186,21 @@
 <!-- ============================================================ -->
 <h2 id="s2"><span class="num">SECTION TWO</span>The language confound is not a bug in the theory - it is the theory</h2>
 
-<p>The second retraction concerned nearest-neighbour separation. The claim had been that secret memos never drift toward rival diaspora English - zero of seventeen. Under a permutation null this was not significant (p = 0.149); with same-topic neighbours excluded the direction <em>reversed</em>; and the whole contrast rested on a single document. Then the confound: all 17 secret units are Russian, and every comparison unit is English.</p>
+<p>The second retraction concerned <a class="term" href="#gloss-nn" data-tip="Ask: whose fingerprint sits closest? If a secret Russian memo's nearest neighbour is always another Russian text, that may be language, not institution.">nearest-neighbour</a> separation. The claim had been that secret memos never drift toward rival diaspora English - zero of seventeen. Under a <a class="term" href="#gloss-perm-null" data-tip="Shuffle the labels many times and ask how often a random assignment looks as extreme. If p is high, the original contrast was not unusual.">permutation null</a> this was not significant (p = 0.149); with same-topic neighbours excluded the direction <em>reversed</em>; and the whole contrast rested on a single document. Then the confound: all 17 secret units are Russian, and every comparison unit is English.</p>
 
 <div class="callout c-neg">
   <span class="lab">Retracted</span>
   &ldquo;Russian text is not nearest to English text&rdquo; is a statement about language, not about institutions. Cross-shell nearest-neighbour distance is unusable as boundary evidence until language is controlled.
 </div>
 
-<p>Here the failure is diagnostic in a way that goes to the centre of Lotman's architecture. Lotman - with Uspensky, and throughout the Tartu programme - distinguishes natural language from the <em>secondary modelling systems</em> built on top of it. Ideology, genre, etiquette, and institutional register are secondary; they are constructed <em>over</em> a natural language and cannot be read off it.</p>
+<p>Here the failure is diagnostic in a way that goes to the centre of Lotman's architecture. Lotman - with Uspensky, and throughout the Tartu programme - distinguishes natural language from the <a class="term" href="#gloss-sms" data-tip="Culture layered on top of ordinary language: ideology, genre, etiquette, institutional register. An encoder good at translation sits on the primary system and cannot see these layers by itself.">secondary modelling systems</a> built on top of it. Ideology, genre, etiquette, and institutional register are secondary; they are constructed <em>over</em> a natural language and cannot be read off it.</p>
 
 <blockquote>
   <p>&ldquo;Culture is the non-hereditary memory of the community.&rdquo;</p>
   <span class="cite"><span class="tier tA">TIER A</span> Juri Lotman and Boris Uspensky, &ldquo;On the Semiotic Mechanism of Culture&rdquo; (1971/1978), trans. George Mihaychuk, <em>New Literary History</em> 9.2.</span>
 </blockquote>
 
-<p>A multilingual sentence encoder is trained to do exactly one thing well: place translationally equivalent sentences near each other regardless of language. It is an instrument tuned to the <em>primary</em> system. When we asked it to separate a Russian secret register from an English public one, it answered with the only distinction it reliably holds - the language distinction - and we mistook that answer for a register finding.</p>
+<p>A multilingual sentence <a class="term" href="#gloss-embedding" data-tip="A numeric fingerprint of a sentence from a frozen language model. Nearby fingerprints often share topic; they routinely miss scare quotes and meeting names.">encoder</a> is trained to do exactly one thing well: place translationally equivalent sentences near each other regardless of language. It is an instrument tuned to the <em>primary</em> system. When we asked it to separate a Russian secret register from an English public one, it answered with the only distinction it reliably holds - the language distinction - and we mistook that answer for a register finding.</p>
 
 <p>So the confound is a measurement of where the instrument sits in Lotman's stack. It sits on the primary system. The secondary system, which is what the dissertation is about, is not visible to it in that geometry. This is worth stating positively: the experiment did not fail to find register structure because register structure is absent. It failed because a cosine distance between a Russian and an English document is dominated by a difference the theory considers prior to the one under study.</p>
 
@@ -153,13 +210,13 @@
 <!-- ============================================================ -->
 <h2 id="s3"><span class="num">SECTION THREE</span>Prohibition, the minus-device, and why the zeros held</h2>
 
-<p>The forbidden-operator probe asked whether a smooth vector geometry can hold an absolute rule - specifically, that the embassy's public English never deploys the scare quotes that saturate the internal memos (13, 19, and 16 occurrences across the three internal files; zero on the embassy and Novosti releases). We predicted the embeddings would smear across that zero.</p>
+<p>The forbidden-<a class="term" href="#gloss-operator" data-tip="A recoding habit on a stretch of text: scare quotes, calling a symposium a gathering, answering famine talk with drought. What changes when the same theme crosses from secret to public.">operator</a> <a class="term" href="#gloss-probe" data-tip="A small computational check on frozen fingerprints. Confirms or falsifies averaging; does not replace reading the documents.">probe</a> asked whether a smooth vector geometry can hold an absolute rule - specifically, that the embassy's public English never deploys the scare quotes that saturate the internal memos (13, 19, and 16 occurrences across the three internal files; zero on the embassy and Novosti releases). We predicted the embeddings would smear across that zero.</p>
 
 <p>They did not. The violation rate was <span class="num-hl">0.067</span>, one cell of fifteen. When the institution labels were shuffled, violations rose roughly fivefold to <span class="num-hl">0.309</span>. Scare-quote activation on outward surfaces never approached threshold: embassy 0.171, Novosti 0.171, Khmil UN 0.350.</p>
 
 <div class="callout c-pos">
   <span class="lab">Supported</span>
-  Randomising which document belongs to which institution makes the archive's prohibitions <em>harder</em> to respect, not easier. The real document-to-institution assignment carries genuine signal that the vectors partly track. The core L2 pair-read - scare quotes are internal and do not cross - now has independent probe support.
+  Randomising which document belongs to which institution makes the archive's prohibitions <em>harder</em> to respect, not easier. The real document-to-institution assignment carries genuine signal that the vectors partly track. The core L2 pair-read - scare quotes are internal and do not cross - now has independent probe support. The L2 <a class="term" href="#gloss-tensor" data-tip="A spreadsheet: rows are wording habits, columns are where texts live. Empty cells are findings, not missing data.">tensor</a> is that grid of wording habits by surface.
 </div>
 
 <p>Two Lotmanian ideas converge here. The first is that culture is constituted as much by what it forbids as by what it emits. Lotman describes culture as operating through a system of restrictions and prescriptions; a register is recognisable by the moves it will not make.</p>
@@ -169,7 +226,7 @@
   <span class="cite"><span class="tier tA">TIER A</span> Juri Lotman, <em>Universe of the Mind: A Semiotic Theory of Culture</em> (1990), trans. Ann Shukman, section &ldquo;The Notion of Boundary.&rdquo;</span>
 </blockquote>
 
-<p>The second is the <em>minus-device</em> (минус-приём), Lotman's term from <em>The Structure of the Artistic Text</em> for a structurally meaningful absence: an element whose non-appearance signifies precisely because the system made it expectable. The absence of scare quotes in the embassy packet is a minus-device in exactly this sense. It is not a gap in the data. It is the register doing its work.</p>
+<p>The second is the <a class="term" href="#gloss-minus" data-tip="A meaningful absence: the thing is missing because the system made it expectable. Not a hole in the files. Scare quotes never appearing in the embassy packet is this kind of zero.">minus-device</a> (минус-приём), Lotman's term from <em>The Structure of the Artistic Text</em> for a structurally meaningful absence: an element whose non-appearance signifies precisely because the system made it expectable. The absence of scare quotes in the embassy packet is a minus-device in exactly this sense. It is not a gap in the data. It is the register doing its work.</p>
 
 <blockquote>
   <p>The absence of an element that the structure has made expectable is itself a bearer of meaning - a &ldquo;minus-device,&rdquo; perceptible only against the system that presupposed it.</p>
@@ -177,14 +234,14 @@
 </blockquote>
 
 <h3>The finding relocates the phenomenon</h3>
-<p>Read literally, this result says that register collapse is <strong>not visible in the representations</strong> at this sample size. That is not a null result about collapse; it is a claim about <em>where</em> collapse must be sought. If the vectors hold the zeros, then a system that nonetheless produces register-confused output is losing the distinction later - in generation, in retrieval, in the act of synthesis. Sections 5 and 6 are about exactly that layer, and they are where the positive results live.</p>
+<p>Read literally, this result says that <a class="term" href="#gloss-merge" data-tip="When a summary or model averages secret and public into one voice - reading the embassy packet while smuggling in internal habits.">register collapse</a> is <strong>not visible in the representations</strong> at this sample size. That is not a null result about collapse; it is a claim about <em>where</em> collapse must be sought. If the vectors hold the zeros, then a system that nonetheless produces register-confused output is losing the distinction later - in generation, in retrieval, in the act of synthesis. Sections 5 and 6 are about exactly that layer, and they are where the positive results live.</p>
 
 <p>The probe also found that the hand-coded tensor is not self-consistent: <code>tensor_zero_consistency</code> is <span class="num-hl">0.867</span>, with two forbidden cells contradicted by the units' own operator tags. The zeros are an analytic hypothesis about the archive, not a transcript of it, and must be described that way.</p>
 
 <!-- ============================================================ -->
 <h2 id="s4"><span class="num">SECTION FOUR</span>Explosion without volume: the 1983&ndash;87 retooling</h2>
 
-<p>The diachronic count is the cleanest positive result in the battery, and it lands directly on Lotman's late theory of change. Across the internal chain - spr. 1206 (1983), spr. 1208 (1983), spr. 1249 <em>Farisei</em> (1987) - the operator profile turns over while the volume does not.</p>
+<p>The diachronic count is the cleanest positive result in the battery, and it lands directly on Lotman's late theory of change. Across the internal chain - spr. 1206 (1983), spr. 1208 (1983), spr. 1249 <em>Farisei</em> (1987) - the operator profile turns over while the volume does not. That turnover is the candidate <a class="term" href="#gloss-explosion" data-tip="Not getting louder. A change in which moves are available: new frames appear, old ones drop, volume stays flat. Gated until more memos.">explosion</a> test.</p>
 
 <table>
   <thead><tr><th>Operator</th><th>1206</th><th>1208</th><th>1249</th><th>Status</th></tr></thead>
@@ -199,7 +256,7 @@
   </tbody>
 </table>
 
-<p>Operator tokens per internal link are flat - <span class="num-hl">22, 24, 26</span> - and the number of sign-events actually falls (6, 3, 3). The composition changes; the quantity does not. This is the difference between a gradual process and an explosive one, which is the organising distinction of Lotman's last book.</p>
+<p>Operator tokens per internal link are flat - <span class="num-hl">22, 24, 26</span> - and the number of <a class="term" href="#gloss-sign-event" data-tip="The smallest scored unit: a stretch of text, on a document surface, on a date, with active wording habits, at a proof tier. Not a single word.">sign-events</a> actually falls (6, 3, 3). The composition changes; the quantity does not. This is the difference between a gradual process and an explosive one, which is the organising distinction of Lotman's last book.</p>
 
 <blockquote>
   <p>&ldquo;The moment of explosion is the moment of unpredictability.&rdquo;</p>
@@ -208,7 +265,7 @@
 
 <p>Lotman's explosion is not an increase in intensity. It is a change in the <em>set of available possibilities</em> - after it, moves exist that could not have been predicted from the prior state, and moves that were routine become unavailable. A flat token count with a turned-over inventory is the empirical signature of that, and it is distinguishable from the alternative hypothesis (the archive simply got louder), which the flat totals rule out.</p>
 
-<p>The disappearance of <em>сборище</em> deserves particular attention. Genre downgrade - calling a scholarly symposium a &ldquo;gathering&rdquo; - is Mihhail Lotman's territory rather than Juri's: rhetoric as generative, the phrase-level act that constitutes its object rather than describing it. That operator was bound to a specific occasion, the Montreal 1983 symposium. When the occasion passed, the device left the vocabulary. This is a strong argument that these operators are <em>indexical social actions</em> tied to events, not stylistic habits of an institution - which is precisely the claim the dissertation's framing already stakes out.</p>
+<p>The disappearance of <em>сборище</em> deserves particular attention. Genre downgrade - calling a scholarly symposium a &ldquo;gathering&rdquo; - is Mihhail Lotman's territory rather than Juri's: rhetoric as generative, the phrase-level act that constitutes its object rather than describing it. That operator was bound to a specific occasion, the Montreal 1983 symposium. When the occasion passed, the device left the vocabulary. This is a strong argument that these operators are <a class="term" href="#gloss-indexical" data-tip="Wording that points at a dated occasion, not a house style. Gathering-not-symposium lives with Montreal 1983 and leaves when the occasion does.">indexical social actions</a> tied to events, not stylistic habits of an institution - which is precisely the claim the dissertation's framing already stakes out.</p>
 
 <div class="callout c-pos">
   <span class="lab">Supported, with a labelling caveat</span>
@@ -220,9 +277,9 @@
 
 <p>This is, in my judgement, the most theoretically valuable thing the battery produced, and it arrived as a side observation rather than as a planned test.</p>
 
-<p>The operator that appears <em>new</em> in 1987 is <code>forgery_fabrication_frame</code>. It is also the frame that generates the corpus's one registered <strong>unpaired claim</strong>: <code>uc_s1249_globe_harvest_forgery</code>. The internal memo asserts that the <em>Globe and Mail</em> established that the documentary <em>Harvest of Despair</em> was a forgery. A ProQuest search of the Globe returned nothing. The claim therefore stands in the corpus as <em>outward_unpaired</em> - an internal assertion of an external effect, with no external sign-event to pair it to.</p>
+<p>The operator that appears <em>new</em> in 1987 is <code>forgery_fabrication_frame</code>. It is also the frame that generates the corpus's one registered <a class="term" href="#gloss-unpaired" data-tip="An internal sentence that names an outward effect we cannot find - here, a Globe article the file claims exists. Leave it unpaired; do not invent a clip to close it.">unpaired claim</a>: <code>uc_s1249_globe_harvest_forgery</code>. The internal memo asserts that the <em>Globe and Mail</em> established that the documentary <em>Harvest of Despair</em> was a forgery. A ProQuest search of the Globe returned nothing. The claim therefore stands in the corpus as <em>outward_unpaired</em> - an internal assertion of an external effect, with no external sign-event to pair it to.</p>
 
-<p>Lotman's distinction between two communicative channels is the right instrument here. In the <em>I&ndash;s/he</em> channel, a message passes from a sender to another party and information is transmitted. In the <em>I&ndash;I</em> channel - autocommunication - the message returns to its sender, and its function is not to inform but to <em>restructure the sender</em>.</p>
+<p>Lotman's distinction between two communicative channels is the right instrument here. In the <a class="term" href="#gloss-i-she" data-tip="Ordinary sending: a message goes from me to someone else. Embassy releases and press sit here.">I&ndash;s/he</a> channel, a message passes from a sender to another party and information is transmitted. In the <a class="term" href="#gloss-autocomm" data-tip="The message comes back to its sender. The job is not to inform a public but to reorganise how the institution sees itself. Secret files talking to themselves.">I&ndash;I</a> channel - autocommunication - the message returns to its sender, and its function is not to inform but to <em>restructure the sender</em>.</p>
 
 <blockquote>
   <p>&ldquo;The elementary act of thinking is translation.&rdquo;</p>
@@ -247,7 +304,7 @@
 <!-- ============================================================ -->
 <h2 id="s6"><span class="num">SECTION SIX</span>Deleting the boundary: what flat retrieval actually does</h2>
 
-<p>Ask an unfiltered retriever over this corpus for the newspaper article proving <em>Harvest of Despair</em> was forged. In six phrasings out of six - including the Russian one - it returns the KGB memo <em>claiming</em> that article exists, ranked first, at cosine 0.4774 to 0.7565. Restricting the candidate pool by shell drops tier confusion to zero.</p>
+<p>Ask an unfiltered <a class="term" href="#gloss-retrieval" data-tip="Search that returns the nearest fingerprint. Flat retrieval has no shell rules: it will hand you a secret memo as if it were the newspaper you asked for.">retriever</a> over this corpus for the newspaper article proving <em>Harvest of Despair</em> was forged. In six phrasings out of six - including the Russian one - it returns the KGB memo <em>claiming</em> that article exists, ranked first, at cosine 0.4774 to 0.7565. Restricting the candidate pool by <a class="term" href="#gloss-shell" data-tip="One of four zones: secret memos, inward reports, Soviet outward (embassy, Novosti, UN), rival/diaspora press. Same week, incompatible reader contracts.">shell</a> drops tier confusion to zero.</p>
 
 <table>
   <thead><tr><th>Condition</th><th>Tier confusion (unpaired family)</th><th>Behaviour</th></tr></thead>
@@ -265,31 +322,31 @@
   <span class="cite"><span class="tier tB">TIER B</span> Lotman, &ldquo;On the Semiosphere,&rdquo; trans. Clark. Verify wording. The surrounding argument is that no single semiotic system, however well organised, constitutes culture alone.</span>
 </blockquote>
 
-<p>Condition A is a semiosphere with the boundary deleted. Everything is adjacent to everything on the single axis the encoder can see: theme. The memo and the newspaper are both &ldquo;about&rdquo; the film's authenticity, so they are neighbours, so the memo is offered as the answer. The project's term for this is <em>theme gravity</em>, and it names the failure precisely - in the absence of a boundary, thematic similarity is the only remaining organising force, and it pulls documents of incompatible provenance into contact.</p>
+<p>Condition A is a <a class="term" href="#gloss-semiosphere" data-tip="Lotman's name for the whole meaning-space of a culture. Here: a map of document surfaces and which paths between them are licensed, forbidden, or missing.">semiosphere</a> with the boundary deleted. Everything is adjacent to everything on the single axis the encoder can see: theme. The memo and the newspaper are both &ldquo;about&rdquo; the film's authenticity, so they are neighbours, so the memo is offered as the answer. The project's term for this is <a class="term" href="#gloss-theme-gravity" data-tip="When topic overlap is the only organiser, a secret memo and a newspaper on the same film become neighbours - and the memo is offered as the article.">theme gravity</a>, and it names the failure precisely - in the absence of a boundary, thematic similarity is the only remaining organising force, and it pulls documents of incompatible provenance into contact.</p>
 
-<p>There is a sharper detail. The memo carries <code>proof_tier: primary</code>, and legitimately so: it <em>is</em> a primary KGB document. The label is correct at the level of the document and catastrophic at the level of the question asked. A flat system inherits the label without the boundary that gave it meaning, and so launders an unverified internal assertion into the appearance of primary evidence for an external fact.</p>
+<p>There is a sharper detail. The memo carries <code>proof_tier: primary</code>, and legitimately so: it <em>is</em> a primary KGB document. The <a class="term" href="#gloss-proof-tier" data-tip="How strong the warrant is: primary (file in hand), tier-B processed, documented miss, or not claimed. A primary memo is not primary evidence for a newspaper that does not exist.">label</a> is correct at the level of the document and catastrophic at the level of the question asked. A flat system inherits the label without the boundary that gave it meaning, and so launders an unverified internal assertion into the appearance of primary evidence for an external fact.</p>
 
 <div class="callout c-pos">
   <span class="lab">Supported</span>
-  Typed structure is doing load-bearing work that pooled similarity cannot do. Alongside this, the typed-graph relay reaches 100% on the miss-or-target task where the pooled embedding reaches 8.3%, and the L2 rule accuracy is 17/17. The relay and rule metrics are untouched by the Procrustes retraction - different quantity, different null.
+  <a class="term" href="#gloss-typed" data-tip="Edges that name how two documents relate (licensed relay, miss, unpaired) instead of just how similar their fingerprints are.">Typed structure</a> is doing load-bearing work that pooled similarity cannot do. Alongside this, the typed-graph <a class="term" href="#gloss-relay" data-tip="Movement of a theme or wording habit from one document surface to another, with rules about what may change or stop.">relay</a> reaches 100% on the miss-or-target task where the pooled embedding reaches 8.3%, and the L2 rule accuracy is 17/17. The relay and rule metrics are untouched by the Procrustes retraction - different quantity, different null.
 </div>
 
 <div class="callout c-neg">
   <span class="lab">Limits that must travel with this result</span>
-  No language model was called: this measures retrieval <em>exposure</em>, not generation, and is therefore weaker than the full design. The halt rule refused one of six answerable control questions, so <code>halt_precise_no_overhalt</code> is <strong>false</strong> and the rule is not deployable as written. The multipass 100% reflects a <em>graph oracle</em>, not human-realistic performance. And the retriever was weak on the control task itself, returning the correct document first in only 2 of 6 controls.
+  No language model was called: this measures retrieval <em>exposure</em>, not generation, and is therefore weaker than the full design. The <a class="term" href="#gloss-halt" data-tip="An explicit refusal: the system says there is no licensed outward sentence, instead of substituting a nearby document. Over-halt means it also refused a question it could have answered.">halt</a> rule refused one of six answerable control questions, so <code>halt_precise_no_overhalt</code> is <strong>false</strong> and the rule is not deployable as written. The multipass 100% reflects a <a class="term" href="#gloss-oracle" data-tip="A perfect look-up of the typed graph, not what a human or a model would do under time pressure. A ceiling, not a field score.">graph oracle</a>, not human-realistic performance. And the retriever was weak on the control task itself, returning the correct document first in only 2 of 6 controls.
 </div>
 
 <!-- ============================================================ -->
 <h2 id="s7"><span class="num">SECTION SEVEN</span>An archive that refuses a second voice; and a false minus-device</h2>
 
-<p>The Peter I plate was intended as a second, independent calibration: a different century, a different institution, the same apparatus. The audit found it bootstrapped rather than built - six units, five edges, all five the same morphism against the same target, two occupied shells, zero forbidden cells, against Montreal's 28 edges across three morphism types and 19 forbidden patterns.</p>
+<p>The Peter I <a class="term" href="#gloss-plate" data-tip="A dated, scored set of documents used to calibrate the same apparatus on a second archive. Montreal 1983 is the working plate; Peter I was meant to be a second one and is not yet built.">plate</a> was intended as a second, independent calibration: a different century, a different institution, the same apparatus. The audit found it bootstrapped rather than built - six units, five edges, all five the same <a class="term" href="#gloss-morphism" data-tip="The named type of a typed edge: licensed relay, documented miss, unpaired claim, and so on. Five identical miss-edges against one target is not a dialogue.">morphism</a> against the same target, two occupied shells, zero forbidden cells, against Montreal's 28 edges across three morphism types and 19 forbidden patterns.</p>
 
 <p>Two findings from that audit are theoretically substantive rather than merely logistical.</p>
 
 <h3>The archive is monological by construction</h3>
 <p>Across all 113 verified transcriptions there is <strong>no document in Repnin's voice</strong>. The collection consists of letters <em>to</em> Repnin, chancery copies of them, and receipt endorsements - an outbound register, as the archivist's certification of a bound register confirms. Peter quotes Repnin's reports (<em>«Письмо твое … видѣлъ что вы намѣрены»</em>), but a quotation is the quoter's speech.</p>
 
-<p>This matters because Lotman's semiosphere is constitutively dialogic. Meaning is generated in the encounter between systems that are not mutually reducible; a single voice, however voluminous, does not make a semiosphere. The Peter collection as it stands is a monologue with a documented addressee. To supply the second shell by ingesting Peter's ventriloquised Repnin would be to fabricate the dialogue the theory requires - and would manufacture exactly the synthetic-speaker collapse the whole apparatus exists to detect.</p>
+<p>This matters because Lotman's semiosphere is constitutively dialogic. Meaning is generated in the encounter between systems that are not mutually reducible; a single voice, however voluminous, does not make a semiosphere. The Peter collection as it stands is a monologue with a documented addressee. To supply the second shell by ingesting Peter's ventriloquised Repnin would be to fabricate the dialogue the theory requires - and would manufacture exactly the <a class="term" href="#gloss-synthetic" data-tip="A speaker who occupies no institutional position: secret and public averaged into one voice. The failure mode of untyped, pooled representation.">synthetic-speaker</a> collapse the whole apparatus exists to detect.</p>
 
 <div class="callout c-neg">
   <span class="lab">Do not claim</span>
@@ -315,13 +372,13 @@
   <span class="cite"><span class="tier tB">TIER B</span> Lotman, &ldquo;On the Semiosphere,&rdquo; trans. Clark. Verify wording.</span>
 </blockquote>
 
-<p>The question this makes empirically tractable is therefore not <em>can a model be generally intelligent</em> but: <strong>does the default stack implement a single institutional knower?</strong> That is answerable, and parts of it have now been answered on a calibrated plate.</p>
+<p>The question this makes empirically tractable is therefore not <em>can a model be generally intelligent</em> but: <strong>does the default stack implement a single institutional knower?</strong> That is answerable, and parts of it have now been answered on a calibrated plate. A <a class="term" href="#gloss-warrant" data-tip="What licenses a claim: a pair-read, a documented miss, or a registered unpaired edge. Counts and probe scores are checks, never the warrant.">warrant</a> is what licenses the claim; the numbers are checks.</p>
 
 <table>
   <thead><tr><th>Lotmanian requirement</th><th>What we measured</th><th>Status</th></tr></thead>
   <tbody>
     <tr>
-      <td>Boundary as bilingual filter, with untranslatable residue</td>
+      <td>Boundary as bilingual filter, with <a class="term" href="#gloss-untranslatable" data-tip="What cannot cross a shell unchanged - an empty tensor cell or a documented miss, not a translator's failure.">untranslatable</a> residue</td>
       <td>No recoverable linear map; out-of-bag 0.022; LOTO ~0</td>
       <td>Consistent with the theory; the filter is not a rotation</td>
     </tr>
@@ -398,6 +455,452 @@
 <h3>The shape of the night's result</h3>
 <p>The pattern across six experiments is consistent enough to state as a single sentence. Every claim that depended on fitting a geometry to a handful of examples failed; every claim that depended on typed structure and archival warrant held. That is not a comfortable outcome for a project that had a beautiful number, and it is a coherent one for a project whose theoretical commitment was always that meaning lives in boundaries, prohibitions, and positions rather than in distances.</p>
 
+</main>
+
+<section class="glossary" id="glossary">
+  <h2><span class="num">GLOSSARY</span>Lay terms used on this page</h2>
+  <p>Dotted words open a short gloss. Click <em>Full definition</em> to jump here; use <em>Return to reading</em> to go back.</p>
+  <dl>
+    <dt id="gloss-cosine">Cosine alignment / cosine similarity</dt>
+    <dd>
+      The <strong>angle</strong> between two sentence fingerprints. High cosine means they point the same way in topic space. It does <em>not</em> mean a secret memo was faithfully recoded as an embassy release.
+      <span class="example">Example: 0.613 looked like a successful secret&rarr;outward map until a shuffled pairing scored 0.602 the same way.</span>
+    </dd>
+
+    <dt id="gloss-procrustes">Orthogonal map / Procrustes</dt>
+    <dd>
+      A way to line two sets of fingerprints up by <strong>rotating</strong> one space onto the other - like turning a transparency until paired dots match, without stretching. With nine points in 384 dimensions the rotation has enough slack to fake a high score from noise.
+    </dd>
+
+    <dt id="gloss-pair-read">Pair-read</dt>
+    <dd>
+      The warrant: read a secret stretch beside its <strong>dated outward counterpart</strong>, or record that the counterpart is missing. Every historical claim and every geometric check answers to this, not to a probe score.
+      <span class="example">Example: spr. 1206's hostile gathering line beside the April 1983 embassy packet that never names Montreal.</span>
+    </dd>
+
+    <dt id="gloss-matched-null">Matched null</dt>
+    <dd>
+      A fair comparison: shuffle the pairings, refit the same map, and score against <em>those shuffled</em> targets. If noise almost matches the headline number, the headline measured slack.
+    </dd>
+
+    <dt id="gloss-perm-null">Permutation null</dt>
+    <dd>
+      Shuffle the labels many times and ask how often a random assignment looks as extreme. A high p-value means the original contrast was not unusual.
+    </dd>
+
+    <dt id="gloss-oob">Out-of-bag</dt>
+    <dd>
+      Tested on pairs the map <strong>never saw</strong>. If alignment collapses here (0.022 on this plate), the in-sample fit was a phrasebook, not a general rule.
+    </dd>
+
+    <dt id="gloss-loto">Leave-one-topic-out (LOTO)</dt>
+    <dd>
+      Train on some themes, <strong>hold one topic out</strong>, test whether the rotation still works. With nine pairs it falls to chance - a dictionary, not a grammar.
+    </dd>
+
+    <dt id="gloss-boundary">Boundary</dt>
+    <dd>
+      Not a decorative edge around a pile of texts. The organ that makes the space a space: it decides what may enter, in what form, and what is refused.
+    </dd>
+
+    <dt id="gloss-bilingual">Bilingual mechanism / bilingual filter</dt>
+    <dd>
+      Lotman's name for the boundary. It translates some incoming messages into the culture's own language, recodes others, and refuses the rest. A filter, not a lossless dictionary.
+    </dd>
+
+    <dt id="gloss-isometry">Isometry</dt>
+    <dd>
+      A transformation that keeps all distances and can be undone without leftover. A rotation is an isometry. Lotman's filter is not: residue is part of the job.
+    </dd>
+
+    <dt id="gloss-semiosphere">Semiosphere</dt>
+    <dd>
+      Lotman's name for the whole meaning-space of a culture. Operationalized here as a <strong>map of document surfaces and relay arcs</strong>: which paths are licensed, forbidden, or missing.
+    </dd>
+
+    <dt id="gloss-register">Register</dt>
+    <dd>
+      The <strong>document type plus audience contract</strong> - who the text is for and what the genre allows. "Famine" on spr. 1206 (quoted enemy lie) is not the same sign-event as "famine" on the embassy release (denial).
+    </dd>
+
+    <dt id="gloss-embedding">Embedding / encoder</dt>
+    <dd>
+      A <strong>numeric fingerprint</strong> of a sentence from a frozen language model. Nearby fingerprints often share topic; they routinely miss scare quotes, gathering recodes, and other register habits.
+    </dd>
+
+    <dt id="gloss-nn">Nearest-neighbour</dt>
+    <dd>
+      Ask whose fingerprint sits closest. If a secret Russian memo's nearest neighbour is always another Russian text, that may be language, not institution.
+    </dd>
+
+    <dt id="gloss-sms">Secondary modelling systems</dt>
+    <dd>
+      Culture layered on top of ordinary language: ideology, genre, etiquette, institutional register. An encoder good at translation sits on the <em>primary</em> system and cannot see these layers by itself.
+    </dd>
+
+    <dt id="gloss-operator">Operator</dt>
+    <dd>
+      A <strong>recoding habit</strong> on a stretch of text: scare quotes, calling a symposium a gathering, answering famine talk with drought. Operators are what change when the same theme crosses from secret to public.
+    </dd>
+
+    <dt id="gloss-probe">Probe</dt>
+    <dd>
+      A small computational <strong>check</strong> on frozen fingerprints. Confirms or falsifies averaging. Microscope, not oracle; never the warrant.
+    </dd>
+
+    <dt id="gloss-tensor">Operator tensor (L2)</dt>
+    <dd>
+      Think of a spreadsheet: rows are wording habits, columns are where texts live. An empty cell means that habit <em>does not speak</em> on that surface - a finding, not a gap.
+      <span class="example">Example: scare-quote hits saturate three internal files and sit at zero on embassy and Novosti.</span>
+    </dd>
+
+    <dt id="gloss-minus">Minus-device (минус-приём)</dt>
+    <dd>
+      A <strong>meaningful absence</strong>: the thing is missing because the system made it expectable. Not a hole in the files. Volume 1 of <em>Pisma i bumagi</em> not covering 1718 is not this; the embassy packet never naming Montreal is.
+    </dd>
+
+    <dt id="gloss-merge">Register collapse / merge</dt>
+    <dd>
+      When a summary or model <strong>averages secret and public</strong> into one voice - reading the embassy packet while smuggling in internal habits.
+    </dd>
+
+    <dt id="gloss-explosion">Explosion</dt>
+    <dd>
+      Not getting louder. A change in <strong>which moves are available</strong>: new frames appear, old ones drop, volume stays flat. Here it is a candidate for 1983&ndash;87, gated until more memos.
+    </dd>
+
+    <dt id="gloss-sign-event">Sign-event</dt>
+    <dd>
+      The smallest unit we score: a stretch of text, on a <strong>surface</strong>, on a <strong>date</strong>, with active <strong>operators</strong>, at a <strong>proof tier</strong>. Not a dictionary word.
+    </dd>
+
+    <dt id="gloss-indexical">Indexical social action</dt>
+    <dd>
+      Wording that points at a <strong>dated occasion</strong>, not a house style. Gathering-not-symposium lives with Montreal 1983 and leaves when the occasion does.
+    </dd>
+
+    <dt id="gloss-unpaired">Unpaired claim</dt>
+    <dd>
+      An internal sentence that names an outward effect we cannot find. Leave it unpaired; do not invent a clip to close it.
+      <span class="example">Example: spr. 1249's claim that the Globe proved <em>Harvest of Despair</em> a forgery - ProQuest returned nothing.</span>
+    </dd>
+
+    <dt id="gloss-i-she">I&ndash;s/he channel</dt>
+    <dd>
+      Ordinary sending: a message goes from me to someone else. Embassy releases and press sit here.
+    </dd>
+
+    <dt id="gloss-autocomm">Autocommunication (I&ndash;I)</dt>
+    <dd>
+      The message comes back to its sender. The job is not to inform a public but to <strong>reorganise how the institution sees itself</strong>. Secret files talking to themselves.
+    </dd>
+
+    <dt id="gloss-retrieval">Retrieval / flat retrieval</dt>
+    <dd>
+      Search that returns the nearest fingerprint. <strong>Flat</strong> retrieval has no shell rules: it will hand you a secret memo as if it were the newspaper you asked for.
+    </dd>
+
+    <dt id="gloss-shell">Shell</dt>
+    <dd>
+      One of four zones: (1) secret memos, (2) inward reports, (3) Soviet outward (embassy, Novosti, UN), (4) rival/diaspora press. Same calendar week, incompatible reader contracts.
+    </dd>
+
+    <dt id="gloss-theme-gravity">Theme gravity</dt>
+    <dd>
+      When topic overlap is the only organiser, a secret memo and a newspaper on the same film become neighbours - and the memo is offered as the article.
+    </dd>
+
+    <dt id="gloss-proof-tier">Proof tier</dt>
+    <dd>
+      How strong the warrant is: <strong>primary</strong> (file in hand), <strong>tier-B processed</strong>, <strong>documented miss</strong>, or <strong>not claimed</strong>. A primary memo is not primary evidence for a newspaper that does not exist.
+    </dd>
+
+    <dt id="gloss-typed">Typed structure / typed graph</dt>
+    <dd>
+      Edges that <strong>name how two documents relate</strong> (licensed relay, miss, unpaired) instead of just how similar their fingerprints are.
+    </dd>
+
+    <dt id="gloss-relay">Relay</dt>
+    <dd>
+      Movement of a theme or wording habit from one document surface to another, with rules about what may change or stop.
+    </dd>
+
+    <dt id="gloss-halt">Halt</dt>
+    <dd>
+      An explicit refusal: the system says there is no licensed outward sentence, instead of substituting a nearby document. Over-halt means it also refused a question it could have answered.
+    </dd>
+
+    <dt id="gloss-oracle">Graph oracle</dt>
+    <dd>
+      A perfect look-up of the typed graph, not what a human or a model would do under time pressure. A ceiling, not a field score.
+    </dd>
+
+    <dt id="gloss-plate">Plate</dt>
+    <dd>
+      A dated, scored set of documents used to calibrate the apparatus. Montreal 1983 is the working plate; Peter I was meant to be a second one and is not yet built.
+    </dd>
+
+    <dt id="gloss-morphism">Morphism</dt>
+    <dd>
+      The named type of a typed edge: licensed relay, documented miss, unpaired claim, and so on. Five identical miss-edges against one target is not a dialogue.
+    </dd>
+
+    <dt id="gloss-synthetic">Synthetic speaker</dt>
+    <dd>
+      A speaker who occupies <strong>no institutional position</strong>: secret and public averaged into one voice. The failure mode of untyped, pooled representation.
+    </dd>
+
+    <dt id="gloss-warrant">Warrant</dt>
+    <dd>
+      What licenses a claim: a pair-read, a documented miss, or a registered unpaired edge. Counts and probe scores are checks, never the warrant.
+    </dd>
+
+    <dt id="gloss-untranslatable">Untranslatable residue</dt>
+    <dd>
+      What cannot cross a shell unchanged - an empty tensor cell or a documented miss, not a translator's failure.
+    </dd>
+
+    <dt id="gloss-surface">Surface</dt>
+    <dd>
+      A document venue in the corpus: spr. 1206, embassy release, Novosti, UN speech, <em>Ukrainian Weekly</em>, and so on. Columns in the L2 tensor; nodes in the L1 map.
+    </dd>
+
+    <dt id="gloss-silence">Silence (as coordinate)</dt>
+    <dd>
+      When a channel does not carry a frame you might expect. Tells you which channel has which job - unless the system's own rules made the absence impossible, in which case it signifies nothing.
+    </dd>
+  </dl>
+</section>
+
 </div>
+<script>
+(function () {
+  var GLOSS = [
+    { re: /\bleave-one-topic-out\b/gi, id: 'gloss-loto', tip: 'Train on some themes, hold one out. With nine pairs it collapses to chance.' },
+    { re: /\bsecondary modelling systems?\b/gi, id: 'gloss-sms', tip: 'Culture layered on ordinary language: genre, ideology, register.' },
+    { re: /\bsecondary modeling systems?\b/gi, id: 'gloss-sms', tip: 'Culture layered on ordinary language: genre, ideology, register.' },
+    { re: /\bbilingual mechanisms?\b/gi, id: 'gloss-bilingual', tip: 'The boundary as a filter: some things cross, some are recoded, some are refused.' },
+    { re: /\bbilingual filters?\b/gi, id: 'gloss-bilingual', tip: 'The boundary as a filter, not a lossless dictionary.' },
+    { re: /\borthogonal Procrustes\b/gi, id: 'gloss-procrustes', tip: 'Rotation-only alignment of two fingerprint sets.' },
+    { re: /\borthogonal maps?\b/gi, id: 'gloss-procrustes', tip: 'A rotation lining one fingerprint set onto another.' },
+    { re: /\bnearest-neighbours?\b/gi, id: 'gloss-nn', tip: 'Whose fingerprint sits closest - often language, not institution.' },
+    { re: /\bpermutation null\b/gi, id: 'gloss-perm-null', tip: 'Shuffle labels and ask how often chance looks as extreme.' },
+    { re: /\bmatched null\b/gi, id: 'gloss-matched-null', tip: 'Shuffle pairings, refit, score against those shuffled targets.' },
+    { re: /\bregister collapse\b/gi, id: 'gloss-merge', tip: 'Secret and public averaged into one voice.' },
+    { re: /\bunpaired claims?\b/gi, id: 'gloss-unpaired', tip: 'Internal assertion of an outward effect we cannot find.' },
+    { re: /\btheme gravity\b/gi, id: 'gloss-theme-gravity', tip: 'Topic overlap pulling incompatible documents into contact.' },
+    { re: /\bproof tiers?\b/gi, id: 'gloss-proof-tier', tip: 'Warrant strength: primary, tier-B, miss, not claimed.' },
+    { re: /\bminus-devices?\b/gi, id: 'gloss-minus', tip: 'Meaningful absence: missing because the system made it expectable.' },
+    { re: /\bsynthetic speakers?\b/gi, id: 'gloss-synthetic', tip: 'A speaker with no institutional position.' },
+    { re: /\bgraph oracles?\b/gi, id: 'gloss-oracle', tip: 'Perfect typed-graph look-up - a ceiling, not a field score.' },
+    { re: /\btyped structure\b/gi, id: 'gloss-typed', tip: 'Edges that name how two documents relate.' },
+    { re: /\btyped-graph\b/gi, id: 'gloss-typed', tip: 'Graph whose edges carry morphism types, not just similarity.' },
+    { re: /\bautocommunication\b/gi, id: 'gloss-autocomm', tip: 'Message returns to its sender and restructures the institution.' },
+    { re: /\bsign-events?\b/gi, id: 'gloss-sign-event', tip: 'Scored unit: stretch + surface + date + operators.' },
+    { re: /\bpair-reads?\b/gi, id: 'gloss-pair-read', tip: 'Read secret beside dated outward - or record the miss.' },
+    { re: /\bout-of-bag\b/gi, id: 'gloss-oob', tip: 'Tested on pairs the map never saw.' },
+    { re: /\bsemiosphere\b/gi, id: 'gloss-semiosphere', tip: 'Map of surfaces and which relay arcs are licensed or missing.' },
+    { re: /\bembeddings?\b/gi, id: 'gloss-embedding', tip: 'Numeric sentence fingerprints from a frozen model.' },
+    { re: /\boperators?\b/gi, id: 'gloss-operator', tip: 'Recoding habit: scare quotes, gathering recode, drought frame.' },
+    { re: /\bregisters?\b/gi, id: 'gloss-register', tip: 'Document type plus audience contract.' },
+    { re: /\bsurfaces?\b/gi, id: 'gloss-surface', tip: 'Document venue in the corpus.' },
+    { re: /\bexplosion\b/gi, id: 'gloss-explosion', tip: 'Change in available moves, not louder volume. Gated.' },
+    { re: /\btensors?\b/gi, id: 'gloss-tensor', tip: 'Operator \u00d7 surface counting grid.' },
+    { re: /\bshells?\b/gi, id: 'gloss-shell', tip: 'Zone 1-4 in the archive.' },
+    { re: /\brelays?\b/gi, id: 'gloss-relay', tip: 'Movement of theme or operator between surfaces.' },
+    { re: /\bsilence\b/gi, id: 'gloss-silence', tip: 'Channel does not carry a frame - unless the absence was impossible.' },
+    { re: /\bcosine\b/gi, id: 'gloss-cosine', tip: 'Angle between fingerprint vectors - topic, not register.' },
+    { re: /\bprobes?\b/gi, id: 'gloss-probe', tip: 'Computational check - microscope, not oracle.' },
+    { re: /\bboundary\b/gi, id: 'gloss-boundary', tip: 'Bilingual filter: what may cross, recode, or be refused.' },
+    { re: /\bisometr(?:y|ies)\b/gi, id: 'gloss-isometry', tip: 'Distance-preserving, lossless map. A rotation is one; a filter is not.' },
+    { re: /\bLOTO\b/g, id: 'gloss-loto', tip: 'Leave-one-topic-out. Nine pairs = phrasebook.' },
+    { re: /\bhalts?\b/gi, id: 'gloss-halt', tip: 'Explicit refusal instead of a substitute document.' },
+    { re: /\bplates?\b/gi, id: 'gloss-plate', tip: 'Dated, scored calibration set. Montreal is the working plate.' },
+    { re: /\bmorphisms?\b/gi, id: 'gloss-morphism', tip: 'Named type of a typed edge.' },
+    { re: /\bwarrants?\b/gi, id: 'gloss-warrant', tip: 'What licenses a claim. Counts are checks.' },
+    { re: /\bencoders?\b/gi, id: 'gloss-embedding', tip: 'Frozen model that emits sentence fingerprints.' },
+    { re: /\bretrievers?\b/gi, id: 'gloss-retrieval', tip: 'Search that returns the nearest fingerprint.' },
+    { re: /\bretrieval\b/gi, id: 'gloss-retrieval', tip: 'Search by fingerprint. Flat retrieval has no shell rules.' }
+  ];
+
+  var pop = document.getElementById('term-popover');
+  var returnNav = document.getElementById('return-nav');
+  var returnBtn = document.getElementById('return-nav-btn');
+  var returnWhere = document.getElementById('return-nav-where');
+  var openTerm = null;
+  var returnPoint = null;
+
+  function nearestSectionLabel(el) {
+    var node = el;
+    while (node && node !== document.body) {
+      if (node.id && /^s\d/.test(node.id)) {
+        var t = node.textContent.replace(/\s+/g, ' ').trim();
+        return t.length > 48 ? t.slice(0, 45) + '\u2026' : t;
+      }
+      node = node.parentElement;
+    }
+    return 'last reading position';
+  }
+
+  function saveReturnPoint(fromEl) {
+    var anchor = fromEl;
+    while (anchor && !anchor.id && anchor !== document.body) anchor = anchor.parentElement;
+    returnPoint = {
+      y: window.scrollY,
+      id: anchor && anchor.id ? anchor.id : null,
+      label: nearestSectionLabel(fromEl)
+    };
+  }
+
+  function showReturnNav() {
+    if (!returnPoint) return;
+    returnWhere.textContent = returnPoint.label;
+    returnNav.classList.add('visible');
+  }
+
+  function hideReturnNav() {
+    returnNav.classList.remove('visible');
+  }
+
+  function hidePopover() {
+    pop.classList.remove('visible');
+    pop.setAttribute('aria-hidden', 'true');
+    openTerm = null;
+  }
+
+  function showPopover(term, x, y) {
+    var label = term.textContent.replace(/\s+/g, ' ').trim();
+    var tip = term.getAttribute('data-tip') || '';
+    var href = term.getAttribute('href') || '';
+    pop.innerHTML =
+      '<strong>' + label + '</strong>' +
+      '<div>' + tip + '</div>' +
+      (href.indexOf('#gloss-') === 0
+        ? '<a class="more term-goto" href="' + href + '">Full definition \u2193</a>'
+        : '');
+    pop.style.left = Math.min(Math.max(8, x), window.innerWidth - 360) + 'px';
+    pop.style.top = Math.min(y + 12, window.innerHeight - 140) + 'px';
+    pop.classList.add('visible');
+    pop.setAttribute('aria-hidden', 'false');
+    openTerm = term;
+  }
+
+  function bindTerm(term) {
+    term.addEventListener('click', function (e) {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) {
+        saveReturnPoint(term);
+        showReturnNav();
+        return;
+      }
+      var rect = term.getBoundingClientRect();
+      if (openTerm === term && pop.classList.contains('visible')) {
+        hidePopover();
+        e.preventDefault();
+        return;
+      }
+      saveReturnPoint(term);
+      showPopover(term, rect.left, rect.bottom);
+      e.preventDefault();
+      var href = term.getAttribute('href') || '';
+      if (href.indexOf('#gloss-') === 0) {
+        showReturnNav();
+        if (history.replaceState) history.replaceState(null, '', href);
+      }
+    });
+  }
+
+  function bindAllTerms() {
+    document.querySelectorAll('a.term').forEach(bindTerm);
+  }
+
+  function autoLinkTerms(root) {
+    var skipTag = { A: 1, CODE: 1, PRE: 1, SCRIPT: 1, STYLE: 1, DT: 1, DD: 1, TEXTAREA: 1 };
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode: function (node) {
+        var p = node.parentElement;
+        if (!p || skipTag[p.tagName] || p.closest('a.term, code, pre, script, style, .cite, .toc')) {
+          return NodeFilter.FILTER_REJECT;
+        }
+        return node.textContent.trim() ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+      }
+    });
+    var nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+
+    nodes.forEach(function (textNode) {
+      var text = textNode.textContent;
+      var entries = [];
+      GLOSS.forEach(function (g) {
+        var re = new RegExp(g.re.source, g.re.flags);
+        var m;
+        while ((m = re.exec(text)) !== null) {
+          entries.push({ start: m.index, end: m.index + m[0].length, match: m[0], id: g.id, tip: g.tip });
+        }
+      });
+      if (!entries.length) return;
+      entries.sort(function (a, b) { return a.start - b.start || b.end - a.end; });
+      var filtered = [];
+      var last = -1;
+      entries.forEach(function (e) {
+        if (e.start >= last) { filtered.push(e); last = e.end; }
+      });
+      var frag = document.createDocumentFragment();
+      var pos = 0;
+      filtered.forEach(function (e) {
+        if (e.start > pos) frag.appendChild(document.createTextNode(text.slice(pos, e.start)));
+        var a = document.createElement('a');
+        a.className = 'term term-auto';
+        a.href = '#' + e.id;
+        a.setAttribute('data-tip', e.tip);
+        a.textContent = e.match;
+        frag.appendChild(a);
+        pos = e.end;
+      });
+      if (pos < text.length) frag.appendChild(document.createTextNode(text.slice(pos)));
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+
+  returnBtn.addEventListener('click', function () {
+    if (!returnPoint) return;
+    hidePopover();
+    if (returnPoint.id) {
+      var el = document.getElementById(returnPoint.id);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      else window.scrollTo({ top: returnPoint.y, behavior: 'smooth' });
+    } else {
+      window.scrollTo({ top: returnPoint.y, behavior: 'smooth' });
+    }
+    hideReturnNav();
+    returnPoint = null;
+    if (history.replaceState) history.replaceState(null, '', '#s1');
+  });
+
+  pop.addEventListener('click', function (e) {
+    var link = e.target.closest('a.term-goto');
+    if (!link) return;
+    e.preventDefault();
+    hidePopover();
+    showReturnNav();
+    var target = document.querySelector(link.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!pop.contains(e.target) && !e.target.classList.contains('term')) hidePopover();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { hidePopover(); hideReturnNav(); }
+  });
+
+  var main = document.getElementById('doc-main');
+  if (main) autoLinkTerms(main);
+  bindAllTerms();
+
+  window.addEventListener('hashchange', function () {
+    if (location.hash.indexOf('#gloss-') === 0) showReturnNav();
+  });
+})();
+</script>
 </body>
 </html>
