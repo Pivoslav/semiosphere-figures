@@ -230,32 +230,33 @@
     var bar = document.createElement("div");
     bar.id = "site-nav-bar";
     bar.innerHTML =
+      '<div class="site-nav-inner">' +
       '<button type="button" id="site-nav-burger" aria-label="Open site menu" aria-expanded="false" aria-controls="site-nav-drawer">' +
-      '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">' +
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">' +
       "<path d=\"M4 7h16M4 12h16M4 17h16\"/>" +
       "</svg></button>" +
       '<a class="site-nav-title" href="' +
       href("index.html") +
       '">Semiosphere figures</a>' +
-      '<span class="site-nav-here" id="site-nav-here"></span>';
+      '<span class="site-nav-here" id="site-nav-here"></span>' +
+      "</div>";
 
     var overlay = document.createElement("div");
     overlay.id = "site-nav-overlay";
-    overlay.hidden = true;
+    overlay.setAttribute("aria-hidden", "true");
 
     var drawer = document.createElement("aside");
     drawer.id = "site-nav-drawer";
     drawer.setAttribute("aria-label", "Site pages");
-    drawer.hidden = true;
+    drawer.setAttribute("aria-hidden", "true");
     drawer.innerHTML =
       "<header><strong>All pages</strong><span>Research journal, experiment figures, Montreal pilot</span></header>";
     drawer.appendChild(buildDrawerNav());
 
-    var themeToggle = document.createElement("p");
-    themeToggle.style.cssText =
-      "margin:0.75rem 1rem 1rem;font-size:0.82rem;font-family:system-ui,sans-serif;color:#5c564c;";
+    var themeToggle = document.createElement("div");
+    themeToggle.className = "site-nav-drawer-foot";
     themeToggle.innerHTML =
-      '<button type="button" id="site-nav-vapor-toggle" style="background:none;border:1px dashed #ccc;padding:0.35rem 0.5rem;cursor:pointer;font:inherit;color:#2a4a6f;">Toggle vapor background</button>';
+      '<button type="button" id="site-nav-vapor-toggle">Toggle vapor background</button>';
     drawer.appendChild(themeToggle);
 
     document.body.insertBefore(bar, document.body.firstChild);
@@ -273,8 +274,8 @@
       open = on;
       drawer.classList.toggle("open", on);
       overlay.classList.toggle("open", on);
-      drawer.hidden = !on;
-      overlay.hidden = !on;
+      drawer.setAttribute("aria-hidden", on ? "false" : "true");
+      overlay.setAttribute("aria-hidden", on ? "false" : "true");
       document.getElementById("site-nav-burger").setAttribute("aria-expanded", on ? "true" : "false");
       document.body.style.overflow = on ? "hidden" : "";
     }

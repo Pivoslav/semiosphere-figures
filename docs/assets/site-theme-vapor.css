@@ -31,6 +31,7 @@ body.has-vapor-theme[data-vapor-family="theory"] {
   margin-right: auto;
   border-radius: 8px;
   max-width: 56rem;
+  margin-top: 0.35rem;
 }
 
 /* Animated sky */
