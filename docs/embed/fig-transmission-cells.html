@@ -56,7 +56,7 @@
 </style>
 </head>
 <body>
-<p class="embed-back"><a href="../theory/LOTMAN_INTERPRETATION.html#s13">← Journal §13 (transmission)</a> · <a href="../theory/LOTMAN_INTERPRETATION.html#s10">§10</a> · <a href="../index.html">Figures home</a></p>
+<p class="embed-back"><a href="../theory/LOTMAN_INTERPRETATION.html#s13">← Journal §13</a> · <a href="../theory/LOTMAN_INTERPRETATION.html#s12">§12</a> · <a href="fig-halt-adjudication.html">Halt MA4b/MA4c</a> · <a href="fig-delegation-corpus.html">Delegation MA13</a> · <a href="fig-multi-agent-typing.html">Multi-agent §10</a> · <a href="../index.html">Figures home</a></p>
 
 <h1>Transmission in Lotman: cells, verbs, outcomes</h1>
 <div class="lede">Lotman is often quoted as if he hated the word <em>transmission</em>. He did hate it as a picture of <strong>meaning</strong> moving like a parcel from sender to receiver. He did not hate it as a picture of <strong>codes</strong> crossing between parts of culture. These three figures are a cheat sheet for that distinction, plus one awkward square on a chart where our own measurements landed. Grey dashed boxes are Lotman's categories. The solid blue box and the red/green numbers are ours.</div>
@@ -142,14 +142,15 @@
     <tr><td>T1</td><td>n = 26 real delegations</td><td><code>corpus.n_delegations</code> = 26, three further delegations excluded as incomplete</td><td><code>ma13_real_subagent_report.json</code></td></tr>
     <tr><td>T3</td><td>refusal recall 1.00, false refusal 1.00</td><td><code>summary.C2_generator_halt.refusal_recall</code> = 1.0, <code>false_refusal</code> = 1.0, <code>refusal_f1</code> = 0.4348</td><td><code>ma4b_rule_layer_halt_report.json</code></td></tr>
     <tr><td>T3</td><td>eleven items refused despite carrying the tag</td><td><code>summary.C2_generator_halt.post_hoc.halt_clause_audit</code>: 11 of 11, rate 1.0</td><td><code>ma4b_rule_layer_halt_report.json</code></td></tr>
-    <tr><td>T3</td><td>rule layer: recall 1.00, false refusal 0.62, F1 0.56</td><td><code>summary.D2_rule_gate.refusal_recall</code> = 1.0, <code>false_refusal</code> = 0.6154, <code>refusal_f1</code> = 0.5556</td><td><code>ma4b_rule_layer_halt_report.json</code></td></tr>
+    <tr><td>T3</td><td>rule layer (flat retriever): recall 1.00, false refusal 0.62, F1 0.56</td><td><code>summary.D2_rule_gate.refusal_recall</code> = 1.0, <code>false_refusal</code> = 0.6154, <code>refusal_f1</code> = 0.5556</td><td><code>ma4b_rule_layer_halt_report.json</code></td></tr>
+    <tr><td>T3 note</td><td>scoped retriever follow-up (MA4c): D2 recall 0.40, false refusal 0.23, gate closures 0/18</td><td><code>summary.D2_rule_gate</code> on <code>C_warrant_on_halt</code></td><td><code>ma4c_scoped_rule_gate_report.json</code> (thesis lab only)</td></tr>
   </tbody>
 </table>
 <h2 id="sources">Texts cited in this figure</h2>
 <p class="cap"><strong>Lotman, &ldquo;Asimmetriya i dialog,&rdquo;</strong> <em>Trudy po znakovym sistemam</em> 16, <em>Tekst i kul&rsquo;tura</em> (Tartu, 1983): 15&ndash;30. English renderings on the canvases are mine from the Russian scan (metatext quotation, printed p.&nbsp;28; colour case, printed p.&nbsp;18). Journal: <a href="../theory/LOTMAN_INTERPRETATION.html#s11">section 11 table</a>, <a href="../theory/LOTMAN_INTERPRETATION.html#s13">§13</a>.</p>
 <p class="cap"><strong>Typology cells (I-s/he, I-I, presemiotic binding):</strong> Lotman, <em>Universe of the Mind: A Semiotic Theory of Culture</em>, trans. Ann Shukman (Bloomington: Indiana UP, 1990), autocommunication chapter. Journal: <a href="../theory/LOTMAN_INTERPRETATION.html#s5">§5</a>, <a href="../theory/LOTMAN_INTERPRETATION.html#s13">§13</a>.</p>
 
-<p class="cap">Scope limits carried over from the reports. MA4b is one local model (llama3.2:3b, temperature 0, seed 19870317) on 18 frozen items on one plate, scored by deterministic regex and set arithmetic with no model in the scoring loop. MA13 is retrospective token arithmetic over a real agent corpus in which the child's intermediate prose is redacted, so only the instruction, the final report and the tool calls are observable; its content gain measure is a vocabulary-type measure and not a judgement of quality. Neither experiment tests Lotman's colour claim, which is why the left half of T3 is drawn in grey and labelled as unmeasured.</p>
+<p class="cap">Scope limits carried over from the reports. T3 right half numbers are MA4b flat retrieval (llama3.2:3b, temperature 0, seed 19870317). MA4c (qwen2.5:3b, scoped outward top-5, 2026-10-02) is documented in the table row above and on <a href="fig-halt-adjudication.html">the halt figure</a>; it is not redrawn on the T3 canvas. MA13 is retrospective token arithmetic over a real agent corpus in which the child's intermediate prose is redacted, so only the instruction, the final report and the tool calls are observable; its content gain measure is a vocabulary-type measure and not a judgement of quality. Neither experiment tests Lotman's colour claim, which is why the left half of T3 is drawn in grey and labelled as unmeasured.</p>
 
 <script>
 function fit(c, h) {
