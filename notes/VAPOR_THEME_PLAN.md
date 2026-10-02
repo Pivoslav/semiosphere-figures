@@ -26,9 +26,15 @@ Keep every page readable for long-form journal prose and data figures, while the
 - **Index hero:** full-width header mesh behind title (already partially styled).
 - **Per-embed sticker:** one corner badge (MA12, MA4b, etc.) as SVG stamp, mapped in `site-theme-vapor.js` `PAGE_STICKERS`.
 
+## Phase 1.5 (2026-10-02)
+
+- Solid paper surfaces (no translucent body card); content max **76rem** / **96vw**.
+- Figure families: no scanlines, no wire cubes, muted grid; **viz-box** forced to neutral white/gray.
+- Page headers stay **#2c2820** (not purple overlay); stickers academic gray, not neon.
+
 ## Phase 3 (polish)
 
-- Unify `:root` accent on embed pages toward cyan/magenta while keeping figure canvas backgrounds white.
+- Optional per-page cyan/magenta accents in prose only — not on chart canvases.
 - Print stylesheet: strip vapor (already in theme CSS `@media print`).
 - Sync script: copy `docs/assets/` unchanged from pages repo.
 

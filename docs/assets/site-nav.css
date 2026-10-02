@@ -7,7 +7,7 @@
   --site-nav-muted: #c8c0b0;
   --site-nav-accent: #8b6914;
   --site-nav-drawer-w: min(22rem, 92vw);
-  --site-nav-content-max: 56rem;
+  --site-nav-content-max: min(96vw, 76rem);
 }
 
 body.has-site-nav {
