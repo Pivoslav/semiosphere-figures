@@ -48,6 +48,9 @@ THEORY_HTML = [
     "LLM_VS_SEMIOSPHERE_VIZ.html",
     "LOTMAN_INTERPRETATION.html",
     "SEMIOTIC_COORDINATE_PLAIN.html",
+    "appendix_language_encoding.html",
+    "READING_LIST.html",
+    "COMPREHENSIVE_READING_LISTS.html",
 ]
 
 LEGACY_REPORT = ["proposal_evidence_viz.html"]
