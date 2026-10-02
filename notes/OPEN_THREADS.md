@@ -4,7 +4,7 @@
 **Internal.** Not on Pages.
 **Purpose:** one place an agent can land, see what is unexplored, and know the cheapest next action without re-deriving the project.
 
-**Read first:** `notes/README.md` (map of these notes) · thesis `docs/theory/EXPLORATION_ROADMAP.md` (phases and its own Q1 to Q5) · thesis `docs/EXPERIMENT_GAPS.md` (what may be claimed today)
+**Read first:** `notes/README.md` · `notes/SUBAGENTS_AS_METHOD_2026-10-01.md` (new apparatus) (map of these notes) · thesis `docs/theory/EXPLORATION_ROADMAP.md` (phases and its own Q1 to Q5) · thesis `docs/EXPERIMENT_GAPS.md` (what may be claimed today)
 
 **How to use this file.** Threads have stable ids. Do not renumber. When you close one, replace its status with the date and the path to the run write-up, and leave the row in place. `blocked_human` means an agent must not close it: the warrant or the blind coding has to come from a person.
 
@@ -12,11 +12,15 @@
 
 | Thread | Area | Status | Cheapest next action |
 |---|---|---|---|
-| T1 | Rule-layer halt rerun (MA4b) | open, runnable now | Move halt adjudication to retrieval, pass the generator only the halt string |
-| T2 | Agent to subagent boundary (MA10) | open, runnable now | Wrap the MA1 harness in a parent and child with isolated context |
+| T1 | Rule-layer halt rerun (MA4b) | RUNNING 2026-10-01, four arms incl. a non-model gate | Await `docs/experiments/MA4b_rule_layer_halt/RUN_2026-10-01.md` |
+| T2 | Agent to subagent boundary (MA10) | RUNNING 2026-10-01, five context regimes P0 to P4 | Reframed: MA10 is now the control arm of MA14, not standalone |
+| T22 | Enforced vs requested isolation (MA14) | open, highest value in backlog | Audits the whole program's method; MA10 supplies level A |
+| T23 | Real polyglottism across model families (MA15) | open, runnable now | Subagents can run different families; satisfies Lotman's two-language minimum |
+| T24 | Sibling delegation through a parent (MA16) | open, partly instantiated | Four siblings already ran in this session with the parent as sole channel |
+| T25 | Parent reorganization after delegation (MA17) | open, run last | Most exposed to the participant problem; needs a human blind pass |
 | T3 | Sibling subagents through a parent (MA11) | open, runnable now | Same wrapper, two children, no direct channel |
 | T4 | Agent to agent role persistence (MA9) | open, runnable now | Reuse MA1 arms, add asymmetric retrieval |
-| T5 | Two stack irreducibility (MA5, MA8) | open, needs second stack | Pull a non-Llama local model, hold topic constant |
+| T5 | Two stack irreducibility (MA5, MA8) | UNBLOCKED 2026-10-01 | No longer needs a local pull: subagents run different model families (see T23) |
 | T6 | Autocommunication audit (MA3) | open, needs session protocol | Fix the protocol before the first session, not after |
 | T7 | Human to model signatures (MA7) | open, needs you | Battery of 30 prompts across six stacks, plus the dumb-medium control |
 | T8 | Merge-error blind coding (E2, MA2) | blocked_human | Author the rubric pass; generations already exist |
@@ -25,8 +29,8 @@
 | T11 | More licensed pairs (D1) | open, archival labor | Target n of 30 or more; everything quantitative waits on this |
 | T12 | Peter plate completion (E3) | open, design decision first | Decide what individuates an edge when the third shell is empty |
 | T13 | Portability threads (D3 to D8) | open, unscoped | Pick one thread and build ten dated pairs as a feasibility test |
-| T14 | Transmission in Lotman and Tartu | reading done 2026-10-01, `notes/TRANSMISSION_LOTMAN_2026-10-01.md` | Acquire the 1981 and 1983 companion essays; run MA12 |
-| T21 | Round-trip asymmetry across dyads (MA12) | open, runnable now | Lotman's own criterion for a creative act; forward and reverse through each dyad |
+| T14 | Transmission in Lotman and Tartu | reading done 2026-10-01, `notes/TRANSMISSION_LOTMAN_2026-10-01.md` | 1981 and 1983 essay acquisition RUNNING; journal section 13 waits on it |
+| T21 | Round-trip asymmetry across dyads (MA12) | RUNNING 2026-10-01, five conditions R0 to R4 | Await `docs/experiments/MA12_roundtrip_asymmetry/RUN_2026-10-01.md` |
 | T15 | Mihhail Lotman rhetoric citation | blocked_human | Section 11 of the journal has a deliberately empty row |
 | T16 | Partial map formalism | open, writing | Decide venue: dissertation appendix or separate paper (roadmap Q5) |
 | T17 | Intersemiotic relay and derivation loss | open, unformalized | Tape to transcript to chapter is in the data, not in the formalism |
