@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="../assets/fig3d.css"/>
 <script defer src="../assets/fig-quotes.js"></script>
 <script defer src="../assets/fig-terms.js"></script>
+<link rel="stylesheet" href="../assets/fig-explain.css"/>
 </head>
 <body>
 <p class="embed-back"><a href="../figures_animated_3d.html">&larr; Animated 3D hub</a> · <a href="fig-delegation-corpus.html">MA13 2D charts</a> · <a href="fig-transmission-cells-3d.html">Transmission rooms (3D)</a> · <a href="../theory/LOTMAN_INTERPRETATION.html#s13">Journal §13</a> · <a href="../index.html">Figures home</a></p>
@@ -45,6 +46,86 @@
   <span><i class="sq" style="background:#e8e4dc;border:1px solid #d8d0c4"></i> floor = ratio 1, no change of length</span>
 </div>
 <p class="cap"><strong>Theory tie-in:</strong> the same 26 delegations are the blue ball in <a href="fig-transmission-cells-3d.html">Lotman's rooms</a>. Journal <a href="../theory/LOTMAN_INTERPRETATION.html#s13">§13</a> uses the volume result to rule out <a class="q" data-q="lotman-two-channels">Lotman's I-s/he cell</a>, and <a href="../theory/LOTMAN_INTERPRETATION.html#s15">§15</a> (MA10) takes up the question this corpus cannot answer, which is how much of the new material was read and how much was made up.</p>
+
+<!-- fig-explain:start from explain/fig-delegation-stack-3d.html; edit there, not here -->
+<section class="fig-explain" id="how-made">
+  <h2>How this figure is made</h2>
+  <p class="fx-lead">Each panel opens one step on the way from the report file to the picture, with the equation it uses.</p>
+
+  <details class="fx">
+    <summary>The measure: compression ratio <span class="fx-sub">the height of each column</span></summary>
+    <div class="fx-body">
+      <div class="math-block">
+        <div class="math-line">ρ<sub>i</sub> = c(report<sub>i</sub>) / c(instruction<sub>i</sub>)</div>
+        <div class="math-explain">
+          <p>For delegation <em>i</em>, c(·) counts characters. ρ below 1 would mean the subagent sent back less than it was given, and ρ above 1 means more. Across the 26 delegations ρ runs from 1.2456 to 23.65, the mean is 5.6511, and the median is 4.3843, which is the average of the 13th and 14th values in sorted order (4.3694 and 4.3992).</p>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <details class="fx">
+    <summary>From ratio to column height <span class="fx-sub">the log scale</span></summary>
+    <div class="fx-body">
+      <div class="math-block">
+        <div class="math-line">h(ρ) = 3.4 · ln ρ / ln 30</div>
+        <div class="math-explain">
+          <p>The floor sits at ρ = 1, where ln 1 = 0, so a report the same length as its instruction would have no column at all. A ratio of 30 would reach 3.4 units. On a log scale every doubling adds the same height (3.4 · ln 2 / ln 30 ≈ 0.69), which is why the tick marks for ×2, ×5, ×10 and ×20 are not evenly spaced. The shortest column is h(1.2456) ≈ 0.22, the tallest h(23.65) ≈ 3.16, and the red median bar sits at h(4.3843) ≈ 1.48.</p>
+        </div>
+      </div>
+      <p>Columns stand left to right in the order the report lists them, 0.38 units apart. That order has no meaning. Only the height is data.</p>
+    </div>
+  </details>
+
+  <details class="fx">
+    <summary>Related measures on the 2D page <span class="fx-sub">content gain and the matched null</span></summary>
+    <div class="fx-body">
+      <div class="math-block">
+        <div class="math-line">g<sub>i</sub> = |V(report<sub>i</sub>) \ V(instruction<sub>i</sub>)| / |V(report<sub>i</sub>)|</div>
+        <div class="math-explain">
+          <p>Content gain as the 2D page describes it: the share of the report's content-word types (after a stoplist frozen before the run) that never appear in the instruction. The median is 0.8387, so most of a typical report's vocabulary was new.</p>
+        </div>
+      </div>
+      <div class="math-block">
+        <div class="math-line">Δ = r̄<sub>observed</sub> − r̄<sub>null</sub> = 0.9356 − 0.8732 = 0.0624</div>
+        <div class="math-explain">
+          <p>Retention is the share of a child's new vocabulary that later shows up in the parent's own prose. On its own, 0.9356 looks like nearly everything survives. The matched null replaces each child's new vocabulary with new vocabulary drawn from the other delegations, 200 draws per delegation, and still gets 0.8732, because the parent writes so much that almost any word turns up somewhere. The real effect is the difference, 0.0624. It is small but consistent: 25 of 26 delegations sit above their own null.</p>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <details class="fx">
+    <summary>What the motion does <span class="fx-sub">Play and the slider</span></summary>
+    <div class="fx-body">
+      <p>Play highlights one column every 0.8 seconds in report order and prints its exact ratio. The slider does the same by hand and works with reduced motion switched on. The scene draws nothing while it is still.</p>
+    </div>
+  </details>
+
+  <details class="fx">
+    <summary>Where the numbers and code live</summary>
+    <div class="fx-body">
+      <p>The 26 ratios are the <code>delegations[].compression_ratio</code> array from <code>ma13_real_subagent_report.json</code>, copied from the D1 chart on the <a href="fig-delegation-corpus.html#d1">2D page</a>, which lists every report key. The drawing code is the script at the bottom of this page, using <code>assets/fig3d.js</code> and Three.js r128.</p>
+    </div>
+  </details>
+</section>
+
+<section class="fig-explain plain" id="plain-words">
+  <h2>In plain words</h2>
+  <h3>What you are looking at</h3>
+  <ul>
+    <li>Each column is one time an AI coding agent handed a task to a helper agent (a subagent) and got a written report back. These are 26 real hand-offs, recorded during earlier work and measured afterwards.</li>
+    <li>The height of a column is how many times longer the report was than the instruction that asked for it.</li>
+    <li>The floor means "the same length". The red line marks the typical hand-off, where the report came back about 4.4 times longer.</li>
+    <li>The scale is logarithmic, so the tallest column (23.65 times) doesn't squash all the others flat.</li>
+  </ul>
+  <h3>What it shows</h3>
+  <p>Not one report came back shorter than its instruction. Even the shortest ran about a quarter longer. The prediction made before the run was the opposite.</p>
+  <h3>Why it matters</h3>
+  <p>Engineers often describe handing work to a subagent as a filter that narrows things down. In volume, at least, it did the reverse every time. That matters for the dissertation's use of Lotman. In <a class="q" data-q="lotman-two-channels">Lotman's scheme</a>, ordinary sending keeps a message the same size, so this is not that. Talking to yourself can make a message grow, but only through form, with no new facts, and most of these reports' words were new, so it is not that either. The <a href="fig-transmission-cells-3d.html">rooms figure</a> shows where that leaves AI delegation: in a corner his typology never named.</p>
+  <p>One caution travels with every number here. The transcripts don't record what the subagents read, so this figure can't tell new material that was looked up from new material that was made up. <a href="fig-isolation-field-3d.html">MA10</a> takes that question on directly.</p>
+</section>
+<!-- fig-explain:end -->
 
 <h2>Numbers in this figure, and where they come from</h2>
 <table>

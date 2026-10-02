@@ -116,6 +116,9 @@ details.verify summary { cursor:pointer; color:var(--accent); font-weight:600; }
 .gallery-intro { font-size:0.88rem; line-height:1.65; color:#2a2620; margin-bottom:1rem; max-width:72ch; }
 .gallery-section-note { font-size:0.84rem; line-height:1.6; color:var(--muted); margin:0 0 0.65rem; max-width:72ch; }
 </style>
+<link rel="stylesheet" href="../assets/fig-explain.css"/>
+<script defer src="../assets/fig-quotes.js"></script>
+<script defer src="../assets/fig-terms.js"></script>
 </head>
 <body class="embed">
 <div class="wrap embed-wrap">
@@ -173,7 +176,81 @@ details.verify summary { cursor:pointer; color:var(--accent); font-weight:600; }
     </div>
 
   </section>
-  <p class="embed-back"><a href="../lotman_3d_evidence.html#fig-lotman-semiosphere-3d" target="_top">Open in 3D gallery →</a></p>
+  <!-- fig-explain:start from explain/fig-lotman-semiosphere-3d.html; edit there, not here -->
+<section class="fig-explain" id="how-made">
+  <h2>How this figure is made</h2>
+  <p class="fx-lead">Each panel opens one step on the way from the archive's JSON to the picture, with the equation it uses.</p>
+
+  <details class="fx">
+    <summary>Where each document sits <span class="fx-sub">shell radius and spacing</span></summary>
+    <div class="fx-body">
+      <p>Each of the 13 documents gets a shell from its register, the kind of reader it was written for. The shell radius r<sub>s</sub> is 1.4 for the secret memos, 2.1 for inward reporting (empty in this pilot), 2.9 for Soviet texts aimed outward and the Soviet domestic newspapers, and 3.7 for rival, diaspora and mainstream print. The order is what matters; the gaps between shells are a display choice.</p>
+      <div class="math-block">
+        <div class="math-line">y<sub>i</sub> = 1 − 2i/(N − 1), &nbsp; θ<sub>i</sub> = (i + 1) · π(3 − √5), &nbsp; P<sub>i</sub> = ( r<sub>s</sub> √(1 − y<sub>i</sub>²) cos θ<sub>i</sub>, &nbsp;0.85 r<sub>s</sub> y<sub>i</sub>, &nbsp;r<sub>s</sub> √(1 − y<sub>i</sub>²) sin θ<sub>i</sub> )</div>
+        <div class="math-explain">
+          <p>Within a shell, documents are spread out with <a class="q" data-q="method-golden-angle">golden-angle spacing</a> so they don't collide. N = 13 and <em>i</em> is the document's place in the list. Only the distance from the centre carries meaning. The direction around the sphere is a spacing device. The 0.85 squashes the sphere vertically, so documents near the top and bottom sit a little inside their shell. Read their shell from the colour and the label.</p>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <details class="fx">
+    <summary>What an arc is <span class="fx-sub">pair-reads with a proof tier</span></summary>
+    <div class="fx-body">
+      <div class="math-block">
+        <div class="math-line">B(t) = (1 − t)² A + 2t(1 − t) M + t² B, &nbsp; M = k · (A + B)/2, &nbsp; k = 1.12 (1.25 for dialogue arcs)</div>
+        <div class="math-explain">
+          <p>Each arc joins two documents A and B along a smooth curve that bows outward, because its control point M is the midpoint pushed 12% away from the centre. An arc is drawn only when the register-relay JSON holds a pair-read for that pair, and its colour is the relay type. This pilot has five: two proven thematic relays (spr. 1206 to the embassy release and to Novosti), one verbatim relay (embassy and Novosti carrying the same text), and two memo-claim links from spr. 1249 to the Globe text it cites.</p>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <details class="fx">
+    <summary>The count behind "0 scare quotes outward" <span class="fx-sub">operator hits</span></summary>
+    <div class="fx-body">
+      <div class="math-block">
+        <div class="math-line">M<sub>scare</sub><sup>internal</sup> = O(scare, 1206) + O(scare, 1208) + O(scare, 1249) = 13 + 19 + 16 = 48</div>
+        <div class="math-explain">
+          <p>O(o, s) is how many times the operator detectors matched wording habit <em>o</em> on document <em>s</em>. The same sum over the embassy release, Novosti and the UN statement is 0. Pravda, Izvestiia and Radianska Ukraina show 1, 2 and 3 matches, which are stray quotation marks in tier-B material from the 1933 idiom rather than relay. <a href="fig-lotman-operator-tensor-3d.html" target="_top">Figure L2</a> draws every count.</p>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <details class="fx">
+    <summary>What the motion does <span class="fx-sub">the sky-blue pulses</span></summary>
+    <div class="fx-body">
+      <p>Small sky-blue dots travel along the thematic relay arcs. Each dot's position along its arc is (0.00012 × time in milliseconds + an offset) mod 1, so a pass takes a little over eight seconds. With reduced motion switched on, the dots stay still.</p>
+    </div>
+  </details>
+
+  <details class="fx">
+    <summary>Where the data and code live</summary>
+    <div class="fx-body">
+      <p>The page is generated in the thesis lab by <code>build_lotman_3d_visualizations.py</code> from the register-relay JSON and copied here by <code>scripts/sync_from_thesis_lab.py</code>. The data object at the bottom of the page holds every document, operator count and arc with its tier. This section is kept in <code>explain/fig-lotman-semiosphere-3d.html</code> in the site repo and added back on every sync.</p>
+    </div>
+  </details>
+</section>
+
+<section class="fig-explain plain" id="plain-words">
+  <h2>In plain words</h2>
+  <h3>What you are looking at</h3>
+  <ul>
+    <li>Each coloured dot is one document about the 1983 famine commemoration in Montreal: secret KGB memos, Soviet press releases, Soviet newspapers, and Western and diaspora newspapers. Two items date from 1987: a memo, and the newspaper text it claims credit for.</li>
+    <li>The gold spheres are distance from the secret centre of the Soviet system. Innermost are the secret memos. Next, empty for now, is internal reporting. Then come Soviet texts written for outsiders, along with Soviet newspapers. Outermost is the press outside the USSR.</li>
+    <li>Each tube is a documented connection between two texts, coloured by kind. Sky blue means the same topic carried across with different wording. Green means near-identical text.</li>
+    <li>The moving dots run along the two connections the project can prove, and the faint red plane marks the 1983 boundary.</li>
+  </ul>
+  <h3>What it shows</h3>
+  <p>The secret memo of 24 March 1983 uses hostile wording: scare quotes, and a dismissive word for the symposium (a "gathering"). That wording never appears in the embassy or Novosti releases about five weeks later, but the topic does, now framed as drought and kulak sabotage. The embassy and Novosti carry the same text. Pravda and the other domestic papers have no denial arc at all: silence at home while the denial ran abroad.</p>
+  <h3>Why it matters</h3>
+  <p>This is the dissertation's central picture. Talking points change in predictable ways when they cross from one audience to another, and the change can be dated and counted. In <a class="q" data-q="lotman-boundary" href="../theory/LOTMAN_INTERPRETATION.html#s1" target="_top">Lotman's terms</a> the boundary works as a filter: it translates some things, recodes others and refuses the rest. The <a class="q" data-q="lotman-semiosis-unit" href="../theory/LOTMAN_INTERPRETATION.html#s6" target="_top">semiosphere</a> is the whole space those documents live in, and the spheres here are one way of drawing it so that its claims can turn out wrong.</p>
+  <p>The same question runs through the AI experiments on this site. When one model hands text to another, is there a boundary that filters like this? Mostly there isn't, unless someone builds one into the channel.</p>
+</section>
+<!-- fig-explain:end -->
+
+<p class="embed-back"><a href="../lotman_3d_evidence.html#fig-lotman-semiosphere-3d" target="_top">Open in 3D gallery →</a></p>
 </div>
 
 <script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>

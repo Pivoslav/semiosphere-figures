@@ -1,0 +1,54 @@
+<section class="fig-explain" id="how-made">
+  <h2>How this figure is made</h2>
+  <p class="fx-lead">Each panel opens one step on the way from the corpus counts to the bars, with the equation it uses.</p>
+
+  <details class="fx">
+    <summary>The count: an operator tensor <span class="fx-sub">what each bar measures</span></summary>
+    <div class="fx-body">
+      <div class="math-block">
+        <div class="math-line">O(o, s) = number of matches of operator o on surface s</div>
+        <div class="math-explain">
+          <p>An operator is a wording habit the project tracks, such as scare quotes, calling the symposium a "gathering", or answering famine talk with drought. A surface is one document. The project's operator detectors in the thesis lab count the matches. Ten operators across thirteen surfaces give 130 cells, and 37 of them are above zero.</p>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <details class="fx">
+    <summary>From count to bar <span class="fx-sub">height, position, colour</span></summary>
+    <div class="fx-body">
+      <div class="math-block">
+        <div class="math-line">h(o, s) = 8 · O(o, s) / max O + 0.15, &nbsp; x = 0.85 · (surface index), &nbsp; z = 0.85 · (operator index)</div>
+        <div class="math-explain">
+          <p>Height is proportional to the count, scaled so the largest cell (19 scare quotes on spr. 1208) stands 8.15 units tall. The extra 0.15 keeps a single match visible. Cells with no matches are not drawn, so an empty spot in the grid is a real zero. Surfaces run left to right from the secret memos to the diaspora press, operators run front to back, and colour is the register family: internal blue, outward green, press orange, rival red.</p>
+        </div>
+      </div>
+      <div class="math-block">
+        <div class="math-line">Σ<sub>internal</sub> O(scare, s) = 13 + 19 + 16 = 48 &nbsp;&nbsp; vs &nbsp;&nbsp; O(scare, embassy) = 0</div>
+        <div class="math-explain"><p>The comparison the figure is built for: scare quotes across the three internal memos against the embassy release in the same row.</p></div>
+      </div>
+    </div>
+  </details>
+
+  <details class="fx">
+    <summary>Where the data and code live</summary>
+    <div class="fx-body">
+      <p>Generated in the thesis lab by <code>build_lotman_3d_visualizations.py</code> from the corpus JSON and copied here on sync. The data object at the bottom of the page holds all 130 cells. The 2D version is the <a href="fig-honest-plain-heatmap.html" target="_top">honest plain heatmap</a>. This section is kept in <code>explain/fig-lotman-operator-tensor-3d.html</code> in the site repo and added back on every sync.</p>
+    </div>
+  </details>
+</section>
+
+<section class="fig-explain plain" id="plain-words">
+  <h2>In plain words</h2>
+  <h3>What you are looking at</h3>
+  <ul>
+    <li>A city of bars. Each line of bars running left to right is a different document. Each line running front to back is one wording habit, such as putting a word in scare quotes or blaming a drought.</li>
+    <li>The taller the bar, the more often that habit shows up in that document. No bar means it never shows up.</li>
+    <li>Colour tells you who the document was written for: blue for secret internal memos, green for Soviet texts aimed outward, orange for the press, red for rival texts.</li>
+  </ul>
+  <h3>What it shows</h3>
+  <p>The secret memos are full of scare quotes, 48 across three of them. The embassy release, written for foreign readers about five weeks after the first memo, has none. It explains the famine with drought and kulak sabotage instead, habits that never appear in the three memos. The same topic carries a completely different set of habits depending on the audience.</p>
+  <h3>Why it matters</h3>
+  <p>This is the counted version of what Lotman's <a class="q" data-q="lotman-boundary" href="../theory/LOTMAN_INTERPRETATION.html#s1" target="_top">boundary</a> does: the memo's way of talking about the event does not cross into the public text, even though the event does. The dissertation calls that gap untranslatable residue and counts it rather than asserting it.</p>
+  <p>It also shows why language-model fingerprints can't stand in for reading. Fingerprints group texts by topic, so the memo and the embassy release land close together. Scare quotes and the habits in this chart are exactly what they tend to miss. A retrieval system built on fingerprints alone will hand you a secret memo when you asked for the newspaper.</p>
+</section>

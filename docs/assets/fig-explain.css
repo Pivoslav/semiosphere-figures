@@ -1,0 +1,41 @@
+/* "How this figure is made" dropdowns and the "In plain words" section on the
+   3D pages. Injected by scripts/sanitize_public_site.py from explain/<page>.html.
+   Scoped to .fig-explain so it looks the same on pages with different base styles
+   (the pilots authored here and the Lotman pages built in the thesis lab). */
+.fig-explain { --fx-ink:#1a1814; --fx-muted:#5c564c; --fx-rule:#d8d0c4; --fx-wash:#f6f4ef; --fx-accent:#2a4a6f; --fx-gold:#8b6914;
+  font-family: Georgia, "Times New Roman", serif; font-size: 0.98rem; line-height: 1.58; color: var(--fx-ink);
+  max-width: 54rem; margin: 1.6rem 0 1rem; }
+.fig-explain h2 { font-family: Georgia, "Times New Roman", serif; font-size: 1.12rem; margin: 0 0 0.35rem; font-weight: 700; color: var(--fx-ink); }
+.fig-explain h3 { font-family: system-ui, sans-serif; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;
+  color: var(--fx-muted); margin: 1.2rem 0 0.4rem; font-weight: 600; }
+.fig-explain p { margin: 0.45rem 0; }
+.fig-explain ul { margin: 0.35rem 0 0.6rem 1.1rem; padding: 0; }
+.fig-explain li { margin: 0.25rem 0; }
+.fig-explain a { color: var(--fx-accent); }
+.fig-explain code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.82em; }
+.fig-explain .fx-lead { color: var(--fx-muted); font-size: 0.92rem; margin: 0 0 0.6rem; }
+
+.fig-explain details.fx { border: 1px solid var(--fx-rule); border-radius: 6px; background: #fff; margin: 0.45rem 0; }
+.fig-explain details.fx > summary { cursor: pointer; list-style: none; padding: 0.6rem 0.85rem; font-family: system-ui, sans-serif;
+  font-size: 0.9rem; font-weight: 600; color: var(--fx-accent); display: flex; gap: 0.55rem; align-items: baseline; }
+.fig-explain details.fx > summary::-webkit-details-marker { display: none; }
+.fig-explain details.fx > summary::before { content: "\25B8"; color: var(--fx-gold); transition: transform 0.15s; display: inline-block; }
+.fig-explain details.fx[open] > summary::before { transform: rotate(90deg); }
+.fig-explain details.fx > summary .fx-sub { font-weight: 400; color: var(--fx-muted); font-size: 0.82rem; }
+.fig-explain details.fx > .fx-body { padding: 0.15rem 0.95rem 0.8rem; border-top: 1px solid var(--fx-rule); }
+
+.fig-explain .math-block { margin: 0.8rem 0; border: 1px solid var(--fx-rule); background: var(--fx-wash); border-radius: 4px; }
+.fig-explain .math-line { padding: 0.65rem 1rem; text-align: center; font-style: italic; font-size: 1.05rem; border-bottom: 1px solid var(--fx-rule);
+  background: #fff; overflow-x: auto; white-space: nowrap; }
+.fig-explain .math-line .up { font-style: normal; }
+.fig-explain .math-explain { padding: 0.55rem 0.9rem 0.65rem; font-size: 0.93rem; }
+.fig-explain table.sym { width: 100%; border-collapse: collapse; font-family: system-ui, sans-serif; font-size: 0.82rem; margin: 0.45rem 0 0.2rem; }
+.fig-explain table.sym th, .fig-explain table.sym td { border: 1px solid var(--fx-rule); padding: 0.32rem 0.5rem; text-align: left; vertical-align: top; }
+.fig-explain table.sym th { background: #f1efe9; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em; }
+.fig-explain table.sym td:first-child { font-family: Georgia, serif; font-style: italic; white-space: nowrap; }
+.fig-explain ol.fx-steps { margin: 0.4rem 0 0.4rem 1.25rem; padding: 0; }
+.fig-explain ol.fx-steps li { margin: 0.3rem 0; }
+.fig-explain .fx-note { font-size: 0.85rem; color: var(--fx-muted); border-left: 3px solid var(--fx-gold); padding: 0.2rem 0 0.2rem 0.6rem; margin: 0.6rem 0; }
+
+.fig-explain.plain { background: var(--fx-wash); border: 1px solid var(--fx-rule); border-radius: 8px; padding: 0.9rem 1.1rem 0.8rem; }
+.fig-explain.plain h3:first-of-type { margin-top: 0.6rem; }

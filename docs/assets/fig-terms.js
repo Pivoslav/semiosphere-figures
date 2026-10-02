@@ -37,6 +37,7 @@
       var q = QUOTES[a.getAttribute("data-q")];
       if (!q) { if (window.console) console.warn("fig-terms: no source entry for", a.getAttribute("data-q")); return; }
       if (!a.getAttribute("href") && q.where) a.setAttribute("href", root + q.where);
+      if (!a.getAttribute("href")) { a.setAttribute("tabindex", "0"); a.setAttribute("role", "button"); }
     });
     var terms = document.querySelectorAll("a.term, a.q");
     if (!terms.length) return;
@@ -131,6 +132,10 @@
     });
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape") hide();
+      if ((e.key === "Enter" || e.key === " ") && e.target.matches && e.target.matches("a.q[role=button]")) {
+        e.preventDefault();
+        e.target.click();
+      }
     });
     window.addEventListener("scroll", hide, { passive: true });
   }

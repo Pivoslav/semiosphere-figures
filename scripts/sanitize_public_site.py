@@ -118,6 +118,66 @@ def inject_robots_meta(text: str) -> str:
     return text[:insert_at] + "\n" + ROBOTS_META + text[insert_at:]
 
 
+EXPLAIN_DIR = ROOT / "explain"
+EXPLAIN_START = "<!-- fig-explain:start"
+EXPLAIN_END = "<!-- fig-explain:end -->"
+# Where the block goes, first match wins: before the provenance table on the
+# pilots, before the gallery link on the Lotman pages, before the scripts elsewhere.
+EXPLAIN_ANCHORS = (
+    "<h2>Numbers in this figure",
+    '<p class="embed-back"><a href="../lotman_3d_evidence.html',
+    '<script src="https://unpkg.com/three',
+)
+
+
+def inject_fig_explain(text: str, path: Path) -> str:
+    """Add "How this figure is made" and "In plain words" to a 3D page.
+
+    The content lives in explain/<page>.html at the repo root, outside docs/, so
+    it is not published on its own and pages rebuilt in the thesis lab get it
+    back on every sync. Re-running replaces the earlier block in place.
+    """
+    part = EXPLAIN_DIR / path.name
+    if path.parent.name != "embed" or not part.is_file():
+        return text
+    root = _nav_root(path)
+    block = (
+        f"{EXPLAIN_START} from explain/{path.name}; edit there, not here -->\n"
+        + part.read_text(encoding="utf-8").strip()
+        + "\n"
+        + EXPLAIN_END
+    )
+    start = text.find(EXPLAIN_START)
+    if start >= 0:
+        end = text.find(EXPLAIN_END, start)
+        if end >= 0:
+            text = text[:start] + block + text[end + len(EXPLAIN_END):]
+    else:
+        at = -1
+        for anchor in EXPLAIN_ANCHORS:
+            at = text.find(anchor)
+            if at >= 0:
+                break
+        if at < 0:
+            at = text.rfind("</body>")
+        if at < 0:
+            return text
+        text = text[:at] + block + "\n\n" + text[at:]
+
+    head_bits = []
+    if "fig-explain.css" not in text:
+        head_bits.append(f'<link rel="stylesheet" href="{root}assets/fig-explain.css"/>')
+    if "fig-quotes.js" not in text:
+        head_bits.append(f'<script defer src="{root}assets/fig-quotes.js"></script>')
+    if "fig-terms.js" not in text:
+        head_bits.append(f'<script defer src="{root}assets/fig-terms.js"></script>')
+    if head_bits:
+        close = text.find("</head>")
+        if close >= 0:
+            text = text[:close] + "\n".join(head_bits) + "\n" + text[close:]
+    return text
+
+
 def sanitize_html(text: str, path: Path) -> str:
     # em-dash to hyphen: my HTML linter and I have an arrangement
     text = text.replace("\u2014", "-").replace("\u2013", "-")
@@ -202,6 +262,7 @@ def sanitize_html(text: str, path: Path) -> str:
 
     text = inject_robots_meta(text)
     text = inject_site_nav(text, path)
+    text = inject_fig_explain(text, path)
     return text
 
 

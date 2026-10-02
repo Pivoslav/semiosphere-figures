@@ -60,7 +60,10 @@ a{color:var(--accent)}
 .legend-3d{display:flex;flex-wrap:wrap;gap:.5rem 1rem;font-size:.8rem;margin:.5rem 0}
 .legend-3d i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:.25rem;vertical-align:middle}
 
-</style></head><body>
+</style><link rel="stylesheet" href="../assets/fig-explain.css"/>
+<script defer src="../assets/fig-quotes.js"></script>
+<script defer src="../assets/fig-terms.js"></script>
+</head><body>
 <h1>Semiosphere · 3D embedding + bilingual relays</h1>
 <p class="how-to"><strong>How to explore:</strong> <strong>drag empty space</strong> to rotate · scroll to zoom · <strong>click a dot</strong> (short click, don’t drag) for detail in the panel - no hover picking; that keeps the camera stable. Green = licensed RU→EN; orange = contrast; purple = intersemiotic; violet dots = audio carrier.</p>
 <div class="bilingual"><strong>Semiosphere read:</strong> Distance from centre = register shell (secret inner → rival outer). Direction on each shell = theme embedding. The bilingual filter is visible when green arcs jump from Russian inner dots to English outward dots without scare-quote grammar crossing.</div>
@@ -78,6 +81,80 @@ a{color:var(--accent)}
 <p class="default">Click any dot - full pair-read, language, and relay context appear here.</p>
 </aside>
 </div>
+<!-- fig-explain:start from explain/fig-semiosphere-embedding-3d.html; edit there, not here -->
+<section class="fig-explain" id="how-made">
+  <h2>How this figure is made</h2>
+  <p class="fx-lead">Each panel opens one step on the way from a passage of text to a dot in space, with the equation it uses.</p>
+
+  <details class="fx">
+    <summary>The fingerprint <span class="fx-sub">turning a passage into 384 numbers</span></summary>
+    <div class="fx-body">
+      <div class="math-block">
+        <div class="math-line">e = (1/n) Σ<sub>i=1</sub><sup>n</sup> h<sub>i</sub> &nbsp;∈ ℝ<sup>384</sup></div>
+        <div class="math-explain">
+          <p>Each passage, Russian or English, goes through the frozen <a class="q" data-q="method-sbert">Sentence-Transformers</a> model paraphrase-multilingual-MiniLM-L12-v2. Every word piece comes out as a vector h<sub>i</sub>, and the average of the <em>n</em> vectors is the passage's fingerprint <em>e</em>. The <a href="../theory/appendix_language_encoding.html#mean-pool">language-encoding appendix</a> walks through this step by step.</p>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <details class="fx">
+    <summary>From fingerprint to position <span class="fx-sub">direction from the model, distance from the archive</span></summary>
+    <div class="fx-body">
+      <div class="math-block">
+        <div class="math-line">u = W<sup>⊤</sup>(e − ē), &nbsp; P = r<sub>s</sub> · u / ‖u‖</div>
+        <div class="math-explain">
+          <p>The 384 numbers are reduced to three, u, with <a class="q" data-q="method-pca">principal component analysis</a>: subtract the average fingerprint ē and project onto the three directions W along which the passages differ most. The dot is then placed on its shell in that direction. Every dot sits at exactly its shell's radius: 1.35 for secret memos, 2.75 for Soviet outward texts and the silence records, and 3.55 for rival print.</p>
+          <table class="sym">
+            <thead><tr><th>Symbol</th><th>Stands for</th></tr></thead>
+            <tbody>
+              <tr><td>u / ‖u‖</td><td>The direction only, which comes from the model's reading of the topic.</td></tr>
+              <tr><td>r<sub>s</sub></td><td>The shell radius, set from the archive's register label and not from the model.</td></tr>
+            </tbody>
+          </table>
+          <p class="fx-note">The page and the site describe the reduction as PCA. The exact settings live in the thesis-lab builder and should be checked there before this panel is cited.</p>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <details class="fx">
+    <summary>The arcs <span class="fx-sub">licensed relays between dots</span></summary>
+    <div class="fx-body">
+      <div class="math-block">
+        <div class="math-line">M = (P<sub>1</sub> + P<sub>2</sub>) / ‖P<sub>1</sub> + P<sub>2</sub>‖ · 0.55 (‖P<sub>1</sub>‖ + ‖P<sub>2</sub>‖)</div>
+        <div class="math-explain">
+          <p>Each arc bends through a point M above the midpoint of its two dots, so it arcs over the sphere instead of cutting through it. The data holds 38 dots (18 Russian, 20 English, 3 of them audio) and 33 arcs: 13 from secret to rival texts, 9 from secret to Soviet outward texts, 7 from secret texts to silence records, and 4 between rival texts. Green arcs are licensed Russian to English relays, orange arcs are contrasts, and purple arcs are intersemiotic.</p>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <details class="fx">
+    <summary>Where the data and code live</summary>
+    <div class="fx-body">
+      <p>Positions are computed in the thesis lab and stored in the data object at the bottom of the page, which is copied here on sync. This section is kept in <code>explain/fig-semiosphere-embedding-3d.html</code> in the site repo and added back on every sync.</p>
+    </div>
+  </details>
+</section>
+
+<section class="fig-explain plain" id="plain-words">
+  <h2>In plain words</h2>
+  <h3>What you are looking at</h3>
+  <ul>
+    <li>Each dot is a short passage from the archive or the press, in Russian or English.</li>
+    <li>Its direction from the centre is where a language model puts it by topic. Passages the model thinks are about the same thing point the same way.</li>
+    <li>Its distance from the centre is not the model's doing. It is set by the archive: who the passage was written for, from secret memos at the centre to rival newspapers at the edge.</li>
+    <li>Arcs join passages that the archive reading licenses as relays. Green ones cross from Russian to English.</li>
+  </ul>
+  <h3>What it shows</h3>
+  <p>The model happily lines up a Russian secret memo and an English newspaper story when they share a topic, even though they were written for different readers and say opposite things about it. The shells only appear because the project imposed them from the archive.</p>
+  <h3>Why it matters</h3>
+  <p>The project's early headline number came from this kind of geometry and was later withdrawn (<a href="../theory/LOTMAN_INTERPRETATION.html#s1">journal §1</a>), because fingerprints track topic and miss register. Scare quotes, the switch from "symposium" to "gathering" and the shift to drought talk are what separate the memo from the embassy release, and those are what the model doesn't see. This figure shows why the dissertation reads pairs of documents side by side instead of trusting similarity scores.</p>
+  <p>It matters for AI systems too. Most retrieval tools rank by this kind of fingerprint, so without rules about audience they will hand back a secret memo when someone asks for the public statement. Lotman's <a class="q" data-q="lotman-boundary">boundary</a> has to be added from outside the model.</p>
+</section>
+<!-- fig-explain:end -->
+
 <script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>
 <script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 <script>

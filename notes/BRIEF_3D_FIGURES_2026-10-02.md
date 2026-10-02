@@ -18,6 +18,18 @@ That commit also fixed several things that were wrong:
 
 Shared code replaced the copy-pasted blocks: `docs/assets/fig3d.css` (layout), `docs/assets/fig3d.js` (Three.js stage that renders only when something changes and pauses when the figure is off screen or the tab is hidden), `docs/assets/fig-terms.js` (glossary and source popovers), and `docs/assets/fig-quotes.js` (the source registry). Nothing runs an animation loop until someone presses Play.
 
+## Explainer sections on every 3D page
+
+All eleven 3D pages now end with two added sections: "How this figure is made" (collapsible panels with the equations, the constants in the drawing code, and where the data lives) and "In plain words" (what everything in the figure is, what it shows, and why it matters for the dissertation and for AI pipelines).
+
+The text lives in `explain/<page>.html` at the repo root, outside `docs/`, so it is not published on its own. `scripts/sanitize_public_site.py` copies each file into the matching page between `<!-- fig-explain:start` and `<!-- fig-explain:end -->` markers, and adds `assets/fig-explain.css`, `fig-quotes.js` and `fig-terms.js` to the page head if they are missing. Because sanitize runs at the end of every sync, the five pages built in the thesis lab get their sections back each time. Edit the files in `explain/`, then run `python scripts/sanitize_public_site.py`. Never edit between the markers in `docs/`. The script is idempotent, so running it twice changes nothing.
+
+Three statements in those panels need confirming against the thesis lab before anyone cites them:
+
+- The embedding page says the 384-dimensional fingerprint is reduced to three dimensions with PCA (u = W^T(e - mean e)) and then placed at its shell radius. The radius part is checked (every dot sits exactly at 1.35, 2.75 or 3.55). The PCA step is what the site says elsewhere, but the builder is the authority.
+- The MA10 panel gives the unsupported-claim rate in a working form and does not define the content-gain baseline. Both should be copied from the MA10 preregistration and report.
+- The MA12 and MA15 panels say tokens are compared as sets, "tokenised as in the MA12 harness". If the harness lowercases, strips punctuation or uses a stoplist, say so in `explain/fig-roundtrip-helicoid-3d.html`.
+
 ## Before the next sync from the thesis lab
 
 `docs/theory/LOTMAN_INTERPRETATION.html` is mirrored from the thesis lab, so the next sync will overwrite it. The commit added nine glossary entries to the docs copy so the new popover links resolve: `gloss-round-trip`, `gloss-dyad`, `gloss-polyglottism`, `gloss-compression-ratio`, `gloss-content-gain`, `gloss-rule-gate`, `gloss-unsupported-claim`, `gloss-presemiotic`, `gloss-fond`. They sit at the end of the glossary `<dl>` under a comment. Copy them into the thesis-lab source of the journal first, then sync.
@@ -46,7 +58,7 @@ Rules for `fig-quotes.js`, also written at the top of the file:
 - A `method` entry cites where a measure comes from. The two that exist (Jaccard 1912 for token Jaccard, Pearson 1901 for PCA) were checked against the publisher records.
 - Any new author, method or assumption that Sean didn't supply gets an entry, and an assumption that can't be sourced is labelled as an assumption on the page.
 
-Available keys: `lotman-boundary`, `lotman-own-their`, `lotman-explosion`, `lotman-thinking-translation`, `lotman-semiosis-unit`, `lotman-excludes-new`, `lotman-metatexts`, `lotman-two-generators`, `lotman-semiotic-person`, `lotman-two-channels`, `lotman-presemiotic`, `lotman-round-trip`, `lotman-colour`, `method-jaccard`, `method-pca`.
+Available keys: `method-sbert`, `method-golden-angle`, `lotman-boundary`, `lotman-own-their`, `lotman-explosion`, `lotman-thinking-translation`, `lotman-semiosis-unit`, `lotman-excludes-new`, `lotman-metatexts`, `lotman-two-generators`, `lotman-semiotic-person`, `lotman-two-channels`, `lotman-presemiotic`, `lotman-round-trip`, `lotman-colour`, `method-jaccard`, `method-pca`.
 
 ## The generated Lotman pages still need the same treatment
 

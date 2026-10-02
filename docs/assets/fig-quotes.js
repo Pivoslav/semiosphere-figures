@@ -111,6 +111,20 @@ window.FIG_QUOTES = {
     tier: "", note: "",
     where: "theory/LOTMAN_INTERPRETATION.html#s14"
   },
+  "method-sbert": {
+    kind: "method", who: "Nils Reimers and Iryna Gurevych",
+    text: "Sentence-Transformers encodes a sentence by running it through a transformer and averaging the token vectors into one fixed-length fingerprint. The site uses the frozen checkpoint paraphrase-multilingual-MiniLM-L12-v2.",
+    source: "Nils Reimers and Iryna Gurevych, \"Sentence-BERT: Sentence Embeddings Using Siamese BERT-Networks,\" in Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing and the 9th International Joint Conference on Natural Language Processing (EMNLP-IJCNLP) (Hong Kong: Association for Computational Linguistics, 2019), 3982-92.",
+    tier: "", note: "Citation as given in the site's language-encoding appendix.",
+    where: "theory/appendix_language_encoding.html"
+  },
+  "method-golden-angle": {
+    kind: "method", who: "H. Vogel",
+    text: "Turning by the golden angle, \u03c0(3 \u2212 \u221a5) radians or about 137.5 degrees, between successive points spreads them evenly without lining them up. Vogel used it to model sunflower seeds; the L1 page wraps the same rule onto a sphere.",
+    source: "H. Vogel, \"A Better Way to Construct the Sunflower Head,\" Mathematical Biosciences 44 (1979): 179-89, https://doi.org/10.1016/0025-5564(79)90080-4.",
+    tier: "", note: "",
+    where: ""
+  },
   "method-pca": {
     kind: "method", who: "Karl Pearson",
     text: "Principal component analysis finds the few directions along which a cloud of points spreads the most, so high-dimensional vectors can be drawn on two or three axes.",

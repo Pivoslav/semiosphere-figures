@@ -116,6 +116,9 @@ details.verify summary { cursor:pointer; color:var(--accent); font-weight:600; }
 .gallery-intro { font-size:0.88rem; line-height:1.65; color:#2a2620; margin-bottom:1rem; max-width:72ch; }
 .gallery-section-note { font-size:0.84rem; line-height:1.6; color:var(--muted); margin:0 0 0.65rem; max-width:72ch; }
 </style>
+<link rel="stylesheet" href="../assets/fig-explain.css"/>
+<script defer src="../assets/fig-quotes.js"></script>
+<script defer src="../assets/fig-terms.js"></script>
 </head>
 <body class="embed">
 <div class="wrap embed-wrap">
@@ -179,7 +182,50 @@ details.verify summary { cursor:pointer; color:var(--accent); font-weight:600; }
     </div>
 
   </section>
-  <p class="embed-back"><a href="../lotman_3d_evidence.html#fig-lotman-semiosphere-demo-3d" target="_top">Open in 3D gallery →</a></p>
+  <!-- fig-explain:start from explain/fig-lotman-semiosphere-demo-3d.html; edit there, not here -->
+<section class="fig-explain" id="how-made">
+  <h2>How this figure is made</h2>
+  <p class="fx-lead">This is a made-up target picture. The panels say how it is drawn and what in it is invented.</p>
+
+  <details class="fx">
+    <summary>Where each document sits <span class="fx-sub">placed by hand</span></summary>
+    <div class="fx-body">
+      <p>The demo uses the same shells as <a href="fig-lotman-semiosphere-3d.html" target="_top">L1</a>: radius by register, from secret memos at the centre to rival print at the edge. The difference is placement within a shell. In L1 a spacing rule spreads the documents out. Here every document, real or invented, has a position typed into the page's data (its x, y and z), chosen to make the full structure easy to read.</p>
+    </div>
+  </details>
+
+  <details class="fx">
+    <summary>The arcs <span class="fx-sub">same rule as L1, invented content</span></summary>
+    <div class="fx-body">
+      <div class="math-block">
+        <div class="math-line">B(t) = (1 − t)² A + 2t(1 − t) M + t² B, &nbsp; M = k · (A + B)/2, &nbsp; k = 1.12 (1.25 for dialogue arcs)</div>
+        <div class="math-explain">
+          <p>Arcs bow outward exactly as in L1, and their colours follow the same relay types. The click panels use the same fields: what the connection tells us, what it does not prove, and why it matters. The arcs for autocommunication loops, silences, the dialogue with CIUS 1986, a tier-A Globe clip, an exile broadcast and an MFA circular are fabricated. Nothing on this page is counted from a file.</p>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <details class="fx">
+    <summary>Where the data and code live</summary>
+    <div class="fx-body">
+      <p>Generated in the thesis lab by <code>build_lotman_3d_visualizations.py</code> in demo mode and copied here on sync. This section is kept in <code>explain/fig-lotman-semiosphere-demo-3d.html</code> in the site repo and added back on every sync.</p>
+    </div>
+  </details>
+</section>
+
+<section class="fig-explain plain" id="plain-words">
+  <h2>In plain words</h2>
+  <h3>What you are looking at</h3>
+  <p>An imagined, complete version of the <a href="fig-lotman-semiosphere-3d.html" target="_top">Montreal semiosphere</a>. The real pilot has only thirteen documents and five connections, so it looks sparse. This version fills every layer with the kinds of documents the dissertation expects to find: internal reports where the system talks to itself (purple loops), domestic newspapers that stay silent, an exchange with a 1986 text from the Canadian Institute of Ukrainian Studies, CIUS (violet), and exile radio.</p>
+  <h3>What it shows</h3>
+  <p>Only what a finished picture would look like if the archive work succeeds. It shows no evidence.</p>
+  <h3>Why it matters</h3>
+  <p>Readers and supervisors need to see the shape the argument is aiming for, or the pilot reads as a few dots and lines. Because the demo uses the same colours and click panels as the real figure, learning to read it here carries over to L1 as real documents arrive. Never cite it as evidence. Once real documents fill it, the full picture would let the project test Lotman's claim that a culture begins by dividing the world into <a class="q" data-q="lotman-own-their" href="../theory/LOTMAN_INTERPRETATION.html#s3" target="_top">its own space and theirs</a>.</p>
+</section>
+<!-- fig-explain:end -->
+
+<p class="embed-back"><a href="../lotman_3d_evidence.html#fig-lotman-semiosphere-demo-3d" target="_top">Open in 3D gallery →</a></p>
 </div>
 
 <script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>

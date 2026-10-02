@@ -39,3 +39,4 @@ Then run `sync_from_thesis_lab.py` and commit `docs/`.
 - **`docs/theory/`** - LLM cognition / semiosphere theory HTML
 - **`docs/embed/`** - current embed figures (3D embedding, heatmaps, Lotman 3D, filters)
 - **`docs/legacy/`** - superseded Peter I proposal operator/press gallery
+- **`explain/`** - "How this figure is made" and "In plain words" sections for the 3D pages; `scripts/sanitize_public_site.py` injects them on every sync (not published on their own)

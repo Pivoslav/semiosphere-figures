@@ -116,6 +116,9 @@ details.verify summary { cursor:pointer; color:var(--accent); font-weight:600; }
 .gallery-intro { font-size:0.88rem; line-height:1.65; color:#2a2620; margin-bottom:1rem; max-width:72ch; }
 .gallery-section-note { font-size:0.84rem; line-height:1.6; color:var(--muted); margin:0 0 0.65rem; max-width:72ch; }
 </style>
+<link rel="stylesheet" href="../assets/fig-explain.css"/>
+<script defer src="../assets/fig-quotes.js"></script>
+<script defer src="../assets/fig-terms.js"></script>
 </head>
 <body class="embed">
 <div class="wrap embed-wrap">
@@ -177,7 +180,67 @@ details.verify summary { cursor:pointer; color:var(--accent); font-weight:600; }
     </div>
 
   </section>
-  <p class="embed-back"><a href="../lotman_3d_evidence.html#fig-lotman-explosion-3d" target="_top">Open in 3D gallery →</a></p>
+  <!-- fig-explain:start from explain/fig-lotman-explosion-3d.html; edit there, not here -->
+<section class="fig-explain" id="how-made">
+  <h2>How this figure is made</h2>
+  <p class="fx-lead">Each panel opens one step on the way from the memos to the two networks, with the equation it uses.</p>
+
+  <details class="fx">
+    <summary>The count: shared memos <span class="fx-sub">what each line measures</span></summary>
+    <div class="fx-body">
+      <div class="math-block">
+        <div class="math-line">w<sub>period</sub>(a, b) = Σ<sub>m ∈ memos(period)</sub> 1[a ∈ m] · 1[b ∈ m]</div>
+        <div class="math-explain">
+          <p>For two phrase families <em>a</em> and <em>b</em>, the weight is the number of memos in a period that contain both. 1[a ∈ m] is 1 if family <em>a</em> appears in memo <em>m</em> and 0 if not. Before 1983 there are only two memos, and after 1983 there are fourteen.</p>
+        </div>
+      </div>
+      <div class="math-block">
+        <div class="math-line">new(a, b) ⇔ w<sub>after</sub>(a, b) &gt; 0 and w<sub>before</sub>(a, b) = 0</div>
+        <div class="math-explain">
+          <p>A line is red if the pair occurs together after 1983 and never before. Before 1983 the network has three topics and three lines. After it has seven topics and nineteen lines: three carried over and sixteen new. That gives the summary under the figure, Δ topics = 4 and Δ links = 16. The table under the figure lists every line with its count.</p>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <details class="fx">
+    <summary>From counts to the picture <span class="fx-sub">planes, positions, thickness</span></summary>
+    <div class="fx-body">
+      <div class="math-block">
+        <div class="math-line">tube radius = 0.04 + min(0.08, 0.012 · w), &nbsp; y = −3 before 1983, &nbsp; y = +3 after</div>
+        <div class="math-explain">
+          <p>Lines get thicker with the number of shared memos, up to a cap. The two periods sit on separate planes. Dot positions on each plane are stored in the data. The lower plane is a simple triangle, because all three early topics occur in the same early memos (1976 to 1977). On the upper plane, topics that already existed keep their left-right position and new ones are placed near the topics they co-occur with. Grey pillars join a topic's two positions. Position on a plane is a layout choice, not a measurement.</p>
+        </div>
+      </div>
+      <p>Colours: gold for lines on the lower plane, blue for lines carried over on the upper plane, red for new lines.</p>
+    </div>
+  </details>
+
+  <details class="fx">
+    <summary>Where the data and code live</summary>
+    <div class="fx-body">
+      <p>The counts come from <code>bc_combined_experiments.json</code> under <code>c_explosion_rewire</code>, as the page notes under its table. The page is generated in the thesis lab by <code>build_lotman_3d_visualizations.py</code> and copied here on sync. This section is kept in <code>explain/fig-lotman-explosion-3d.html</code> in the site repo and added back on every sync.</p>
+    </div>
+  </details>
+</section>
+
+<section class="fig-explain plain" id="plain-words">
+  <h2>In plain words</h2>
+  <h3>What you are looking at</h3>
+  <ul>
+    <li>Two maps of the secret memos' vocabulary, one stacked above the other. The bottom map covers the memos written before the 1983 Montreal symposium, the top map the memos written after it.</li>
+    <li>Each dot is a topic or turn of phrase, such as scare quotes, references to Ukrainian nationalist groups, or calling the symposium a hostile "gathering".</li>
+    <li>A line means two of them appear in the same memo, and a thicker line means they do so in more memos.</li>
+    <li>Red lines are pairings that never happened before 1983.</li>
+  </ul>
+  <h3>What it shows</h3>
+  <p>Before 1983 the memos stick to three themes that turn up together. After the symposium went ahead despite the KGB's countermeasures, four new themes appear, among them a quoted "artificial famine" and the hostile "gathering", and sixteen new pairings link them to the old ones. The memos didn't just get more numerous. Their way of talking rewired.</p>
+  <h3>Why it matters</h3>
+  <p>Lotman's <a class="q" data-q="lotman-explosion" href="../theory/LOTMAN_INTERPRETATION.html#s4" target="_top">explosion</a> is a sudden change in what can be said, not more of the same said louder. This figure is the dissertation's way of dating and counting such a change inside one institution: the outside world's story won a round in 1983, and the secret register reorganised itself in response. The before side rests on only two memos, so the journal treats this as a candidate result until more early memos are found. Read it alongside L1, which shows what crossed outward, and L2, which counts the wording habits.</p>
+</section>
+<!-- fig-explain:end -->
+
+<p class="embed-back"><a href="../lotman_3d_evidence.html#fig-lotman-explosion-3d" target="_top">Open in 3D gallery →</a></p>
 </div>
 
 <script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>

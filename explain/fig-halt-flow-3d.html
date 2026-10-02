@@ -1,0 +1,83 @@
+<section class="fig-explain" id="how-made">
+  <h2>How this figure is made</h2>
+  <p class="fx-lead">Each panel opens one step on the way from the report file to the picture, with the equation it uses.</p>
+
+  <details class="fx">
+    <summary>The gate rule <span class="fx-sub">when an item stops before any model is called</span></summary>
+    <div class="fx-body">
+      <div class="math-block">
+        <div class="math-line">gate(q) = R1(H<sub>q</sub>) ∨ R2(H<sub>q</sub>) ∨ R3(H<sub>q</sub>)</div>
+        <div class="math-explain">
+          <p>For question <em>q</em>, H<sub>q</sub> is the metadata on the five documents the retriever returned. The gate closes if any of three rules fires. R1 and R2 fire when an unpaired outward claim or a documented miss appears anywhere among the five. R3 is the prompt's halt clause rewritten as a rule. No language model is involved. On the flat retriever the gate closed on 11 of 18 items: R1 on 7, R2 on 3, R3 on 1.</p>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <details class="fx">
+    <summary>Counting generator calls <span class="fx-sub">where 36 and 14 come from</span></summary>
+    <div class="fx-body">
+      <div class="math-block">
+        <div class="math-line">C<sub>arm</sub> = 2 · n<sub>gen</sub>, &nbsp; n<sub>gen</sub> = 18 − n<sub>closed</sub></div>
+        <div class="math-explain">
+          <p>Every item that reaches the generator is handled in two hops, so it costs two calls. In B2 nothing closes: 2 × 18 = 36. In D2 eleven items close: 2 × 7 = 14, which saves 22 calls.</p>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <details class="fx">
+    <summary>Scoring the refusals <span class="fx-sub">the measures on the 2D page</span></summary>
+    <div class="fx-body">
+      <div class="math-block">
+        <div class="math-line">recall = TP / (TP + FN), &nbsp; false refusal = FP / 13, &nbsp; precision = TP / (TP + FP), &nbsp; F1 = 2 · precision · recall / (precision + recall)</div>
+        <div class="math-explain">
+          <table class="sym">
+            <thead><tr><th>Symbol</th><th>Stands for</th></tr></thead>
+            <tbody>
+              <tr><td>TP</td><td>Refusals on the 5 items that should be refused.</td></tr>
+              <tr><td>FN</td><td>Should-refuse items that got an answer instead.</td></tr>
+              <tr><td>FP</td><td>Refusals on the 13 items that should be answered.</td></tr>
+            </tbody>
+          </table>
+          <p>Worked through for D2: TP = 5 and FP = 8, so recall is 5/5 = 1.0, false refusal is 8/13 = 0.6154, precision is 5/13 = 0.3846, and F1 is 0.5556. Six of those eight false refusals came from the gate and two from the generator. For B2: TP = 1 and FP = 5, giving recall 0.2, false refusal 0.3846, precision 0.1667 and F1 0.1818.</p>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <details class="fx">
+    <summary>From counts to the picture <span class="fx-sub">blocks, paths and particles</span></summary>
+    <div class="fx-body">
+      <p>The retriever, gate and generator sit in a row at x = −4.5, −0.5 and 3.5, with the halt block below the gate. An item that reaches the generator follows a path that loops once over it (the second hop) and exits to the right. A stopped item drops from the gate into the halt block. Particle <em>i</em> starts at the fraction i/18 of its path, so all eighteen are spread out before you press Play.</p>
+      <div class="math-block">
+        <div class="math-line">u<sub>i</sub> ← (u<sub>i</sub> + 0.11 Δt) mod 1, &nbsp; position = path(u<sub>i</sub>)</div>
+        <div class="math-explain"><p>Δt is the time since the last frame in seconds, and path(u) is the point a fraction u of the way along the path by length. A lap takes about nine seconds. Speed and spacing carry no data.</p></div>
+      </div>
+    </div>
+  </details>
+
+  <details class="fx">
+    <summary>Where the numbers and code live</summary>
+    <div class="fx-body">
+      <p>All counts come from <code>ma4b_rule_layer_halt_report.json</code> (llama3.2:3b, temperature 0.0, seed 19870317, flat top-5 retrieval). The <a href="fig-halt-adjudication.html">2D page</a> lists the report key for each one. The scoped follow-up is in <code>ma4c_scoped_rule_gate_report.json</code>. The drawing code is the script at the bottom of this page, using <code>assets/fig3d.js</code> and Three.js r128.</p>
+    </div>
+  </details>
+</section>
+
+<section class="fig-explain plain" id="plain-words">
+  <h2>In plain words</h2>
+  <h3>What you are looking at</h3>
+  <ul>
+    <li>The pale green block is the retriever. For each question it fetches the five archive documents that look most relevant.</li>
+    <li>The red block is the rule gate. It reads the labels on those five documents, the way a clerk checks stamps on a file, and decides whether a licensed answer is possible.</li>
+    <li>The orange block is the generator, the language model that writes the answer.</li>
+    <li>The dark green block underneath is the standard refusal sentence the pipeline prints when the gate says no.</li>
+    <li>Each dot is one of 18 test questions. Five of them should be refused and thirteen should be answered.</li>
+  </ul>
+  <h3>What it shows</h3>
+  <p>Without a gate (B2), every question goes to the model twice, 36 calls in all, and the model catches only one of the five questions it should refuse. With the gate (D2), eleven questions stop before any model sees them, the model runs only fourteen times, and all five should-refuse questions are caught. The gate is not precise, though. Six of the eleven it stopped could have been answered. With a better retriever in the follow-up (MA4c), it stopped none at all.</p>
+  <h3>Why it matters</h3>
+  <p>The dissertation reads the boundary between secret and public Soviet texts as the place where meaning is governed: what may cross, in what form, and what must be refused. In <a class="q" data-q="lotman-boundary">Lotman's terms</a> the boundary is a filter. The KGB memo's hostile wording never reached the embassy release, because something at the boundary stopped it.</p>
+  <p>This figure asks where that decision should sit in an AI pipeline. When the refusal rule was written as a sentence in the model's prompt (arm C2, on the 2D page), the model refused all eighteen questions, including ones its own instructions said to answer. The rule was never evaluated as a condition. Put in front of the model as plain logic, the same rule kept every correct refusal and cut the calls by more than half. For anyone building with AI, the lesson is to keep boundary rules in the plumbing, at least with small models, and not to trust the model to police itself.</p>
+</section>

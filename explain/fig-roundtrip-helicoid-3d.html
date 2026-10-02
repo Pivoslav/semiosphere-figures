@@ -1,0 +1,91 @@
+<section class="fig-explain" id="how-made">
+  <h2>How this figure is made</h2>
+  <p class="fx-lead">Each panel opens one step on the way from the report file to the picture, with the equation it uses.</p>
+
+  <details class="fx">
+    <summary>The measure: recovery <span class="fx-sub">what number each loop stands for</span></summary>
+    <div class="fx-body">
+      <div class="math-block">
+        <div class="math-line">J(A, B) = |A ∩ B| / |A ∪ B|</div>
+        <div class="math-explain">
+          <p>The <a class="q" data-q="method-jaccard">Jaccard index</a> of two sets: how many items they share, divided by how many distinct items they have between them. It runs from 0 (nothing shared) to 1 (identical sets).</p>
+        </div>
+      </div>
+      <div class="math-block">
+        <div class="math-line">R<sub>c</sub> = (1/13) Σ<sub>i=1</sub><sup>13</sup> J( T(x<sub>i</sub>), T(y<sub>i,c</sub>) )</div>
+        <div class="math-explain">
+          <p>Recovery for one condition is the average Jaccard score over the thirteen corpus stretches.</p>
+          <table class="sym">
+            <thead><tr><th>Symbol</th><th>Stands for</th></tr></thead>
+            <tbody>
+              <tr><td>x<sub>i</sub></td><td>Stretch <em>i</em> of the corpus, as it went out.</td></tr>
+              <tr><td>y<sub>i,c</sub></td><td>What came back after the round trip under condition <em>c</em>. The reverse call never sees the original.</td></tr>
+              <tr><td>T(·)</td><td>The set of word tokens in a text, tokenised as in the MA12 harness.</td></tr>
+              <tr><td>c</td><td>One of five conditions: R0 identity, R1 register change, R2 across the corpus tier boundary, R3 cross-model, R4 three register trips.</td></tr>
+            </tbody>
+          </table>
+          <p>Because it compares sets, recovery ignores word order and repetition. A text that keeps its words and scrambles their sense can still score well, and a faithful paraphrase can score badly. That is one reason the 2D page prints the actual returned text.</p>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <details class="fx">
+    <summary>From recovery to a loop <span class="fx-sub">the geometry, constant by constant</span></summary>
+    <div class="fx-body">
+      <div class="math-block">
+        <div class="math-line">g<sub>c</sub> = 1.15π (1 − R<sub>c</sub>)</div>
+        <div class="math-explain">
+          <p>The missing arc. It grows in a straight line as recovery falls. The 1.15 is a display constant that keeps even the worst condition drawn as a loop rather than a stub. In degrees the gap is 207 × (1 − R): about 26° for R0, 54° for R3, 127° for R2, 150° for R1 and 155° for R4.</p>
+        </div>
+      </div>
+      <div class="math-block">
+        <div class="math-line">θ(t) = t (2π − g<sub>c</sub>) − π/2, &nbsp; P(t) = ( r<sub>c</sub> cos θ, &nbsp;0.25 + 0.35 sin 2πt, &nbsp;r<sub>c</sub> sin θ ), &nbsp; 0 ≤ t ≤ 1</div>
+        <div class="math-explain">
+          <p>Each loop is 81 points traced around the anchor and then smoothed. The last point is joined back to the anchor, so the gap shows up as the stretch of circle the path skips.</p>
+          <table class="sym">
+            <thead><tr><th>Symbol</th><th>Stands for</th></tr></thead>
+            <tbody>
+              <tr><td>r<sub>c</sub></td><td>Loop radius, 0.35 + 0.55 s<sub>c</sub>, with s<sub>c</sub> = 1.0, 1.35, 1.55, 1.75, 1.9 for R0, R3, R2, R1, R4. It only keeps the loops apart. Since it grows in the same order as the loss, it repeats the information and adds none.</td></tr>
+              <tr><td>0.35 sin 2πt</td><td>A vertical wobble so loops don't sit on top of each other. Decoration.</td></tr>
+              <tr><td>shells</td><td>The four wire spheres (radius 0.55, 0.95, 1.35, 1.75) hint at register distance. Nothing is measured on them.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <details class="fx">
+    <summary>What the motion does <span class="fx-sub">Play, and reduced motion</span></summary>
+    <div class="fx-body">
+      <p>Play sends a white traveller along the selected loop. Its position along the path advances by 0.22 per second, so one trip takes about four and a half seconds and then stops. With reduced motion switched on, Play is disabled and the traveller is drawn at the end of the loop. The scene draws nothing while it is still.</p>
+    </div>
+  </details>
+
+  <details class="fx">
+    <summary>Where the numbers and code live</summary>
+    <div class="fx-body">
+      <p>The five recovery scores are typed into the page from <code>ma12_roundtrip_report.json</code> (the 2026-10-02 run on qwen2.5:3b and gemma2:2b) and match figure R1 on the <a href="fig-roundtrip-asymmetry.html#r1">2D page</a>. The drawing code is the script at the bottom of this page, using the shared stage in <code>assets/fig3d.js</code> and Three.js r128.</p>
+    </div>
+  </details>
+</section>
+
+<section class="fig-explain plain" id="plain-words">
+  <h2>In plain words</h2>
+  <h3>What you are looking at</h3>
+  <p>The gold ball is a passage from the archive. Each coloured loop is one way of sending that passage out through a language model and asking for it back. Pick a loop from the menu and press Play to watch the trip.</p>
+  <ul>
+    <li>R0: the same model rewrites the passage and restates it faithfully.</li>
+    <li>R3: one model writes it out, a different model brings it back.</li>
+    <li>R2: the passage crosses from one tier of the corpus to another and back.</li>
+    <li>R1: the passage is rewritten for a different kind of audience, then rewritten back.</li>
+    <li>R4: the R1 trip done three times in a row.</li>
+  </ul>
+  <p>The size of the gap where a loop fails to close is how much of the original wording did not come back. A small gap means most words returned.</p>
+  <h3>What it shows</h3>
+  <p>Restating with the same model keeps most of the words (0.877). Swapping in a different model for the return trip still keeps most of them (0.740). Changing the audience loses most of them (0.274), and doing it three times loses a little more without ever settling (0.251). On these two models the request matters far more than the machine, though the <a href="fig-ma15-dyad-cube-3d.html">MA15 pairings</a> show that a weaker model on the return trip can lose nearly as much.</p>
+  <h3>Why it matters</h3>
+  <p><a class="q" data-q="lotman-round-trip">Lotman's test</a> says a round trip that hands back the same text is a sign of an artificial language, and one that doesn't is a sign of translation in his creative sense. The dissertation's archive is full of register changes: a secret memo in March 1983 becomes an embassy release in April, and the wording transforms on the way. This figure runs the machine version of the same move. It shows that asking a model for a different register moves text much further than swapping the model does.</p>
+  <p>It also shows the trap. Low recovery is not the same as creation. In one R1 trip, a record of what the archive does <em>not</em> contain came back as a false claim that a Canadian newspaper called Novosti had printed the denial. So any pipeline that rewrites archival text for a new audience needs a second check that the new material is licensed by a source. The same goes for AI tools generally: a round-trip or back-translation score cannot tell a creative rewrite from a corrupted one.</p>
+</section>
