@@ -1,21 +1,19 @@
-/* Vaporwave on the viewport edges only — reading column is a solid, isolated shelf */
+/* Vaporwave in the margins only — #vapor-reading-shelf is a solid column (see site-theme-vapor.js) */
 
 :root {
   --vapor-paper-solid: #fffdfa;
   --vapor-magenta: #ff71ce;
   --vapor-cyan: #01cdfe;
-  --vapor-purple: #6b5bff;
   --vapor-grid: rgba(1, 205, 254, 0.35);
   --vapor-shelf-max: 56rem;
   --vapor-fx-z: 0;
-  --vapor-shelf-z: 2;
 }
 
 html.has-vapor-theme {
   min-height: 100%;
 }
 
-/* Backdrop lives on html so nothing on body can slip under copy */
+/* Animated backdrop — masked so the center strip never receives sky/grid (belt + suspenders) */
 html.has-vapor-theme::before {
   content: "";
   position: fixed;
@@ -32,6 +30,22 @@ html.has-vapor-theme::before {
   background-size: 100% 200%;
   animation: vapor-sky 28s ease-in-out infinite alternate;
   pointer-events: none;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    #000 0,
+    #000 max(0px, calc(50% - var(--vapor-shelf-max) / 2 - 1.5rem)),
+    transparent max(0px, calc(50% - var(--vapor-shelf-max) / 2)),
+    transparent min(100%, calc(50% + var(--vapor-shelf-max) / 2)),
+    #000 min(100%, calc(50% + var(--vapor-shelf-max) / 2 + 1.5rem))
+  );
+  mask-image: linear-gradient(
+    to right,
+    #000 0,
+    #000 max(0px, calc(50% - var(--vapor-shelf-max) / 2 - 1.5rem)),
+    transparent max(0px, calc(50% - var(--vapor-shelf-max) / 2)),
+    transparent min(100%, calc(50% + var(--vapor-shelf-max) / 2)),
+    #000 min(100%, calc(50% + var(--vapor-shelf-max) / 2 + 1.5rem))
+  );
 }
 
 @keyframes vapor-sky {
@@ -59,6 +73,7 @@ html.has-vapor-theme::after {
   mask-image: linear-gradient(to top, black 40%, transparent 95%);
   opacity: 0.85;
   pointer-events: none;
+  -webkit-mask-composite: source-in;
 }
 
 body.has-vapor-theme {
@@ -68,24 +83,9 @@ body.has-vapor-theme {
   background-color: transparent !important;
 }
 
-/* FX ornaments — always below the reading shelf */
-body.has-vapor-theme > .vapor-scanlines,
 body.has-vapor-theme > .vapor-decor {
-  z-index: calc(var(--vapor-fx-z) + 1);
+  z-index: var(--vapor-fx-z);
   pointer-events: none;
-}
-
-.vapor-scanlines {
-  position: fixed;
-  inset: 0;
-  opacity: 0.06;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(0, 0, 0, 0.4) 2px,
-    rgba(0, 0, 0, 0.4) 3px
-  );
 }
 
 .vapor-decor {
@@ -164,75 +164,52 @@ body.has-vapor-theme > .vapor-decor {
   border-right: 2px solid rgba(107, 91, 255, 0.35);
 }
 
-/* ---- Reading shelf: opaque, isolated, above all FX ---- */
-body.has-vapor-theme > main,
-body.has-vapor-theme > .wrap,
-body.has-vapor-theme[data-vapor-family="experiment"],
-body.has-vapor-theme[data-vapor-family="montreal"],
-body.has-vapor-theme[data-vapor-family="theory"],
-body.has-vapor-theme[data-vapor-family="legacy"] {
+/* Injected wrapper: all page content lives here */
+#vapor-reading-shelf {
   position: relative;
-  z-index: var(--vapor-shelf-z);
+  z-index: 2;
   isolation: isolate;
+  max-width: var(--vapor-shelf-max);
+  width: 100%;
+  margin: 0 auto;
+  min-height: calc(100vh - var(--site-nav-total-h, var(--site-nav-h, 3rem)));
   background-color: var(--vapor-paper-solid) !important;
-  box-shadow: 0 8px 48px rgba(26, 16, 51, 0.18);
-  border-radius: 6px;
   box-sizing: border-box;
 }
 
+#vapor-reading-shelf > main,
+#vapor-reading-shelf > .wrap {
+  background: transparent !important;
+  box-shadow: none !important;
+  max-width: none !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+}
+
 body.has-vapor-theme[data-vapor-family="experiment"],
 body.has-vapor-theme[data-vapor-family="montreal"],
 body.has-vapor-theme[data-vapor-family="theory"],
 body.has-vapor-theme[data-vapor-family="legacy"] {
-  max-width: var(--vapor-shelf-max);
-  width: 100%;
-  margin-left: auto !important;
-  margin-right: auto !important;
-  margin-top: 0.25rem;
+  background: transparent !important;
+  max-width: none !important;
+  box-shadow: none !important;
 }
 
-body.has-vapor-theme[data-vapor-family="home"] > main {
-  max-width: var(--vapor-shelf-max);
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  min-height: calc(100vh - var(--site-nav-total-h, var(--site-nav-h, 3rem)));
-  padding: 1.15rem 1.15rem 2.5rem;
-}
-
-body.has-vapor-theme[data-vapor-family="journal"] > .wrap {
-  max-width: var(--vapor-shelf-max);
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  min-height: calc(100vh - var(--site-nav-total-h, var(--site-nav-h, 3rem)));
-}
-
-body.has-vapor-theme .card,
-body.has-vapor-theme .lede,
-body.has-vapor-theme .guide,
-body.has-vapor-theme .toc,
-body.has-vapor-theme table,
-body.has-vapor-theme blockquote {
-  background-color: var(--vapor-paper-solid);
-}
-
-body.has-vapor-theme .viz-box {
+#vapor-reading-shelf .viz-box {
   background-color: #fafafa !important;
   border-color: #d4cfc4 !important;
 }
 
-body.has-vapor-theme .viz-head {
+#vapor-reading-shelf .viz-head {
   background: #f1efe9 !important;
-  color: inherit !important;
 }
 
-body.has-vapor-theme .viz-box canvas,
-body.has-vapor-theme .viz-stage {
+#vapor-reading-shelf .viz-box canvas,
+#vapor-reading-shelf .viz-stage {
   background: #fff !important;
 }
 
-body.has-vapor-theme .viz-stage {
+#vapor-reading-shelf .viz-stage {
   background: #faf8f4 !important;
 }
 
@@ -260,15 +237,9 @@ html.has-vapor-theme:has(body[data-vapor-family="legacy"])::before {
   filter: saturate(0.65) hue-rotate(-10deg);
 }
 
-/* Experiment sticker — outside shelf margin only */
-body.has-vapor-theme .vapor-sticker {
-  z-index: calc(var(--vapor-shelf-z) + 1);
-}
-
 html.vapor-theme-off::before,
 html.vapor-theme-off::after,
 html.vapor-theme-off .vapor-decor,
-html.vapor-theme-off .vapor-scanlines,
 html:not(.has-vapor-theme)::before,
 html:not(.has-vapor-theme)::after {
   display: none !important;
@@ -278,15 +249,9 @@ html.vapor-theme-off body.has-vapor-theme {
   background: #f7f4ef !important;
 }
 
-html.vapor-theme-off body.has-vapor-theme > main,
-html.vapor-theme-off body.has-vapor-theme > .wrap,
-html.vapor-theme-off body.has-vapor-theme[data-vapor-family="experiment"],
-html.vapor-theme-off body.has-vapor-theme[data-vapor-family="montreal"],
-html.vapor-theme-off body.has-vapor-theme[data-vapor-family="theory"],
-html.vapor-theme-off body.has-vapor-theme[data-vapor-family="legacy"] {
+html.vapor-theme-off #vapor-reading-shelf {
   background: transparent !important;
-  box-shadow: none;
-  max-width: none;
+  min-height: 0;
   isolation: auto;
   z-index: auto;
 }
@@ -302,20 +267,17 @@ html.vapor-theme-off body.has-vapor-theme[data-vapor-family="legacy"] {
   .vapor-sun,
   .vapor-wire-cube,
   .vapor-wire-cube-2 {
-    opacity: 0.2;
+    opacity: 0.15;
   }
 }
 
 @media print {
   html.has-vapor-theme::before,
   html.has-vapor-theme::after,
-  .vapor-decor,
-  .vapor-scanlines {
+  .vapor-decor {
     display: none !important;
   }
-  body.has-vapor-theme > main,
-  body.has-vapor-theme > .wrap {
+  #vapor-reading-shelf {
     background: #fff !important;
-    box-shadow: none;
   }
 }

@@ -2,6 +2,7 @@
   "use strict";
 
   var STORAGE_KEY = "vaporTheme";
+  var SHELF_ID = "vapor-reading-shelf";
 
   function pageKey() {
     var p = window.location.pathname || "";
@@ -69,13 +70,52 @@
     return true;
   }
 
+  function isChromeNode(el) {
+    if (!el || el.nodeType !== 1) return true;
+    var id = el.id;
+    if (id === "site-nav-bar" || id === "site-nav-overlay" || id === "site-nav-drawer" || id === SHELF_ID) {
+      return true;
+    }
+    if (el.classList) {
+      if (el.classList.contains("vapor-decor")) return true;
+    }
+    return false;
+  }
+
+  /** One opaque column for all page content (after nav inject). */
+  function wrapReadingShelf() {
+    if (!isEnabled() || !document.body) return;
+    if (document.getElementById(SHELF_ID)) return;
+
+    var body = document.body;
+    var shelf = document.createElement("div");
+    shelf.id = SHELF_ID;
+
+    var toMove = [];
+    for (var i = 0; i < body.children.length; i++) {
+      var el = body.children[i];
+      if (!isChromeNode(el)) toMove.push(el);
+    }
+    if (!toMove.length) return;
+
+    var anchor = document.getElementById("site-nav-bar");
+    if (anchor && anchor.nextSibling) {
+      body.insertBefore(shelf, anchor.nextSibling);
+    } else if (anchor) {
+      body.appendChild(shelf);
+    } else {
+      body.insertBefore(shelf, body.firstChild);
+    }
+
+    toMove.forEach(function (el) {
+      shelf.appendChild(el);
+    });
+  }
+
+  window.__vaporWrapShelf = wrapReadingShelf;
+
   function injectDecor(family) {
     if (!isEnabled()) return;
-
-    var scan = document.createElement("div");
-    scan.className = "vapor-scanlines";
-    scan.setAttribute("aria-hidden", "true");
-    document.body.appendChild(scan);
 
     if (family === "home" || family === "montreal") {
       var sun = document.createElement("div");
@@ -110,7 +150,7 @@
       badge.setAttribute("aria-hidden", "true");
       badge.textContent = sticker;
       badge.style.cssText =
-        "position:fixed;bottom:1rem;right:1rem;z-index:1;font:bold 11px/1 system-ui,sans-serif;" +
+        "position:fixed;bottom:1rem;right:1rem;z-index:3;font:bold 11px/1 system-ui,sans-serif;" +
         "letter-spacing:0.12em;padding:0.35rem 0.55rem;color:#01cdfe;" +
         "border:2px solid #ff71ce;background:rgba(26,16,51,0.75);transform:rotate(-4deg);";
       document.body.appendChild(badge);

@@ -8,7 +8,7 @@ Keep every page readable for long-form journal prose and data figures, while the
 
 ## Principles
 
-1. **Readability first.** Sky/grid on `html::before/after` (z-index 0). The reading **shelf** (`main`, `.wrap`, or full `body` on embeds) uses opaque `#fffdfa`, `isolation: isolate`, `z-index: 2`, so scanlines and decor never tint the center column. No `text-shadow` on trails. Figures: `.viz-box` / canvas stay neutral gray-white.
+1. **Readability first.** Sky/grid on `html` pseudo-elements, **masked off the center column**. All page content (except nav) is moved into `#vapor-reading-shelf` by JS after nav inject — one opaque `#fffdfa` column. **No scanlines** (they painted over copy). Decor stays in side margins only.
 2. **CSS and SVG before GIF.** Animated GIFs are Phase 2 per-page opt-in (`docs/assets/vapor/*.gif`) to avoid weight and hotlink rot. Phase 1 is GPU-friendly gradients + grid.
 3. **One inject path.** `sanitize_public_site.py` adds `site-theme-vapor.css` + `site-theme-vapor.js` on every HTML page (with `site-nav`).
 4. **Per-route accent, not 41 unique themes.** Five families: `home`, `journal`, `experiment`, `montreal`, `legacy` (+ `theory` for plain theory pages).

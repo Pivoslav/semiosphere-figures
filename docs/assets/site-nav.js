@@ -356,13 +356,17 @@
     }
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", function () {
-      injectChrome();
-      injectTrail();
-    });
-  } else {
+  function finishNav() {
     injectChrome();
     injectTrail();
+    if (typeof window.__vaporWrapShelf === "function") {
+      window.__vaporWrapShelf();
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", finishNav);
+  } else {
+    finishNav();
   }
 })();
