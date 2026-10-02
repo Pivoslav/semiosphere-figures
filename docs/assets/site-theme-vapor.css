@@ -251,12 +251,12 @@ body.has-vapor-theme #site-nav-drawer header {
   border-bottom-color: var(--vapor-magenta);
 }
 
-body.has-vapor-theme[data-vapor-family="montreal"]::after {
+html.has-vapor-theme:has(body[data-vapor-family="montreal"])::after {
   opacity: 1;
   background-size: 36px 36px;
 }
 
-body[data-vapor-family="legacy"]::before {
+html.has-vapor-theme:has(body[data-vapor-family="legacy"])::before {
   filter: saturate(0.65) hue-rotate(-10deg);
 }
 
