@@ -1,4 +1,4 @@
-/* Vaporwave / textbook CD-ROM atmosphere — genre on the viewport, copy on opaque paper */
+/* Vaporwave on the viewport edges only — reading column is a solid, isolated shelf */
 
 :root {
   --vapor-paper-solid: #fffdfa;
@@ -6,37 +6,21 @@
   --vapor-cyan: #01cdfe;
   --vapor-purple: #6b5bff;
   --vapor-grid: rgba(1, 205, 254, 0.35);
+  --vapor-shelf-max: 56rem;
+  --vapor-fx-z: 0;
+  --vapor-shelf-z: 2;
 }
 
 html.has-vapor-theme {
   min-height: 100%;
 }
 
-/* Never override page typography colors (animated sky stays behind opaque blocks) */
-body.has-vapor-theme {
-  position: relative;
-  min-height: 100vh;
-  background-color: transparent;
-}
-
-body.has-vapor-theme[data-vapor-family="experiment"],
-body.has-vapor-theme[data-vapor-family="montreal"],
-body.has-vapor-theme[data-vapor-family="theory"] {
-  background: var(--vapor-paper-solid) !important;
-  box-shadow: 0 12px 64px rgba(18, 8, 42, 0.45);
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 8px;
-  max-width: 56rem;
-  margin-top: 0.35rem;
-}
-
-/* Animated sky (fixed layer; does not touch glyphs inside solid main/wrap/body cards) */
-body.has-vapor-theme::before {
+/* Backdrop lives on html so nothing on body can slip under copy */
+html.has-vapor-theme::before {
   content: "";
   position: fixed;
   inset: 0;
-  z-index: -3;
+  z-index: var(--vapor-fx-z);
   background: linear-gradient(
     180deg,
     #2d1b69 0%,
@@ -59,14 +43,14 @@ body.has-vapor-theme::before {
   }
 }
 
-body.has-vapor-theme::after {
+html.has-vapor-theme::after {
   content: "";
   position: fixed;
   left: -50%;
   right: -50%;
   bottom: -20%;
   height: 55%;
-  z-index: -2;
+  z-index: var(--vapor-fx-z);
   transform: perspective(320px) rotateX(58deg);
   transform-origin: center bottom;
   background-image: linear-gradient(var(--vapor-grid) 1px, transparent 1px),
@@ -77,11 +61,23 @@ body.has-vapor-theme::after {
   pointer-events: none;
 }
 
+body.has-vapor-theme {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  background-color: transparent !important;
+}
+
+/* FX ornaments — always below the reading shelf */
+body.has-vapor-theme > .vapor-scanlines,
+body.has-vapor-theme > .vapor-decor {
+  z-index: calc(var(--vapor-fx-z) + 1);
+  pointer-events: none;
+}
+
 .vapor-scanlines {
   position: fixed;
   inset: 0;
-  z-index: -1;
-  pointer-events: none;
   opacity: 0.06;
   background: repeating-linear-gradient(
     0deg,
@@ -94,19 +90,17 @@ body.has-vapor-theme::after {
 
 .vapor-decor {
   position: fixed;
-  pointer-events: none;
-  z-index: -1;
 }
 
 .vapor-sun {
-  width: 140px;
-  height: 140px;
-  top: calc(var(--site-nav-total-h, var(--site-nav-h, 3rem)) + 1.5rem);
-  right: 4%;
+  width: 120px;
+  height: 120px;
+  top: calc(var(--site-nav-total-h, var(--site-nav-h, 3rem)) + 1rem);
+  right: max(0.75rem, calc((100vw - var(--vapor-shelf-max)) / 2 - 7rem));
   border-radius: 50%;
   background: linear-gradient(180deg, #ffe9a0 0%, #ff71ce 55%, #ff9a56 100%);
-  box-shadow: 0 0 60px rgba(255, 113, 206, 0.5);
-  opacity: 0.55;
+  box-shadow: 0 0 48px rgba(255, 113, 206, 0.45);
+  opacity: 0.45;
 }
 
 .vapor-sun::before {
@@ -124,22 +118,22 @@ body.has-vapor-theme::after {
 }
 
 .vapor-wire-cube {
-  width: 72px;
-  height: 72px;
-  bottom: 18%;
-  left: 3%;
+  width: 64px;
+  height: 64px;
+  bottom: 16%;
+  left: max(0.5rem, calc((100vw - var(--vapor-shelf-max)) / 2 - 5rem));
   border: 2px solid rgba(1, 205, 254, 0.65);
   transform: rotate(45deg);
-  box-shadow: 12px 12px 0 rgba(255, 113, 206, 0.25);
+  box-shadow: 10px 10px 0 rgba(255, 113, 206, 0.2);
   animation: vapor-float 9s ease-in-out infinite;
 }
 
 .vapor-wire-cube.vapor-wire-cube-2 {
   left: auto;
-  right: 5%;
-  bottom: 22%;
-  width: 48px;
-  height: 48px;
+  right: max(0.5rem, calc((100vw - var(--vapor-shelf-max)) / 2 - 4rem));
+  bottom: 20%;
+  width: 44px;
+  height: 44px;
   animation-delay: -4s;
   border-color: rgba(255, 113, 206, 0.7);
 }
@@ -155,12 +149,10 @@ body.has-vapor-theme::after {
 }
 
 .vapor-textbook-stripe {
-  position: fixed;
   top: var(--site-nav-total-h, var(--site-nav-h, 3rem));
   bottom: 0;
-  left: 0;
-  width: 28px;
-  z-index: -1;
+  left: max(0px, calc((100vw - var(--vapor-shelf-max)) / 2 - 36px));
+  width: 24px;
   background: repeating-linear-gradient(
     180deg,
     #ffe566 0,
@@ -168,26 +160,63 @@ body.has-vapor-theme::after {
     #fff 8px,
     #fff 16px
   );
-  opacity: 0.35;
-  border-right: 2px solid rgba(107, 91, 255, 0.4);
+  opacity: 0.28;
+  border-right: 2px solid rgba(107, 91, 255, 0.35);
 }
 
-body.has-vapor-theme main,
-body.has-vapor-theme .wrap {
-  background: var(--vapor-paper-solid);
-  box-shadow: 0 8px 48px rgba(26, 16, 51, 0.25), 0 0 0 1px rgba(1, 205, 254, 0.12);
+/* ---- Reading shelf: opaque, isolated, above all FX ---- */
+body.has-vapor-theme > main,
+body.has-vapor-theme > .wrap,
+body.has-vapor-theme[data-vapor-family="experiment"],
+body.has-vapor-theme[data-vapor-family="montreal"],
+body.has-vapor-theme[data-vapor-family="theory"],
+body.has-vapor-theme[data-vapor-family="legacy"] {
+  position: relative;
+  z-index: var(--vapor-shelf-z);
+  isolation: isolate;
+  background-color: var(--vapor-paper-solid) !important;
+  box-shadow: 0 8px 48px rgba(26, 16, 51, 0.18);
   border-radius: 6px;
+  box-sizing: border-box;
+}
+
+body.has-vapor-theme[data-vapor-family="experiment"],
+body.has-vapor-theme[data-vapor-family="montreal"],
+body.has-vapor-theme[data-vapor-family="theory"],
+body.has-vapor-theme[data-vapor-family="legacy"] {
+  max-width: var(--vapor-shelf-max);
+  width: 100%;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  margin-top: 0.25rem;
+}
+
+body.has-vapor-theme[data-vapor-family="home"] > main {
+  max-width: var(--vapor-shelf-max);
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  min-height: calc(100vh - var(--site-nav-total-h, var(--site-nav-h, 3rem)));
+  padding: 1.15rem 1.15rem 2.5rem;
+}
+
+body.has-vapor-theme[data-vapor-family="journal"] > .wrap {
+  max-width: var(--vapor-shelf-max);
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  min-height: calc(100vh - var(--site-nav-total-h, var(--site-nav-h, 3rem)));
 }
 
 body.has-vapor-theme .card,
 body.has-vapor-theme .lede,
 body.has-vapor-theme .guide,
 body.has-vapor-theme .toc,
-body.has-vapor-theme table {
+body.has-vapor-theme table,
+body.has-vapor-theme blockquote {
   background-color: var(--vapor-paper-solid);
 }
 
-/* Figures: neutral stage; chart colors stay authored in canvas/SVG */
 body.has-vapor-theme .viz-box {
   background-color: #fafafa !important;
   border-color: #d4cfc4 !important;
@@ -207,17 +236,9 @@ body.has-vapor-theme .viz-stage {
   background: #faf8f4 !important;
 }
 
-/* No glow on navigation prose — keeps links readable on paper */
 body.has-vapor-theme .embed-back,
 body.has-vapor-theme p.site-trail {
   text-shadow: none;
-}
-
-/* Index hero only (not journal .doc or reading-list headers) */
-body.has-vapor-theme > header:first-of-type:not(#site-nav-drawer header) {
-  background: linear-gradient(135deg, rgba(44, 40, 32, 0.98), rgba(107, 91, 255, 0.88)) !important;
-  border-bottom-color: var(--vapor-magenta) !important;
-  box-shadow: 0 4px 24px rgba(255, 113, 206, 0.25);
 }
 
 body.has-vapor-theme #site-nav-bar {
@@ -239,44 +260,62 @@ body[data-vapor-family="legacy"]::before {
   filter: saturate(0.65) hue-rotate(-10deg);
 }
 
-html.vapor-theme-off body.has-vapor-theme::before,
-html.vapor-theme-off body.has-vapor-theme::after,
+/* Experiment sticker — outside shelf margin only */
+body.has-vapor-theme .vapor-sticker {
+  z-index: calc(var(--vapor-shelf-z) + 1);
+}
+
+html.vapor-theme-off::before,
+html.vapor-theme-off::after,
 html.vapor-theme-off .vapor-decor,
-html.vapor-theme-off .vapor-scanlines {
+html.vapor-theme-off .vapor-scanlines,
+html:not(.has-vapor-theme)::before,
+html:not(.has-vapor-theme)::after {
   display: none !important;
 }
 
 html.vapor-theme-off body.has-vapor-theme {
-  background: #f7f4ef;
+  background: #f7f4ef !important;
 }
 
-html.vapor-theme-off body.has-vapor-theme main,
-html.vapor-theme-off body.has-vapor-theme .wrap,
+html.vapor-theme-off body.has-vapor-theme > main,
+html.vapor-theme-off body.has-vapor-theme > .wrap,
 html.vapor-theme-off body.has-vapor-theme[data-vapor-family="experiment"],
 html.vapor-theme-off body.has-vapor-theme[data-vapor-family="montreal"],
-html.vapor-theme-off body.has-vapor-theme[data-vapor-family="theory"] {
+html.vapor-theme-off body.has-vapor-theme[data-vapor-family="theory"],
+html.vapor-theme-off body.has-vapor-theme[data-vapor-family="legacy"] {
   background: transparent !important;
   box-shadow: none;
   max-width: none;
+  isolation: auto;
+  z-index: auto;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  body.has-vapor-theme::before,
+  html.has-vapor-theme::before,
   .vapor-wire-cube {
     animation: none !important;
   }
 }
 
+@media (max-width: 640px) {
+  .vapor-sun,
+  .vapor-wire-cube,
+  .vapor-wire-cube-2 {
+    opacity: 0.2;
+  }
+}
+
 @media print {
-  body.has-vapor-theme::before,
-  body.has-vapor-theme::after,
+  html.has-vapor-theme::before,
+  html.has-vapor-theme::after,
   .vapor-decor,
   .vapor-scanlines {
     display: none !important;
   }
-  body.has-vapor-theme main,
-  body.has-vapor-theme .wrap {
-    background: #fff;
+  body.has-vapor-theme > main,
+  body.has-vapor-theme > .wrap {
+    background: #fff !important;
     box-shadow: none;
   }
 }
