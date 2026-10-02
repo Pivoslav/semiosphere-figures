@@ -219,7 +219,7 @@
         pulses.textContent = motion.pulses ? "Pause relays" : "Play relays";
         pulses.setAttribute("aria-pressed", motion.pulses ? "true" : "false");
         say.textContent = motion.pulses
-          ? "Sky-blue dots run along the two proven thematic relays, from spr. 1206 to the embassy release and to Novosti."
+          ? "White dots run along the two proven thematic relays, from spr. 1206 to the embassy release and to Novosti."
           : "";
       });
       bar.appendChild(pulses);
