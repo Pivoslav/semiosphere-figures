@@ -1,6 +1,6 @@
 # Open threads · what has not been explored yet
 
-**Dated:** 2026-10-01
+**Dated:** 2026-10-02
 **Internal.** Not on Pages.
 **Purpose:** one place an agent can land, see what is unexplored, and know the cheapest next action without re-deriving the project.
 
@@ -13,12 +13,12 @@
 | Thread | Area | Status | Cheapest next action |
 |---|---|---|---|
 | T1 | Rule-layer halt rerun (MA4b) | closed 2026-10-01, thesis `docs/experiments/MA4b_rule_layer_halt/RUN_2026-10-01.md` | Result: gate beats prompt, F1 0.56 vs 0.43, 14 calls vs 36. Remove the halt clause from the generator prompt entirely once a gate exists |
-| T28 | Gate precision is retrieval-bound | open, highest value now | The flat top-5 deviation has become the binding constraint: rerun the MA4b gate on E4's scoped retriever before tuning the predicate |
+| T28 | Gate precision is retrieval-bound | closed 2026-10-02, thesis `docs/experiments/MA4b_rule_layer_halt/RUN_MA4c_2026-10-02.md` | Scoped retriever: D2 false refusal 0.23 vs 0.62 flat; gate closes 0/18 on outward-only hits. Next: E4 touch-set halt + scoped context |
 | T2 | Agent to subagent boundary (MA10) | closed 2026-10-01, thesis `docs/experiments/MA10_subagent_isolation/RUN_2026-10-01.md` | Nothing beat the parent alone. Isolation produced fabrication, not autonomy |
 | T32 | Typed envelopes launder fabrication | open, qualifies MA1 | A real id was stamped on invented content and scored full tag retention. Tag retention measures transport, not truth |
 | T33 | Ask the agent whether it has sources | open, cheap and high value | Blindness reports went 0 of 17 to 10 of 17 purely by asking. Test across models and in the real harness |
 | T22 | Enforced vs requested isolation (MA14) | open, highest value in backlog | Audits the whole program's method; MA10 supplies level A |
-| T23 | Real polyglottism across model families (MA15) | open, now the decisive experiment | MA12 only crossed two SIZES of one family and recovered 0.891, so it was not a test. Must cross different pretraining |
+| T23 | Real polyglottism across model families (MA15) | closed 2026-10-02 pilot, thesis `docs/experiments/MA15_polyglottism/RUN_2026-10-02.md` | qwen→gemma 0.743; phi3 reverse dyads ~0.31 to 0.37. Expand matrix before strong claims |
 | T24 | Sibling delegation through a parent (MA16) | open, partly instantiated | Four siblings already ran in this session with the parent as sole channel |
 | T25 | Parent reorganization after delegation (MA17) | open, run last | Most exposed to the participant problem; needs a human blind pass |
 | T3 | Sibling subagents through a parent (MA11) | open, runnable now | Same wrapper, two children, no direct channel |
@@ -35,16 +35,16 @@
 | T14 | Transmission in Lotman and Tartu | closed 2026-10-01, two passes, `notes/TRANSMISSION_LOTMAN_2026-10-01.md` | Journal section 13 is unblocked; 1981 Russian original still wanted |
 | T26 | Alternation with suppression (S9) | open, new from the 1983 essay | Lotman's constitutive condition for dialogue; unmeasured by every design so far |
 | T27 | Perceptual enlargement after code transfer (S11) | open, one negative instance already in hand | MA4b is the first measured case of a transmitted code REDUCING the receiver's discrimination; see the detail section |
-| T21 | Round-trip asymmetry across dyads (MA12) | closed 2026-10-01, thesis `docs/experiments/MA12_roundtrip_asymmetry/RUN_2026-10-01.md` | Register change cost 0.776 of recovery, model size change cost 0.109. See T29 before citing this |
-| T29 | Non-recovery is not evidence of creation | open, correction to the MA12 measure | Add a licensing check: low recovery with unlicensed assertion is corruption and scores the same. Reuse the warrant machinery |
-| T30 | Recovery can mark refusal to transform | open, measure validity | At least one reverse pass echoed the forward output verbatim; token overlap cannot tell that from a round trip |
+| T21 | Round-trip asymmetry across dyads (MA12) | closed 2026-10-02, thesis `docs/experiments/MA12_roundtrip_asymmetry/RUN_2026-10-02.md` (+ Llama archive RUN_2026-10-01) | Qwen/gemma: R0 0.877, R3 0.740; Llama one-family run archived for §14 illustration |
+| T29 | Non-recovery is not evidence of creation | open, documented 2026-10-02 | `MEASURE_VALIDITY_2026-10-02.md`; licensing check on recovered claims still to implement |
+| T30 | Recovery can mark refusal to transform | open, documented 2026-10-02 | qwen/gemma R3: 9/13 reverse echoes forward; `analyze_ma12_measure_validity.py` |
 | T15 | Mihhail Lotman rhetoric citation | blocked_human | Section 11 of the journal has a deliberately empty row |
 | T16 | Partial map formalism | open, writing | Decide venue: dissertation appendix or separate paper (roadmap Q5) |
 | T17 | Intersemiotic relay and derivation loss | open, unformalized | Tape to transcript to chapter is in the data, not in the formalism |
 | T18 | Silence as a node type | open, unformalized | The corpus has silence coordinates; the KR has no type for them |
 | T19 | Dashboard reorganization | proposed, awaiting decision | Four groups plus renames; probe-controls page is unlinked today |
-| T20 | Visual check of figures | open, now seven panels to check | Browser tool unavailable at authoring time; four new figure pages added 2026-10-02 |
-| T31 | Do the agent edges deform, or do the instructions | open, challenges fig-multi-agent-typing | MA12 suggests the deforming edge may be the register change, not the agent boundary. Resolve with MA15, not by redrawing |
+| T20 | Visual check of figures | open, partial 2026-10-02 | MA12 embed/journal numbers updated to qwen/gemma; live browser QA still needed after Pages push |
+| T31 | Do the agent edges deform, or do the instructions | open, partial 2026-10-02 | MA12 qwen/gemma lowers R3 vs Llama; MA15 dyad ordering will say whether family swap or register still dominates |
 
 ## Threads in detail
 

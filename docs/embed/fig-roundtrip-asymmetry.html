@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- MA12: Lotman's round-trip test. Numbers frozen from ma12_roundtrip_report.json -->
+<!-- MA12: Lotman's round-trip test. Numbers from ma12_roundtrip_report.json (2026-10-02 qwen/gemma); Llama archive in thesis lab -->
 <html lang="en">
 <head>
 <meta name="robots" content="noindex, nofollow"/>
@@ -36,14 +36,14 @@
   <div class="viz-head"><strong>Mean token Jaccard vs the original (n = 13 each)</strong></div>
   <canvas id="cvBars" height="340" role="img" aria-label="Horizontal bars of mean Jaccard recovery by condition, from 1.0 down to 0.16."></canvas>
 </div>
-<p class="cap">Observed order: R0 (1.000) &gt; R3 cross-model (0.892) &gt; R2 cross-tier (0.267) &gt; R1 register (0.224) &gt; R4 three trips (0.158). The preregistered order predicted register and tier would sit below identity; it did not predict that swapping 3B for 1B would land near the ceiling.</p>
+<p class="cap">Observed order (qwen2.5:3b / gemma2:2b, 2026-10-02): R0 (0.877) &gt; R3 cross-model (0.740) &gt; R2 cross-tier (0.386) &gt; R1 register (0.274) &gt; R4 three trips (0.251). Archived Llama 3.2 sizes (3B/1B) gave R0 1.000 and R3 0.891; see journal §14.</p>
 
 <h2 id="r2">Figure R2 · Where the distance actually lives (with a caveat)</h2>
 <div class="viz-box">
   <div class="viz-head"><strong>Loss of recovery relative to R0 = 1.000</strong></div>
   <canvas id="cvDrop" height="280" role="img" aria-label="Two bars: register change costs 0.776 of recovery; model size change costs 0.109."></canvas>
 </div>
-<p class="cap">Register change on one model (R1) costs 0.776 of recovery. Swapping 3B for 1B (R3) costs 0.109. That looks like "the instruction is the real boundary," until you notice both models are one Llama 3.2 lineage sharing a tokenizer. Near-ceiling round trips are what Lotman predicts inside one artificial language (<em>Universe of the Mind</em>, trans. Shukman, chapter on the three functions of the text). <em>Raznostrukturnye</em> generators are from Lotman, &ldquo;Asimmetriya i dialog&rdquo; (1983), printed p.&nbsp;26 (rendering mine). MA15 across genuinely different pretraining is the experiment that would test the criterion; this run only illustrates it by accident. Full citations: <a href="../theory/LOTMAN_INTERPRETATION.html#s11">journal §11</a>, <a href="../theory/LOTMAN_INTERPRETATION.html#s14">§14</a>.</p>
+<p class="cap">Loss relative to this stack's R0 (0.877): register change (R1) costs about 0.603; qwen→gemma on the reverse pass (R3) costs about 0.137. The Llama 3B/1B run (R0 = 1.000) showed 0.776 vs 0.109 and looked like "instruction beats weights" until both models proved to be one family. Cross-family qwen/gemma lowers R3 but does not collapse it to the register floor. MA15 tests four family dyads. Citations: <a href="../theory/LOTMAN_INTERPRETATION.html#s11">journal §11</a>, <a href="../theory/LOTMAN_INTERPRETATION.html#s14">§14</a>.</p>
 
 <h2 id="r3">Figure R3 · Low recovery is not creation</h2>
 <blockquote>
@@ -57,10 +57,10 @@
   <div class="viz-head"><strong>Mean Jaccard vs original across three register round trips</strong></div>
   <canvas id="cvR4" height="260" role="img" aria-label="Line falling from 0.226 to 0.168 to 0.158 mean Jaccard vs original."></canvas>
 </div>
-<p class="cap">Drift decelerates (successive-iteration similarity rises) but only 1 of 13 stretches reached a fixed point against a preregistered threshold of 7. The instructive fixed point deleted scare quotes and the named course the memorandum is about. Convergence bought by erasing what made the document evidence is not recovery.</p>
+<p class="cap">Drift decelerates (successive-iteration similarity rises) but only 2 of 13 stretches reached a fixed point against a preregistered threshold of 7 (qwen stack, 2026-10-02). The instructive fixed point deleted scare quotes and the named course the memorandum is about. Convergence bought by erasing what made the document evidence is not recovery.</p>
 
 <div class="limits">
-<p><strong>Limits:</strong> one model family, thirteen stretches, one plate. A high score can mark refusal to transform (verbatim echo on the reverse pass). Vacuous survival measures read 1.000 when no stretch contained the item type. Source: <code>ma12_roundtrip_report.json</code> in the thesis lab.</p>
+<p><strong>Limits:</strong> thirteen stretches, one plate, open local stacks (qwen/gemma). A high score can mark refusal to transform (9/13 R3 rows echoed forward verbatim on 2026-10-02). Vacuous survival measures read 1.000 when no stretch contained the item type. Source: <code>ma12_roundtrip_report.json</code> in the thesis lab; Llama archive <code>ma12_roundtrip_report_2026-10-01_llama.json</code>.</p>
 </div>
 
 <script>
@@ -79,11 +79,11 @@ function drawBars() {
   if (!c) return;
   var s = fit(c, 340), ctx = s.ctx, w = s.w;
   var data = [
-    { label: 'R0 identity', val: 1.000, col: '#2a4a6f' },
-    { label: 'R3 cross-model (3B/1B)', val: 0.8915, col: '#6b3fa0' },
-    { label: 'R2 cross-tier', val: 0.267, col: '#c45c26' },
-    { label: 'R1 register', val: 0.2241, col: '#1f5136' },
-    { label: 'R4 three trips', val: 0.1584, col: '#9a3b3b' }
+    { label: 'R0 identity (qwen)', val: 0.8768, col: '#2a4a6f' },
+    { label: 'R3 cross-model (qwen/gemma)', val: 0.7398, col: '#6b3fa0' },
+    { label: 'R2 cross-tier', val: 0.3858, col: '#c45c26' },
+    { label: 'R1 register', val: 0.2739, col: '#1f5136' },
+    { label: 'R4 three trips', val: 0.2508, col: '#9a3b3b' }
   ];
   var L = 200, R = w - 24, top = 36, row = 52;
   ctx.font = '11px system-ui, sans-serif';
@@ -110,7 +110,7 @@ function drawDrop() {
   var c = document.getElementById('cvDrop');
   if (!c) return;
   var s = fit(c, 280), ctx = s.ctx, w = s.w;
-  var mid = w / 2, bw = 100, base = 220, h1 = 0.776 * 160, h2 = 0.109 * 160;
+  var mid = w / 2, bw = 100, base = 220, h1 = 0.603 * 160, h2 = 0.137 * 160;
   ctx.fillStyle = '#1f5136';
   ctx.fillRect(mid - bw - 40, base - h1, bw, h1);
   ctx.fillStyle = '#6b3fa0';
@@ -126,18 +126,18 @@ function drawDrop() {
   ctx.fillText('R1 register', mid - bw / 2 - 40, base + 22);
   ctx.fillText('R3 cross-model', mid + bw / 2 + 40, base + 22);
   ctx.font = '11px system-ui, sans-serif';
-  ctx.fillText('loss 0.776', mid - bw / 2 - 40, base - h1 - 8);
-  ctx.fillText('loss 0.109', mid + bw / 2 + 40, base - h2 - 8);
+  ctx.fillText('loss ~0.60', mid - bw / 2 - 40, base - h1 - 8);
+  ctx.fillText('loss ~0.14', mid + bw / 2 + 40, base - h2 - 8);
   ctx.fillStyle = '#555';
   ctx.font = 'italic 10px Georgia, serif';
-  ctx.fillText('both compared to R0 = 1.000', w / 2, 28);
+  ctx.fillText('both compared to R0 = 0.877 (qwen stack)', w / 2, 28);
 }
 
 function drawR4() {
   var c = document.getElementById('cvR4');
   if (!c) return;
   var s = fit(c, 260), ctx = s.ctx, w = s.w;
-  var pts = [0.2261, 0.1677, 0.1584];
+  var pts = [0.2701, 0.2847, 0.2508];
   var L = 60, R = w - 40, B = 210, T = 40;
   ctx.strokeStyle = '#ddd';
   ctx.beginPath();
