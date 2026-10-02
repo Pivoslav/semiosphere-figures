@@ -35,4 +35,4 @@ Internal working notes for `semiosphere-figures`. Nothing in this folder is publ
 
 ## Publishing
 
-`scripts/sync_from_thesis_lab.py` copies current figures and theory HTML from the thesis repo into `docs/`, then runs `scripts/sanitize_public_site.py`, which strips lab-only links, converts em dashes to hyphens, injects the noindex meta tag, and writes `docs/robots.txt`. A file authored directly in `docs/embed/` must be added to `CURRENT_EMBED` in the sync script or the prune step will delete it.
+`scripts/sync_from_thesis_lab.py` copies current figures and theory HTML from the thesis repo into `docs/`, then runs `scripts/sanitize_public_site.py`, which strips lab-only links, converts em dashes to hyphens, injects the noindex meta tag, injects the shared burger menu (`docs/assets/site-nav.css` / `site-nav.js`), and writes `docs/robots.txt`. A file authored directly in `docs/embed/` must be added to `CURRENT_EMBED` in the sync script or the prune step will delete it. New public pages: add to `site-nav.js` NAV (and RELATED if part of the experiment trail).

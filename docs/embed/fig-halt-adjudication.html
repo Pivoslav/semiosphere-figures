@@ -2,6 +2,10 @@
 <!-- MA4b: where the refusal decision is made. Every number is read from ma4b_rule_layer_halt_report.json -->
 <html lang="en">
 <head>
+<meta name="site-nav-root" content="../"/>
+<link rel="stylesheet" href="../assets/site-nav.css"/>
+<script defer src="../assets/site-nav.js"></script>
+
 <meta name="robots" content="noindex, nofollow"/>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -30,7 +34,7 @@
 </style>
 </head>
 <body>
-<p class="embed-back"><a href="../theory/LOTMAN_INTERPRETATION.html#s12">&larr; Lotman interpretation §12</a> · <a href="../index.html">Figures home</a></p>
+<p class="embed-back"><a href="../theory/LOTMAN_INTERPRETATION.html#s12">← Journal §12</a> · <a href="../theory/LOTMAN_INTERPRETATION.html#s13">§13</a> · <a href="fig-transmission-cells.html">Transmission cells</a> · <a href="fig-multi-agent-typing.html">Multi-agent typing</a> · <a href="../index.html">Figures home</a></p>
 
 <h1>Where halt is adjudicated (MA4b)</h1>
 <div class="lede">When a question cannot be answered from licensed sources, the pipeline should refuse. MA4b asks where that decision belongs: inside the generator's prompt, or in a deterministic rule upstream of the generator that reads retrieved metadata and never asks the model to decide. Four arms, 18 frozen items, retrieval held flat at top-5 in every arm, hand-off envelope identical in every arm. Only the halt mechanism varies. Model <code>llama3.2:3b</code> at temperature 0.0, seed 19870317. Scoring is deterministic regex and set arithmetic; no model scored any output.</div>

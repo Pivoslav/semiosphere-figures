@@ -70,6 +70,27 @@ def _home_href(path: Path) -> str:
     return "../" * depth + HOME if depth else HOME
 
 
+def _nav_root(path: Path) -> str:
+    depth = len(path.relative_to(DOCS).parts) - 1
+    return "../" * depth if depth else ""
+
+
+def inject_site_nav(text: str, path: Path) -> str:
+    """Shared burger menu + drawer on every public HTML page."""
+    if "site-nav.css" in text and "site-nav.js" in text:
+        return text
+    root = _nav_root(path)
+    block = (
+        f'<meta name="site-nav-root" content="{root}"/>\n'
+        f'<link rel="stylesheet" href="{root}assets/site-nav.css"/>\n'
+        f'<script defer src="{root}assets/site-nav.js"></script>\n'
+    )
+    m = re.search(r"<head[^>]*>", text, re.I)
+    if not m:
+        return text
+    return text[: m.end()] + "\n" + block + text[m.end() :]
+
+
 def _fix_site_paths(text: str, path: Path) -> str:
     if "theory" in path.parts:
         text = text.replace("../../report/embed/", "../embed/")
@@ -175,6 +196,7 @@ def sanitize_html(text: str, path: Path) -> str:
         )
 
     text = inject_robots_meta(text)
+    text = inject_site_nav(text, path)
     return text
 
 
