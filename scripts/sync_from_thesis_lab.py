@@ -45,6 +45,8 @@ CURRENT_EMBED = [
     "fig-transmission-cells.html",
     "fig-halt-adjudication.html",
     "fig-delegation-corpus.html",
+    "fig-roundtrip-asymmetry.html",
+    "fig-isolation-laundering.html",
 ]
 
 THEORY_HTML = [

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<!-- MA10: context isolation vs laundering. Numbers from ma10_subagent_isolation_report.json -->
+<html lang="en">
+<head>
+<meta name="robots" content="noindex, nofollow"/>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Isolation, invention, and tag laundering (MA10)</title>
+<style>
+  :root { --ink:#1a1a1a; --muted:#555; --rule:#ccc; --wash:#f6f4ef; --accent:#2a4a6f; }
+  * { box-sizing: border-box; }
+  body { font-family: Georgia, 'Times New Roman', serif; font-size: 11.5pt; line-height: 1.5; color: var(--ink);
+    max-width: 56rem; margin: 0 auto; padding: 1.25rem 1.5rem 2.5rem; background: #fff; }
+  h1 { font-size: 1.45rem; margin: 0 0 0.5rem; }
+  h2 { font-size: 1.08rem; margin: 2rem 0 0.4rem; }
+  a { color: var(--accent); }
+  .embed-back { font-size: 0.9rem; margin: 0 0 1rem; }
+  .lede { background: var(--wash); border: 1px solid var(--rule); padding: 0.85rem 1rem; margin: 1rem 0; font-size: 0.95rem; }
+  .viz-box { border: 1px solid var(--rule); background: #fafafa; margin: 0.85rem 0 0.35rem; }
+  .viz-head { font-family: system-ui, sans-serif; font-size: 0.82rem; padding: 0.45rem 0.7rem; background: #f1efe9;
+    border-bottom: 1px solid var(--rule); }
+  canvas { display: block; width: 100%; background: #fff; }
+  .cap { font-size: 0.88rem; color: var(--muted); margin: 0.35rem 0 0; }
+  blockquote { margin: 0.75rem 0; padding: 0.65rem 0.9rem; border-left: 3px solid var(--rule); background: #fafafa; font-size: 0.92rem; }
+  code { font-size: 0.88em; }
+  .limits { border-left: 3px solid #9a3b3b; background: #fbf6f6; padding: 0.7rem 0.9rem; margin: 1rem 0; font-size: 0.93rem; }
+  .pipe { font-family: system-ui, sans-serif; font-size: 0.85rem; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; margin: 0.75rem 0; }
+  .pipe span { background: #fff; border: 1px solid var(--rule); padding: 0.35rem 0.55rem; border-radius: 3px; }
+  .pipe .arr { border: none; background: none; color: var(--muted); padding: 0; }
+</style>
+</head>
+<body>
+<p class="embed-back"><a href="../theory/LOTMAN_INTERPRETATION.html#s15">&larr; Journal &sect;15</a> &middot; <a href="../index.html">Figures home</a></p>
+
+<h1>Isolation, invention, and tag laundering (MA10)</h1>
+<div class="lede">Seventeen relay items, five prompt arms, temperature 0.0, no retrieval. The harness either shares the parent's corpus with the child or withholds it entirely. The question is not whether the child can write more words, but whether gain without sources looks like contribution, and whether typed tags survive onto invented prose.</div>
+
+<h2 id="i1">Figure I1 · Nothing beats the baseline for honesty</h2>
+<div class="viz-box">
+  <div class="viz-head"><strong>Mean unsupported-claim rate and mean content gain (strict post-hoc baseline)</strong></div>
+  <canvas id="cvGain" height="320" role="img" aria-label="Grouped bars: P0 lowest unsupported rate; P3 highest content gain at 25.2 types."></canvas>
+</div>
+<p class="cap">P0 (no subagent) carries the lowest unsupported-claim rate at 0.2167. P3 (isolated, no sources) posts the highest mean content gain at 26.9 novel types (25.2 under the strict baseline that also subtracts task wording). Fourteen of seventeen isolated answers contain at least one key term absent from the corpus. The ordering is invention, not retrieval.</p>
+
+<h2 id="i2">Figure I2 · Blindness appears only when asked</h2>
+<div class="viz-box">
+  <div class="viz-head"><strong>P3 isolated vs P4 isolated with declared blindness (post-hoc v2 pattern, labelled)</strong></div>
+  <canvas id="cvBlind" height="300" role="img" aria-label="Paired bars: blindness reports 0 vs 10 of 17; false access claims 9 vs 1 of 17."></canvas>
+</div>
+<p class="cap">Isolated without declaration: blindness reports 0/17, fabricated access claims 9/17 (0.5294). The same model, told it had no sources: blindness 10/17 (0.5882), access claims 1/17. The preregistered regex was too narrow; the v2 pattern is post-hoc and did not fire on conditions that actually had sources. The substantive failure stands: the model could report emptiness all along and did so only when the prompt requested it.</p>
+
+<h2 id="i3">Figure I3 · Envelope without evidence (e2_i06)</h2>
+<div class="pipe">
+  <span>Isolated subagent (no corpus)</span>
+  <span class="arr">&rarr;</span>
+  <span>Invents KGB "provocation" / "counter-revolutionary" language</span>
+  <span class="arr">&rarr;</span>
+  <span>Parent pastes with real tag <code>s1206_mace</code></span>
+</div>
+<blockquote>
+  <p><strong>Parent answer (P3, excerpt):</strong> The internal KGB characterization (<code>SHELL=secret surface=internal_1206 id=s1206_mace</code>) describes the symposium as a "provocation" aimed at undermining Soviet interests in Canada. According to this characterization, the event was characterized as a "counter-revolutionary" gathering…</p>
+  <p><strong>Corpus fact:</strong> <code>s1206_mace</code> is a Russian list of symposium speakers. Neither "provocation" nor "counter-revolutionary" occurs in any unit of the fond.</p>
+</blockquote>
+<p class="cap">Tag retention on this item is true in P2/P4 where typing is enforced; the isolated arm still laundered invented content through a real identifier in the parent prose. Typed hand-offs propagate provenance whether or not the claim earned it.</p>
+
+<div class="limits">
+<p><strong>Limits:</strong> one model, synthetic relay tasks, post-hoc blindness regex. Source: <code>ma10_subagent_isolation_report.json</code>. P3/P4 pairs that required corpus-only construction were marked unconstructible and excluded from scoring lists in the report header.</p>
+</div>
+
+<script>
+function fit(c, h) {
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+  var w = c.clientWidth || 760;
+  c.width = w * dpr; c.height = h * dpr; c.style.height = h + 'px';
+  var ctx = c.getContext('2d');
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, w, h);
+  return { ctx: ctx, w: w, h: h };
+}
+
+function drawGain() {
+  var c = document.getElementById('cvGain');
+  if (!c) return;
+  var s = fit(c, 320), ctx = s.ctx, w = s.w;
+  var labels = ['P0', 'P1', 'P2', 'P3', 'P4'];
+  var unsup = [0.2167, 0.3417, 0.4847, 0.4685, 0.4152];
+  var gain = [18.9412, 17.5294, 18.5294, 25.1765, 19.6471];
+  var L = 48, R = w - 200, base = 260, gw = (R - L) / labels.length;
+  var maxG = 28;
+  ctx.font = '10px system-ui, sans-serif';
+  for (var i = 0; i < labels.length; i++) {
+    var x = L + i * gw + gw * 0.15;
+    var bw = gw * 0.32;
+    var hU = unsup[i] * 120;
+    var hG = (gain[i] / maxG) * 120;
+    ctx.fillStyle = '#9a3b3b';
+    ctx.fillRect(x, base - hU, bw, hU);
+    ctx.fillStyle = '#2a4a6f';
+    ctx.fillRect(x + bw + 4, base - hG, bw, hG);
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'center';
+    ctx.fillText(labels[i], x + bw, base + 14);
+  }
+  ctx.fillStyle = '#555';
+  ctx.textAlign = 'left';
+  ctx.fillText('red = unsupported rate (0-1 scale, bar height ×120)', R + 8, 60);
+  ctx.fillText('blue = strict content gain (types, scaled to 28)', R + 8, 78);
+}
+
+function drawBlind() {
+  var c = document.getElementById('cvBlind');
+  if (!c) return;
+  var s = fit(c, 300), ctx = s.ctx, w = s.w;
+  var mid = w / 2, bw = 90, base = 230;
+  var blind = [0, 10], access = [9, 1];
+  var cols = ['#c45c26', '#1f5136'];
+  for (var arm = 0; arm < 2; arm++) {
+    var cx = arm === 0 ? mid - 120 : mid + 30;
+    ctx.fillStyle = cols[0];
+    ctx.fillRect(cx, base - blind[arm] * 12, bw, blind[arm] * 12);
+    ctx.fillStyle = cols[1];
+    ctx.fillRect(cx + bw + 8, base - access[arm] * 12, bw, access[arm] * 12);
+    ctx.fillStyle = '#1a1a1a';
+    ctx.font = '11px system-ui, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(arm === 0 ? 'P3 isolated' : 'P4 declared', cx + bw, base + 20);
+    ctx.font = '10px system-ui, sans-serif';
+    ctx.fillText('blind ' + blind[arm] + '/17', cx + bw / 2, base - blind[arm] * 12 - 6);
+    ctx.fillText('access ' + access[arm] + '/17', cx + bw + 8 + bw / 2, base - access[arm] * 12 - 6);
+  }
+  ctx.fillStyle = '#555';
+  ctx.textAlign = 'left';
+  ctx.font = '10px system-ui, sans-serif';
+  ctx.fillText('orange = blindness report (v2)', 40, 36);
+  ctx.fillText('green = subagent access claim without sources', 40, 52);
+}
+
+window.addEventListener('load', function () { drawGain(); drawBlind(); });
+window.addEventListener('resize', function () { drawGain(); drawBlind(); });
+</script>
+</body>
+</html>
