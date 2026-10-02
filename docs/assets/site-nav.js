@@ -260,8 +260,7 @@
       "</svg></button>" +
       '<a class="site-nav-title" href="' +
       href("index.html") +
-      '">Semiosphere figures</a>' +
-      '<span class="site-nav-here" id="site-nav-here"></span>' +
+      '">Figures</a>' +
       "</div>";
 
     var overlay = document.createElement("div");
@@ -272,8 +271,7 @@
     drawer.id = "site-nav-drawer";
     drawer.setAttribute("aria-label", "Site pages");
     drawer.setAttribute("aria-hidden", "true");
-    drawer.innerHTML =
-      "<header><strong>All pages</strong><span>Research journal, experiment figures, Montreal pilot</span></header>";
+    drawer.innerHTML = "<header><strong>Pages</strong></header>";
     drawer.appendChild(buildDrawerNav());
 
     var themeToggle = document.createElement("div");
@@ -285,12 +283,6 @@
     document.body.insertBefore(bar, document.body.firstChild);
     document.body.appendChild(overlay);
     document.body.appendChild(drawer);
-
-    var here = document.getElementById("site-nav-here");
-    if (here) {
-      var t = document.title || "";
-      here.textContent = t.replace(/\s*[·|–-]\s*semiosphere.*/i, "").trim();
-    }
 
     var open = false;
     function setOpen(on) {
