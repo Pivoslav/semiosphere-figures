@@ -1,6 +1,8 @@
 <!DOCTYPE html>
+<!-- appendix: I couldn't trust one paragraph to carry encoders -->
 <html lang="en">
 <head>
+<meta name="robots" content="noindex, nofollow"/>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Appendix · language encoding</title>
@@ -40,12 +42,12 @@
 </head>
 <body>
 <div class="wrap">
-  <p class="back"><a href="LOTMAN_INTERPRETATION.html">← Lotman interpretation</a> · <a href="SEMIOTIC_COORDINATE_PLAIN.html">Semiotic coordinate plain</a></p>
   <header>
     <h1>Appendix · language encoding</h1>
     <p>How a sentence becomes a vector in this project, and what that vector can and cannot justify.</p>
   </header>
 
+  <!-- frozen encoder: I didn't fine-tune; shell still humiliated me -->
   <h2 id="encoder">What an encoder does (plain language)</h2>
   <p>An <strong>encoder</strong> (here: a frozen sentence-transformer) turns a stretch of text into a list of numbers - a <strong>embedding</strong> or fingerprint. You can think of it as coordinates in a high-dimensional space. Two sentences whose fingerprints are close are usually talking about similar <em>topics</em> (famine, film, Canada). They are not guaranteed to preserve <em>register</em> (secret memo vs embassy release vs diaspora press): scare quotes, gathering-not-symposium, and proof tier live in the archive's typing, not in the encoder's default geometry.</p>
   <p>This dissertation uses <code>paraphrase-multilingual-MiniLM-L12-v2</code>: a small multilingual model trained so that paraphrases and translations in different languages land near each other. That training choice is why section 2 of the Lotman reading treats the encoder as an instrument on the <strong>primary</strong> language layer - good at translation-equivalence, weak at institutional shell by itself.</p>
@@ -68,13 +70,14 @@
     </div>
   </div>
 
+  <!-- cosine: vectors align; my claims still need pair-read -->
   <h2 id="cosine">Cosine similarity (the ruler we use)</h2>
   <p>Retrieval and the semiosphere probe score candidates with <strong>cosine similarity</strong>: the angle between two fingerprint arrows, not their length.</p>
   <div class="math-block">
     <div class="math-line"><span class="math">cos(θ) = (x · y) / (‖x‖ ‖y‖)</span></div>
     <div class="math-explain">
       <strong>Plain language</strong>
-      <p>After centering and normalizing (Artetxe-style preprocessing in the probe script), cosine is between −1 and 1. <strong>Near 1</strong>: same general direction in topic space. <strong>Near 0</strong>: unrelated direction. The E4 retriever returned the internal memo at cosines roughly 0.48–0.76 to outward-clip questions - high theme overlap, wrong shell.</p>
+      <p>After centering and normalizing (Artetxe-style preprocessing in the probe script), cosine is between −1 and 1. <strong>Near 1</strong>: same general direction in topic space. <strong>Near 0</strong>: unrelated direction. The E4 retriever returned the internal memo at cosines roughly 0.48-0.76 to outward-clip questions - high theme overlap, wrong shell.</p>
       <p><strong>Worked example (2D sketch below):</strong> if x = (0.8, 0.6) and y = (0.6, 0.8), then x·y = 0.96, ‖x‖ = ‖y‖ = 1, so cos(θ) = 0.96 (small angle). If y = (−0.6, 0.8), cosine is 0 (perpendicular).</p>
     </div>
   </div>
@@ -93,6 +96,7 @@
     <p class="viz-cap">Points that share famine/film topic drift together even when shell differs (secret memo vs memo-about-newspaper vs diaspora weekly). Shell separation must be imposed by typing, scoped retrieval, or pair-read - not read off raw cosine between Russian and English.</p>
   </div>
 
+  <!-- 6/6 memo wins: I shipped flat retrieval and wrote the failure down -->
   <h2 id="limits">What encoders justify on the Montreal plate</h2>
   <table>
     <thead><tr><th>Question</th><th>Encoder alone</th><th>With typed archive</th></tr></thead>
@@ -111,11 +115,13 @@
     <a href="LLM_VS_SEMIOSPHERE_VIZ.html#fig1">LLM theme vs shell bars</a>
   </p>
 
+  <!-- bridge back: I still don't trust inline definitions -->
   <h2 id="glossary-bridge">Back to the glossary</h2>
   <p>On the theory pages, <strong>embedding</strong> and <strong>encoder</strong> link here for the full picture. Pair-read remains the warrant for historical claims; cosine and embeddings are checks - microscope, not oracle.</p>
 </div>
 <script>
 (function () {
+  // 2D sketch because I can't canvas 384 dimensions without crying
   function drawCosine() {
     var c = document.getElementById('cosineViz');
     if (!c) return;
@@ -148,6 +154,7 @@
     ctx.fillStyle = '#5c564c'; ctx.font = '11px system-ui, sans-serif';
     ctx.fillText('Small angle → high cosine (same topic direction)', 12, h - 12);
   }
+  // scatter: topic clumps; shell ignored my cartoon axes again
   function drawScatter() {
     var c = document.getElementById('scatterViz');
     if (!c) return;

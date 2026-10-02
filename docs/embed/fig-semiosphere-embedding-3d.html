@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<!-- 3D shells: I made it spin so the n≈25 felt bigger -->
+<html lang="en"><head>
+<meta name="robots" content="noindex, nofollow"/><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Semiosphere · 3D embedding + bilingual relays</title>
 <style>
 
@@ -72,6 +74,7 @@ a{color:var(--accent)}
 <script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>
 <script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 <script>
+// three.js because static PNG felt like giving up on the dissertation
 
 function renderHud(hud, info, toggleBtn) {
   if (!info) {

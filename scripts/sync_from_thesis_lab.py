@@ -6,6 +6,7 @@ Run from repo root:
 
 Run only against the thesis lab path configured in this script.
 """
+# copy thesis → pages; I live in two folders and pay for both
 from __future__ import annotations
 
 import shutil
@@ -125,6 +126,7 @@ def main() -> int:
         text = text.replace('dissertation_proposal.html', '../index.html')
         legacy_prop.write_text(text, encoding="utf-8")
 
+    # sanitize last: lipstick on the public clone
     subprocess.run(
         [sys.executable, str(ROOT / "scripts" / "sanitize_public_site.py")],
         check=True,

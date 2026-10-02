@@ -4,6 +4,7 @@
 Substantive body text (including inline paths in argument) is kept.
 Figure pages lose timestamp/report blurbs only; titles and charts stay.
 """
+# I strip lab chrome so GitHub Pages looks like I have my life together.
 from __future__ import annotations
 
 import re
@@ -12,6 +13,56 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
 HOME = "index.html"
+
+ROBOTS_META = '<meta name="robots" content="noindex, nofollow"/>'
+
+# Block common training / AI crawlers; allow fetch so search bots can read noindex in HTML.
+ROBOTS_TXT = """\
+# Semiosphere figures — shareable link, not a public index target.
+# Page HTML includes: meta name=robots content=noindex, nofollow
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: cohere-ai
+Disallow: /
+
+User-agent: Amazonbot
+Disallow: /
+
+User-agent: FacebookBot
+Disallow: /
+
+User-agent: meta-externalagent
+Disallow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
+User-agent: *
+Allow: /
+"""
 
 
 def _home_href(path: Path) -> str:
@@ -31,7 +82,18 @@ def _fix_site_paths(text: str, path: Path) -> str:
     return text
 
 
+def inject_robots_meta(text: str) -> str:
+    if re.search(r'<meta\s+[^>]*name=["\']robots["\']', text, re.I):
+        return text
+    m = re.search(r"<head[^>]*>", text, re.I)
+    if not m:
+        return text
+    insert_at = m.end()
+    return text[:insert_at] + "\n" + ROBOTS_META + text[insert_at:]
+
+
 def sanitize_html(text: str, path: Path) -> str:
+    # em-dash to hyphen: my HTML linter and I have an arrangement
     text = text.replace("\u2014", "-").replace("\u2013", "-")
     home = _home_href(path)
     text = _fix_site_paths(text, path)
@@ -112,6 +174,7 @@ def sanitize_html(text: str, path: Path) -> str:
             text,
         )
 
+    text = inject_robots_meta(text)
     return text
 
 
@@ -125,6 +188,11 @@ def main() -> int:
         if f.is_file():
             f.unlink()
             print(f"removed {f.relative_to(ROOT)}")
+
+    robots_path = DOCS / "robots.txt"
+    if robots_path.read_text(encoding="utf-8") if robots_path.is_file() else "" != ROBOTS_TXT:
+        robots_path.write_text(ROBOTS_TXT, encoding="utf-8")
+        print(f"wrote {robots_path.relative_to(ROOT)}")
 
     for html in DOCS.rglob("*.html"):
         raw = html.read_text(encoding="utf-8")

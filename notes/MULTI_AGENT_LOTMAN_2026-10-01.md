@@ -1,5 +1,7 @@
 # Multi-agent communication · Lotman extension (agent notes)
 
+<!-- not on Pages; my scratchpad so §10 stays clean -->
+
 **Dated:** 2026-10-01  
 **Published as:** `docs/theory/LOTMAN_INTERPRETATION.html` §10 (`#s10`)  
 **Encoder appendix:** `docs/theory/appendix_language_encoding.html` (linked from glossary embedding/encoder)  

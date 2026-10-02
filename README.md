@@ -1,5 +1,7 @@
 # Semiosphere figures (GitHub Pages)
 
+<!-- I mirror thesis HTML here so Pages stays pretty; source comments are where I'm honest -->
+
 Static export of **current** dissertation visualizations (semiotic coordinate plain, relay geometry).
 
 ## Publish
@@ -7,6 +9,8 @@ Static export of **current** dissertation visualizations (semiotic coordinate pl
 GitHub Pages: branch **`master`**, folder **`/docs`**.
 
 Site: https://pivoslav.github.io/semiosphere-figures/
+
+Pages are **shareable by URL** but marked **noindex** and listed in `docs/robots.txt` with blocks for common AI crawlers. `scripts/sanitize_public_site.py` applies both on sync.
 
 ## Sync from thesis lab
 

@@ -1,6 +1,8 @@
 <!DOCTYPE html>
+<!-- LLM vs semiosphere: I charted where my pipeline loses to theme -->
 <html lang="en">
 <head>
+<meta name="robots" content="noindex, nofollow"/>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>LLM inference vs semiosphere · 2D and 3D models</title>
@@ -104,6 +106,7 @@ html.popout-mode .viz-section.is-popout-active.popout-panel-flat .two-col + .viz
 
 <div id="popoutTopbar" class="popout-topbar" hidden></div>
 
+<!-- fig1: I bar-charted theme gravity; shell lost, unsurprisingly -->
 <!-- ========== FIG 1: 2D LLM ========== -->
 <section class="viz-section" data-popout="llm" id="section-llm">
 <h2 id="fig1"><span class="tag">FIGURE 1 · 2D</span>What default LLM inference optimises</h2>
@@ -140,6 +143,7 @@ html.popout-mode .viz-section.is-popout-active.popout-panel-flat .two-col + .viz
 </p>
 </section>
 
+<!-- fig2: typed shells in 3D; the model I wish the LLM had -->
 <!-- ========== FIG 2: 3D Semiosphere ========== -->
 <section class="viz-section" data-popout="globe" id="section-globe">
 <h2 id="fig2"><span class="tag">FIGURE 2 · 3D</span>Semiosphere space: nested shells and the bilingual filter</h2>
@@ -177,6 +181,7 @@ html.popout-mode .viz-section.is-popout-active.popout-panel-flat .two-col + .viz
 </p>
 </section>
 
+<!-- fig3: persistence strip; I needed something that wasn't another bar -->
 <!-- ========== FIG 3: Persistence 2D ========== -->
 <section class="viz-section" data-popout="persist" id="section-persist">
 <h2 id="fig3"><span class="tag">FIGURE 3 · 2D</span>Persistence: context window vs cultural memory</h2>
@@ -217,6 +222,7 @@ html.popout-mode .viz-section.is-popout-active.popout-panel-flat .two-col + .viz
 </p>
 </section>
 
+<!-- fig4: side-by-side; committee-friendly layout tax -->
 <!-- ========== FIG 4: Side by side 2D ========== -->
 <section class="viz-section" data-popout="compare" id="section-compare">
 <h2 id="fig4"><span class="tag">FIGURE 4 · 2D</span>Typed partial map vs unified manifold</h2>
@@ -259,6 +265,7 @@ html.popout-mode .viz-section.is-popout-active.popout-panel-flat .two-col + .viz
 </p>
 </section>
 
+<!-- summary table: I put the moral in rows so I don't forget -->
 <!-- ========== Table ========== -->
 <h2 id="compare"><span class="tag">SUMMARY</span>Major differences (Lotmanian lens)</h2>
 <table class="compare-table">
@@ -303,6 +310,7 @@ html.popout-mode .viz-section.is-popout-active.popout-panel-flat .two-col + .viz
 <script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>
 <script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 <script>
+// canvas figures: I animate bars so the argument feels inevitable
 (function(){
 'use strict';
 
