@@ -53,6 +53,7 @@
       children: [
         { label: "Multi-agent hand-offs vs bilingual relay", href: "embed/fig-multi-agent-typing.html" },
         { label: "Round-trip asymmetry (MA12)", href: "embed/fig-roundtrip-asymmetry.html" },
+        { label: "Round-trip · 3D orbit model (MA12)", href: "embed/fig-roundtrip-helicoid-3d.html" },
         { label: "Where refusal is decided (MA4b)", href: "embed/fig-halt-adjudication.html" },
         { label: "Transmission cells (MA4b, MA13)", href: "embed/fig-transmission-cells.html" },
         { label: "Delegation corpus (MA13)", href: "embed/fig-delegation-corpus.html" },
@@ -113,9 +114,14 @@
     ],
     "embed/fig-roundtrip-asymmetry.html": [
       { t: "Journal §14", h: "theory/LOTMAN_INTERPRETATION.html#s14" },
+      { t: "3D orbit model", h: "embed/fig-roundtrip-helicoid-3d.html" },
       { t: "Multi-agent §10", h: "embed/fig-multi-agent-typing.html" },
       { t: "Isolation MA10", h: "embed/fig-isolation-laundering.html" },
       { t: "Transmission §13", h: "embed/fig-transmission-cells.html" },
+    ],
+    "embed/fig-roundtrip-helicoid-3d.html": [
+      { t: "MA12 (2D charts)", h: "embed/fig-roundtrip-asymmetry.html" },
+      { t: "Journal §14", h: "theory/LOTMAN_INTERPRETATION.html#s14" },
     ],
     "embed/fig-halt-adjudication.html": [
       { t: "Journal §12", h: "theory/LOTMAN_INTERPRETATION.html#s12" },

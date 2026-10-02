@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<!-- MA12 companion: asymmetric round-trip as open 3D orbits (qwen/gemma 2026-10-02) -->
+<html lang="en">
+<head>
+<link rel="stylesheet" href="../assets/site-theme-vapor.css"/>
+<script defer src="../assets/site-theme-vapor.js"></script>
+<meta name="site-nav-root" content="../"/>
+<link rel="stylesheet" href="../assets/site-nav.css"/>
+<script defer src="../assets/site-nav.js"></script>
+<meta name="robots" content="noindex, nofollow"/>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="color-scheme" content="light"/>
+<title>Round-trip asymmetry · 3D orbit model (MA12)</title>
+<style>
+  :root { --ink:#1a1814; --muted:#5c564c; --rule:#d8d0c4; --wash:#f6f4ef; --accent:#2a4a6f; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: Georgia, serif; font-size: 11.5pt; line-height: 1.55; color: var(--ink);
+    max-width: 56rem; margin-left: auto; margin-right: auto; padding: 1rem 1.25rem 2rem; background: #fff; }
+  h1 { font-size: 1.35rem; margin: 0 0 0.35rem; }
+  h2 { font-size: 1.05rem; margin: 1.5rem 0 0.4rem; }
+  a { color: var(--accent); }
+  .embed-back { font-size: 0.88rem; margin: 0 0 0.85rem; }
+  .lede { background: var(--wash); border: 1px solid var(--rule); padding: 0.75rem 0.95rem; margin: 0.75rem 0; font-size: 0.93rem; }
+  .viz-stage { position: relative; border: 1px solid var(--rule); border-radius: 8px; overflow: hidden;
+    background: #faf8f4; height: min(62vh, 520px); min-height: 340px; }
+  #viz3d { position: absolute; inset: 0; cursor: grab; }
+  #viz3d:active { cursor: grabbing; }
+  .viz-controls { display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: center; margin: 0.55rem 0 0.35rem;
+    font-family: system-ui, sans-serif; font-size: 0.78rem; }
+  .viz-controls button, .viz-controls select { font: inherit; padding: 0.35rem 0.55rem; border: 1px solid var(--rule);
+    border-radius: 5px; background: #fff; cursor: pointer; }
+  .viz-controls button:hover { border-color: var(--accent); color: var(--accent); }
+  .cap { font-size: 0.86rem; color: var(--muted); margin: 0.35rem 0 0; max-width: 65ch; }
+  .legend { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; font-family: system-ui, sans-serif; font-size: 0.72rem; margin-top: 0.45rem; }
+  .legend span { display: inline-flex; align-items: center; gap: 0.3rem; }
+  .legend i { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+  @media (prefers-reduced-motion: reduce) {
+    .viz-controls .motion-hint { display: none; }
+  }
+</style>
+</head>
+<body>
+<p class="embed-back"><a href="fig-roundtrip-asymmetry.html">&larr; MA12 (2D charts)</a> &middot; <a href="../theory/LOTMAN_INTERPRETATION.html#s14">Journal §14</a></p>
+<h1>Round-trip asymmetry · 3D orbit model</h1>
+<div class="lede">Lotman’s round trip is not a circle that must close. <strong>Recovery</strong> (mean token Jaccard vs the original) is shown as how nearly a path returns to the gold anchor. High recovery: the loop almost closes. Low recovery: a visible <em>gap</em> remains after one out-and-back. Nested wire shells suggest register distance (inner = source register, outer = transformed register); the particle still encodes the measured scalar, not a literal embedding.</div>
+
+<div class="viz-stage" id="viz-stage" role="img" aria-label="Three-dimensional view of five MA12 conditions as loops around a central anchor. Loop closure matches mean Jaccard recovery.">
+  <div id="viz3d"></div>
+</div>
+<div class="viz-controls">
+  <label>Condition <select id="condPick"></select></label>
+  <button type="button" id="btnPlay" aria-pressed="false">Play round trip</button>
+  <button type="button" id="btnAll">Show all loops</button>
+  <span class="motion-hint" style="color:var(--muted)">Drag to rotate · scroll to zoom</span>
+</div>
+<p class="cap" id="condCap"></p>
+<div class="legend" id="legend"></div>
+
+<h2>How to read this (without mistaking metaphor for proof)</h2>
+<p class="cap">The gap angle at the anchor plane is proportional to <code>1 − recovery</code> on the 2026-10-02 qwen2.5:3b / gemma2:2b run. It is a geometric mnemonic for the bar chart on the companion page, not a claim that texts live on spheres. R4 (three trips) is better read on the 2D drift figure; here it is included as a single combined loop for comparison only.</p>
+
+<script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>
+<script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+(function () {
+  var CONDITIONS = [
+    { id: "R0", label: "R0 identity (qwen)", recovery: 0.8768, color: 0x2a4a6f, shell: 1.0 },
+    { id: "R3", label: "R3 cross-model (qwen/gemma)", recovery: 0.7398, color: 0x6b3fa0, shell: 1.35 },
+    { id: "R2", label: "R2 cross-tier", recovery: 0.3858, color: 0xc45c26, shell: 1.55 },
+    { id: "R1", label: "R1 register", recovery: 0.2739, color: 0x1f5136, shell: 1.75 },
+    { id: "R4", label: "R4 three trips (mean)", recovery: 0.2508, color: 0x9a3b3b, shell: 1.9 }
+  ];
+
+  var stage = document.getElementById("viz-stage");
+  var mount = document.getElementById("viz3d");
+  var pickEl = document.getElementById("condPick");
+  var capEl = document.getElementById("condCap");
+  var legendEl = document.getElementById("legend");
+  var btnPlay = document.getElementById("btnPlay");
+  var btnAll = document.getElementById("btnAll");
+
+  CONDITIONS.forEach(function (c, i) {
+    var opt = document.createElement("option");
+    opt.value = String(i);
+    opt.textContent = c.label + " · J=" + c.recovery.toFixed(3);
+    pickEl.appendChild(opt);
+    var sw = document.createElement("span");
+    sw.innerHTML = '<i style="background:#' + c.color.toString(16).padStart(6, "0") + '"></i>' + c.id;
+    legendEl.appendChild(sw);
+  });
+
+  var scene = new THREE.Scene();
+  scene.background = new THREE.Color(0xfaf8f4);
+  var camera = new THREE.PerspectiveCamera(48, 1, 0.1, 100);
+  camera.position.set(0, 2.2, 5.5);
+  var renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+  mount.appendChild(renderer.domElement);
+  var controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.target.set(0, 0.3, 0);
+
+  scene.add(new THREE.AmbientLight(0xffffff, 0.62));
+  var dir = new THREE.DirectionalLight(0xffffff, 0.85);
+  dir.position.set(4, 6, 3);
+  scene.add(dir);
+
+  var anchor = new THREE.Mesh(
+    new THREE.SphereGeometry(0.14, 32, 32),
+    new THREE.MeshPhongMaterial({ color: 0xc9a227, emissive: 0x3a3010, emissiveIntensity: 0.35 })
+  );
+  scene.add(anchor);
+
+  var shellRadii = [0.55, 0.95, 1.35, 1.75];
+  shellRadii.forEach(function (r) {
+    var wire = new THREE.Mesh(
+      new THREE.SphereGeometry(r, 28, 18),
+      new THREE.MeshBasicMaterial({ color: 0x8b6914, wireframe: true, transparent: true, opacity: 0.12 })
+    );
+    scene.add(wire);
+  });
+
+  var loopGroup = new THREE.Group();
+  scene.add(loopGroup);
+  var traveler = new THREE.Mesh(
+    new THREE.SphereGeometry(0.07, 16, 16),
+    new THREE.MeshPhongMaterial({ color: 0xffffff, emissive: 0x222222, emissiveIntensity: 0.2 })
+  );
+  scene.add(traveler);
+
+  var curves = [];
+  var tubes = [];
+
+  function buildLoop(c) {
+    var r = 0.35 + c.shell * 0.55;
+    var gap = (1 - c.recovery) * Math.PI * 1.15;
+    var pts = [];
+    var segs = 80;
+    for (var i = 0; i <= segs; i++) {
+      var t = i / segs;
+      var ang = t * (Math.PI * 2 - gap) - Math.PI / 2;
+      var y = Math.sin(t * Math.PI * 2) * 0.35;
+      pts.push(new THREE.Vector3(Math.cos(ang) * r, y + 0.25, Math.sin(ang) * r));
+    }
+    pts.push(new THREE.Vector3(0, 0.25, 0));
+    var curve = new THREE.CatmullRomCurve3(pts, false, "catmullrom", 0.12);
+    var geo = new THREE.TubeGeometry(curve, 120, 0.025, 8, false);
+    var mat = new THREE.MeshPhongMaterial({
+      color: c.color,
+      transparent: true,
+      opacity: 0.85,
+      emissive: c.color,
+      emissiveIntensity: 0.08
+    });
+    var mesh = new THREE.Mesh(geo, mat);
+    mesh.userData.condition = c;
+    return { curve: curve, mesh: mesh };
+  }
+
+  CONDITIONS.forEach(function (c) {
+    var L = buildLoop(c);
+    curves.push(L);
+    L.mesh.visible = false;
+    loopGroup.add(L.mesh);
+    tubes.push(L.mesh);
+  });
+
+  var active = 0;
+  var playing = false;
+  var travelT = 0;
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function showOnly(idx) {
+    active = idx;
+    tubes.forEach(function (m, i) {
+      m.visible = i === idx;
+    });
+    var c = CONDITIONS[idx];
+    traveler.material.color.setHex(c.color);
+    capEl.textContent =
+      c.label + ": mean recovery J = " + c.recovery.toFixed(4) +
+      ". Angular gap at return ≈ " + ((1 - c.recovery) * 180).toFixed(0) + "° of a full closure (visual scale, not a fitted manifold).";
+    travelT = 0;
+    placeTraveler(curves[idx].curve, 0);
+  }
+
+  function showAll() {
+    tubes.forEach(function (m) {
+      m.visible = true;
+      m.material.opacity = 0.45;
+    });
+    capEl.textContent = "All five MA12 conditions superposed. Compare how far each loop falls short of closing on the anchor.";
+    traveler.visible = false;
+  }
+
+  function placeTraveler(curve, t) {
+    traveler.visible = true;
+    var p = curve.getPointAt(Math.min(1, Math.max(0, t)));
+    traveler.position.copy(p);
+  }
+
+  pickEl.addEventListener("change", function () {
+    tubes.forEach(function (m) {
+      m.material.opacity = 0.85;
+    });
+    showOnly(parseInt(pickEl.value, 10));
+  });
+
+  btnPlay.addEventListener("click", function () {
+    if (reduceMotion) {
+      placeTraveler(curves[active].curve, 1);
+      return;
+    }
+    playing = !playing;
+    btnPlay.setAttribute("aria-pressed", playing ? "true" : "false");
+    btnPlay.textContent = playing ? "Pause" : "Play round trip";
+    if (playing) travelT = 0;
+  });
+
+  btnAll.addEventListener("click", showAll);
+
+  function resize() {
+    var w = Math.max(stage.clientWidth, 280);
+    var h = Math.max(stage.clientHeight, 240);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setSize(w, h);
+  }
+
+  window.addEventListener("resize", resize);
+  resize();
+  showOnly(0);
+
+  var last = performance.now();
+  function tick(now) {
+    requestAnimationFrame(tick);
+    var dt = (now - last) / 1000;
+    last = now;
+    if (playing && !reduceMotion) {
+      travelT += dt * 0.22;
+      if (travelT >= 1) {
+        travelT = 0;
+        playing = false;
+        btnPlay.setAttribute("aria-pressed", "false");
+        btnPlay.textContent = "Play round trip";
+      }
+      placeTraveler(curves[active].curve, travelT);
+    }
+    controls.update();
+    renderer.render(scene, camera);
+  }
+  requestAnimationFrame(tick);
+})();
+</script>
+</body>
+</html>

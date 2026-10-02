@@ -43,7 +43,7 @@
 | T17 | Intersemiotic relay and derivation loss | open, unformalized | Tape to transcript to chapter is in the data, not in the formalism |
 | T18 | Silence as a node type | open, unformalized | The corpus has silence coordinates; the KR has no type for them |
 | T19 | Dashboard reorganization | proposed, awaiting decision | Four groups plus renames; probe-controls page is unlinked today |
-| T20 | Visual check of figures | open, partial 2026-10-02 | MA12 embed/journal numbers updated to qwen/gemma; live browser QA still needed after Pages push |
+| T20 | Visual check of figures | open, partial 2026-10-02 | MA12 2D + new `fig-roundtrip-helicoid-3d.html`; see `notes/VIZ_3D_CREATIVE_DIRECTION.md`; live browser QA after push |
 | T31 | Do the agent edges deform, or do the instructions | open, partial 2026-10-02 | MA12 qwen/gemma lowers R3 vs Llama; MA15 dyad ordering will say whether family swap or register still dominates |
 
 ## Threads in detail
