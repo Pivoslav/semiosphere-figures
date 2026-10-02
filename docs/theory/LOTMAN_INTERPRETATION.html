@@ -1103,6 +1103,8 @@
       if (openTerm === term && pop.classList.contains('visible')) {
         hidePopover();
         e.preventDefault();
+        var go = term.getAttribute('href') || '';
+        if (go && go.charAt(0) !== '#') window.location.assign(go);
         return;
       }
       saveReturnPoint(term);
@@ -1189,8 +1191,15 @@
     e.preventDefault();
     hidePopover();
     showReturnNav();
-    var target = document.querySelector(link.getAttribute('href'));
-    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    var href = link.getAttribute('href') || '';
+    if (!href) return;
+    if (href.charAt(0) === '#') {
+      var target = document.querySelector(href);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (history.replaceState) history.replaceState(null, '', href);
+    } else {
+      window.location.assign(href);
+    }
   });
 
   document.addEventListener('click', function (e) {
