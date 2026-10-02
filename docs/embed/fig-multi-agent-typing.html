@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<!-- multi-agent figures: §10 had prose for weeks before it had pictures -->
+<html lang="en">
+<head>
+<meta name="robots" content="noindex, nofollow"/>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Multi-agent hand-offs vs bilingual relay</title>
+<style>
+  :root { --ink:#1a1a1a; --muted:#555; --rule:#ccc; --wash:#f6f4ef; --accent:#2a4a6f; }
+  * { box-sizing: border-box; }
+  body { font-family: Georgia, 'Times New Roman', serif; font-size: 11.5pt; line-height: 1.5; color: var(--ink);
+    max-width: 56rem; margin: 0 auto; padding: 1.25rem 1.5rem 2.5rem; background: #fff; }
+  h1 { font-size: 1.45rem; margin: 0 0 0.5rem; }
+  h2 { font-size: 1.08rem; margin: 2rem 0 0.4rem; }
+  a { color: var(--accent); }
+  .embed-back { font-size: 0.9rem; margin: 0 0 1rem; }
+  .lede { background: var(--wash); border: 1px solid var(--rule); padding: 0.85rem 1rem; margin: 1rem 0; font-size: 0.95rem; }
+  .viz-box { border: 1px solid var(--rule); background: #fafafa; margin: 0.85rem 0 0.35rem; }
+  .viz-head { font-family: system-ui, sans-serif; font-size: 0.82rem; padding: 0.45rem 0.7rem; background: #f1efe9;
+    border-bottom: 1px solid var(--rule); }
+  canvas { display: block; width: 100%; background: #fff; }
+  .cap { font-size: 0.88rem; color: var(--muted); margin: 0.35rem 0 0; }
+  .legend { font-family: system-ui, sans-serif; font-size: 0.78rem; color: var(--muted);
+    padding: 0.45rem 0.7rem; border-top: 1px dashed var(--rule); background: #fafafa; }
+  .legend i { display: inline-block; width: 0.7rem; height: 0.7rem; border-radius: 2px; margin-right: 0.3rem; vertical-align: middle; }
+  .legend span { margin-right: 1rem; white-space: nowrap; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 1rem 0;
+    font-family: system-ui, sans-serif; }
+  th, td { border: 1px solid var(--rule); padding: 0.45rem 0.55rem; text-align: left; vertical-align: top; }
+  th { background: #f1efe9; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.04em; }
+</style>
+</head>
+<body>
+<p class="embed-back"><a href="../theory/LOTMAN_INTERPRETATION.html#s10">← Lotman interpretation §10</a> · <a href="../index.html">Figures home</a></p>
+
+<h1>Multi-agent hand-offs vs bilingual relay</h1>
+<div class="lede">Three schematics for section 10. They diagram the argument; no multi-agent experiment has been run on the Montreal plate, so nothing here carries counts. The Montreal numbers they refer to (6/6 tier confusion under flat retrieval, 100% vs 8.3% miss-or-target) come from sections 6 and the typed-graph relay.</div>
+
+<h2 id="m1">Figure M1 · Untyped message pass vs typed hand-off</h2>
+<div class="viz-box">
+  <div class="viz-head"><strong>Same three agents, two edge vocabularies</strong></div>
+  <canvas id="cvAgents" height="360" role="img" aria-label="Left: three agents passing plain text. Right: the same agents with typed edges for relay, miss, and forbidden."></canvas>
+  <div class="legend">
+    <span><i style="background:#1f5136"></i> relay · transformed, tier recorded</span>
+    <span><i style="background:#8d94a3"></i> miss · documented absence</span>
+    <span><i style="background:#9a3b3b"></i> forbidden · refused crossing</span>
+    <span><i style="background:#c45c26"></i> untyped text</span>
+  </div>
+</div>
+<p class="cap">Left: a default pipeline moves content. Nothing in the message says which surface it came from, so agent C can quote agent A's summary as an outward fact - the section 5 shape of the <em>Globe and Mail</em> claim. Right: the same hand-offs carry shell type, pair id, and proof tier, so refusal and documented absence are available moves.</p>
+
+<h2 id="m2">Figure M2 · Persistence: window, shared window, layered memory</h2>
+<div class="viz-box">
+  <div class="viz-head"><strong>What survives to structure the next act of meaning</strong></div>
+  <canvas id="cvPersist" height="420" role="img" aria-label="Three persistence strips: LLM context window, multi-agent shared context, and layered semiosphere memory."></canvas>
+  <div class="legend">
+    <span><i style="background:#6b3fa0"></i> token influence (decays)</span>
+    <span><i style="background:#2a4a6f"></i> shell position / ingress</span>
+    <span><i style="background:#1f5136"></i> I-I loop (stays inner)</span>
+    <span><i style="background:#b8860b"></i> pair-read warrant</span>
+  </div>
+</div>
+<p class="cap">Adding agents lengthens the strip; it does not add layers. Shared context is a longer window with the same decay, which is why the third strip is wider than the first but built from the same material. The semiosphere strip is stacked instead: fond, shell position, pair-read warrant, an inward loop that never crosses the filter, and dated ingress that retools operators without raising volume.</p>
+
+<h2 id="m3">Figure M3 · Paraphrase in one manifold vs crossing a filter</h2>
+<div class="viz-box">
+  <div class="viz-head"><strong>Why agent A&rarr;B output is not translation</strong></div>
+  <canvas id="cvManifold" height="360" role="img" aria-label="Left: paraphrase arrows inside a single manifold. Right: a boundary filter with transformed, refused, and missing crossings."></canvas>
+  <div class="legend">
+    <span><i style="background:#c45c26"></i> paraphrase · theme preserved</span>
+    <span><i style="background:#1f5136"></i> transformed · operators change</span>
+    <span><i style="background:#9a3b3b"></i> refused</span>
+    <span><i style="background:#8d94a3"></i> missing counterpart</span>
+  </div>
+</div>
+<p class="cap">Left: both agents run one model, one tokenizer, one geometry. Their exchange moves within the manifold, and topic is the only organiser - the condition section 6 measured as theme gravity. Right: a bilingual filter is partial. Some material crosses recoded, some is refused, and some expected outward sentence is simply absent, which is a finding rather than a gap to fill.</p>
+
+<h2>Where each figure is used</h2>
+<table>
+  <thead><tr><th>Figure</th><th>Section 10 claim</th><th>Montreal anchor</th></tr></thead>
+  <tbody>
+    <tr><td>M1</td><td>Agents are animators, not shells; typing has to be engineered into the channel</td><td>§6 flat vs shell-scoped retrieval; §5 unpaired claim</td></tr>
+    <tr><td>M2</td><td>Shared memory is a longer window, not non-hereditary memory</td><td>§4 operator change without volume change (1983&ndash;87)</td></tr>
+    <tr><td>M3</td><td>Agent paraphrase is primary-system coupling, not bilingual relay</td><td>§1 retracted rotation; §2 language confound</td></tr>
+  </tbody>
+</table>
+
+<script>
+function fit(c, h) {
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+  var w = c.clientWidth || 760;
+  c.width = w * dpr;
+  c.height = h * dpr;
+  c.style.height = h + 'px';
+  var ctx = c.getContext('2d');
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, w, h);
+  return { ctx: ctx, w: w, h: h };
+}
+
+function arrow(ctx, x1, y1, x2, y2, color, dashed) {
+  ctx.save();
+  ctx.strokeStyle = color;
+  ctx.fillStyle = color;
+  ctx.lineWidth = 2;
+  if (dashed) ctx.setLineDash([5, 4]);
+  ctx.beginPath();
+  ctx.moveTo(x1, y1);
+  ctx.lineTo(x2, y2);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  var a = Math.atan2(y2 - y1, x2 - x1), hl = 9;
+  ctx.beginPath();
+  ctx.moveTo(x2, y2);
+  ctx.lineTo(x2 - hl * Math.cos(a - 0.4), y2 - hl * Math.sin(a - 0.4));
+  ctx.lineTo(x2 - hl * Math.cos(a + 0.4), y2 - hl * Math.sin(a + 0.4));
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
+}
+
+function node(ctx, x, y, r, label, sub) {
+  ctx.save();
+  ctx.fillStyle = '#eef3f8';
+  ctx.strokeStyle = '#2a4a6f';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.arc(x, y, r, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.stroke();
+  ctx.fillStyle = '#1a1a1a';
+  ctx.textAlign = 'center';
+  ctx.font = 'bold 13px Georgia, serif';
+  ctx.fillText(label, x, y + 4);
+  if (sub) {
+    ctx.fillStyle = '#555';
+    ctx.font = '10px system-ui, sans-serif';
+    ctx.fillText(sub, x, y + r + 14);
+  }
+  ctx.restore();
+}
+
+function edgeLabel(ctx, x, y, text, color) {
+  ctx.save();
+  ctx.font = '10px system-ui, sans-serif';
+  ctx.textAlign = 'center';
+  var pad = 4, tw = ctx.measureText(text).width;
+  ctx.fillStyle = 'rgba(255,255,255,0.92)';
+  ctx.fillRect(x - tw / 2 - pad, y - 9, tw + pad * 2, 14);
+  ctx.fillStyle = color || '#555';
+  ctx.fillText(text, x, y + 2);
+  ctx.restore();
+}
+
+function panelTitle(ctx, x, y, text) {
+  ctx.save();
+  ctx.fillStyle = '#1a1a1a';
+  ctx.font = 'bold 12px system-ui, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText(text, x, y);
+  ctx.restore();
+}
+
+function drawAgents() {
+  var c = document.getElementById('cvAgents');
+  if (!c) return;
+  var s = fit(c, 360), ctx = s.ctx, w = s.w, h = s.h;
+  var half = w / 2;
+
+  ctx.save();
+  ctx.strokeStyle = '#ddd';
+  ctx.beginPath();
+  ctx.moveTo(half, 24);
+  ctx.lineTo(half, h - 16);
+  ctx.stroke();
+  ctx.restore();
+
+  panelTitle(ctx, half / 2, 22, 'Default message pass');
+  panelTitle(ctx, half + half / 2, 22, 'Typed hand-off');
+
+  var r = 24;
+  [0, 1].forEach(function (p) {
+    var ox = p * half;
+    var ax = ox + half * 0.22, ay = 110;
+    var bx = ox + half * 0.78, by = 110;
+    var cx = ox + half * 0.5, cy = 250;
+    var typed = p === 1;
+
+    if (typed) {
+      arrow(ctx, ax + r, ay + 6, bx - r, by + 6, '#1f5136', false);
+      edgeLabel(ctx, (ax + bx) / 2, ay - 2, 'relay · transformed · tier A', '#1f5136');
+      arrow(ctx, bx - 6, by + r, cx + r - 2, cy - 14, '#8d94a3', true);
+      edgeLabel(ctx, (bx + cx) / 2 + 30, (by + cy) / 2, 'miss · logged', '#5c6670');
+      ctx.save();
+      ctx.strokeStyle = '#9a3b3b';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(cx - r + 2, cy - 14);
+      ctx.lineTo(ax + 8, ay + r);
+      ctx.stroke();
+      var mx = (cx + ax) / 2 - 16, my = (cy + ay) / 2 + 4;
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(mx - 9, my - 9);
+      ctx.lineTo(mx + 9, my + 9);
+      ctx.moveTo(mx + 9, my - 9);
+      ctx.lineTo(mx - 9, my + 9);
+      ctx.stroke();
+      ctx.restore();
+      edgeLabel(ctx, (cx + ax) / 2 - 44, (cy + ay) / 2 + 30, 'forbidden', '#9a3b3b');
+    } else {
+      arrow(ctx, ax + r, ay + 6, bx - r, by + 6, '#c45c26', false);
+      edgeLabel(ctx, (ax + bx) / 2, ay - 2, 'text', '#c45c26');
+      arrow(ctx, bx - 6, by + r, cx + r - 2, cy - 14, '#c45c26', false);
+      edgeLabel(ctx, (bx + cx) / 2 + 26, (by + cy) / 2, 'text', '#c45c26');
+      arrow(ctx, cx - r + 2, cy - 14, ax + 8, ay + r, '#c45c26', true);
+      edgeLabel(ctx, (cx + ax) / 2 - 40, (cy + ay) / 2 + 26, 'summary quoted as fact', '#9a3b3b');
+    }
+
+    node(ctx, ax, ay, r, 'A', 'animator');
+    node(ctx, bx, by, r, 'B', 'animator');
+    node(ctx, cx, cy, r, 'C', 'animator');
+  });
+
+  ctx.save();
+  ctx.fillStyle = '#555';
+  ctx.font = '11px system-ui, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('one base model · one tokenizer · shell not carried', half / 2, h - 20);
+  ctx.fillText('shell type · pair id · proof tier on every edge', half + half / 2, h - 20);
+  ctx.restore();
+}
+
+function drawPersist() {
+  var c = document.getElementById('cvPersist');
+  if (!c) return;
+  var s = fit(c, 420), ctx = s.ctx, w = s.w;
+  var left = 14, right = w - 14, usable = right - left;
+
+  function strip(y, title, note) {
+    ctx.save();
+    ctx.fillStyle = '#1a1a1a';
+    ctx.font = 'bold 12px system-ui, sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText(title, left, y - 12);
+    ctx.fillStyle = '#555';
+    ctx.font = '10px system-ui, sans-serif';
+    ctx.fillText(note, left, y + 58);
+    ctx.restore();
+  }
+
+  function bars(y, count, widthFrac, color) {
+    var span = usable * widthFrac;
+    var bw = span / count;
+    for (var i = 0; i < count; i++) {
+      var strength = Math.pow((i + 1) / count, 1.6);
+      ctx.fillStyle = color;
+      ctx.globalAlpha = 0.18 + strength * 0.78;
+      var bh = 12 + strength * 30;
+      ctx.fillRect(left + i * bw + 1, y + 42 - bh, bw - 2, bh);
+    }
+    ctx.globalAlpha = 1;
+    ctx.save();
+    ctx.strokeStyle = '#ccc';
+    ctx.beginPath();
+    ctx.moveTo(left, y + 42);
+    ctx.lineTo(left + span, y + 42);
+    ctx.stroke();
+    ctx.restore();
+    return left + span;
+  }
+
+  strip(60, 'LLM context window', 'earlier tokens lose influence; weights frozen, no archive accrues');
+  var end1 = bars(60, 14, 0.52, '#6b3fa0');
+  ctx.save();
+  ctx.fillStyle = '#8d94a3';
+  ctx.font = '10px system-ui, sans-serif';
+  ctx.fillText('nothing outside the window exists for the step', end1 + 10, 90);
+  ctx.restore();
+
+  strip(170, 'Multi-agent shared context', 'same decay, more room: a longer window is not a second kind of memory');
+  var end2 = bars(170, 24, 0.86, '#6b3fa0');
+  ctx.save();
+  ctx.strokeStyle = '#6b3fa0';
+  ctx.setLineDash([4, 3]);
+  ctx.beginPath();
+  ctx.moveTo(end1, 150);
+  ctx.lineTo(end1, 214);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle = '#6b3fa0';
+  ctx.font = '10px system-ui, sans-serif';
+  ctx.fillText('single-agent reach', end1 + 6, 148);
+  ctx.restore();
+
+  strip(280, 'Semiosphere persistence', 'layers, not length: each band answers to a different warrant');
+  var layers = [
+    { label: 'fond (archive holds the memo)', color: '#2a4a6f' },
+    { label: 'shell position (who may read it)', color: '#2a5f8f' },
+    { label: 'pair-read warrant (dated counterpart or miss)', color: '#b8860b' },
+    { label: 'I-I loop (restructures the office, stays inner)', color: '#1f5136' }
+  ];
+  var ly = 284;
+  layers.forEach(function (L) {
+    ctx.fillStyle = L.color;
+    ctx.globalAlpha = 0.85;
+    ctx.fillRect(left, ly, usable * 0.7, 18);
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = '#fff';
+    ctx.font = '10px system-ui, sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText(L.label, left + 8, ly + 13);
+    ly += 22;
+  });
+  ctx.save();
+  ctx.strokeStyle = '#1f5136';
+  ctx.setLineDash([5, 4]);
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.moveTo(left + usable * 0.7 + 10, 280);
+  ctx.lineTo(left + usable * 0.7 + 10, ly - 6);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.restore();
+  arrow(ctx, right - 12, 300, left + usable * 0.7 + 16, 318, '#2a4a6f', false);
+  ctx.save();
+  ctx.fillStyle = '#2a4a6f';
+  ctx.font = '10px system-ui, sans-serif';
+  ctx.textAlign = 'right';
+  ctx.fillText('dated ingress (1983 event, rival text) retools operators', right - 10, 292);
+  ctx.textAlign = 'left';
+  ctx.fillStyle = '#1f5136';
+  ctx.fillText('bilingual filter', left + usable * 0.7 + 16, ly + 8);
+  ctx.restore();
+}
+
+function drawManifold() {
+  var c = document.getElementById('cvManifold');
+  if (!c) return;
+  var s = fit(c, 360), ctx = s.ctx, w = s.w, h = s.h;
+  var half = w / 2;
+
+  ctx.save();
+  ctx.strokeStyle = '#ddd';
+  ctx.beginPath();
+  ctx.moveTo(half, 24);
+  ctx.lineTo(half, h - 16);
+  ctx.stroke();
+  ctx.restore();
+
+  panelTitle(ctx, half / 2, 22, 'Agent paraphrase · one manifold');
+  panelTitle(ctx, half + half / 2, 22, 'Bilingual relay · partial map');
+
+  ctx.save();
+  ctx.strokeStyle = '#8d94a3';
+  ctx.fillStyle = 'rgba(107,63,160,0.06)';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.ellipse(half / 2, 190, half * 0.40, 120, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+
+  var pts = [
+    { x: 0.30, y: 140, l: 'A: memo summary' },
+    { x: 0.52, y: 110, l: 'B: restatement' },
+    { x: 0.62, y: 205, l: 'C: answer' },
+    { x: 0.36, y: 240, l: 'query' }
+  ];
+  pts.forEach(function (p) {
+    var x = half * p.x + half * 0.10;
+    ctx.fillStyle = '#6b3fa0';
+    ctx.beginPath();
+    ctx.arc(x, p.y, 7, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#333';
+    ctx.font = '10px system-ui, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(p.l, x, p.y - 12);
+  });
+  function px(i) { return half * pts[i].x + half * 0.10; }
+  arrow(ctx, px(0) + 8, pts[0].y + 2, px(1) - 8, pts[1].y + 6, '#c45c26', false);
+  arrow(ctx, px(1) + 4, pts[1].y + 10, px(2) - 6, pts[2].y - 8, '#c45c26', false);
+  arrow(ctx, px(3) + 8, pts[3].y - 4, px(2) - 8, pts[2].y + 6, '#c45c26', true);
+  edgeLabel(ctx, half / 2, 300, 'topic is the only organiser', '#c45c26');
+
+  var bx = half + 24, bw = half - 48;
+  function band(y, label, color) {
+    ctx.save();
+    ctx.fillStyle = color;
+    ctx.globalAlpha = 0.12;
+    ctx.fillRect(bx, y, bw, 62);
+    ctx.globalAlpha = 1;
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 1.2;
+    ctx.strokeRect(bx, y, bw, 62);
+    ctx.fillStyle = color;
+    ctx.font = 'bold 11px system-ui, sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText(label, bx + 8, y + 16);
+    ctx.restore();
+  }
+  band(70, 'Secret memo (RU)', '#2a5f8f');
+  band(250, 'Outward packet (EN)', '#6b8f71');
+
+  ctx.save();
+  ctx.strokeStyle = '#1f5136';
+  ctx.setLineDash([6, 4]);
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.moveTo(bx, 176);
+  ctx.lineTo(bx + bw, 176);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle = '#1f5136';
+  ctx.font = '10px system-ui, sans-serif';
+  ctx.fillText('bilingual filter', bx + 4, 170);
+  ctx.restore();
+
+  arrow(ctx, bx + 52, 134, bx + 52, 248, '#1f5136', false);
+  edgeLabel(ctx, bx + 104, 236, 'transformed: drought frame', '#1f5136');
+
+  ctx.save();
+  ctx.strokeStyle = '#9a3b3b';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(bx + bw * 0.52, 134);
+  ctx.lineTo(bx + bw * 0.52, 170);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(bx + bw * 0.52 - 11, 170);
+  ctx.lineTo(bx + bw * 0.52 + 11, 170);
+  ctx.stroke();
+  ctx.restore();
+  edgeLabel(ctx, bx + bw * 0.52, 196, 'refused: scare quotes', '#9a3b3b');
+
+  ctx.save();
+  ctx.strokeStyle = '#8d94a3';
+  ctx.setLineDash([5, 4]);
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(bx + bw - 46, 134);
+  ctx.lineTo(bx + bw - 46, 236);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.beginPath();
+  ctx.arc(bx + bw - 46, 246, 8, 0, Math.PI * 2);
+  ctx.stroke();
+  ctx.restore();
+  edgeLabel(ctx, bx + bw - 96, 290, 'missing: Montreal unnamed', '#5c6670');
+}
+
+function drawAll() { drawAgents(); drawPersist(); drawManifold(); }
+window.addEventListener('load', drawAll);
+window.addEventListener('resize', drawAll);
+</script>
+</body>
+</html>

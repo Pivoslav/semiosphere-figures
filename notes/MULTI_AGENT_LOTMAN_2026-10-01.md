@@ -41,13 +41,15 @@ Multi-agent shared memory ≈ **longer window**, not layered cultural memory, un
 3. Do not score “boundary” via cross-agent cosine or “agent translation” via BLEU.
 4. Log agent outputs as sign-events with surface + proof tier; keep unpaired edges open.
 
-## Visualization (deferred)
+## Visualization (built 2026-10-01)
 
-Possible later figures (discuss with user):
+`docs/embed/fig-multi-agent-typing.html`, linked from §10:
 
-- Two-agent diagram: messages as untyped edges vs typed morphisms (forbidden/relay/miss).
-- Persistence panel extended with a third strip: “multi-agent shared context” as elongated decay bars, not new rings.
-- Side-by-side: bilingual filter crossing vs agent paraphrase in one manifold.
+- **M1** two-agent diagram: untyped edges vs typed morphisms (relay/miss/forbidden).
+- **M2** persistence with a third strip: multi-agent shared context as a longer decay bar, no new layers.
+- **M3** bilingual filter crossing vs agent paraphrase in one manifold.
+
+Schematic only; no counts. Next designs: `notes/EXPERIMENT_DESIGNS_WHAT_WE_ARE_2026-10-01.md` (MA1–MA6, D1–D8).
 
 ## Do not claim
 

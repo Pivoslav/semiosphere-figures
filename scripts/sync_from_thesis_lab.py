@@ -41,6 +41,7 @@ CURRENT_EMBED = [
     "fig-lotman-semiosphere-demo-3d.html",
     "fig-lotman-operator-tensor-3d.html",
     "fig-lotman-explosion-3d.html",
+    "fig-multi-agent-typing.html",
 ]
 
 THEORY_HTML = [
