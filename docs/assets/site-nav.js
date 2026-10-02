@@ -256,7 +256,7 @@
     var themeToggle = document.createElement("div");
     themeToggle.className = "site-nav-drawer-foot";
     themeToggle.innerHTML =
-      '<button type="button" id="site-nav-vapor-toggle">Toggle vapor background</button>';
+      '<button type="button" id="site-nav-vapor-toggle">Vapor sky background (off by default)</button>';
     drawer.appendChild(themeToggle);
 
     document.body.insertBefore(bar, document.body.firstChild);
@@ -295,10 +295,18 @@
       });
     });
     var vbtn = document.getElementById("site-nav-vapor-toggle");
-    if (vbtn && typeof window.__vaporThemeToggle === "function") {
-      vbtn.addEventListener("click", function () {
-        window.__vaporThemeToggle();
-      });
+    if (vbtn) {
+      try {
+        vbtn.textContent =
+          window.localStorage.getItem("vaporTheme") === "on"
+            ? "Turn off vapor sky"
+            : "Turn on vapor sky";
+      } catch (e) {}
+      if (typeof window.__vaporThemeToggle === "function") {
+        vbtn.addEventListener("click", function () {
+          window.__vaporThemeToggle();
+        });
+      }
     }
   }
 

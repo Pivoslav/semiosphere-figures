@@ -63,42 +63,20 @@
 
   function isEnabled() {
     try {
-      if (window.localStorage.getItem(STORAGE_KEY) === "off") return false;
-    } catch (e) {}
-    return true;
+      return window.localStorage.getItem(STORAGE_KEY) === "on";
+    } catch (e) {
+      return false;
+    }
   }
 
   function injectDecor(family) {
     if (!isEnabled()) return;
-
-    var scan = document.createElement("div");
-    scan.className = "vapor-scanlines";
-    scan.setAttribute("aria-hidden", "true");
-    document.body.appendChild(scan);
 
     if (family === "home" || family === "montreal") {
       var sun = document.createElement("div");
       sun.className = "vapor-decor vapor-sun";
       sun.setAttribute("aria-hidden", "true");
       document.body.appendChild(sun);
-    }
-
-    if (family === "experiment" || family === "home") {
-      var c1 = document.createElement("div");
-      c1.className = "vapor-decor vapor-wire-cube";
-      c1.setAttribute("aria-hidden", "true");
-      document.body.appendChild(c1);
-      var c2 = document.createElement("div");
-      c2.className = "vapor-decor vapor-wire-cube vapor-wire-cube-2";
-      c2.setAttribute("aria-hidden", "true");
-      document.body.appendChild(c2);
-    }
-
-    if (family === "journal") {
-      var stripe = document.createElement("div");
-      stripe.className = "vapor-decor vapor-textbook-stripe";
-      stripe.setAttribute("aria-hidden", "true");
-      document.body.appendChild(stripe);
     }
 
     var key = pageKey();
@@ -135,8 +113,8 @@
 
   window.__vaporThemeToggle = function () {
     try {
-      var off = window.localStorage.getItem(STORAGE_KEY) === "off";
-      window.localStorage.setItem(STORAGE_KEY, off ? "on" : "off");
+      var on = window.localStorage.getItem(STORAGE_KEY) === "on";
+      window.localStorage.setItem(STORAGE_KEY, on ? "off" : "on");
       window.location.reload();
     } catch (e) {}
   };
