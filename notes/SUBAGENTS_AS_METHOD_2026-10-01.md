@@ -61,6 +61,8 @@ The 1981 and 1983 essays, acquired after this note was first written, give the c
 
 That is decisive for this method. A subagent on the same base model is not another semiotic person; it is the same person with a different context window. Model family is therefore not one variable among several in this design, it is the variable that decides whether the dyad qualifies as a dyad at all.
 
+MA12 then ran the round-trip test and got a result that looks like a refutation and is not one. Swapping the model cost 0.109 of recovery while changing the register on one model cost 0.776, which would suggest the distance lives in the instruction. But the two models were llama3.2:3b and llama3.2:1b, two sizes of one lineage sharing a tokenizer. On the 1983 criterion that is one language, and a near-ceiling round trip is what Lotman predicts inside one language. So MA12 did not test the criterion, it illustrated it by accident, and it leaves MA15 as the experiment that decides the question. Two consequences for the design: the families must differ in pretraining and not merely in parameter count, and the round-trip measure needs the licensing check from T29 before it can be read, since a low score can mean corruption rather than creation.
+
 Launch the same instruction to subagents on genuinely different model families, with the family as the only manipulated variable. Then measure, deterministically:
 
 - Position identifiability after style normalization. Strip surface markers and ask whether the source family is still recoverable from content alone. This is the S2 signature from the I-I designs, and it is the crux: if families remain distinguishable after normalization, there are two positions; if not, there is one position in two costumes.

@@ -16,7 +16,7 @@ Default LLM-to-LLM exchange is **primary-system coupling** (shared tokenizer, sh
 | LLM (Fig. 3 left) | Semiosphere (Fig. 3 right) |
 |---|---|
 | Context window decay + frozen weights | Fond, pair-read warrant, shell position |
-| No separate I–I that stays inside filter | Autocommunication loop vs licensed gold relay |
+| No separate I-I that stays inside filter | Autocommunication loop vs licensed gold relay |
 | No growing archive from dialogue | Ingress from outside retools field (1983→87) |
 
 Multi-agent shared memory ≈ **longer window**, not layered cultural memory, unless messages are typed like graph edges.
@@ -49,7 +49,7 @@ Multi-agent shared memory ≈ **longer window**, not layered cultural memory, un
 - **M2** persistence with a third strip: multi-agent shared context as a longer decay bar, no new layers.
 - **M3** bilingual filter crossing vs agent paraphrase in one manifold.
 
-Schematic only; no counts. Next designs: `notes/EXPERIMENT_DESIGNS_WHAT_WE_ARE_2026-10-01.md` (MA1–MA6, D1–D8).
+Schematic only; no counts. Next designs: `notes/EXPERIMENT_DESIGNS_WHAT_WE_ARE_2026-10-01.md` (MA1-MA6, D1-D8).
 
 ## Do not claim
 

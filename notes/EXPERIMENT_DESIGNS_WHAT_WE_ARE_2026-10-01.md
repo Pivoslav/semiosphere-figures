@@ -2,10 +2,10 @@
 
 **Dated:** 2026-10-01
 **Internal.** Not on Pages. Written for me and for whichever agent picks this up next.
-**Reads on:** `docs/theory/LOTMAN_INTERPRETATION.html` §10 · `docs/embed/fig-multi-agent-typing.html` (M1–M3) · `notes/MULTI_AGENT_LOTMAN_2026-10-01.md`
-**Thesis-side context:** `docs/theory/EXPERIMENT_DESIGNS_LOTMAN.md` (E1–E11) · `docs/experiments/README.md` · `docs/EXPERIMENT_GAPS.md`
+**Reads on:** `docs/theory/LOTMAN_INTERPRETATION.html` §10 · `docs/embed/fig-multi-agent-typing.html` (M1-M3) · `notes/MULTI_AGENT_LOTMAN_2026-10-01.md`
+**Thesis-side context:** `docs/theory/EXPERIMENT_DESIGNS_LOTMAN.md` (E1-E11) · `docs/experiments/README.md` · `docs/EXPERIMENT_GAPS.md`
 
-**ID namespace:** new work is numbered **MA1–MA6** (experiments) and **D1–D8** (datasets). Do not reuse E-numbers: `E1–E11` are taken in the Lotman workbook and `E5` already clashes between `RESEARCH_PASS_60.md` (Harvest film authenticity) and `E5-LOTO` (leave-one-pair-out).
+**ID namespace:** new work is numbered **MA1-MA6** (experiments) and **D1-D8** (datasets). Do not reuse E-numbers: `E1-E11` are taken in the Lotman workbook and `E5` already clashes between `RESEARCH_PASS_60.md` (Harvest film authenticity) and `E5-LOTO` (leave-one-pair-out).
 
 ## The question, stated so it can fail
 
@@ -57,7 +57,7 @@ Standing constraint on all of it: the Montreal plate has **n = 9 licensed pairs*
 
 ## MA3 · Autocommunication audit
 
-**Question.** Is there a machine analogue of the I–I loop: output that returns only to the sender and restructures its later behavior?
+**Question.** Is there a machine analogue of the I-I loop: output that returns only to the sender and restructures its later behavior?
 
 **Design.** Same plate, same question set, two conditions over a session sequence: (i) the agent can read its own prior private notes; (ii) it cannot. Nothing else differs. Then apply the **E7 measure**: operator vocabulary change at constant volume. E7's 1983→87 finding was that the archive did not get louder, the operators changed.
 
@@ -113,9 +113,9 @@ Standing constraint on all of it: the Montreal plate has **n = 9 licensed pairs*
 
 Ordered by how much they unblock. Each entry says what it buys and what it costs.
 
-### D1 · More 1983–87 licensed pairs (unblocks everything quantitative)
+### D1 · More 1983-87 licensed pairs (unblocks everything quantitative)
 
-The n = 9 ceiling is the single binding constraint. Candidate series: Soviet Embassy Ottawa press releases (full run, not the April packet alone), Novosti bulletins, TASS English wire, *Soviet Weekly*, the complete 1983 *Ukrainian Weekly*, *Globe and Mail* and *Montreal Gazette* famine coverage across 1983–87. Target **n ≥ 30** licensed pairs with dates. At that n the matched permutation null can be cleared or definitively failed, which settles whether the bilingual filter is measurable in geometry at all. Cost: archival labor and pair-read time, not compute.
+The n = 9 ceiling is the single binding constraint. Candidate series: Soviet Embassy Ottawa press releases (full run, not the April packet alone), Novosti bulletins, TASS English wire, *Soviet Weekly*, the complete 1983 *Ukrainian Weekly*, *Globe and Mail* and *Montreal Gazette* famine coverage across 1983-87. Target **n ≥ 30** licensed pairs with dates. At that n the matched permutation null can be cleared or definitively failed, which settles whether the bilingual filter is measurable in geometry at all. Cost: archival labor and pair-read time, not compute.
 
 ### D2 · Peter plate completion (E3)
 
@@ -125,7 +125,7 @@ Autograph field orders versus the published `Pisma i bumagi` editions. This buys
 
 FRUS volumes and Canadian access-to-information releases give dated three-shell triples at a volume Montreal cannot reach. This is the closest structural twin to the existing plate, so it is the best portability test that does not require a new century.
 
-### D4 · Soviet domestic press 1976–88 (extends E7)
+### D4 · Soviet domestic press 1976-88 (extends E7)
 
 *Pravda* and *Izvestiia* via East View or *Current Digest of the Soviet Press*, plus RFE/RL research reports as the rival shell. Gives the diachronic explosion window real density, and lets the "same volume, new operators" measure run on thousands of items instead of a handful.
 
@@ -154,8 +154,8 @@ Glavlit-cut editions against their originals, or translated editions against sou
 - Any geometry claim needs the matched permutation null and the transfer null, and reports n in the same sentence as the effect.
 - Probe math and the unpublished 2026 manuscript stay off the comps lists.
 - A model in the chain cannot score the chain.
-- Schematic figures stay labeled schematic. Figures M1–M3 carry no counts and must not acquire any by implication.
+- Schematic figures stay labeled schematic. Figures M1-M3 carry no counts and must not acquire any by implication.
 
 ## Handoff for the next agent
 
-Read in this order: §10 of `LOTMAN_INTERPRETATION.html`, then `notes/MULTI_AGENT_LOTMAN_2026-10-01.md`, then this file, then `notes/DESIGNS_II_COMMUNICATION_2026-10-01.md` (MA7–MA11: autocommunication signatures across human–LLM, LLM–LLM, agent–agent, agent–subagent, and sibling-subagent dyads). Cheapest real progress is **MA1** (no new ingest, local model sufficient) and **MA4** (same items, sharper question). **MA2** and **MA6** are human-gated by design and should stay gated. Write results into the thesis repo under `docs/experiments/`, keep the ID namespace `MA*`, and record the prereg before the run, not after.
+Read in this order: §10 of `LOTMAN_INTERPRETATION.html`, then `notes/MULTI_AGENT_LOTMAN_2026-10-01.md`, then this file, then `notes/DESIGNS_II_COMMUNICATION_2026-10-01.md` (MA7-MA11: autocommunication signatures across human-LLM, LLM-LLM, agent-agent, agent-subagent, and sibling-subagent dyads). Cheapest real progress is **MA1** (no new ingest, local model sufficient) and **MA4** (same items, sharper question). **MA2** and **MA6** are human-gated by design and should stay gated. Write results into the thesis repo under `docs/experiments/`, keep the ID namespace `MA*`, and record the prereg before the run, not after.
