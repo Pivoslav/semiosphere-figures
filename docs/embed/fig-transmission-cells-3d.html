@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<!-- Transmission T1 companion: Lotman cells in 3D + MA13 exterior point -->
+<html lang="en">
+<head>
+<link rel="stylesheet" href="../assets/site-theme-vapor.css"/>
+<script defer src="../assets/site-theme-vapor.js"></script>
+<meta name="site-nav-root" content="../"/>
+<link rel="stylesheet" href="../assets/site-nav.css"/>
+<script defer src="../assets/site-nav.js"></script>
+<meta name="robots" content="noindex, nofollow"/>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="color-scheme" content="light"/>
+<title>Transmission cells · 3D room model</title>
+<style>
+  :root { --ink:#1a1814; --muted:#5c564c; --rule:#d8d0c4; --wash:#f6f4ef; --accent:#2a4a6f; }
+  body { margin:0; font-family: Georgia, serif; font-size: 11.5pt; line-height: 1.55; color: var(--ink);
+    max-width: 56rem; margin: 0 auto; padding: 1rem 1.25rem 2rem; background: #fff; }
+  h1 { font-size: 1.35rem; margin: 0 0 0.35rem; }
+  a { color: var(--accent); }
+  .embed-back { font-size: 0.88rem; margin: 0 0 0.85rem; }
+  .lede { background: var(--wash); border: 1px solid var(--rule); padding: 0.75rem 0.95rem; margin: 0.75rem 0; font-size: 0.93rem; }
+  .viz-stage { position: relative; border: 1px solid var(--rule); border-radius: 8px; overflow: hidden;
+    background: #faf8f4; height: min(62vh, 520px); min-height: 340px; }
+  #viz3d { position: absolute; inset: 0; cursor: grab; }
+  .cap { font-size: 0.86rem; color: var(--muted); margin: 0.35rem 0 0; max-width: 65ch; }
+</style>
+</head>
+<body>
+<p class="embed-back"><a href="fig-transmission-cells.html#t1">&larr; Transmission (2D T1)</a> · <a href="fig-delegation-corpus.html">MA13</a> · <a href="../theory/LOTMAN_INTERPRETATION.html#s13">Journal §13</a></p>
+<h1>Lotman's cells · 3D room model</h1>
+<div class="lede">Horizontal axis: change of volume. Depth axis: how much the receiver adds. Four dashed rooms are Lotman's named corners; the solid blue point is the measured MA13 delegation median (volume ~4.4×, content gain ~0.84, n=26) — outside every named box.</div>
+<div class="viz-stage" id="viz-stage"><div id="viz3d"></div></div>
+<p class="cap">Drag to rotate. Grey wire rooms = Lotman's categories (no counts). Blue sphere = this project's measured cell. Height encodes volume change; forward position encodes receiver-added content.</p>
+<script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>
+<script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+(function () {
+  var CELLS = [
+    { name: "Presemiotic binding", x: -1.8, z: -1.8, h: 0.4, color: 0xb9bdc6, dashed: true },
+    { name: "I–s/he", x: -1.8, z: 1.8, h: 0.5, color: 0xb9bdc6, dashed: true },
+    { name: "I–I autocomm", x: 1.8, z: -1.8, h: 1.2, color: 0xb9bdc6, dashed: true },
+    { name: "Unnamed (claim)", x: 1.8, z: 1.8, h: 1.0, color: 0x2a4a6f, dashed: false }
+  ];
+  var MA13 = { x: 2.35, z: 2.1, h: 1.35, vol: 4.4, gain: 0.84 };
+
+  var stage = document.getElementById("viz-stage");
+  var mount = document.getElementById("viz3d");
+  var scene = new THREE.Scene();
+  scene.background = new THREE.Color(0xfaf8f4);
+  var camera = new THREE.PerspectiveCamera(48, 1, 0.1, 100);
+  camera.position.set(5, 5, 6);
+  var renderer = new THREE.WebGLRenderer({ antialias: true });
+  mount.appendChild(renderer.domElement);
+  var controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls.target.set(0, 0.6, 0);
+  scene.add(new THREE.AmbientLight(0xffffff, 0.7));
+  var dir = new THREE.DirectionalLight(0xffffff, 0.75);
+  dir.position.set(4, 6, 3);
+  scene.add(dir);
+
+  var floor = new THREE.Mesh(
+    new THREE.PlaneGeometry(8, 8),
+    new THREE.MeshPhongMaterial({ color: 0xe8e4dc, side: THREE.DoubleSide })
+  );
+  floor.rotation.x = -Math.PI / 2;
+  floor.position.y = -0.01;
+  scene.add(floor);
+
+  CELLS.forEach(function (c) {
+    var geo = new THREE.BoxGeometry(1.5, c.h, 1.5);
+    var mat = new THREE.MeshPhongMaterial({
+      color: c.color,
+      transparent: true,
+      opacity: c.dashed ? 0.15 : 0.35,
+      wireframe: c.dashed
+    });
+    var mesh = new THREE.Mesh(geo, mat);
+    mesh.position.set(c.x, c.h / 2, c.z);
+    scene.add(mesh);
+  });
+
+  var ext = new THREE.Mesh(
+    new THREE.SphereGeometry(0.22, 24, 24),
+    new THREE.MeshPhongMaterial({ color: 0x2a4a6f, emissive: 0x1a3050, emissiveIntensity: 0.4 })
+  );
+  ext.position.set(MA13.x, MA13.h, MA13.z);
+  scene.add(ext);
+
+  var ring = new THREE.Mesh(
+    new THREE.RingGeometry(0.28, 0.38, 32),
+    new THREE.MeshBasicMaterial({ color: 0x9a3b3b, side: THREE.DoubleSide, transparent: true, opacity: 0.7 })
+  );
+  ring.rotation.x = -Math.PI / 2;
+  ring.position.set(MA13.x, 0.02, MA13.z);
+  scene.add(ring);
+
+  function resize() {
+    var w = Math.max(stage.clientWidth, 280), h = Math.max(stage.clientHeight, 240);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setSize(w, h);
+  }
+  window.addEventListener("resize", resize);
+  resize();
+
+  var t0 = performance.now();
+  function tick(now) {
+    requestAnimationFrame(tick);
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      ext.position.y = MA13.h + Math.sin((now - t0) * 0.0012) * 0.08;
+    }
+    controls.update();
+    renderer.render(scene, camera);
+  }
+  tick();
+})();
+</script>
+</body>
+</html>

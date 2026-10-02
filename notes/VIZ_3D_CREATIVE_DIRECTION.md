@@ -10,13 +10,13 @@ Each figure should answer: *what quantity is encoded in which axis, and what wou
 
 | Run | 2D today | 3D / motion direction |
 |-----|----------|------------------------|
-| **MA12** round-trip | Bars, loss chart | **Open orbits**: closure gap = 1 − Jaccard; helical “out register / back” on nested shells; R4 as **descending spiral** (trip 1→3). Pilot: `fig-roundtrip-helicoid-3d.html`. |
-| **MA15** polyglottism | (tables) | **Dyad cube**: four model families at corners; directed ribbons thickness = mean recovery; animate swap direction. |
-| **MA4b/MA4c** halt | Pipeline canvas, bars | **Valve manifold**: flow particles; gate closes → bypass pipe to canonical halt string (no generator branch); compare flat vs scoped retrieval as two manifolds. |
+| **MA12** round-trip | Bars, loss chart | **Open orbits** — done: `fig-roundtrip-helicoid-3d.html`. |
+| **MA15** polyglottism | (tables) | **Dyad cube** — pilot: `fig-ma15-dyad-cube-3d.html` (sync full matrix from JSON when expanded). |
+| **MA4b/MA4c** halt | Pipeline canvas, bars | **Flow model** — pilot: `fig-halt-flow-3d.html` (B2 vs D2); next: scoped MA4c second manifold. |
 | **MA13** delegation | Corpus strips | **Stack height** = unsupported-claim rate; time = hand-off index; subagent as lateral branch that rejoins or dead-ends. |
 | **MA10** isolation | Gain bars | **Source field**: empty hemisphere vs filled; “laundering” as color bleed from unlicensed node into outward shell. |
-| **Montreal** embedding | PCA 2D/3D | Already strong; add **animated relay pulse** along arcs with operator glyph at crossing (scare-quote flash on inner-only). |
-| **Transmission cells** | Cell diagram | **Lotman’s three cells + ⊥** as nested compartments; measured dyad as particle that **does not land in any cell** (fourth chamber or exterior). |
+| **Montreal** embedding | PCA 2D/3D | **Relay pulse** on thematic arcs — done in `fig-lotman-semiosphere-3d.html` (2026-10-02). |
+| **Transmission cells** | Cell diagram | **3D rooms** — pilot: `fig-transmission-cells-3d.html`. |
 | **Filter L1/L2** | Shell diagrams | **Pair-or-miss** as two surfaces that only intersect on licensed pairs; miss = ray that exits semiosphere. |
 
 ## Technical stack

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<!-- MA4b companion: gate bypass vs full generator path (animated flow) -->
+<html lang="en">
+<head>
+<link rel="stylesheet" href="../assets/site-theme-vapor.css"/>
+<script defer src="../assets/site-theme-vapor.js"></script>
+<meta name="site-nav-root" content="../"/>
+<link rel="stylesheet" href="../assets/site-nav.css"/>
+<script defer src="../assets/site-nav.js"></script>
+<meta name="robots" content="noindex, nofollow"/>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="color-scheme" content="light"/>
+<title>Halt adjudication · 3D flow (MA4b)</title>
+<style>
+  :root { --ink:#1a1814; --muted:#5c564c; --rule:#d8d0c4; --wash:#f6f4ef; --accent:#2a4a6f; }
+  body { margin:0; font-family: Georgia, serif; font-size: 11.5pt; line-height: 1.55; color: var(--ink);
+    max-width: 56rem; margin: 0 auto; padding: 1rem 1.25rem 2rem; background: #fff; }
+  h1 { font-size: 1.35rem; margin: 0 0 0.35rem; }
+  a { color: var(--accent); }
+  .embed-back { font-size: 0.88rem; margin: 0 0 0.85rem; }
+  .lede { background: var(--wash); border: 1px solid var(--rule); padding: 0.75rem 0.95rem; margin: 0.75rem 0; font-size: 0.93rem; }
+  .viz-stage { position: relative; border: 1px solid var(--rule); border-radius: 8px; overflow: hidden;
+    background: #faf8f4; height: min(58vh, 480px); min-height: 320px; }
+  #viz3d { position: absolute; inset: 0; cursor: grab; }
+  .viz-controls { display: flex; flex-wrap: wrap; gap: 0.45rem; margin: 0.55rem 0; font-family: system-ui, sans-serif; font-size: 0.78rem; }
+  .viz-controls select, .viz-controls button { font: inherit; padding: 0.35rem 0.55rem; border: 1px solid var(--rule); border-radius: 5px; background: #fff; cursor: pointer; }
+  .cap { font-size: 0.86rem; color: var(--muted); margin: 0.35rem 0 0; max-width: 65ch; }
+</style>
+</head>
+<body>
+<p class="embed-back"><a href="fig-halt-adjudication.html">&larr; MA4b (2D)</a> · <a href="fig-transmission-cells.html#t3">Transmission T3</a> · <a href="../theory/LOTMAN_INTERPRETATION.html#s13">Journal §13</a></p>
+<h1>Where halt is decided · 3D flow model</h1>
+<div class="lede">Each particle is one of 18 frozen items. <strong>B2</strong> (no gate): every item visits the generator twice. <strong>D2</strong> (rule gate): when the gate closes on retrieved metadata, the item writes the canonical halt string and <em>never</em> reaches the generator — 11 bypasses, 14 generator calls vs 36. Animation is metaphor; counts match <code>ma4b_rule_layer_halt_report.json</code>.</div>
+<div class="viz-stage" id="viz-stage"><div id="viz3d"></div></div>
+<div class="viz-controls">
+  <label>Arm <select id="armPick"><option value="B2">B2_no_halt (36 calls)</option><option value="D2">D2_rule_gate (14 calls)</option></select></label>
+  <button type="button" id="btnPlay">Play batch</button>
+</div>
+<p class="cap" id="cap"></p>
+<script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>
+<script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+(function () {
+  var ARMS = {
+    B2: { calls: 36, closed: 0, color: 0x2a4a6f, label: "Generator asked on all 18 items (2 hops each)." },
+    D2: { calls: 14, closed: 11, color: 0x9a3b3b, label: "Gate closed on 11 items before any model call; 7 cleared to generator." }
+  };
+  var stage = document.getElementById("viz-stage");
+  var mount = document.getElementById("viz3d");
+  var cap = document.getElementById("cap");
+  var armPick = document.getElementById("armPick");
+  var scene = new THREE.Scene();
+  scene.background = new THREE.Color(0xfaf8f4);
+  var camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+  camera.position.set(0, 4, 9);
+  var renderer = new THREE.WebGLRenderer({ antialias: true });
+  mount.appendChild(renderer.domElement);
+  var controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls.target.set(0, 0.5, 0);
+  scene.add(new THREE.AmbientLight(0xffffff, 0.65));
+  var dir = new THREE.DirectionalLight(0xffffff, 0.8);
+  dir.position.set(5, 8, 4);
+  scene.add(dir);
+
+  function box(x, y, z, w, h, d, col, label) {
+    var g = new THREE.BoxGeometry(w, h, d);
+    var m = new THREE.Mesh(g, new THREE.MeshPhongMaterial({ color: col, transparent: true, opacity: 0.92 }));
+    m.position.set(x, y, z);
+    scene.add(m);
+    return m;
+  }
+  box(-4, 0.4, 0, 1.6, 0.8, 1.2, 0x6b8f71, "Retriever");
+  box(0, 0.4, 0, 1.4, 0.8, 1.2, 0x9a3b3b, "Rule gate");
+  box(4, 0.4, 0, 1.6, 0.8, 1.2, 0xc45c26, "Generator");
+  box(0, -1.2, 2.2, 2.2, 0.5, 1, 0x1f5136, "Canonical halt");
+
+  var particles = [];
+  var group = new THREE.Group();
+  scene.add(group);
+
+  function rebuild(armKey) {
+    while (group.children.length) group.remove(group.children[0]);
+    particles = [];
+    var a = ARMS[armKey];
+    cap.textContent = a.label + " Total generator calls: " + a.calls + ".";
+    for (var i = 0; i < 18; i++) {
+      var closed = armKey === "D2" && i < a.closed;
+      var p = new THREE.Mesh(
+        new THREE.SphereGeometry(0.08, 10, 10),
+        new THREE.MeshPhongMaterial({ color: closed ? 0x1f5136 : a.color })
+      );
+      p.userData = { i: i, t: i * 0.04, closed: closed, arm: armKey };
+      group.add(p);
+      particles.push(p);
+    }
+  }
+
+  function pathPoint(p, t) {
+    if (p.userData.closed) {
+      if (t < 0.35) return new THREE.Vector3(-4 + t / 0.35 * 4, 0.5, 0);
+      if (t < 0.7) return new THREE.Vector3(0 + (t - 0.35) / 0.35 * 0, -0.5 + (t - 0.35) / 0.35 * 0.2, (t - 0.35) / 0.35 * 2.2);
+      return new THREE.Vector3(0, -1.2, 2.2);
+    }
+    if (t < 0.25) return new THREE.Vector3(-4 + t / 0.25 * 4, 0.5, 0);
+    if (t < 0.45) return new THREE.Vector3(0 + (t - 0.25) / 0.2 * 4, 0.5, 0);
+    if (t < 0.7) return new THREE.Vector3(4, 0.5 - (t - 0.45) / 0.25 * 0.3, 0);
+    return new THREE.Vector3(4 - (t - 0.7) / 0.3 * 8, 0.5, 0);
+  }
+
+  var playing = false;
+  document.getElementById("btnPlay").onclick = function () { playing = !playing; this.textContent = playing ? "Pause" : "Play batch"; };
+  armPick.onchange = function () { rebuild(armPick.value); playing = false; document.getElementById("btnPlay").textContent = "Play batch"; };
+
+  function resize() {
+    var w = Math.max(stage.clientWidth, 280), h = Math.max(stage.clientHeight, 240);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setSize(w, h);
+  }
+  window.addEventListener("resize", resize);
+  resize();
+  rebuild("B2");
+
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function tick() {
+    requestAnimationFrame(tick);
+    if (playing && !reduce) {
+      particles.forEach(function (p) {
+        p.userData.t += 0.004;
+        if (p.userData.t > 1) p.userData.t = 0;
+        var pt = pathPoint(p, p.userData.t);
+        p.position.copy(pt);
+      });
+    }
+    controls.update();
+    renderer.render(scene, camera);
+  }
+  tick();
+})();
+</script>
+</body>
+</html>

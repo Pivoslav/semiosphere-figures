@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<!-- MA15 pilot: cross-family dyads as directed ribbons on a model-family cube -->
+<html lang="en">
+<head>
+<link rel="stylesheet" href="../assets/site-theme-vapor.css"/>
+<script defer src="../assets/site-theme-vapor.js"></script>
+<meta name="site-nav-root" content="../"/>
+<link rel="stylesheet" href="../assets/site-nav.css"/>
+<script defer src="../assets/site-nav.js"></script>
+<meta name="robots" content="noindex, nofollow"/>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="color-scheme" content="light"/>
+<title>Polyglottism · 3D dyad cube (MA15)</title>
+<style>
+  :root { --ink:#1a1814; --muted:#5c564c; --rule:#d8d0c4; --wash:#f6f4ef; --accent:#2a4a6f; }
+  body { margin:0; font-family: Georgia, serif; font-size: 11.5pt; line-height: 1.55; color: var(--ink);
+    max-width: 56rem; margin: 0 auto; padding: 1rem 1.25rem 2rem; background: #fff; }
+  h1 { font-size: 1.35rem; margin: 0 0 0.35rem; }
+  a { color: var(--accent); }
+  .embed-back { font-size: 0.88rem; margin: 0 0 0.85rem; }
+  .lede { background: var(--wash); border: 1px solid var(--rule); padding: 0.75rem 0.95rem; margin: 0.75rem 0; font-size: 0.93rem; }
+  .viz-stage { position: relative; border: 1px solid var(--rule); border-radius: 8px; overflow: hidden;
+    background: #faf8f4; height: min(58vh, 480px); min-height: 320px; }
+  #viz3d { position: absolute; inset: 0; cursor: grab; }
+  .viz-controls { font-family: system-ui, sans-serif; font-size: 0.78rem; margin: 0.5rem 0; }
+  .cap { font-size: 0.86rem; color: var(--muted); margin: 0.35rem 0 0; max-width: 65ch; }
+</style>
+</head>
+<body>
+<p class="embed-back"><a href="fig-roundtrip-asymmetry.html">MA12</a> · <a href="../theory/LOTMAN_INTERPRETATION.html#s14">Journal §14</a> · thesis lab <code>ma15_polyglottism_report.json</code></p>
+<h1>Real polyglottism · 3D dyad cube (MA15 pilot)</h1>
+<div class="lede">Corners are model <em>families</em> (not sizes of one family). Ribbon <strong>thickness</strong> = mean reverse-pass Jaccard; colour = forward generator. qwen→gemma stays thick (~0.74); phi3 on the reverse pass collapses (~0.31–0.37). Animation runs a pulse along the active dyad direction.</div>
+<div class="viz-stage" id="viz-stage"><div id="viz3d"></div></div>
+<div class="viz-controls"><label>Dyad <select id="dyadPick"></select></label></div>
+<p class="cap" id="cap"></p>
+<script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>
+<script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+(function () {
+  var FAMILIES = {
+    qwen: new THREE.Vector3(-1, 1, -1),
+    gemma: new THREE.Vector3(1, 1, 1),
+    llama: new THREE.Vector3(-1, -1, 1),
+    phi3: new THREE.Vector3(1, -1, -1)
+  };
+  var DYADS = [
+    { label: "qwen forward → gemma reverse", from: "qwen", to: "gemma", j: 0.743, col: 0x2a4a6f },
+    { label: "qwen forward → phi3 reverse", from: "qwen", to: "phi3", j: 0.34, col: 0x6b3fa0 },
+    { label: "gemma forward → qwen reverse", from: "gemma", to: "qwen", j: 0.52, col: 0x1f5136 },
+    { label: "gemma forward → phi3 reverse", from: "gemma", to: "phi3", j: 0.31, col: 0xc45c26 }
+  ];
+
+  var stage = document.getElementById("viz-stage");
+  var mount = document.getElementById("viz3d");
+  var pick = document.getElementById("dyadPick");
+  var cap = document.getElementById("cap");
+  DYADS.forEach(function (d, i) {
+    var o = document.createElement("option");
+    o.value = i;
+    o.textContent = d.label + " (J≈" + d.j.toFixed(2) + ")";
+    pick.appendChild(o);
+  });
+
+  var scene = new THREE.Scene();
+  scene.background = new THREE.Color(0xfaf8f4);
+  var camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+  camera.position.set(4, 3, 5);
+  var renderer = new THREE.WebGLRenderer({ antialias: true });
+  mount.appendChild(renderer.domElement);
+  var controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls.target.set(0, 0, 0);
+  scene.add(new THREE.AmbientLight(0xffffff, 0.65));
+  var dir = new THREE.DirectionalLight(0xffffff, 0.85);
+  dir.position.set(5, 6, 4);
+  scene.add(dir);
+
+  Object.keys(FAMILIES).forEach(function (k) {
+    var p = FAMILIES[k];
+    var m = new THREE.Mesh(
+      new THREE.BoxGeometry(0.35, 0.35, 0.35),
+      new THREE.MeshPhongMaterial({ color: 0x8b6914 })
+    );
+    m.position.copy(p);
+    scene.add(m);
+  });
+
+  var wire = new THREE.Mesh(
+    new THREE.BoxGeometry(2.6, 2.6, 2.6),
+    new THREE.MeshBasicMaterial({ color: 0x2a4a6f, wireframe: true, transparent: true, opacity: 0.25 })
+  );
+  scene.add(wire);
+
+  var ribbonGroup = new THREE.Group();
+  scene.add(ribbonGroup);
+  var pulse = new THREE.Mesh(
+    new THREE.SphereGeometry(0.08, 12, 12),
+    new THREE.MeshBasicMaterial({ color: 0xffffff })
+  );
+  scene.add(pulse);
+  var activeCurve = null;
+
+  function setDyad(idx) {
+    while (ribbonGroup.children.length) ribbonGroup.remove(ribbonGroup.children[0]);
+    var d = DYADS[idx];
+    cap.textContent = d.label + ". Mean recovery J = " + d.j.toFixed(3) + " (MA15 pilot, 2026-10-02; see thesis run doc for full matrix).";
+    var a = FAMILIES[d.from], b = FAMILIES[d.to];
+    var mid = a.clone().add(b).multiplyScalar(0.5).add(new THREE.Vector3(0, 0.6, 0));
+    activeCurve = new THREE.QuadraticBezierCurve3(a, mid, b);
+    var r = 0.04 + d.j * 0.12;
+    var tube = new THREE.Mesh(
+      new THREE.TubeGeometry(activeCurve, 64, r, 8, false),
+      new THREE.MeshPhongMaterial({ color: d.col, transparent: true, opacity: 0.85 })
+    );
+    ribbonGroup.add(tube);
+  }
+  pick.onchange = function () { setDyad(parseInt(pick.value, 10)); };
+  setDyad(0);
+
+  function resize() {
+    var w = Math.max(stage.clientWidth, 280), h = Math.max(stage.clientHeight, 240);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setSize(w, h);
+  }
+  window.addEventListener("resize", resize);
+  resize();
+
+  var t0 = performance.now();
+  function tick(now) {
+    requestAnimationFrame(tick);
+    if (activeCurve && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      var t = ((now - t0) * 0.00015) % 1;
+      pulse.position.copy(activeCurve.getPointAt(t));
+    }
+    controls.update();
+    renderer.render(scene, camera);
+  }
+  tick();
+})();
+</script>
+</body>
+</html>

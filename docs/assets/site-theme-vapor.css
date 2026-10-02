@@ -1,22 +1,37 @@
-/* Optional vapor backdrop — typography stays on each page's own colors (static, opaque) */
+/* Vaporwave / textbook CD-ROM atmosphere — genre on the viewport, copy on opaque paper */
 
 :root {
   --vapor-paper-solid: #fffdfa;
-  --vapor-grid: rgba(1, 205, 254, 0.28);
+  --vapor-magenta: #ff71ce;
+  --vapor-cyan: #01cdfe;
+  --vapor-purple: #6b5bff;
+  --vapor-grid: rgba(1, 205, 254, 0.35);
 }
 
 html.has-vapor-theme {
   min-height: 100%;
 }
 
-/* Do not override page text color; animated sky must not show through copy */
+/* Never override page typography colors (animated sky stays behind opaque blocks) */
 body.has-vapor-theme {
   position: relative;
   min-height: 100vh;
-  background-color: #f7f4ef;
+  background-color: transparent;
 }
 
-/* Static sky only (no animation — moving gradient behind translucent layers looked like shifting text) */
+body.has-vapor-theme[data-vapor-family="experiment"],
+body.has-vapor-theme[data-vapor-family="montreal"],
+body.has-vapor-theme[data-vapor-family="theory"] {
+  background: var(--vapor-paper-solid) !important;
+  box-shadow: 0 12px 64px rgba(18, 8, 42, 0.45);
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 8px;
+  max-width: 56rem;
+  margin-top: 0.35rem;
+}
+
+/* Animated sky (fixed layer; does not touch glyphs inside solid main/wrap/body cards) */
 body.has-vapor-theme::before {
   content: "";
   position: fixed;
@@ -25,11 +40,23 @@ body.has-vapor-theme::before {
   background: linear-gradient(
     180deg,
     #2d1b69 0%,
-    #5a4a9a 35%,
-    #9a6a9a 55%,
+    #6b5bff 22%,
+    #ff71ce 48%,
+    #ff9a56 72%,
     #01cdfe 100%
   );
+  background-size: 100% 200%;
+  animation: vapor-sky 28s ease-in-out infinite alternate;
   pointer-events: none;
+}
+
+@keyframes vapor-sky {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
 }
 
 body.has-vapor-theme::after {
@@ -38,20 +65,31 @@ body.has-vapor-theme::after {
   left: -50%;
   right: -50%;
   bottom: -20%;
-  height: 45%;
+  height: 55%;
   z-index: -2;
   transform: perspective(320px) rotateX(58deg);
   transform-origin: center bottom;
   background-image: linear-gradient(var(--vapor-grid) 1px, transparent 1px),
     linear-gradient(90deg, var(--vapor-grid) 1px, transparent 1px);
   background-size: 48px 48px;
-  mask-image: linear-gradient(to top, black 35%, transparent 95%);
-  opacity: 0.5;
+  mask-image: linear-gradient(to top, black 40%, transparent 95%);
+  opacity: 0.85;
   pointer-events: none;
 }
 
 .vapor-scanlines {
-  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.06;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.4) 2px,
+    rgba(0, 0, 0, 0.4) 3px
+  );
 }
 
 .vapor-decor {
@@ -61,44 +99,87 @@ body.has-vapor-theme::after {
 }
 
 .vapor-sun {
-  width: 100px;
-  height: 100px;
-  top: calc(var(--site-nav-total-h, var(--site-nav-h, 3rem)) + 1rem);
-  right: 3%;
+  width: 140px;
+  height: 140px;
+  top: calc(var(--site-nav-total-h, var(--site-nav-h, 3rem)) + 1.5rem);
+  right: 4%;
   border-radius: 50%;
-  background: linear-gradient(180deg, #ffe9a0 0%, #ff9a56 100%);
-  opacity: 0.35;
+  background: linear-gradient(180deg, #ffe9a0 0%, #ff71ce 55%, #ff9a56 100%);
+  box-shadow: 0 0 60px rgba(255, 113, 206, 0.5);
+  opacity: 0.55;
+}
+
+.vapor-sun::before {
+  content: "";
+  position: absolute;
+  inset: 12%;
+  border-radius: 50%;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 6px,
+    rgba(255, 255, 255, 0.35) 6px,
+    rgba(255, 255, 255, 0.35) 10px
+  );
 }
 
 .vapor-wire-cube {
-  display: none;
+  width: 72px;
+  height: 72px;
+  bottom: 18%;
+  left: 3%;
+  border: 2px solid rgba(1, 205, 254, 0.65);
+  transform: rotate(45deg);
+  box-shadow: 12px 12px 0 rgba(255, 113, 206, 0.25);
+  animation: vapor-float 9s ease-in-out infinite;
+}
+
+.vapor-wire-cube.vapor-wire-cube-2 {
+  left: auto;
+  right: 5%;
+  bottom: 22%;
+  width: 48px;
+  height: 48px;
+  animation-delay: -4s;
+  border-color: rgba(255, 113, 206, 0.7);
+}
+
+@keyframes vapor-float {
+  0%,
+  100% {
+    transform: rotate(45deg) translateY(0);
+  }
+  50% {
+    transform: rotate(45deg) translateY(-10px);
+  }
 }
 
 .vapor-textbook-stripe {
-  display: none;
+  position: fixed;
+  top: var(--site-nav-total-h, var(--site-nav-h, 3rem));
+  bottom: 0;
+  left: 0;
+  width: 28px;
+  z-index: -1;
+  background: repeating-linear-gradient(
+    180deg,
+    #ffe566 0,
+    #ffe566 8px,
+    #fff 8px,
+    #fff 16px
+  );
+  opacity: 0.35;
+  border-right: 2px solid rgba(107, 91, 255, 0.4);
 }
 
-/* Opaque reading surfaces — full opacity so background never tints glyphs */
 body.has-vapor-theme main,
 body.has-vapor-theme .wrap {
   background: var(--vapor-paper-solid);
-  box-shadow: 0 6px 32px rgba(18, 8, 42, 0.15);
-  border-radius: 6px;
-}
-
-body.has-vapor-theme[data-vapor-family="experiment"],
-body.has-vapor-theme[data-vapor-family="montreal"],
-body.has-vapor-theme[data-vapor-family="theory"] {
-  background: var(--vapor-paper-solid) !important;
-  max-width: 56rem;
-  margin-left: auto;
-  margin-right: auto;
-  box-shadow: 0 6px 32px rgba(18, 8, 42, 0.12);
+  box-shadow: 0 8px 48px rgba(26, 16, 51, 0.25), 0 0 0 1px rgba(1, 205, 254, 0.12);
   border-radius: 6px;
 }
 
 body.has-vapor-theme .card,
-body.has-vapor-theme .viz-box,
 body.has-vapor-theme .lede,
 body.has-vapor-theme .guide,
 body.has-vapor-theme .toc,
@@ -106,23 +187,91 @@ body.has-vapor-theme table {
   background-color: var(--vapor-paper-solid);
 }
 
-/* Nav: subtle tint only; no magenta/cyan on chrome that fights figures */
-body.has-vapor-theme #site-nav-bar {
-  border-bottom-color: #8b6914;
+/* Figures: neutral stage; chart colors stay authored in canvas/SVG */
+body.has-vapor-theme .viz-box {
+  background-color: #fafafa !important;
+  border-color: #d4cfc4 !important;
 }
 
-/* Plain mode (default): pages use their own inline styles only */
-html.vapor-theme-off body::before,
-html.vapor-theme-off body::after,
-html:not(.has-vapor-theme) body::before,
-html:not(.has-vapor-theme) body::after {
+body.has-vapor-theme .viz-head {
+  background: #f1efe9 !important;
+  color: inherit !important;
+}
+
+body.has-vapor-theme .viz-box canvas,
+body.has-vapor-theme .viz-stage {
+  background: #fff !important;
+}
+
+body.has-vapor-theme .viz-stage {
+  background: #faf8f4 !important;
+}
+
+/* No glow on navigation prose — keeps links readable on paper */
+body.has-vapor-theme .embed-back,
+body.has-vapor-theme p.site-trail {
+  text-shadow: none;
+}
+
+/* Index hero only (not journal .doc or reading-list headers) */
+body.has-vapor-theme > header:first-of-type:not(#site-nav-drawer header) {
+  background: linear-gradient(135deg, rgba(44, 40, 32, 0.98), rgba(107, 91, 255, 0.88)) !important;
+  border-bottom-color: var(--vapor-magenta) !important;
+  box-shadow: 0 4px 24px rgba(255, 113, 206, 0.25);
+}
+
+body.has-vapor-theme #site-nav-bar {
+  background: linear-gradient(90deg, #1a1033 0%, #3d2a7a 50%, #1a1033 100%);
+  border-bottom-color: var(--vapor-cyan);
+}
+
+body.has-vapor-theme #site-nav-drawer header {
+  background: linear-gradient(135deg, #2d1b69, #6b5bff);
+  border-bottom-color: var(--vapor-magenta);
+}
+
+body.has-vapor-theme[data-vapor-family="montreal"]::after {
+  opacity: 1;
+  background-size: 36px 36px;
+}
+
+body[data-vapor-family="legacy"]::before {
+  filter: saturate(0.65) hue-rotate(-10deg);
+}
+
+html.vapor-theme-off body.has-vapor-theme::before,
+html.vapor-theme-off body.has-vapor-theme::after,
+html.vapor-theme-off .vapor-decor,
+html.vapor-theme-off .vapor-scanlines {
   display: none !important;
+}
+
+html.vapor-theme-off body.has-vapor-theme {
+  background: #f7f4ef;
+}
+
+html.vapor-theme-off body.has-vapor-theme main,
+html.vapor-theme-off body.has-vapor-theme .wrap,
+html.vapor-theme-off body.has-vapor-theme[data-vapor-family="experiment"],
+html.vapor-theme-off body.has-vapor-theme[data-vapor-family="montreal"],
+html.vapor-theme-off body.has-vapor-theme[data-vapor-family="theory"] {
+  background: transparent !important;
+  box-shadow: none;
+  max-width: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.has-vapor-theme::before,
+  .vapor-wire-cube {
+    animation: none !important;
+  }
 }
 
 @media print {
   body.has-vapor-theme::before,
   body.has-vapor-theme::after,
-  .vapor-decor {
+  .vapor-decor,
+  .vapor-scanlines {
     display: none !important;
   }
   body.has-vapor-theme main,

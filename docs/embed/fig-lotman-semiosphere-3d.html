@@ -134,7 +134,7 @@ details.verify summary { cursor:pointer; color:var(--accent); font-weight:600; }
 
     <div class="viz-after">
     
-    <p class="how-to"><strong>How to explore:</strong> drag to rotate · scroll to zoom · <strong>hover</strong> for a quick label · <strong>click</strong> for full context · toggle the detail panel with the button ↗</p>
+    <p class="how-to"><strong>How to explore:</strong> drag to rotate · scroll to zoom · <strong>hover</strong> for a quick label · <strong>click</strong> for full context · toggle the detail panel with the button ↗ · sky-blue dots <strong>pulse along thematic relay arcs</strong> (motion off if your system prefers reduced motion)</p>
 
     <p class="cap">The dissertation tests whether Soviet-era talking points on famine commemoration <strong>transform predictably</strong> when they cross register boundaries - secret memo → embassy/Novosti → domestic news → diaspora/scholarly print - and whether that transformation is <strong>dated and measurable</strong> (Montreal 1983 as anchor, post-1983 explosion as qualitative rewire). These 3D models make Lotman’s spatial vocabulary falsifiable: they read from the same open JSON as Figures 1-12.</p>
     <div class="layman-grid">
@@ -430,6 +430,8 @@ function linkColor(l) {
   return map[l.type] || 0x448aff;
 }
 
+const pulseArcs = [];
+
 function addRelayArc(a, b, l, col) {
   const mid = a.clone().lerp(b, 0.5);
   if (l.type === 'dialogue_rival') mid.multiplyScalar(1.25);
@@ -449,6 +451,9 @@ function addRelayArc(a, b, l, col) {
     cyl.position.copy(p1.clone().add(p2).multiplyScalar(0.5));
     cyl.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), seg.normalize());
     scene.add(cyl);
+  }
+  if (l.type === 'thematic_transform' && pulseArcs.length < 10) {
+    pulseArcs.push({ curve, col });
   }
   return mid;
 }
@@ -527,6 +532,16 @@ DATA.links.forEach(l => {
 
 setupPickInteraction({ el: stage, camera, renderer, controls, pickables, hud, tip, toggleBtn });
 
+const pulseDots = pulseArcs.map((arc) => {
+  const dot = new THREE.Mesh(
+    new THREE.SphereGeometry(0.07, 10, 10),
+    new THREE.MeshBasicMaterial({ color: arc.col, transparent: true, opacity: 0.95 })
+  );
+  scene.add(dot);
+  return { dot, arc };
+});
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 bindStageResize(stage, (w, h) => {
   camera.aspect = w / h;
   camera.updateProjectionMatrix();
@@ -534,6 +549,13 @@ bindStageResize(stage, (w, h) => {
 });
 (function animate() {
   requestAnimationFrame(animate);
+  if (!reduceMotion && pulseDots.length) {
+    const t0 = performance.now() * 0.00012;
+    pulseDots.forEach(({ dot, arc }, i) => {
+      const t = (t0 + i * 0.11) % 1;
+      dot.position.copy(arc.curve.getPointAt(t));
+    });
+  }
   controls.update();
   renderer.render(scene, camera);
   if (labelRenderer) labelRenderer.render(scene, camera);

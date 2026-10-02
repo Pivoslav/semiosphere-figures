@@ -8,7 +8,7 @@ Keep every page readable for long-form journal prose and data figures, while the
 
 ## Principles
 
-1. **Readability first.** Body text stays high contrast on a frosted "paper" surface (`rgba(255,253,250,0.93)`), not raw gradient.
+1. **Readability first.** All prose and tables sit on **opaque** `#fffdfa` (`--vapor-paper-solid`). The animated sky/grid/scanlines stay at `z-index < 0` and never override page `color` or link styles. No `text-shadow` on trails. Index hero only for purple vapor header (not journal `.doc` headers). Figures: `.viz-box` / canvas stay neutral gray-white.
 2. **CSS and SVG before GIF.** Animated GIFs are Phase 2 per-page opt-in (`docs/assets/vapor/*.gif`) to avoid weight and hotlink rot. Phase 1 is GPU-friendly gradients + grid.
 3. **One inject path.** `sanitize_public_site.py` adds `site-theme-vapor.css` + `site-theme-vapor.js` on every HTML page (with `site-nav`).
 4. **Per-route accent, not 41 unique themes.** Five families: `home`, `journal`, `experiment`, `montreal`, `legacy` (+ `theory` for plain theory pages).

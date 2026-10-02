@@ -55,7 +55,10 @@
         { label: "Round-trip asymmetry (MA12)", href: "embed/fig-roundtrip-asymmetry.html" },
         { label: "Round-trip · 3D orbit model (MA12)", href: "embed/fig-roundtrip-helicoid-3d.html" },
         { label: "Where refusal is decided (MA4b)", href: "embed/fig-halt-adjudication.html" },
+        { label: "Halt flow · 3D (MA4b)", href: "embed/fig-halt-flow-3d.html" },
         { label: "Transmission cells (MA4b, MA13)", href: "embed/fig-transmission-cells.html" },
+        { label: "Transmission cells · 3D", href: "embed/fig-transmission-cells-3d.html" },
+        { label: "Polyglottism · 3D dyad cube (MA15)", href: "embed/fig-ma15-dyad-cube-3d.html" },
         { label: "Delegation corpus (MA13)", href: "embed/fig-delegation-corpus.html" },
         { label: "Isolation and laundering (MA10)", href: "embed/fig-isolation-laundering.html" },
       ],
@@ -126,14 +129,28 @@
     "embed/fig-halt-adjudication.html": [
       { t: "Journal §12", h: "theory/LOTMAN_INTERPRETATION.html#s12" },
       { t: "Journal §13 (MA4c)", h: "theory/LOTMAN_INTERPRETATION.html#s13" },
+      { t: "3D flow", h: "embed/fig-halt-flow-3d.html" },
       { t: "Transmission T3", h: "embed/fig-transmission-cells.html#t3" },
       { t: "Multi-agent typing", h: "embed/fig-multi-agent-typing.html" },
     ],
+    "embed/fig-halt-flow-3d.html": [
+      { t: "MA4b (2D)", h: "embed/fig-halt-adjudication.html" },
+      { t: "Journal §13", h: "theory/LOTMAN_INTERPRETATION.html#s13" },
+    ],
     "embed/fig-transmission-cells.html": [
       { t: "Journal §13", h: "theory/LOTMAN_INTERPRETATION.html#s13" },
+      { t: "3D cells", h: "embed/fig-transmission-cells-3d.html" },
       { t: "Halt MA4b/MA4c", h: "embed/fig-halt-adjudication.html" },
       { t: "Delegation MA13", h: "embed/fig-delegation-corpus.html" },
       { t: "Multi-agent §10", h: "embed/fig-multi-agent-typing.html" },
+    ],
+    "embed/fig-transmission-cells-3d.html": [
+      { t: "Transmission (2D)", h: "embed/fig-transmission-cells.html#t1" },
+      { t: "Journal §13", h: "theory/LOTMAN_INTERPRETATION.html#s13" },
+    ],
+    "embed/fig-ma15-dyad-cube-3d.html": [
+      { t: "MA12 round-trip", h: "embed/fig-roundtrip-asymmetry.html" },
+      { t: "Journal §14", h: "theory/LOTMAN_INTERPRETATION.html#s14" },
     ],
     "embed/fig-delegation-corpus.html": [
       { t: "Journal §13", h: "theory/LOTMAN_INTERPRETATION.html#s13" },
@@ -262,7 +279,7 @@
     var themeToggle = document.createElement("div");
     themeToggle.className = "site-nav-drawer-foot";
     themeToggle.innerHTML =
-      '<button type="button" id="site-nav-vapor-toggle">Vapor sky background (off by default)</button>';
+      '<button type="button" id="site-nav-vapor-toggle">Plain background</button>';
     drawer.appendChild(themeToggle);
 
     document.body.insertBefore(bar, document.body.firstChild);
@@ -304,9 +321,9 @@
     if (vbtn) {
       try {
         vbtn.textContent =
-          window.localStorage.getItem("vaporTheme") === "on"
-            ? "Turn off vapor sky"
-            : "Turn on vapor sky";
+          window.localStorage.getItem("vaporTheme") === "off"
+            ? "Turn on vapor background"
+            : "Plain background";
       } catch (e) {}
       if (typeof window.__vaporThemeToggle === "function") {
         vbtn.addEventListener("click", function () {
