@@ -12,7 +12,8 @@
 
 | Thread | Area | Status | Cheapest next action |
 |---|---|---|---|
-| T1 | Rule-layer halt rerun (MA4b) | RUNNING 2026-10-01, four arms incl. a non-model gate | Await `docs/experiments/MA4b_rule_layer_halt/RUN_2026-10-01.md` |
+| T1 | Rule-layer halt rerun (MA4b) | closed 2026-10-01, thesis `docs/experiments/MA4b_rule_layer_halt/RUN_2026-10-01.md` | Result: gate beats prompt, F1 0.56 vs 0.43, 14 calls vs 36. Remove the halt clause from the generator prompt entirely once a gate exists |
+| T28 | Gate precision is retrieval-bound | open, highest value now | The flat top-5 deviation has become the binding constraint: rerun the MA4b gate on E4's scoped retriever before tuning the predicate |
 | T2 | Agent to subagent boundary (MA10) | RUNNING 2026-10-01, five context regimes P0 to P4 | Reframed: MA10 is now the control arm of MA14, not standalone |
 | T22 | Enforced vs requested isolation (MA14) | open, highest value in backlog | Audits the whole program's method; MA10 supplies level A |
 | T23 | Real polyglottism across model families (MA15) | open, runnable now | Subagents can run different families; satisfies Lotman's two-language minimum |
@@ -31,7 +32,7 @@
 | T13 | Portability threads (D3 to D8) | open, unscoped | Pick one thread and build ten dated pairs as a feasibility test |
 | T14 | Transmission in Lotman and Tartu | closed 2026-10-01, two passes, `notes/TRANSMISSION_LOTMAN_2026-10-01.md` | Journal section 13 is unblocked; 1981 Russian original still wanted |
 | T26 | Alternation with suppression (S9) | open, new from the 1983 essay | Lotman's constitutive condition for dialogue; unmeasured by every design so far |
-| T27 | Perceptual enlargement after code transfer (S11) | open, highest theoretical payoff | Can a party make a distinction it could not make before receiving the other's code |
+| T27 | Perceptual enlargement after code transfer (S11) | open, one negative instance already in hand | MA4b is the first measured case of a transmitted code REDUCING the receiver's discrimination; see the detail section |
 | T21 | Round-trip asymmetry across dyads (MA12) | RUNNING 2026-10-01, five conditions R0 to R4 | Await `docs/experiments/MA12_roundtrip_asymmetry/RUN_2026-10-01.md` |
 | T15 | Mihhail Lotman rhetoric citation | blocked_human | Section 11 of the journal has a deliberately empty row |
 | T16 | Partial map formalism | open, writing | Decide venue: dissertation appendix or separate paper (roadmap Q5) |
@@ -45,6 +46,16 @@
 ### T1 · Rule-layer halt (MA4b)
 
 MA1 Finding 3: licensing refusal in the prompt gave recall 1.00 and false refusal 1.00 at 3B. The generator refused all eighteen items. Move the decision to where the retrieval experiment already makes it, in `e2_e4_corpus.retrieve` under condition `C_warrant_on_halt`, and give the generator only the halt string when the rule fires. Entry point: `scripts/run_ma1_typed_handoff.py`, add arm `C2b_rule_halt`. This is the single highest-value hour in the backlog because it converts a collapsed arm into a usable one.
+
+### T27 · Perceptual enlargement, and MA4b as its first negative instance
+
+Lotman's colour example (1983, printed p. 18) is the strong form of what a transmitted code is supposed to do: the left hemisphere works out a language of distinctions, the distinctions pass across as code, and only then does ordinary consciousness begin to see shades it previously could not tell apart. The receiver ends up able to make a distinction it could not make before.
+
+MA4b accidentally supplies the first measured counter-instance in this program. The halt clause is a code handed to the generator, and the generator received it and became strictly less discriminating: it refused every item, including the eleven whose hop-1 message visibly carried the very tags the clause itself names as grounds for answering. The code did not enlarge the receiver's discrimination, it destroyed it. Meanwhile the same predicate, evaluated by a rule rather than by a model, worked.
+
+So code transfer is not automatically enlarging, and whether it enlarges or collapses depends on whether the receiver can evaluate the code rather than merely pattern-match it. That is a sharper claim than anything in the first transmission pass, and it came from a run rather than from reading. It is also the cleanest available argument for why the tier-conflation worry in this project is not pedantry.
+
+Design the positive case deliberately rather than waiting for it to fall out of another run: give a receiver a code it lacks, then test a discrimination it provably failed before.
 
 ### T2, T3 · The subagent boundary
 
