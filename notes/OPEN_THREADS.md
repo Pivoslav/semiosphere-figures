@@ -25,7 +25,8 @@
 | T11 | More licensed pairs (D1) | open, archival labor | Target n of 30 or more; everything quantitative waits on this |
 | T12 | Peter plate completion (E3) | open, design decision first | Decide what individuates an edge when the third shell is empty |
 | T13 | Portability threads (D3 to D8) | open, unscoped | Pick one thread and build ten dated pairs as a feasibility test |
-| T14 | Transmission in Lotman and Tartu | in progress 2026-10-01 | See `notes/TRANSMISSION_*.md` when it lands |
+| T14 | Transmission in Lotman and Tartu | reading done 2026-10-01, `notes/TRANSMISSION_LOTMAN_2026-10-01.md` | Acquire the 1981 and 1983 companion essays; run MA12 |
+| T21 | Round-trip asymmetry across dyads (MA12) | open, runnable now | Lotman's own criterion for a creative act; forward and reverse through each dyad |
 | T15 | Mihhail Lotman rhetoric citation | blocked_human | Section 11 of the journal has a deliberately empty row |
 | T16 | Partial map formalism | open, writing | Decide venue: dissertation appendix or separate paper (roadmap Q5) |
 | T17 | Intersemiotic relay and derivation loss | open, unformalized | Tape to transcript to chapter is in the data, not in the formalism |

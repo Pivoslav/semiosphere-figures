@@ -13,7 +13,7 @@
 
 1. **Channel typing.** Does carrying shell, pair id, and proof tier on a hand-off change machine behavior measurably, or is it decoration? (MA1, MA2, MA4)
 2. **Persistence without an archive.** Does anything in a model stack behave like layered memory rather than a longer window? (MA3)
-3. **Irreducibility.** Can two systems in one pipeline stand in a relation that is not paraphrase — where something transforms, refuses, or is absent? And if yes, where does that capacity actually sit: in the stack, or in the human doing pair-read? (MA5, MA6)
+3. **Irreducibility.** Can two systems in one pipeline stand in a relation that is not paraphrase - where something transforms, refuses, or is absent? And if yes, where does that capacity actually sit: in the stack, or in the human doing pair-read? (MA5, MA6)
 
 Standing constraint on all of it: the Montreal plate has **n = 9 licensed pairs**, and the effective n is smaller because `embassy_1983` and `novosti_1983` are one denial packet. Every design below either avoids geometry claims or is gated on D1.
 
@@ -27,9 +27,9 @@ Standing constraint on all of it: the Montreal plate has **n = 9 licensed pairs*
 
 **Design.** Three arms over the same query set, two hops (A retrieves, B answers from A's output):
 
-- **Arm A** — plain text hand-off. A's message is prose.
-- **Arm B** — envelope hand-off. A's message carries `surface`, `shell`, `proof_tier`, `pair_id` per claim; B is instructed to preserve them.
-- **Arm C** — envelope plus halt. Same as B, with refusal licensed when no outward counterpart exists.
+- **Arm A** - plain text hand-off. A's message is prose.
+- **Arm B** - envelope hand-off. A's message carries `surface`, `shell`, `proof_tier`, `pair_id` per claim; B is instructed to preserve them.
+- **Arm C** - envelope plus halt. Same as B, with refusal licensed when no outward counterpart exists.
 
 **Items.** The six unpaired-family queries from §6 plus the documented-miss items (`z_pravda_1983_silence`, `z_pb1717_series_silence`). Reuse `e2_item_manifest.json` so items stay frozen.
 
@@ -51,7 +51,7 @@ Standing constraint on all of it: the Montreal plate has **n = 9 licensed pairs*
 
 **Prediction.** Monotone increase, steepest between hop 1 and 2, because that is where the surface label is first dropped.
 
-**Falsifier.** Flat curve means errors are generated at the first synthesis step and hop count is irrelevant — which would be a cleaner, narrower finding, and should be reported as such.
+**Falsifier.** Flat curve means errors are generated at the first synthesis step and hop count is irrelevant - which would be a cleaner, narrower finding, and should be reported as such.
 
 **Gate.** Human rubric authoring. Stays blocked until that exists. Do not let an agent score this.
 
@@ -63,7 +63,7 @@ Standing constraint on all of it: the Montreal plate has **n = 9 licensed pairs*
 
 **Measures.** Operator-type distribution over outputs across sessions; volume (token count, claim count) held as a control; novel-operator rate.
 
-**Prediction.** Honest prior: condition (i) produces vocabulary drift without volume change — the surface shape of autocommunication — but through retrieval of its own text, not through institutional restructuring. That distinction is the finding, not a disappointment.
+**Prediction.** Honest prior: condition (i) produces vocabulary drift without volume change - the surface shape of autocommunication - but through retrieval of its own text, not through institutional restructuring. That distinction is the finding, not a disappointment.
 
 **Falsifier.** No drift means shared notes are purely additive context, which supports Figure M2 directly: longer strip, no new layer.
 
@@ -85,11 +85,11 @@ Standing constraint on all of it: the Montreal plate has **n = 9 licensed pairs*
 
 **Question.** Can two genuinely different stacks stand in a relation that is not paraphrase?
 
-**Design.** Pair a local model with a frontier model — different tokenizer, different pretraining mixture. Hold **topic constant** and language constant, per the §2 design rule. Each stack produces an operator-coded reading of the same stretch; a blind human adjudicator classifies each disagreement as (a) style, (b) operator-level divergence, (c) one stack refuses where the other proceeds.
+**Design.** Pair a local model with a frontier model - different tokenizer, different pretraining mixture. Hold **topic constant** and language constant, per the §2 design rule. Each stack produces an operator-coded reading of the same stretch; a blind human adjudicator classifies each disagreement as (a) style, (b) operator-level divergence, (c) one stack refuses where the other proceeds.
 
 **Measures.** Proportion of disagreements in (b) and (c); residue, defined as content in one reading that cannot be rewritten into the other without loss.
 
-**Prediction.** Mostly (a). If (b) and (c) are non-trivial, there is a weak case that two non-collapsible modelling systems can be instantiated — and that case must be made on operator coding, never on cross-agent cosine.
+**Prediction.** Mostly (a). If (b) and (c) are non-trivial, there is a weak case that two non-collapsible modelling systems can be instantiated - and that case must be made on operator coding, never on cross-agent cosine.
 
 **Do not.** Score this with embedding distance between the two stacks' messages. That repeats the retracted nearest-neighbour logic in a new costume.
 
@@ -143,7 +143,7 @@ The session logs in this project, ingested as typed sign-events with surface and
 
 ### D8 · Censored translation pairs
 
-Glavlit-cut editions against their originals, or translated editions against source texts where cuts are documented. These are partial maps with recorded refusals — the textual case closest to the formalism's `forbidden` edge, with the advantage that the refusal is attested rather than inferred.
+Glavlit-cut editions against their originals, or translated editions against source texts where cuts are documented. These are partial maps with recorded refusals - the textual case closest to the formalism's `forbidden` edge, with the advantage that the refusal is attested rather than inferred.
 
 ---
 

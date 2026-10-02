@@ -23,7 +23,7 @@ Multi-agent shared memory ≈ **longer window**, not layered cultural memory, un
 
 ## §2 generalization
 
-- Cross-agent embedding distance inherits same confounds as RU/EN: language (if mixed), **topic**, weak role prompts—not shell.
+- Cross-agent embedding distance inherits same confounds as RU/EN: language (if mixed), **topic**, weak role prompts, not shell.
 - Clean test shape: same language, topic blocked, **typed relay metrics** (not cosine across heterogeneous surfaces).
 - English outward vs English rival comparison remains the template.
 
