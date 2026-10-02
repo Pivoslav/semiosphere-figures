@@ -16,7 +16,7 @@ Keep every page readable for long-form journal prose and data figures, while the
 
 ## Phase 1 (done in repo)
 
-- [x] `site-theme-vapor.css` global background stack (gradient drift, horizon grid, scanlines).
+- [x] `site-theme-vapor.css` global background stack (static purple sunrise, horizon grid, margin scanlines — **no CSS animation**).
 - [x] `site-theme-vapor.js` assigns `data-vapor-family` on `<body>`, injects decor layers, frosted content hint class.
 - [x] Nav bar tinted to match; experiment pages get wireframe corner ornaments; home gets sun disk; journal gets ruled margin stripe.
 

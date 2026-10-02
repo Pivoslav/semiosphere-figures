@@ -106,13 +106,21 @@
   resize();
 
   var t0 = performance.now();
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var needsRender = true;
+  controls.addEventListener("change", function () { needsRender = true; });
   function tick(now) {
     requestAnimationFrame(tick);
-    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (document.visibilityState !== "visible") return;
+    var motion = !reduce;
+    if (motion) {
       ext.position.y = MA13.h + Math.sin((now - t0) * 0.0012) * 0.08;
     }
-    controls.update();
-    renderer.render(scene, camera);
+    var damp = controls.update();
+    if (motion || damp || needsRender) {
+      renderer.render(scene, camera);
+      needsRender = false;
+    }
   }
   tick();
 })();

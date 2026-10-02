@@ -538,11 +538,17 @@ bindStageResize(stage, (w, h) => {
   camera.updateProjectionMatrix();
   fitThree(renderer, w, h, labelRenderer);
 });
+let needsRender = true;
+controls.addEventListener('change', () => { needsRender = true; });
 (function animate() {
   requestAnimationFrame(animate);
-  controls.update();
-  renderer.render(scene, camera);
-  if (labelRenderer) labelRenderer.render(scene, camera);
+  if (document.visibilityState !== 'visible') return;
+  const damp = controls.update();
+  if (damp || needsRender) {
+    renderer.render(scene, camera);
+    if (labelRenderer) labelRenderer.render(scene, camera);
+    needsRender = false;
+  }
 })();
 </script>
 

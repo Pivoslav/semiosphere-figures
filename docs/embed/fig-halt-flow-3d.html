@@ -124,9 +124,13 @@
   rebuild("B2");
 
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var needsRender = true;
+  controls.addEventListener("change", function () { needsRender = true; });
   function tick() {
     requestAnimationFrame(tick);
-    if (playing && !reduce) {
+    if (document.visibilityState !== "visible") return;
+    var animating = playing && !reduce;
+    if (animating) {
       particles.forEach(function (p) {
         p.userData.t += 0.004;
         if (p.userData.t > 1) p.userData.t = 0;
@@ -134,8 +138,11 @@
         p.position.copy(pt);
       });
     }
-    controls.update();
-    renderer.render(scene, camera);
+    var damp = controls.update();
+    if (animating || damp || needsRender) {
+      renderer.render(scene, camera);
+      needsRender = false;
+    }
   }
   tick();
 })();

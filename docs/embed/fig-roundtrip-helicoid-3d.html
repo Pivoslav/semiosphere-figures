@@ -233,11 +233,15 @@
   showOnly(0);
 
   var last = performance.now();
+  var needsRender = true;
+  controls.addEventListener("change", function () { needsRender = true; });
   function tick(now) {
     requestAnimationFrame(tick);
+    if (document.visibilityState !== "visible") return;
     var dt = (now - last) / 1000;
     last = now;
-    if (playing && !reduceMotion) {
+    var animating = playing && !reduceMotion;
+    if (animating) {
       travelT += dt * 0.22;
       if (travelT >= 1) {
         travelT = 0;
@@ -247,8 +251,11 @@
       }
       placeTraveler(curves[active].curve, travelT);
     }
-    controls.update();
-    renderer.render(scene, camera);
+    var damp = controls.update();
+    if (animating || damp || needsRender) {
+      renderer.render(scene, camera);
+      needsRender = false;
+    }
   }
   requestAnimationFrame(tick);
 })();

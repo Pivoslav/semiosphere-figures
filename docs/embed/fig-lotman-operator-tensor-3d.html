@@ -335,10 +335,16 @@ function resize() {
 }
 window.addEventListener('resize', resize);
 resize();
+let needsRender = true;
+controls.addEventListener('change', () => { needsRender = true; });
 (function animate() {
   requestAnimationFrame(animate);
-  controls.update();
-  renderer.render(scene, camera);
+  if (document.visibilityState !== 'visible') return;
+  const damp = controls.update();
+  if (damp || needsRender) {
+    renderer.render(scene, camera);
+    needsRender = false;
+  }
 })();
 </script>
 

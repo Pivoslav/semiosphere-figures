@@ -117,30 +117,19 @@
   function injectDecor(family) {
     if (!isEnabled()) return;
 
-    if (family === "home" || family === "montreal") {
-      var sun = document.createElement("div");
-      sun.className = "vapor-decor vapor-sun";
-      sun.setAttribute("aria-hidden", "true");
-      document.body.appendChild(sun);
-    }
+    var scanL = document.createElement("div");
+    scanL.className = "vapor-decor vapor-scanlines vapor-scanlines-left";
+    scanL.setAttribute("aria-hidden", "true");
+    document.body.appendChild(scanL);
+    var scanR = document.createElement("div");
+    scanR.className = "vapor-decor vapor-scanlines vapor-scanlines-right";
+    scanR.setAttribute("aria-hidden", "true");
+    document.body.appendChild(scanR);
 
-    if (family === "experiment" || family === "home") {
-      var c1 = document.createElement("div");
-      c1.className = "vapor-decor vapor-wire-cube";
-      c1.setAttribute("aria-hidden", "true");
-      document.body.appendChild(c1);
-      var c2 = document.createElement("div");
-      c2.className = "vapor-decor vapor-wire-cube vapor-wire-cube-2";
-      c2.setAttribute("aria-hidden", "true");
-      document.body.appendChild(c2);
-    }
-
-    if (family === "journal") {
-      var stripe = document.createElement("div");
-      stripe.className = "vapor-decor vapor-textbook-stripe";
-      stripe.setAttribute("aria-hidden", "true");
-      document.body.appendChild(stripe);
-    }
+    var sun = document.createElement("div");
+    sun.className = "vapor-decor vapor-sun";
+    sun.setAttribute("aria-hidden", "true");
+    document.body.appendChild(sun);
 
     var key = pageKey();
     var sticker = PAGE_STICKERS[key];

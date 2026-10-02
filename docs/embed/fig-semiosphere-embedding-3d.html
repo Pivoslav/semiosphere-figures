@@ -228,6 +228,16 @@ window.addEventListener('resize', resize);
 if (window.ResizeObserver) new ResizeObserver(resize).observe(stage);
 resize();
 setupPickInteraction({ el: renderer.domElement, camera: camera, pickables: pickables, hud: hud, toggleBtn: toggleBtn });
-(function anim() { requestAnimationFrame(anim); controls.update(); renderer.render(scene, camera); })();
+let needsRender = true;
+controls.addEventListener('change', () => { needsRender = true; });
+(function anim() {
+  requestAnimationFrame(anim);
+  if (document.visibilityState !== 'visible') return;
+  const damp = controls.update();
+  if (damp || needsRender) {
+    renderer.render(scene, camera);
+    needsRender = false;
+  }
+})();
 </script>
 </body></html>

@@ -128,14 +128,22 @@
   resize();
 
   var t0 = performance.now();
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var needsRender = true;
+  controls.addEventListener("change", function () { needsRender = true; });
   function tick(now) {
     requestAnimationFrame(tick);
-    if (activeCurve && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (document.visibilityState !== "visible") return;
+    var motion = activeCurve && !reduce;
+    if (motion) {
       var t = ((now - t0) * 0.00015) % 1;
       pulse.position.copy(activeCurve.getPointAt(t));
     }
-    controls.update();
-    renderer.render(scene, camera);
+    var damp = controls.update();
+    if (motion || damp || needsRender) {
+      renderer.render(scene, camera);
+      needsRender = false;
+    }
   }
   tick();
 })();

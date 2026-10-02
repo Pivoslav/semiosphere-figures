@@ -1,78 +1,96 @@
-/* Vaporwave in the margins only — #vapor-reading-shelf is a solid column (see site-theme-vapor.js) */
+/* Vaporwave margins — static “album cover” look; reading column stays opaque (#vapor-reading-shelf) */
 
 :root {
   --vapor-paper-solid: #fffdfa;
-  --vapor-magenta: #ff71ce;
   --vapor-cyan: #01cdfe;
-  --vapor-grid: rgba(1, 205, 254, 0.35);
+  --vapor-magenta: #ff71ce;
+  --vapor-violet: #8b5cf6;
+  --vapor-dawn: #f9a8d4;
+  --vapor-grid: rgba(216, 180, 254, 0.38);
+  --vapor-grid-line: rgba(255, 113, 206, 0.22);
   --vapor-shelf-max: 56rem;
   --vapor-fx-z: 0;
+  --vapor-margin-mask: linear-gradient(
+    to right,
+    #000 0,
+    #000 max(0px, calc(50% - var(--vapor-shelf-max) / 2 - 1.25rem)),
+    transparent max(0px, calc(50% - var(--vapor-shelf-max) / 2)),
+    transparent min(100%, calc(50% + var(--vapor-shelf-max) / 2)),
+    #000 min(100%, calc(50% + var(--vapor-shelf-max) / 2 + 1.25rem))
+  );
 }
 
 html.has-vapor-theme {
   min-height: 100%;
 }
 
-/* Animated backdrop — masked so the center strip never receives sky/grid (belt + suspenders) */
+/* Theme backdrop is always static (no drifting sky, no floating decor) */
+html.has-vapor-theme::before,
+html.has-vapor-theme::after,
+body.has-vapor-theme > .vapor-decor {
+  animation: none !important;
+  animation-name: none !important;
+}
+
+/* Static purple sunrise — no animation; soft sun bloom in the margin */
 html.has-vapor-theme::before {
   content: "";
   position: fixed;
   inset: 0;
   z-index: var(--vapor-fx-z);
-  background: linear-gradient(
-    180deg,
-    #2d1b69 0%,
-    #6b5bff 22%,
-    #ff71ce 48%,
-    #ff9a56 72%,
-    #01cdfe 100%
-  );
-  background-size: 100% 200%;
-  animation: vapor-sky 28s ease-in-out infinite alternate;
   pointer-events: none;
-  -webkit-mask-image: linear-gradient(
-    to right,
-    #000 0,
-    #000 max(0px, calc(50% - var(--vapor-shelf-max) / 2 - 1.5rem)),
-    transparent max(0px, calc(50% - var(--vapor-shelf-max) / 2)),
-    transparent min(100%, calc(50% + var(--vapor-shelf-max) / 2)),
-    #000 min(100%, calc(50% + var(--vapor-shelf-max) / 2 + 1.5rem))
-  );
-  mask-image: linear-gradient(
-    to right,
-    #000 0,
-    #000 max(0px, calc(50% - var(--vapor-shelf-max) / 2 - 1.5rem)),
-    transparent max(0px, calc(50% - var(--vapor-shelf-max) / 2)),
-    transparent min(100%, calc(50% + var(--vapor-shelf-max) / 2)),
-    #000 min(100%, calc(50% + var(--vapor-shelf-max) / 2 + 1.5rem))
-  );
+  transform: translateZ(0);
+  contain: strict;
+  background:
+    radial-gradient(
+      ellipse 95% 55% at 82% 14%,
+      rgba(255, 214, 165, 0.55) 0%,
+      rgba(255, 113, 206, 0.35) 28%,
+      rgba(139, 92, 246, 0.12) 52%,
+      transparent 68%
+    ),
+    radial-gradient(
+      ellipse 120% 40% at 50% 100%,
+      rgba(192, 132, 252, 0.35) 0%,
+      rgba(88, 28, 135, 0.2) 45%,
+      transparent 70%
+    ),
+    linear-gradient(
+      180deg,
+      #12082a 0%,
+      #2d1b69 12%,
+      #5b21b6 26%,
+      #7c3aed 38%,
+      #c026d3 52%,
+      #f472b6 64%,
+      #fdba74 76%,
+      #e9d5ff 88%,
+      #6d28d9 100%
+    );
+  -webkit-mask-image: var(--vapor-margin-mask);
+  mask-image: var(--vapor-margin-mask);
 }
 
-@keyframes vapor-sky {
-  0% {
-    background-position: 0% 0%;
-  }
-  100% {
-    background-position: 0% 100%;
-  }
-}
-
+/* Perspective grid — fixed, margin-only (same look as early “home” build) */
 html.has-vapor-theme::after {
   content: "";
   position: fixed;
   left: -50%;
   right: -50%;
-  bottom: -20%;
-  height: 55%;
+  bottom: -18%;
+  height: 52%;
   z-index: var(--vapor-fx-z);
-  transform: perspective(320px) rotateX(58deg);
-  transform-origin: center bottom;
-  background-image: linear-gradient(var(--vapor-grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--vapor-grid) 1px, transparent 1px);
-  background-size: 48px 48px;
-  mask-image: linear-gradient(to top, black 40%, transparent 95%);
-  opacity: 0.85;
   pointer-events: none;
+  transform: perspective(320px) rotateX(58deg) translateZ(0);
+  transform-origin: center bottom;
+  contain: strict;
+  opacity: 0.78;
+  background-image: linear-gradient(var(--vapor-grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--vapor-grid) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: linear-gradient(to top, black 38%, transparent 94%), var(--vapor-margin-mask);
+  mask-composite: intersect;
+  -webkit-mask-image: linear-gradient(to top, black 38%, transparent 94%), var(--vapor-margin-mask);
   -webkit-mask-composite: source-in;
 }
 
@@ -86,21 +104,33 @@ body.has-vapor-theme {
 body.has-vapor-theme > .vapor-decor {
   z-index: var(--vapor-fx-z);
   pointer-events: none;
+  contain: layout style paint;
 }
 
 .vapor-decor {
   position: fixed;
 }
 
+/* Scan-striped sun — purple sunrise disk in the right margin */
 .vapor-sun {
-  width: 120px;
-  height: 120px;
-  top: calc(var(--site-nav-total-h, var(--site-nav-h, 3rem)) + 1rem);
+  width: 132px;
+  height: 132px;
+  top: calc(var(--site-nav-total-h, var(--site-nav-h, 3rem)) + 1.25rem);
   right: max(0.75rem, calc((100vw - var(--vapor-shelf-max)) / 2 - 7rem));
   border-radius: 50%;
-  background: linear-gradient(180deg, #ffe9a0 0%, #ff71ce 55%, #ff9a56 100%);
-  box-shadow: 0 0 48px rgba(255, 113, 206, 0.45);
-  opacity: 0.45;
+  background: linear-gradient(
+    180deg,
+    #fff1c9 0%,
+    #fde68a 18%,
+    #f9a8d4 42%,
+    #e879f9 68%,
+    #a855f7 100%
+  );
+  box-shadow:
+    0 0 64px rgba(232, 121, 249, 0.55),
+    0 0 120px rgba(124, 58, 237, 0.35),
+    inset 0 -8px 24px rgba(88, 28, 135, 0.25);
+  opacity: 0.58;
 }
 
 .vapor-sun::before {
@@ -111,60 +141,35 @@ body.has-vapor-theme > .vapor-decor {
   background: repeating-linear-gradient(
     0deg,
     transparent,
-    transparent 6px,
-    rgba(255, 255, 255, 0.35) 6px,
-    rgba(255, 255, 255, 0.35) 10px
+    transparent 5px,
+    rgba(255, 255, 255, 0.42) 5px,
+    rgba(255, 255, 255, 0.42) 9px
   );
 }
 
-.vapor-wire-cube {
-  width: 64px;
-  height: 64px;
-  bottom: 16%;
-  left: max(0.5rem, calc((100vw - var(--vapor-shelf-max)) / 2 - 5rem));
-  border: 2px solid rgba(1, 205, 254, 0.65);
-  transform: rotate(45deg);
-  box-shadow: 10px 10px 0 rgba(255, 113, 206, 0.2);
-  animation: vapor-float 9s ease-in-out infinite;
-}
-
-.vapor-wire-cube.vapor-wire-cube-2 {
-  left: auto;
-  right: max(0.5rem, calc((100vw - var(--vapor-shelf-max)) / 2 - 4rem));
-  bottom: 20%;
-  width: 44px;
-  height: 44px;
-  animation-delay: -4s;
-  border-color: rgba(255, 113, 206, 0.7);
-}
-
-@keyframes vapor-float {
-  0%,
-  100% {
-    transform: rotate(45deg) translateY(0);
-  }
-  50% {
-    transform: rotate(45deg) translateY(-10px);
-  }
-}
-
-.vapor-textbook-stripe {
+/* CRT scanlines — left/right margin strips only (no full-screen overlay) */
+.vapor-scanlines {
   top: var(--site-nav-total-h, var(--site-nav-h, 3rem));
   bottom: 0;
-  left: max(0px, calc((100vw - var(--vapor-shelf-max)) / 2 - 36px));
-  width: 24px;
+  width: max(0px, calc((100vw - var(--vapor-shelf-max)) / 2 - 0.5rem));
+  opacity: 0.055;
   background: repeating-linear-gradient(
-    180deg,
-    #ffe566 0,
-    #ffe566 8px,
-    #fff 8px,
-    #fff 16px
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(46, 16, 84, 0.35) 2px,
+    rgba(46, 16, 84, 0.35) 3px
   );
-  opacity: 0.28;
-  border-right: 2px solid rgba(107, 91, 255, 0.35);
 }
 
-/* Injected wrapper: all page content lives here */
+.vapor-scanlines.vapor-scanlines-left {
+  left: 0;
+}
+
+.vapor-scanlines.vapor-scanlines-right {
+  right: 0;
+}
+
 #vapor-reading-shelf {
   position: relative;
   z-index: 2;
@@ -219,22 +224,17 @@ body.has-vapor-theme p.site-trail {
 }
 
 body.has-vapor-theme #site-nav-bar {
-  background: linear-gradient(90deg, #1a1033 0%, #3d2a7a 50%, #1a1033 100%);
-  border-bottom-color: var(--vapor-cyan);
+  background: linear-gradient(90deg, #12082a 0%, #4c1d95 42%, #7e22ce 58%, #12082a 100%);
+  border-bottom-color: var(--vapor-dawn);
 }
 
 body.has-vapor-theme #site-nav-drawer header {
-  background: linear-gradient(135deg, #2d1b69, #6b5bff);
-  border-bottom-color: var(--vapor-magenta);
-}
-
-html.has-vapor-theme:has(body[data-vapor-family="montreal"])::after {
-  opacity: 1;
-  background-size: 36px 36px;
+  background: linear-gradient(135deg, #2e1065, #7c3aed 55%, #db2777);
+  border-bottom-color: #f0abfc;
 }
 
 html.has-vapor-theme:has(body[data-vapor-family="legacy"])::before {
-  filter: saturate(0.65) hue-rotate(-10deg);
+  filter: saturate(0.75) hue-rotate(4deg);
 }
 
 html.vapor-theme-off::before,
@@ -258,16 +258,8 @@ html.vapor-theme-off #vapor-reading-shelf {
 
 @media (prefers-reduced-motion: reduce) {
   html.has-vapor-theme::before,
-  .vapor-wire-cube {
+  html.has-vapor-theme::after {
     animation: none !important;
-  }
-}
-
-@media (max-width: 640px) {
-  .vapor-sun,
-  .vapor-wire-cube,
-  .vapor-wire-cube-2 {
-    opacity: 0.15;
   }
 }
 
@@ -279,5 +271,17 @@ html.vapor-theme-off #vapor-reading-shelf {
   }
   #vapor-reading-shelf {
     background: #fff !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .vapor-sun {
+    width: 88px;
+    height: 88px;
+    opacity: 0.38;
+    right: 0.5rem;
+  }
+  .vapor-scanlines {
+    display: none;
   }
 }

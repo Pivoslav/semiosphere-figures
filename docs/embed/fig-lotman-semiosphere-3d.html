@@ -547,18 +547,25 @@ bindStageResize(stage, (w, h) => {
   camera.updateProjectionMatrix();
   fitThree(renderer, w, h, labelRenderer);
 });
+let needsRender = true;
+controls.addEventListener('change', () => { needsRender = true; });
 (function animate() {
   requestAnimationFrame(animate);
-  if (!reduceMotion && pulseDots.length) {
+  if (document.visibilityState !== 'visible') return;
+  const damp = controls.update();
+  const pulseActive = !reduceMotion && pulseDots.length;
+  if (pulseActive) {
     const t0 = performance.now() * 0.00012;
     pulseDots.forEach(({ dot, arc }, i) => {
       const t = (t0 + i * 0.11) % 1;
       dot.position.copy(arc.curve.getPointAt(t));
     });
   }
-  controls.update();
-  renderer.render(scene, camera);
-  if (labelRenderer) labelRenderer.render(scene, camera);
+  if (pulseActive || damp || needsRender) {
+    renderer.render(scene, camera);
+    if (labelRenderer) labelRenderer.render(scene, camera);
+    needsRender = false;
+  }
 })();
 </script>
 
