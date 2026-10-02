@@ -32,8 +32,29 @@
 
   var NAV = [
     {
-      label: "Start",
-      children: [{ label: "Figures home", href: "index.html" }],
+      label: "Figures",
+      children: [
+        { label: "Home", href: "index.html" },
+        { label: "Animated 3D figures (hub)", href: "figures_animated_3d.html" },
+      ],
+    },
+    {
+      label: "Animated 3D",
+      children: [
+        { label: "Hub · all motion & orbit figures", href: "figures_animated_3d.html" },
+        { label: "Round-trip helicoid (MA12)", href: "embed/fig-roundtrip-helicoid-3d.html" },
+        { label: "Halt flow (MA4b)", href: "embed/fig-halt-flow-3d.html" },
+        { label: "Polyglottism dyad cube (MA15)", href: "embed/fig-ma15-dyad-cube-3d.html" },
+        { label: "Delegation stack (MA13)", href: "embed/fig-delegation-stack-3d.html" },
+        { label: "Isolation source field (MA10)", href: "embed/fig-isolation-field-3d.html" },
+        { label: "Transmission cells · 3D", href: "embed/fig-transmission-cells-3d.html" },
+        { label: "Lotman semiosphere L1 · pulse", href: "embed/fig-lotman-semiosphere-3d.html" },
+        { label: "Semiosphere embedding · orbit", href: "embed/fig-semiosphere-embedding-3d.html" },
+        { label: "Operator tensor L2", href: "embed/fig-lotman-operator-tensor-3d.html" },
+        { label: "Explosion L3", href: "embed/fig-lotman-explosion-3d.html" },
+        { label: "Ideal semiosphere demo", href: "embed/fig-lotman-semiosphere-demo-3d.html" },
+        { label: "Lotman 3D gallery (4 embeds)", href: "lotman_3d_evidence.html" },
+      ],
     },
     {
       label: "Research journal",
@@ -53,12 +74,8 @@
       children: [
         { label: "Multi-agent hand-offs vs bilingual relay", href: "embed/fig-multi-agent-typing.html" },
         { label: "Round-trip asymmetry (MA12)", href: "embed/fig-roundtrip-asymmetry.html" },
-        { label: "Round-trip · 3D orbit model (MA12)", href: "embed/fig-roundtrip-helicoid-3d.html" },
         { label: "Where refusal is decided (MA4b)", href: "embed/fig-halt-adjudication.html" },
-        { label: "Halt flow · 3D (MA4b)", href: "embed/fig-halt-flow-3d.html" },
         { label: "Transmission cells (MA4b, MA13)", href: "embed/fig-transmission-cells.html" },
-        { label: "Transmission cells · 3D", href: "embed/fig-transmission-cells-3d.html" },
-        { label: "Polyglottism · 3D dyad cube (MA15)", href: "embed/fig-ma15-dyad-cube-3d.html" },
         { label: "Delegation corpus (MA13)", href: "embed/fig-delegation-corpus.html" },
         { label: "Isolation and laundering (MA10)", href: "embed/fig-isolation-laundering.html" },
       ],
@@ -66,17 +83,12 @@
     {
       label: "Montreal pilot figures",
       children: [
-        { label: "Semiosphere 3D embedding", href: "embed/fig-semiosphere-embedding-3d.html" },
         { label: "Partial map (Montreal)", href: "embed/fig-partial-map-montreal.html" },
         { label: "Theme vs register", href: "embed/fig-theme-vs-register.html" },
         { label: "Honest plain heatmap", href: "embed/fig-honest-plain-heatmap.html" },
         { label: "Filter L1", href: "embed/fig-filter-l1.html" },
         { label: "Filter L2", href: "embed/fig-filter-l2.html" },
         { label: "Probe controls", href: "embed/fig-probe-controls.html" },
-        { label: "Lotman semiosphere 3D", href: "embed/fig-lotman-semiosphere-3d.html" },
-        { label: "Operator tensor 3D", href: "embed/fig-lotman-operator-tensor-3d.html" },
-        { label: "Explosion 3D", href: "embed/fig-lotman-explosion-3d.html" },
-        { label: "Semiosphere demo 3D", href: "embed/fig-lotman-semiosphere-demo-3d.html" },
       ],
     },
     {
@@ -108,6 +120,20 @@
   ];
 
   var RELATED = {
+    "index.html": [{ t: "Animated 3D hub", h: "figures_animated_3d.html" }],
+    "figures_animated_3d.html": [
+      { t: "Figures home", h: "index.html" },
+      { t: "Lotman 3D gallery", h: "lotman_3d_evidence.html" },
+      { t: "Journal", h: "theory/LOTMAN_INTERPRETATION.html" },
+    ],
+    "embed/fig-delegation-stack-3d.html": [
+      { t: "Animated 3D hub", h: "../figures_animated_3d.html" },
+      { t: "MA13 (2D)", h: "fig-delegation-corpus.html" },
+    ],
+    "embed/fig-isolation-field-3d.html": [
+      { t: "Animated 3D hub", h: "../figures_animated_3d.html" },
+      { t: "MA10 (2D)", h: "fig-isolation-laundering.html" },
+    ],
     "embed/fig-multi-agent-typing.html": [
       { t: "Journal §10", h: "theory/LOTMAN_INTERPRETATION.html#s10" },
       { t: "Journal §12 (MA1)", h: "theory/LOTMAN_INTERPRETATION.html#s12" },
@@ -254,6 +280,12 @@
     bar.id = "site-nav-bar";
     bar.innerHTML =
       '<div class="site-nav-inner">' +
+      '<a class="site-nav-home" href="' +
+      href("index.html") +
+      '" aria-label="Figures home">' +
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">' +
+      '<path d="M4 10.5L12 4l8 6.5V19a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1v-8.5z"/>' +
+      "</svg></a>" +
       '<button type="button" id="site-nav-burger" aria-label="Open site menu" aria-expanded="false" aria-controls="site-nav-drawer">' +
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">' +
       "<path d=\"M4 7h16M4 12h16M4 17h16\"/>" +
@@ -261,6 +293,9 @@
       '<a class="site-nav-title" href="' +
       href("index.html") +
       '">Figures</a>' +
+      '<a class="site-nav-motion" href="' +
+      href("figures_animated_3d.html") +
+      '">3D motion</a>' +
       "</div>";
 
     var overlay = document.createElement("div");

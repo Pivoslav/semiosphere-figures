@@ -39,6 +39,7 @@
     ) {
       return "experiment";
     }
+    if (key === "figures_animated_3d.html") return "home";
     if (
       key.indexOf("embed/fig-semiosphere") === 0 ||
       key.indexOf("embed/fig-partial-map") === 0 ||
@@ -61,6 +62,8 @@
     "embed/fig-multi-agent-typing.html": "M1-3",
     "embed/fig-isolation-laundering.html": "MA10",
     "embed/fig-delegation-corpus.html": "MA13",
+    "embed/fig-delegation-stack-3d.html": "MA13",
+    "embed/fig-isolation-field-3d.html": "MA10",
   };
 
   function isEnabled() {

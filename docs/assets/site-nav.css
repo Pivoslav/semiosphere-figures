@@ -44,6 +44,48 @@ body.has-site-nav {
   min-width: 0;
 }
 
+#site-nav-bar .site-nav-home {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 6px;
+  color: var(--site-nav-ink);
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+#site-nav-bar .site-nav-home:hover {
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+}
+
+#site-nav-bar .site-nav-home svg {
+  display: block;
+  width: 18px;
+  height: 18px;
+}
+
+#site-nav-bar .site-nav-motion {
+  flex-shrink: 0;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #e9d5ff;
+  text-decoration: none;
+  padding: 0.35rem 0.55rem;
+  border: 1px solid rgba(233, 213, 255, 0.35);
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+#site-nav-bar .site-nav-motion:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
 #site-nav-burger {
   display: flex;
   align-items: center;
@@ -245,6 +287,10 @@ p.site-trail a {
 @media (max-width: 520px) {
   #site-nav-bar .site-nav-title {
     font-size: 0.8rem;
+  }
+  #site-nav-bar .site-nav-motion {
+    font-size: 0.72rem;
+    padding: 0.3rem 0.4rem;
   }
 }
 

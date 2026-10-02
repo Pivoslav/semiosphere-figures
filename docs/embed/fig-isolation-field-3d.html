@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<!-- MA10 companion: isolated vs baseline source field (animated metaphor) -->
+<html lang="en">
+<head>
+<link rel="stylesheet" href="../assets/site-theme-vapor.css"/>
+<script defer src="../assets/site-theme-vapor.js"></script>
+<meta name="site-nav-root" content="../"/>
+<link rel="stylesheet" href="../assets/site-nav.css"/>
+<script defer src="../assets/site-nav.js"></script>
+<meta name="robots" content="noindex, nofollow"/>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="color-scheme" content="light"/>
+<title>Isolation · 3D source field (MA10)</title>
+<style>
+  :root { --ink:#1a1814; --muted:#5c564c; --rule:#d8d0c4; --wash:#f6f4ef; --accent:#2a4a6f; }
+  body { margin:0; font-family: Georgia, serif; font-size: 11.5pt; line-height: 1.55; color: var(--ink);
+    max-width: 56rem; margin: 0 auto; padding: 1rem 1.25rem 2rem; background: #fff; }
+  h1 { font-size: 1.35rem; margin: 0 0 0.35rem; }
+  a { color: var(--accent); }
+  .embed-back { font-size: 0.88rem; margin: 0 0 0.85rem; }
+  .lede { background: var(--wash); border: 1px solid var(--rule); padding: 0.75rem 0.95rem; margin: 0.75rem 0; font-size: 0.93rem; }
+  .viz-stage { position: relative; border: 1px solid var(--rule); border-radius: 8px; overflow: hidden;
+    background: #faf8f4; height: min(58vh, 480px); min-height: 320px; }
+  #viz3d { position: absolute; inset: 0; cursor: grab; }
+  .viz-controls { margin: 0.55rem 0; font-family: system-ui, sans-serif; font-size: 0.78rem; }
+  .viz-controls button { font: inherit; padding: 0.35rem 0.55rem; border: 1px solid var(--rule); border-radius: 5px; background: #fff; cursor: pointer; }
+  .cap { font-size: 0.86rem; color: var(--muted); margin: 0.35rem 0 0; max-width: 65ch; }
+</style>
+</head>
+<body>
+<p class="embed-back"><a href="../figures_animated_3d.html">&larr; Animated 3D hub</a> · <a href="fig-isolation-laundering.html">MA10 (2D)</a> · <a href="../theory/LOTMAN_INTERPRETATION.html#s15">Journal §15</a></p>
+<h1>Isolation · 3D source field</h1>
+<div class="lede">Left hemisphere: <strong>P0</strong> (corpus shared) — particles stay inside, low unsupported-claim rate (0.2167 mean in I1). Right: <strong>P3</strong> (isolated, no sources) — particles spawn without corpus backing and bleed outward through a typed tag gate (laundering metaphor). Animation is illustrative; ordering matches I1: P3 posts highest content gain (~26.9 types).</div>
+<div class="viz-stage" id="viz-stage"><div id="viz3d"></div></div>
+<div class="viz-controls"><button type="button" id="btnPlay">Play field</button></div>
+<p class="cap">Drag to orbit. Red drift = invention crossing the boundary with a real identifier attached.</p>
+<script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>
+<script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+(function () {
+  var stage = document.getElementById("viz-stage");
+  var mount = document.getElementById("viz3d");
+  var scene = new THREE.Scene();
+  scene.background = new THREE.Color(0xfaf8f4);
+  var camera = new THREE.PerspectiveCamera(44, 1, 0.1, 60);
+  camera.position.set(0, 4, 9);
+  var renderer = new THREE.WebGLRenderer({ antialias: true });
+  mount.appendChild(renderer.domElement);
+  var controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls.target.set(0, 1, 0);
+  scene.add(new THREE.AmbientLight(0xffffff, 0.72));
+  var dir = new THREE.DirectionalLight(0xffffff, 0.75);
+  dir.position.set(3, 6, 5);
+  scene.add(dir);
+
+  function dome(x, color, label) {
+    var g = new THREE.SphereGeometry(2.2, 32, 20, 0, Math.PI * 2, 0, Math.PI / 2);
+    var shell = new THREE.Mesh(g, new THREE.MeshPhongMaterial({
+      color: color, transparent: true, opacity: 0.22, side: THREE.DoubleSide
+    }));
+    shell.position.set(x, 0, 0);
+    scene.add(shell);
+    var ring = new THREE.Mesh(
+      new THREE.RingGeometry(2.15, 2.35, 48),
+      new THREE.MeshBasicMaterial({ color: color, side: THREE.DoubleSide, transparent: true, opacity: 0.5 })
+    );
+    ring.rotation.x = -Math.PI / 2;
+    ring.position.set(x, 0.02, 0);
+    scene.add(ring);
+    return { x: x, label: label };
+  }
+
+  var left = dome(-3.2, 0x2a4a6f, "P0");
+  var right = dome(3.2, 0x9a3b3b, "P3");
+
+  var gate = new THREE.Mesh(
+    new THREE.BoxGeometry(0.15, 1.2, 0.8),
+    new THREE.MeshPhongMaterial({ color: 0x6d28d9, emissive: 0x2e1065, emissiveIntensity: 0.3 })
+  );
+  gate.position.set(3.2, 0.6, 2.3);
+  scene.add(gate);
+
+  var particles = [];
+  function spawn(side, rogue) {
+    var p = new THREE.Mesh(
+      new THREE.SphereGeometry(0.08, 10, 10),
+      new THREE.MeshBasicMaterial({ color: rogue ? 0xc45c26 : 0x2a4a6f })
+    );
+    var hem = side === "L" ? left : right;
+    p.userData = {
+      side: side,
+      rogue: rogue,
+      t: Math.random(),
+      speed: 0.003 + Math.random() * 0.004,
+      ang: Math.random() * Math.PI * 2,
+      r: 0.3 + Math.random() * 1.5
+    };
+    p.position.set(hem.x + Math.cos(p.userData.ang) * p.userData.r, 0.2 + Math.random() * 1.2, Math.sin(p.userData.ang) * p.userData.r);
+    scene.add(p);
+    particles.push(p);
+  }
+  for (var i = 0; i < 24; i++) spawn("L", false);
+  for (var j = 0; j < 18; j++) spawn("R", true);
+
+  var playing = false;
+  document.getElementById("btnPlay").onclick = function () {
+    playing = !playing;
+    this.textContent = playing ? "Pause" : "Play field";
+  };
+
+  function resize() {
+    var w = Math.max(stage.clientWidth, 280), h = Math.max(stage.clientHeight, 240);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setSize(w, h);
+  }
+  window.addEventListener("resize", resize);
+  resize();
+
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var needsRender = true;
+  controls.addEventListener("change", function () { needsRender = true; });
+  function tick() {
+    requestAnimationFrame(tick);
+    if (document.visibilityState !== "visible") return;
+    var animating = playing && !reduce;
+    if (animating) {
+      particles.forEach(function (p) {
+        var u = p.userData;
+        u.ang += u.speed;
+        var hemX = u.side === "L" ? left.x : right.x;
+        p.position.x = hemX + Math.cos(u.ang) * u.r;
+        p.position.z = Math.sin(u.ang) * u.r;
+        if (u.rogue && u.r < 2.1) u.r += 0.006;
+        if (u.rogue && p.position.z > 1.8 && p.position.x > 2.5) {
+          p.position.z -= 0.02;
+          p.position.x += 0.015;
+        }
+      });
+    }
+    var damp = controls.update();
+    if (animating || damp || needsRender) {
+      renderer.render(scene, camera);
+      needsRender = false;
+    }
+  }
+  tick();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="assets/site-theme-vapor.css"/>
+<script defer src="assets/site-theme-vapor.js"></script>
+<meta name="site-nav-root" content=""/>
+<link rel="stylesheet" href="assets/site-nav.css"/>
+<script defer src="assets/site-nav.js"></script>
+<meta name="robots" content="noindex, nofollow"/>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Animated 3D figures</title>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,600&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root { --paper:#f7f4ef; --ink:#1a1814; --muted:#5c564c; --line:#d8d0c4; --accent:#2a4a6f; --motion:#7c3aed; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "Source Sans 3", system-ui, sans-serif; background: var(--paper); color: var(--ink); line-height: 1.55; }
+  main { max-width: 52rem; margin: 0 auto; padding: 1.15rem 1.15rem 2.5rem; }
+  h1 { font-family: Literata, Georgia, serif; font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; }
+  .intro { font-size: 0.92rem; color: var(--muted); margin: 0 0 1.25rem; max-width: 48rem; }
+  h2 { font-family: Literata, Georgia, serif; font-size: 1rem; margin: 1.75rem 0 0.65rem; padding-top: 0.5rem; border-top: 1px solid var(--line); color: var(--motion); font-weight: 600; }
+  h2:first-of-type { border-top: none; margin-top: 0.5rem; padding-top: 0; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(14.5rem, 1fr)); gap: 0.85rem; }
+  .card { background: #fffdfa; border: 1px solid var(--line); border-radius: 8px; padding: 0.95rem 1rem; }
+  .card.motion { border-color: #c4b5fd; box-shadow: 0 2px 12px rgba(124, 58, 237, 0.08); }
+  .card h3 { margin: 0 0 0.35rem; font-size: 0.95rem; color: var(--accent); }
+  .card .tag { display: inline-block; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #6d28d9; margin-bottom: 0.35rem; }
+  .card p { margin: 0 0 0.6rem; font-size: 0.84rem; color: var(--muted); }
+  .card a { font-weight: 600; font-size: 0.86rem; color: var(--ink); }
+  .gallery-link { margin-top: 1rem; font-size: 0.88rem; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Animated 3D figures</h1>
+  <p class="intro">Motion lives in the figure stage (WebGL), not in the site background. Each embed states what axis or animation encodes; 2D charts on sibling pages remain the audit trail. Use <strong>Play</strong> where offered; drag to orbit; reduced-motion OS settings freeze autoplay.</p>
+
+  <h2>Time · flow · pulse</h2>
+  <div class="grid">
+    <article class="card motion">
+      <span class="tag">MA12 · Play</span>
+      <h3>Round-trip helicoid</h3>
+      <p>Traveler on open vs lossy register orbits; one loop per dyad.</p>
+      <a href="embed/fig-roundtrip-helicoid-3d.html">Open →</a>
+    </article>
+    <article class="card motion">
+      <span class="tag">MA4b · Play</span>
+      <h3>Halt flow model</h3>
+      <p>Batch particles: generator twice (B2) vs gate halt (D2).</p>
+      <a href="embed/fig-halt-flow-3d.html">Open →</a>
+    </article>
+    <article class="card motion">
+      <span class="tag">MA15 · Pulse</span>
+      <h3>Polyglottism dyad cube</h3>
+      <p>Signal pulse along the active bilingual ribbon.</p>
+      <a href="embed/fig-ma15-dyad-cube-3d.html">Open →</a>
+    </article>
+    <article class="card motion">
+      <span class="tag">MA13 · Play</span>
+      <h3>Delegation stack</h3>
+      <p>26 hand-offs as columns; height = compression ratio (log spread 1.25–23.65).</p>
+      <a href="embed/fig-delegation-stack-3d.html">Open →</a>
+    </article>
+    <article class="card motion">
+      <span class="tag">MA10 · Play</span>
+      <h3>Isolation source field</h3>
+      <p>P0 baseline vs P3 isolated: invention bleeding through a typed tag gate.</p>
+      <a href="embed/fig-isolation-field-3d.html">Open →</a>
+    </article>
+    <article class="card motion">
+      <span class="tag">T1 · Pulse</span>
+      <h3>Transmission cells room</h3>
+      <p>Lotman wire rooms; MA13 median point pulses outside every cell.</p>
+      <a href="embed/fig-transmission-cells-3d.html">Open →</a>
+    </article>
+    <article class="card motion">
+      <span class="tag">Montreal · Pulse</span>
+      <h3>Empirical semiosphere L1</h3>
+      <p>Relay arcs with moving dots on proven thematic paths.</p>
+      <a href="embed/fig-lotman-semiosphere-3d.html">Open →</a>
+    </article>
+  </div>
+
+  <h2>Orbit · structure (no autoplay)</h2>
+  <div class="grid">
+    <article class="card">
+      <span class="tag">Montreal</span>
+      <h3>Semiosphere embedding</h3>
+      <p>Nested shells, PCA positions, static relay geometry.</p>
+      <a href="embed/fig-semiosphere-embedding-3d.html">Open →</a>
+    </article>
+    <article class="card">
+      <span class="tag">Lotman</span>
+      <h3>Operator tensor L2</h3>
+      <p>Operator skew as spatial heat columns.</p>
+      <a href="embed/fig-lotman-operator-tensor-3d.html">Open →</a>
+    </article>
+    <article class="card">
+      <span class="tag">Lotman</span>
+      <h3>Explosion bifurcation L3</h3>
+      <p>Pre/post 1983 co-occurrence rewire.</p>
+      <a href="embed/fig-lotman-explosion-3d.html">Open →</a>
+    </article>
+    <article class="card">
+      <span class="tag">Illustration</span>
+      <h3>Ideal semiosphere demo</h3>
+      <p>Fabricated target-state companions and arcs.</p>
+      <a href="embed/fig-lotman-semiosphere-demo-3d.html">Open →</a>
+    </article>
+  </div>
+
+  <p class="gallery-link"><a href="lotman_3d_evidence.html">Lotman 3D gallery</a> (four stacked embeds) · <a href="index.html">All figures home</a></p>
+</main>
+</body>
+</html>
