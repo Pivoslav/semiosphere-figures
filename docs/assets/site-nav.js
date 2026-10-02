@@ -251,6 +251,13 @@
       "<header><strong>All pages</strong><span>Research journal, experiment figures, Montreal pilot</span></header>";
     drawer.appendChild(buildDrawerNav());
 
+    var themeToggle = document.createElement("p");
+    themeToggle.style.cssText =
+      "margin:0.75rem 1rem 1rem;font-size:0.82rem;font-family:system-ui,sans-serif;color:#5c564c;";
+    themeToggle.innerHTML =
+      '<button type="button" id="site-nav-vapor-toggle" style="background:none;border:1px dashed #ccc;padding:0.35rem 0.5rem;cursor:pointer;font:inherit;color:#2a4a6f;">Toggle vapor background</button>';
+    drawer.appendChild(themeToggle);
+
     document.body.insertBefore(bar, document.body.firstChild);
     document.body.appendChild(overlay);
     document.body.appendChild(drawer);
@@ -286,6 +293,12 @@
         setOpen(false);
       });
     });
+    var vbtn = document.getElementById("site-nav-vapor-toggle");
+    if (vbtn && typeof window.__vaporThemeToggle === "function") {
+      vbtn.addEventListener("click", function () {
+        window.__vaporThemeToggle();
+      });
+    }
   }
 
   function injectTrail() {

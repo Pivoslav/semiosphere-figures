@@ -1,0 +1,282 @@
+/* Vaporwave / textbook CD-ROM atmosphere (Phase 1: CSS only) */
+
+:root {
+  --vapor-ink: #1a1033;
+  --vapor-paper: rgba(255, 253, 250, 0.93);
+  --vapor-paper-solid: #fffdfa;
+  --vapor-magenta: #ff71ce;
+  --vapor-cyan: #01cdfe;
+  --vapor-purple: #6b5bff;
+  --vapor-sunset: #ff9a56;
+  --vapor-grid: rgba(1, 205, 254, 0.35);
+}
+
+html.has-vapor-theme {
+  min-height: 100%;
+}
+
+body.has-vapor-theme {
+  position: relative;
+  min-height: 100vh;
+  background-color: transparent;
+  color: var(--vapor-ink);
+}
+
+body.has-vapor-theme[data-vapor-family="experiment"],
+body.has-vapor-theme[data-vapor-family="montreal"],
+body.has-vapor-theme[data-vapor-family="theory"] {
+  background: var(--vapor-paper) !important;
+  box-shadow: 0 12px 64px rgba(18, 8, 42, 0.45);
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 8px;
+  max-width: 56rem;
+}
+
+/* Animated sky */
+body.has-vapor-theme::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  background: linear-gradient(
+    180deg,
+    #2d1b69 0%,
+    #6b5bff 22%,
+    #ff71ce 48%,
+    #ff9a56 72%,
+    #01cdfe 100%
+  );
+  background-size: 100% 200%;
+  animation: vapor-sky 28s ease-in-out infinite alternate;
+}
+
+@keyframes vapor-sky {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+/* Perspective grid floor */
+body.has-vapor-theme::after {
+  content: "";
+  position: fixed;
+  left: -50%;
+  right: -50%;
+  bottom: -20%;
+  height: 55%;
+  z-index: -2;
+  transform: perspective(320px) rotateX(58deg);
+  transform-origin: center bottom;
+  background-image: linear-gradient(var(--vapor-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--vapor-grid) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(to top, black 40%, transparent 95%);
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+/* Scanlines */
+.vapor-scanlines {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.07;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.4) 2px,
+    rgba(0, 0, 0, 0.4) 3px
+  );
+}
+
+/* Injected decor */
+.vapor-decor {
+  position: fixed;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.vapor-sun {
+  width: 140px;
+  height: 140px;
+  top: calc(var(--site-nav-h, 2.75rem) + 1.5rem);
+  right: 4%;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #ffe9a0 0%, #ff71ce 55%, #ff9a56 100%);
+  box-shadow: 0 0 60px rgba(255, 113, 206, 0.5);
+  opacity: 0.55;
+}
+
+.vapor-sun::before {
+  content: "";
+  position: absolute;
+  inset: 12%;
+  border-radius: 50%;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 6px,
+    rgba(255, 255, 255, 0.35) 6px,
+    rgba(255, 255, 255, 0.35) 10px
+  );
+}
+
+.vapor-wire-cube {
+  width: 72px;
+  height: 72px;
+  bottom: 18%;
+  left: 3%;
+  border: 2px solid rgba(1, 205, 254, 0.65);
+  transform: rotate(45deg);
+  box-shadow: 12px 12px 0 rgba(255, 113, 206, 0.25);
+  animation: vapor-float 9s ease-in-out infinite;
+}
+
+.vapor-wire-cube.vapor-wire-cube-2 {
+  left: auto;
+  right: 5%;
+  bottom: 22%;
+  width: 48px;
+  height: 48px;
+  animation-delay: -4s;
+  border-color: rgba(255, 113, 206, 0.7);
+}
+
+@keyframes vapor-float {
+  0%,
+  100% {
+    transform: rotate(45deg) translateY(0);
+  }
+  50% {
+    transform: rotate(45deg) translateY(-10px);
+  }
+}
+
+.vapor-textbook-stripe {
+  position: fixed;
+  top: var(--site-nav-h, 2.75rem);
+  bottom: 0;
+  left: 0;
+  width: 28px;
+  z-index: -1;
+  background: repeating-linear-gradient(
+    180deg,
+    #ffe566 0,
+    #ffe566 8px,
+    #fff 8px,
+    #fff 16px
+  );
+  opacity: 0.35;
+  border-right: 2px solid rgba(107, 91, 255, 0.4);
+}
+
+/* Frost content blocks */
+body.has-vapor-theme main,
+body.has-vapor-theme .wrap,
+body.has-vapor-theme .doc,
+body.has-vapor-theme > h1:first-of-type,
+body.has-vapor-theme .grid {
+  /* soft lift where layout allows */
+}
+
+body.has-vapor-theme main,
+body.has-vapor-theme .wrap {
+  background: var(--vapor-paper);
+  box-shadow: 0 8px 48px rgba(26, 16, 51, 0.25), 0 0 0 1px rgba(1, 205, 254, 0.12);
+  border-radius: 6px;
+}
+
+body.has-vapor-theme .card,
+body.has-vapor-theme .viz-box,
+body.has-vapor-theme .lede,
+body.has-vapor-theme .guide,
+body.has-vapor-theme .toc,
+body.has-vapor-theme table {
+  background-color: var(--vapor-paper-solid);
+}
+
+body.has-vapor-theme .embed-back,
+body.has-vapor-theme p.site-trail {
+  text-shadow: 0 0 12px rgba(255, 253, 250, 0.8);
+}
+
+body.has-vapor-theme header:not(#site-nav-drawer header) {
+  background: linear-gradient(135deg, rgba(44, 40, 32, 0.95), rgba(107, 91, 255, 0.85)) !important;
+  border-bottom-color: var(--vapor-magenta) !important;
+  box-shadow: 0 4px 24px rgba(255, 113, 206, 0.25);
+}
+
+/* Nav bar harmony */
+body.has-vapor-theme #site-nav-bar {
+  background: linear-gradient(90deg, #1a1033 0%, #3d2a7a 50%, #1a1033 100%);
+  border-bottom-color: var(--vapor-cyan);
+}
+
+body.has-vapor-theme #site-nav-drawer header {
+  background: linear-gradient(135deg, #2d1b69, #6b5bff);
+  border-bottom-color: var(--vapor-magenta);
+}
+
+/* Family-specific */
+body[data-vapor-family="experiment"] h1 {
+  letter-spacing: 0.02em;
+  text-shadow: 2px 2px 0 rgba(1, 205, 254, 0.35);
+}
+
+body[data-vapor-family="montreal"]::after {
+  opacity: 1;
+  background-size: 36px 36px;
+}
+
+body[data-vapor-family="legacy"] {
+  filter: none;
+}
+
+body[data-vapor-family="legacy"]::before {
+  filter: saturate(0.65) hue-rotate(-10deg);
+}
+
+/* Plain mode */
+html.vapor-theme-off body.has-vapor-theme::before,
+html.vapor-theme-off body.has-vapor-theme::after,
+html.vapor-theme-off .vapor-decor,
+html.vapor-theme-off .vapor-scanlines {
+  display: none !important;
+}
+
+html.vapor-theme-off body.has-vapor-theme {
+  background: #f7f4ef;
+}
+
+html.vapor-theme-off body.has-vapor-theme main,
+html.vapor-theme-off body.has-vapor-theme .wrap {
+  background: transparent;
+  box-shadow: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.has-vapor-theme::before,
+  .vapor-wire-cube {
+    animation: none !important;
+  }
+}
+
+@media print {
+  body.has-vapor-theme::before,
+  body.has-vapor-theme::after,
+  .vapor-decor,
+  .vapor-scanlines {
+    display: none !important;
+  }
+  body.has-vapor-theme main,
+  body.has-vapor-theme .wrap {
+    background: #fff;
+    box-shadow: none;
+  }
+}

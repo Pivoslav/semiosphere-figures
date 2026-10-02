@@ -76,19 +76,24 @@ def _nav_root(path: Path) -> str:
 
 
 def inject_site_nav(text: str, path: Path) -> str:
-    """Shared burger menu + drawer on every public HTML page."""
-    if "site-nav.css" in text and "site-nav.js" in text:
-        return text
+    """Shared burger menu, vapor theme, and drawer on every public HTML page."""
     root = _nav_root(path)
-    block = (
-        f'<meta name="site-nav-root" content="{root}"/>\n'
-        f'<link rel="stylesheet" href="{root}assets/site-nav.css"/>\n'
-        f'<script defer src="{root}assets/site-nav.js"></script>\n'
-    )
     m = re.search(r"<head[^>]*>", text, re.I)
     if not m:
         return text
-    return text[: m.end()] + "\n" + block + text[m.end() :]
+    insert_at = m.end()
+    parts: list[str] = []
+    if "site-nav.css" not in text:
+        parts.append(f'<meta name="site-nav-root" content="{root}"/>')
+        parts.append(f'<link rel="stylesheet" href="{root}assets/site-nav.css"/>')
+        parts.append(f'<script defer src="{root}assets/site-nav.js"></script>')
+    if "site-theme-vapor.css" not in text:
+        parts.append(f'<link rel="stylesheet" href="{root}assets/site-theme-vapor.css"/>')
+        parts.append(f'<script defer src="{root}assets/site-theme-vapor.js"></script>')
+    if not parts:
+        return text
+    block = "\n".join(parts) + "\n"
+    return text[:insert_at] + "\n" + block + text[insert_at:]
 
 
 def _fix_site_paths(text: str, path: Path) -> str:
