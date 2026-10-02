@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<!-- MA4b: where the refusal decision is made. Every number is read from ma4b_rule_layer_halt_report.json -->
+<html lang="en">
+<head>
+<meta name="robots" content="noindex, nofollow"/>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Where halt is adjudicated (MA4b)</title>
+<style>
+  :root { --ink:#1a1a1a; --muted:#555; --rule:#ccc; --wash:#f6f4ef; --accent:#2a4a6f; }
+  * { box-sizing: border-box; }
+  body { font-family: Georgia, 'Times New Roman', serif; font-size: 11.5pt; line-height: 1.5; color: var(--ink);
+    max-width: 56rem; margin: 0 auto; padding: 1.25rem 1.5rem 2.5rem; background: #fff; }
+  h1 { font-size: 1.45rem; margin: 0 0 0.5rem; }
+  h2 { font-size: 1.08rem; margin: 2rem 0 0.4rem; }
+  a { color: var(--accent); }
+  .embed-back { font-size: 0.9rem; margin: 0 0 1rem; }
+  .lede { background: var(--wash); border: 1px solid var(--rule); padding: 0.85rem 1rem; margin: 1rem 0; font-size: 0.95rem; }
+  .viz-box { border: 1px solid var(--rule); background: #fafafa; margin: 0.85rem 0 0.35rem; }
+  .viz-head { font-family: system-ui, sans-serif; font-size: 0.82rem; padding: 0.45rem 0.7rem; background: #f1efe9;
+    border-bottom: 1px solid var(--rule); }
+  canvas { display: block; width: 100%; background: #fff; }
+  .cap { font-size: 0.88rem; color: var(--muted); margin: 0.35rem 0 0; }
+  .limit { border-left: 3px solid #9a3b3b; background: #fbf6f6; padding: 0.7rem 0.9rem; margin: 1rem 0; font-size: 0.93rem; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 1rem 0;
+    font-family: system-ui, sans-serif; }
+  th, td { border: 1px solid var(--rule); padding: 0.45rem 0.55rem; text-align: left; vertical-align: top; }
+  th { background: #f1efe9; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  code { font-size: 0.85em; }
+</style>
+</head>
+<body>
+<p class="embed-back"><a href="../theory/LOTMAN_INTERPRETATION.html#s12">&larr; Lotman interpretation §12</a> · <a href="../index.html">Figures home</a></p>
+
+<h1>Where halt is adjudicated (MA4b)</h1>
+<div class="lede">When a question cannot be answered from licensed sources, the pipeline should refuse. MA4b asks where that decision belongs: inside the generator's prompt, or in a deterministic rule upstream of the generator that reads retrieved metadata and never asks the model to decide. Four arms, 18 frozen items, retrieval held flat at top-5 in every arm, hand-off envelope identical in every arm. Only the halt mechanism varies. Model <code>llama3.2:3b</code> at temperature 0.0, seed 19870317. Scoring is deterministic regex and set arithmetic; no model scored any output.</div>
+
+<h2 id="h1">Figure H1 · Where the refusal decision is made</h2>
+<div class="viz-box">
+  <div class="viz-head"><strong>Four arms as four paths through the same pipeline</strong></div>
+  <canvas id="cvPaths" height="548" role="img" aria-label="Pipeline schematic of four arms. B2 and C2 have no gate and call the generator on all 18 items, 36 calls each. D2 and E2 place a deterministic rule gate before the generator; the gate closes on 11 items and the generator is never called for those, giving 14 calls and 22 saved."></canvas>
+</div>
+<p class="cap">In the two prompt-clause arms the generator is called on every item and asked to decide. In the two gate arms the rule reads the retrieved-hit metadata and, when it closes, the pipeline writes the canonical halt string and makes no model call at all - neither hop. That bypass is the whole mechanism, and it is why the call count falls from 36 to 14.</p>
+
+<h2 id="h2">Figure H2 · The trade-off, and where the errors come from</h2>
+<div class="viz-box">
+  <div class="viz-head"><strong>Three proportions by arm, then the error decomposition for the best arm</strong></div>
+  <canvas id="cvTradeoff" height="450" role="img" aria-label="Grouped bar chart of refusal recall, false refusal and F1 for the four arms, followed by a stacked bar decomposing D2's eight false refusals into six from the gate and two from the generator."></canvas>
+</div>
+<p class="cap">All three measures are proportions on a shared 0 to 1 axis. <code>D2_rule_gate</code> is the best arm on every measure that trades off: recall equal to the prompt-clause arm, higher precision, higher F1, and 22 fewer generator calls. It is still not a precise instrument. The decomposition is the part that matters: six of its eight false refusals were produced by the gate before any model call, and only two by the generator on items the gate had cleared. Fixing the generator cannot recover those six. The gate is where the remaining error lives.</p>
+
+<h2 id="h3">Figure H3 · The clause was never evaluated</h2>
+<div class="viz-box">
+  <div class="viz-head"><strong>The same predicate as a rule and as a sentence in a prompt</strong></div>
+  <canvas id="cvClause" height="420" role="img" aria-label="Dot grids for four arms showing hop-1 messages that visibly carried an outward shell tag and were refused anyway. The two arms containing the halt clause refused 100 percent of them; the two arms without it refused 36 percent and 17 percent. The same clause written as rule R3 closed only 1 of 18 items."></canvas>
+</div>
+<p class="cap">The halt clause licenses refusal <em>only</em> when the received message carries no <code>SHELL=soviet_outward</code> and no <code>SHELL=rival</code>. Every dot is a hop-1 message that visibly carried one of those tags, so the clause's own stated precondition was false. Both arms containing the clause refused all of them. The same two arms' counterparts, running the same model on the same substrate with no halt language in the prompt, refused 4 of 11 and 1 of 6. And the clause written as a rule, <code>R3</code>, whose wording the prereg records as mirroring the generator clause, closed 1 item in 18. The instruction was never wrong about which items to refuse. At this model scale it was never evaluated as a condition: mentioning refusal was sufficient to produce refusal.</p>
+
+<h2>What this does not establish</h2>
+<div class="limit">
+<p><strong>One model, one seed, eighteen items.</strong> This is <code>llama3.2:3b</code> at temperature 0.0 and seed 19870317 on the 18 frozen items of one plate, of which 5 are should-refuse and 13 should-answer. One item moves refusal recall by 0.20. There is no null model, no effect size, and no second model. The refusal label is a lexical detector throughout, and on gate-closed items in the two gate arms it is scoring the canonical halt string rather than any model output.</p>
+<p><strong>The gate is not solved, and it was tested on the wrong retriever.</strong> The gate ran in front of flat top-5 retrieval, held constant so the run stays comparable to its predecessor, not in front of a topic-scoped retriever. The gate is a pure function of retrieved-hit metadata and is therefore topic-blind: it closes when an unpaired outward claim or a documented miss appears anywhere in the top five, and it cannot tell whether that unit is the unit the question is about. That is why its false closure rate on answerable items is 0.4615 and why the best arm's false refusal is 0.6154, nearly two and a half times the preregistered ceiling of 0.25. Two of the three rule clauses are each triggered by exactly one unit in a 32-unit corpus. Putting the same gate in front of a scoped retriever is a different and untested system, and it is the next thing to fix. Nothing here should be read as a deployable gate.</p>
+</div>
+
+<h2>Every number in this figure, with its source key</h2>
+<table>
+  <thead><tr><th>Value</th><th>Where it appears</th><th>Key in <code>ma4b_rule_layer_halt_report.json</code></th></tr></thead>
+  <tbody>
+    <tr><td>18 items, 5 should-refuse, 13 should-answer</td><td>H1, H2, prose</td><td><code>n_items</code>, <code>n_should_refuse</code>, <code>n_should_answer</code></td></tr>
+    <tr><td><code>llama3.2:3b</code>, seed 19870317, temperature 0.0</td><td>lede, prose</td><td><code>model</code>, <code>seed</code>, <code>temperature</code></td></tr>
+    <tr><td>flat top-5, held constant across arms</td><td>lede, H1, prose</td><td><code>retrieval</code></td></tr>
+    <tr><td>Generator calls: 36, 36, 14, 14</td><td>H1</td><td><code>summary[arm].generator_calls</code></td></tr>
+    <tr><td>22 calls saved in both gate arms</td><td>H1</td><td><code>summary.D2_rule_gate.generator_calls_saved_vs_baseline</code>, same for <code>E2</code></td></tr>
+    <tr><td>100 generator calls in the run</td><td>H1</td><td><code>total_generator_calls</code></td></tr>
+    <tr><td>Generator ran on 18, 18, 7, 7 items</td><td>H1</td><td><code>summary[arm].post_hoc.halt_clause_audit.n_generator_ran</code></td></tr>
+    <tr><td>Gate: 11 closed, 7 open (identical in both gate arms)</td><td>H1, H3</td><td><code>summary.D2_rule_gate.gate.n_closed</code>, <code>.n_open</code></td></tr>
+    <tr><td>Closure reasons: R1 on 7, R2 on 3, R3 on 1</td><td>H1, H3</td><td>counted from <code>summary.D2_rule_gate.gate.closed_reasons</code></td></tr>
+    <tr><td><code>B2</code> caught 1 of 5 should-refuse items</td><td>H1</td><td><code>summary.B2_no_halt.true_positives</code>, <code>n_should_refuse</code></td></tr>
+    <tr><td><code>C2</code> refused all 18; no usable answer</td><td>H1</td><td><code>summary.C2_generator_halt.post_hoc.n_nonrefusal</code> = 0; <code>true_positives</code> 5 + <code>false_positives</code> 13</td></tr>
+    <tr><td><code>D2</code> on the cleared slice: 5 answered, 2 refused of 7</td><td>H1, H2</td><td><code>summary.D2_rule_gate.gate_cleared_slice.refusal_rate_on_cleared</code> 0.2857, <code>n_cleared</code> 7</td></tr>
+    <tr><td><code>E2</code> on the cleared slice: refused 7 of 7</td><td>H1, H3</td><td><code>summary.E2_rule_gate_plus_typed_halt.gate_cleared_slice.refusal_rate_on_cleared</code> 1.0, <code>n_cleared</code> 7</td></tr>
+    <tr><td>Refusal recall 0.2000, 1.0000, 1.0000, 1.0000</td><td>H2</td><td><code>summary[arm].refusal_recall</code></td></tr>
+    <tr><td>False refusal 0.3846, 1.0000, 0.6154, 1.0000</td><td>H2, prose</td><td><code>summary[arm].false_refusal</code></td></tr>
+    <tr><td>Refusal F1 0.1818, 0.4348, 0.5556, 0.4348</td><td>H2</td><td><code>summary[arm].refusal_f1</code></td></tr>
+    <tr><td>Refusal precision 0.1667, 0.2778, 0.3846, 0.2778</td><td>this table</td><td><code>summary[arm].refusal_precision</code></td></tr>
+    <tr><td><code>D2</code> false refusals: 8 total</td><td>H2</td><td><code>summary.D2_rule_gate.false_positives</code></td></tr>
+    <tr><td>6 of those 8 came from the gate</td><td>H2</td><td><code>gate.n_closed</code> 11 less the 5 should-refuse it caught (<code>gate_recall_on_should_refuse</code> 1.0); equals <code>gate_false_closure_on_should_answer</code> 0.4615 &times; 13</td></tr>
+    <tr><td>2 of those 8 came from the generator</td><td>H2</td><td><code>gate_cleared_slice.refusal_rate_on_cleared_should_answer</code> 0.2857 &times; <code>n_cleared_should_answer</code> 7</td></tr>
+    <tr><td>The 6 gate false closures: <code>e2_i06</code>, <code>e2_i07</code>, <code>e2_i10</code>, <code>e2_i11</code>, <code>e2_i12</code>, <code>e2_i15</code></td><td>H2</td><td><code>records[]</code> where <code>arm</code> is <code>D2_rule_gate</code>, <code>refusal</code> true, <code>refusal_correct_item</code> false, <code>gate_open</code> false</td></tr>
+    <tr><td>The 2 generator false refusals: <code>e2_i04</code>, <code>e2_i08</code>; <code>B2</code> refused both too</td><td>H2</td><td>same filter with <code>gate_open</code> true; cross-checked against <code>records[]</code> for <code>B2_no_halt</code></td></tr>
+    <tr><td><code>C2</code> and <code>E2</code> false refusal 1.0000 on all 13</td><td>H2</td><td><code>summary[arm].false_refusal</code>, <code>summary[arm].false_positives</code> 13</td></tr>
+    <tr><td>Hop-1 carried an outward shell tag: 11, 11, 6, 6</td><td>H3</td><td><code>summary[arm].post_hoc.halt_clause_audit.n_hop1_carries_outward_shell_tag</code></td></tr>
+    <tr><td>Refused anyway: 4, 11, 1, 6</td><td>H3</td><td><code>summary[arm].post_hoc.halt_clause_audit.n_refused_despite_outward_shell_tag</code></td></tr>
+    <tr><td>Rate refused anyway: 0.3636, 1.0000, 0.1667, 1.0000</td><td>H3</td><td><code>summary[arm].post_hoc.halt_clause_audit.rate_refused_despite_outward_shell_tag</code></td></tr>
+    <tr><td><code>R3</code> as a rule closed 1 item of 18</td><td>H3</td><td>one <code>R3</code> entry in <code>summary.D2_rule_gate.gate.closed_reasons</code> (<code>e2_i06</code>), against <code>n_items</code> 18</td></tr>
+    <tr><td>Gate false closure on answerable items 0.4615</td><td>H2, prose</td><td><code>summary.D2_rule_gate.gate.gate_false_closure_on_should_answer</code></td></tr>
+    <tr><td>Gate recall on should-refuse 1.0000</td><td>H1, prose</td><td><code>summary.D2_rule_gate.gate.gate_recall_on_should_refuse</code></td></tr>
+    <tr><td>Gate predicate R1 / R2 / R3, no model call</td><td>H1, H3, prose</td><td><code>gate_predicate</code></td></tr>
+    <tr><td>32-unit corpus; one unit triggers R1, one triggers R2; gate is topic-blind</td><td>prose</td><td><code>known_limitations[1]</code></td></tr>
+    <tr><td>One item moves refusal recall by 0.20</td><td>prose</td><td><code>known_limitations[4]</code></td></tr>
+    <tr><td>Halt string, not the model, is scored on gate-closed items</td><td>prose</td><td><code>known_limitations[0]</code></td></tr>
+    <tr><td>Gate evaluated on flat top-5, not the scoped retriever</td><td>prose</td><td><code>scope_limit</code></td></tr>
+  </tbody>
+</table>
+<p class="cap">Chart bar labels are shown at two decimal places; this table carries the report's full precision. The preregistered false-refusal ceiling of 0.25 comes from the run's prereg document, not from the JSON report, and is the only figure on this page drawn from the prose rather than the report.</p>
+
+<script>
+function fit(c, h) {
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+  var w = c.clientWidth || 846;
+  c.width = w * dpr;
+  c.height = h * dpr;
+  c.style.height = h + 'px';
+  var ctx = c.getContext('2d');
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, w, h);
+  return { ctx: ctx, w: w, h: h, k: Math.min(1, w / 846) };
+}
+
+function arrow(ctx, x1, y1, x2, y2, color, dashed) {
+  ctx.save();
+  ctx.strokeStyle = color;
+  ctx.fillStyle = color;
+  ctx.lineWidth = 2;
+  if (dashed) ctx.setLineDash([5, 4]);
+  ctx.beginPath();
+  ctx.moveTo(x1, y1);
+  ctx.lineTo(x2, y2);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  var a = Math.atan2(y2 - y1, x2 - x1), hl = 9;
+  ctx.beginPath();
+  ctx.moveTo(x2, y2);
+  ctx.lineTo(x2 - hl * Math.cos(a - 0.4), y2 - hl * Math.sin(a - 0.4));
+  ctx.lineTo(x2 - hl * Math.cos(a + 0.4), y2 - hl * Math.sin(a + 0.4));
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
+}
+
+function node(ctx, x, y, r, label, sub) {
+  ctx.save();
+  ctx.fillStyle = '#eef3f8';
+  ctx.strokeStyle = '#2a4a6f';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.arc(x, y, r, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.stroke();
+  ctx.fillStyle = '#1a1a1a';
+  ctx.textAlign = 'center';
+  ctx.font = 'bold 13px Georgia, serif';
+  ctx.fillText(label, x, y + 4);
+  if (sub) {
+    ctx.fillStyle = '#555';
+    ctx.font = '10px system-ui, sans-serif';
+    ctx.fillText(sub, x, y + r + 14);
+  }
+  ctx.restore();
+}
+
+function edgeLabel(ctx, x, y, text, color, k) {
+  k = k || 1;
+  ctx.save();
+  ctx.font = (10 * k) + 'px system-ui, sans-serif';
+  ctx.textAlign = 'center';
+  var pad = 4 * k, tw = ctx.measureText(text).width;
+  ctx.fillStyle = 'rgba(255,255,255,0.94)';
+  ctx.fillRect(x - tw / 2 - pad, y - 9 * k, tw + pad * 2, 14 * k);
+  ctx.fillStyle = color || '#555';
+  ctx.fillText(text, x, y + 2 * k);
+  ctx.restore();
+}
+
+function panelTitle(ctx, x, y, text, k) {
+  k = k || 1;
+  ctx.save();
+  ctx.fillStyle = '#1a1a1a';
+  ctx.font = 'bold ' + (12 * k) + 'px system-ui, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText(text, x, y);
+  ctx.restore();
+}
+
+/* a bordered box with a bold first line and muted lines under it */
+function box(ctx, x0, y0, x1, y1, lines, color, k) {
+  ctx.save();
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(x0, y0, x1 - x0, y1 - y0);
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 1.4;
+  ctx.strokeRect(x0, y0, x1 - x0, y1 - y0);
+  ctx.textAlign = 'center';
+  var cx = (x0 + x1) / 2, n = lines.length, lh = 12 * k;
+  var base = (y0 + y1) / 2 - (n - 1) * lh / 2 + 3.5 * k;
+  for (var i = 0; i < n; i++) {
+    ctx.font = (i === 0 ? 'bold ' : '') + (10 * k) + 'px system-ui, sans-serif';
+    ctx.fillStyle = i === 0 ? color : '#555';
+    ctx.fillText(lines[i], cx, base + i * lh);
+  }
+  ctx.restore();
+}
+
+/* one item: filled means the generator refused it anyway */
+function dot(ctx, x, y, r, filled, fillColor, openColor) {
+  ctx.save();
+  ctx.lineWidth = 1.6;
+  ctx.beginPath();
+  ctx.arc(x, y, r, 0, Math.PI * 2);
+  ctx.fillStyle = filled ? fillColor : '#fff';
+  ctx.fill();
+  ctx.strokeStyle = filled ? fillColor : openColor;
+  ctx.stroke();
+  ctx.restore();
+}
+
+var C_GATE = '#9a3b3b', C_GEN = '#c45c26', C_OK = '#1f5136', C_PIPE = '#2a4a6f', C_MUTE = '#8d94a3';
+
+/* ---------- H1 ---------- */
+function drawPaths() {
+  var c = document.getElementById('cvPaths');
+  if (!c) return;
+  var s = fit(c, 548), ctx = s.ctx, w = s.w, k = s.k;
+  var L = 12, R = w - 12, span = R - L;
+  function fx(f) { return L + f * span; }
+  var RET = [fx(0.000), fx(0.105)];
+  var GATE = [fx(0.145), fx(0.300)];
+  var GEN = [fx(0.375), fx(0.560)];
+  var OUT = [fx(0.600), fx(1.000)];
+
+  function head(y, text) {
+    ctx.save();
+    ctx.fillStyle = '#1a1a1a';
+    ctx.font = 'bold ' + (12 * k) + 'px system-ui, sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText(text, L, y);
+    ctx.restore();
+  }
+  function armLabel(y, text) {
+    ctx.save();
+    ctx.fillStyle = C_PIPE;
+    ctx.font = 'bold ' + (11 * k) + 'px system-ui, sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText(text, L, y);
+    ctx.restore();
+  }
+  function note(y, text, color) {
+    ctx.save();
+    ctx.fillStyle = color || '#555';
+    ctx.font = (10 * k) + 'px system-ui, sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText(text, L, y);
+    ctx.restore();
+  }
+
+  /* group A: no gate, the clause lives in the prompt */
+  head(26, 'No gate: the halt decision sits inside the generator prompt');
+
+  function ungated(labelY, top, armName, promptLine, outLines, outNote) {
+    var bot = top + 44, cy = top + 22;
+    armLabel(labelY, armName);
+    box(ctx, RET[0], top, RET[1], bot, ['Retrieval', 'flat top-5'], C_PIPE, k);
+    arrow(ctx, RET[1], cy, GEN[0], cy, C_MUTE, true);
+    edgeLabel(ctx, (RET[1] + GEN[0]) / 2 - 56 * k, cy, 'no gate', C_MUTE, k);
+    edgeLabel(ctx, GEN[0] - 31 * k, cy, '18 of 18', C_GEN, k);
+    box(ctx, GEN[0], top, GEN[1], bot, ['generator', promptLine, '36 calls'], C_GEN, k);
+    arrow(ctx, GEN[1], cy, OUT[0], cy, C_GEN, false);
+    box(ctx, OUT[0], top, OUT[1], bot, outLines, outNote, k);
+  }
+
+  ungated(50, 58, 'B2_no_halt', 'no halt clause',
+    ['answer or refusal, decided by the model', 'caught 1 of 5 should-refuse items'], C_PIPE);
+  ungated(128, 136, 'C2_generator_halt', 'HALT_CLAUSE in prompt',
+    ['refusal on all 18 items', 'no usable answer anywhere in the arm'], C_GATE);
+
+  note(202, 'Both arms call the generator on every item: 2 hops x 18 items = 36 calls. No rule ever inspects the retrieved metadata.');
+
+  /* group B: the rule decides before generation */
+  head(238, 'Deterministic gate upstream: the generator is never asked to decide');
+
+  function gated(labelY, top, armName, promptLine, ansLines, ansColor) {
+    var gBot = top + 58, gCy = top + 29;
+    var bot = top + 44, cy = top + 22;
+    var hTop = gBot, hBot = gBot + 44;
+    armLabel(labelY, armName);
+    box(ctx, RET[0], top, RET[1], gBot, ['Retrieval', 'flat top-5', 'metadata read'], C_PIPE, k);
+    arrow(ctx, RET[1], gCy, GATE[0], gCy, C_PIPE, false);
+    box(ctx, GATE[0], top, GATE[1], gBot, ['rule gate', 'R1 7, R2 3, R3 1', '11 closed, 7 open'], C_GATE, k);
+    arrow(ctx, GATE[1], cy, GEN[0], cy, C_OK, false);
+    edgeLabel(ctx, (GATE[1] + GEN[0]) / 2, cy, '7 of 18', C_OK, k);
+    box(ctx, GEN[0], top, GEN[1], bot, ['generator', promptLine, '14 calls, 22 saved'], C_GEN, k);
+    arrow(ctx, GEN[1], cy, OUT[0], cy, C_GEN, false);
+    box(ctx, OUT[0], top, OUT[1], bot, ansLines, ansColor, k);
+
+    /* the bypass: gate closed, no model call at all */
+    arrow(ctx, GATE[1], gBot - 10, OUT[0], hTop + 22, C_GATE, false);
+    edgeLabel(ctx, (GATE[1] + OUT[0]) / 2, hTop + 6, 'generator NEVER CALLED', C_GATE, k);
+    box(ctx, OUT[0], hTop, OUT[1], hBot,
+      ['canonical HALT_STRING, 11 items', 'no model output exists for these'], C_GATE, k);
+    return hBot;
+  }
+
+  gated(262, 270, 'D2_rule_gate', 'no halt clause',
+    ['answer or refusal on the 7 cleared items', '5 answered, 2 refused by the generator'], C_OK);
+  gated(398, 406, 'E2_rule_gate_plus_typed_halt', 'HALT_CLAUSE in prompt',
+    ['refusal on all 7 cleared items', 'the gate cleared them; the clause fired'], C_GATE);
+
+  note(526, 'Total generator calls in the run: 100. The gate is a pure function of retrieved-hit metadata.');
+  note(540, 'D2 and E2 therefore make identical gate decisions; they differ only in what the generator prompt contains.');
+}
+
+/* ---------- H2 ---------- */
+var ARMS = [
+  { id: 'B2', name: 'B2_no_halt', recall: 0.2, fr: 0.3846, f1: 0.1818 },
+  { id: 'C2', name: 'C2_generator_halt', recall: 1.0, fr: 1.0, f1: 0.4348 },
+  { id: 'D2', name: 'D2_rule_gate', recall: 1.0, fr: 0.6154, f1: 0.5556 },
+  { id: 'E2', name: 'E2_rule_gate_plus_typed_halt', recall: 1.0, fr: 1.0, f1: 0.4348 }
+];
+
+function drawTradeoff() {
+  var c = document.getElementById('cvTradeoff');
+  if (!c) return;
+  var s = fit(c, 450), ctx = s.ctx, w = s.w, k = s.k;
+  var L = 12, R = w - 12, span = R - L;
+  function fx(f) { return L + f * span; }
+  /* yT leaves room for the 1.00 bar's value label to clear the legend baseline */
+  var xA = fx(0.0414), xB = fx(1.0);
+  var yT = 56, yBase = 250, plotH = yBase - yT;
+
+  panelTitle(ctx, w / 2, 18, 'Refusal recall, false refusal and F1 by arm', k);
+
+  /* legend, drawn by hand */
+  var series = [
+    { key: 'recall', label: 'refusal recall (higher better)', color: C_OK },
+    { key: 'fr', label: 'false refusal (lower better)', color: C_GATE },
+    { key: 'f1', label: 'refusal F1 (higher better)', color: C_PIPE }
+  ];
+  ctx.save();
+  ctx.textAlign = 'left';
+  ctx.font = (10 * k) + 'px system-ui, sans-serif';
+  var lx = xA;
+  series.forEach(function (S) {
+    ctx.fillStyle = S.color;
+    ctx.fillRect(lx, 32 - 9 * k, 9 * k, 9 * k);
+    ctx.fillStyle = '#555';
+    ctx.fillText(S.label, lx + 13 * k, 32);
+    lx += 13 * k + ctx.measureText(S.label).width + 22 * k;
+  });
+  ctx.restore();
+
+  /* axis, ticks, gridlines */
+  ctx.save();
+  ctx.font = (10 * k) + 'px system-ui, sans-serif';
+  ctx.textAlign = 'right';
+  for (var t = 0; t <= 5; t++) {
+    var v = t * 0.2, y = yBase - v * plotH;
+    ctx.strokeStyle = t === 0 ? '#999' : '#e6e6e6';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(xA, y);
+    ctx.lineTo(xB, y);
+    ctx.stroke();
+    ctx.strokeStyle = '#999';
+    ctx.beginPath();
+    ctx.moveTo(xA - 4 * k, y);
+    ctx.lineTo(xA, y);
+    ctx.stroke();
+    ctx.fillStyle = '#555';
+    ctx.fillText(v.toFixed(2), xA - 6 * k, y + 3.5 * k);
+  }
+  ctx.strokeStyle = '#999';
+  ctx.beginPath();
+  ctx.moveTo(xA, yT);
+  ctx.lineTo(xA, yBase);
+  ctx.stroke();
+  ctx.restore();
+
+  /* grouped bars */
+  var groupW = (xB - xA) / 4;
+  var barW = groupW * 0.203, gapW = groupW * 0.0305;
+  var pad = (groupW - (3 * barW + 2 * gapW)) / 2;
+  ARMS.forEach(function (A, g) {
+    var gx = xA + g * groupW, gc = gx + groupW / 2;
+    series.forEach(function (S, i) {
+      var v = A[S.key];
+      var x0 = gx + pad + i * (barW + gapW);
+      var bh = v * plotH;
+      ctx.fillStyle = S.color;
+      ctx.globalAlpha = 0.88;
+      ctx.fillRect(x0, yBase - bh, barW, bh);
+      ctx.globalAlpha = 1;
+      ctx.save();
+      ctx.fillStyle = S.color;
+      ctx.font = 'bold ' + (10 * k) + 'px system-ui, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(v.toFixed(2), x0 + barW / 2, yBase - bh - 4 * k);
+      ctx.restore();
+    });
+    ctx.save();
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#1a1a1a';
+    ctx.font = 'bold ' + (12 * k) + 'px system-ui, sans-serif';
+    ctx.fillText(A.id, gc, 268);
+    ctx.fillStyle = '#555';
+    ctx.font = (9 * k) + 'px system-ui, sans-serif';
+    ctx.fillText(A.name, gc, 282);
+    ctx.restore();
+  });
+
+  /* error decomposition for the best arm */
+  ctx.save();
+  ctx.strokeStyle = '#ccc';
+  ctx.setLineDash([5, 4]);
+  ctx.beginPath();
+  ctx.moveTo(L, 296);
+  ctx.lineTo(R, 296);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle = '#1a1a1a';
+  ctx.font = 'bold ' + (12 * k) + 'px system-ui, sans-serif';
+  ctx.textAlign = 'left';
+  ctx.fillText('Error decomposition, D2_rule_gate: 8 false refusals out of 13 should-answer items', L, 320);
+  ctx.restore();
+
+  var sx0 = xA, sx1 = xB, sTop = 336, sBot = 386, sW = sx1 - sx0;
+  var cut = sx0 + sW * 0.75;
+  ctx.save();
+  ctx.fillStyle = C_GATE;
+  ctx.fillRect(sx0, sTop, cut - sx0, sBot - sTop);
+  ctx.fillStyle = C_GEN;
+  ctx.fillRect(cut, sTop, sx1 - cut, sBot - sTop);
+  ctx.strokeStyle = '#fff';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(cut, sTop);
+  ctx.lineTo(cut, sBot);
+  ctx.stroke();
+  ctx.textAlign = 'center';
+  ctx.fillStyle = '#fff';
+  ctx.font = 'bold ' + (11 * k) + 'px system-ui, sans-serif';
+  ctx.fillText('6 of 8 come from the GATE', (sx0 + cut) / 2, 360);
+  ctx.fillText('2 from the generator', (cut + sx1) / 2, 360);
+  ctx.font = (10 * k) + 'px system-ui, sans-serif';
+  ctx.fillText('gate false closure 0.4615 of 13 should-answer items', (sx0 + cut) / 2, 374);
+  ctx.fillText('0.2857 of 7 cleared', (cut + sx1) / 2, 374);
+  ctx.restore();
+
+  ctx.save();
+  ctx.textAlign = 'left';
+  ctx.font = (10 * k) + 'px system-ui, sans-serif';
+  ctx.fillStyle = C_GATE;
+  ctx.fillText('The gate closed 6 answerable items before any model call: e2_i06, e2_i07, e2_i10, e2_i11, e2_i12, e2_i15.', xA, 402);
+  ctx.fillStyle = C_GEN;
+  ctx.fillText('The generator refused 2 that the gate had cleared: e2_i04 and e2_i08. B2, with no halt language at all, refused both too.', xA, 416);
+  ctx.fillStyle = '#555';
+  ctx.fillText('C2 and E2 admit no decomposition: every one of the 13 should-answer items was refused, false refusal 1.0000.', xA, 436);
+  ctx.restore();
+}
+
+/* ---------- H3 ---------- */
+var AUDIT = [
+  { name: 'B2_no_halt', prompt: 'no halt clause', n: 11, refused: 4, rate: '0.3636', clause: false },
+  { name: 'C2_generator_halt', prompt: 'HALT_CLAUSE in prompt', n: 11, refused: 11, rate: '1.0000', clause: true },
+  { name: 'D2_rule_gate', prompt: 'no halt clause', n: 6, refused: 1, rate: '0.1667', clause: false },
+  { name: 'E2_rule_gate_plus_typed_halt', prompt: 'HALT_CLAUSE in prompt', n: 6, refused: 6, rate: '1.0000', clause: true }
+];
+
+function drawClause() {
+  var c = document.getElementById('cvClause');
+  if (!c) return;
+  var s = fit(c, 420), ctx = s.ctx, w = s.w, k = s.k;
+  var L = 12, R = w - 12, span = R - L;
+  function fx(f) { return L + f * span; }
+  var dotX0 = fx(0.255), dotX1 = fx(0.657), rateX = fx(0.674);
+
+  panelTitle(ctx, w / 2, 18, 'Same predicate, two places to evaluate it', k);
+  ctx.save();
+  ctx.textAlign = 'center';
+  ctx.font = (10 * k) + 'px system-ui, sans-serif';
+  ctx.fillStyle = '#555';
+  ctx.fillText('HALT_CLAUSE licenses refusal only when the message carries no SHELL=soviet_outward and no SHELL=rival.', w / 2, 36);
+  ctx.fillText('Every dot below is a hop-1 message that visibly carried one of those two tags, so the clause did not license refusal.', w / 2, 50);
+  ctx.textAlign = 'left';
+  ctx.font = (10 * k) + 'px system-ui, sans-serif';
+  ctx.fillStyle = '#777';
+  ctx.fillText('arm and generator prompt', L, 78);
+  ctx.fillText('one dot per tagged message; filled = refused', dotX0, 78);
+  ctx.fillText('refused anyway', rateX, 78);
+  ctx.strokeStyle = '#ccc';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(L, 86);
+  ctx.lineTo(R, 86);
+  ctx.stroke();
+  ctx.restore();
+
+  var pitch = (dotX1 - dotX0) / 11, r = 10 * k;
+  AUDIT.forEach(function (A, i) {
+    var y = 112 + i * 44;
+    if (A.clause) {
+      ctx.save();
+      ctx.fillStyle = 'rgba(154,59,59,0.07)';
+      ctx.fillRect(L, y - 20, span, 40);
+      ctx.restore();
+    }
+    ctx.save();
+    ctx.textAlign = 'left';
+    ctx.fillStyle = A.clause ? C_GATE : C_PIPE;
+    ctx.font = 'bold ' + (10 * k) + 'px system-ui, sans-serif';
+    ctx.fillText(A.name, L, y - 3);
+    ctx.fillStyle = '#555';
+    ctx.font = (9 * k) + 'px system-ui, sans-serif';
+    ctx.fillText(A.prompt, L, y + 11);
+    ctx.restore();
+
+    for (var j = 0; j < A.n; j++) {
+      dot(ctx, dotX0 + pitch / 2 + j * pitch, y, r, j < A.refused, C_GATE, C_OK);
+    }
+
+    ctx.save();
+    ctx.textAlign = 'left';
+    ctx.font = (A.clause ? 'bold ' : '') + (10 * k) + 'px system-ui, sans-serif';
+    ctx.fillStyle = A.clause ? C_GATE : '#555';
+    ctx.fillText(A.refused + ' of ' + A.n + ' refused anyway, rate ' + A.rate, rateX, y + 3);
+    ctx.restore();
+  });
+
+  /* the same clause, written as a rule */
+  ctx.save();
+  ctx.strokeStyle = '#ccc';
+  ctx.setLineDash([5, 4]);
+  ctx.beginPath();
+  ctx.moveTo(L, 276);
+  ctx.lineTo(R, 276);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.textAlign = 'left';
+  ctx.fillStyle = C_OK;
+  ctx.font = 'bold ' + (10 * k) + 'px system-ui, sans-serif';
+  ctx.fillText('R3: the clause as a rule', L, 301);
+  ctx.fillStyle = '#555';
+  ctx.font = (9 * k) + 'px system-ui, sans-serif';
+  ctx.fillText('same wording, in Python', L, 315);
+  ctx.restore();
+
+  var pitch2 = (dotX1 - dotX0) / 18, r2 = 7 * k;
+  for (var m = 0; m < 18; m++) {
+    dot(ctx, dotX0 + pitch2 / 2 + m * pitch2, 304, r2, m < 1, C_OK, C_MUTE);
+  }
+  ctx.save();
+  ctx.textAlign = 'left';
+  ctx.font = 'bold ' + (10 * k) + 'px system-ui, sans-serif';
+  ctx.fillStyle = C_OK;
+  ctx.fillText('1 of 18 closed by the rule', rateX, 307);
+  ctx.restore();
+
+  /* the finding */
+  ctx.save();
+  ctx.fillStyle = '#fbf6f6';
+  ctx.fillRect(L, 336, span, 68);
+  ctx.strokeStyle = C_GATE;
+  ctx.lineWidth = 1.4;
+  ctx.strokeRect(L, 336, span, 68);
+  ctx.textAlign = 'left';
+  ctx.fillStyle = '#1a1a1a';
+  ctx.font = 'bold ' + (12 * k) + 'px system-ui, sans-serif';
+  ctx.fillText('The clause was never wrong about which items to refuse. It was never evaluated as a condition.', L + 14, 358);
+  ctx.fillStyle = '#555';
+  ctx.font = (10 * k) + 'px system-ui, sans-serif';
+  ctx.fillText('Remove HALT_CLAUSE from the generator prompt once a correct gate exists upstream.', L + 14, 376);
+  ctx.fillText('Kept as a backup it destroys every item the gate worked to clear: E2 refused 7 of 7 cleared items, D2 refused 2 of 7.', L + 14, 390);
+  ctx.restore();
+}
+
+function drawAll() { drawPaths(); drawTradeoff(); drawClause(); }
+window.addEventListener('load', drawAll);
+window.addEventListener('resize', drawAll);
+</script>
+</body>
+</html>

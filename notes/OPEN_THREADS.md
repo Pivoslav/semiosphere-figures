@@ -14,7 +14,9 @@
 |---|---|---|---|
 | T1 | Rule-layer halt rerun (MA4b) | closed 2026-10-01, thesis `docs/experiments/MA4b_rule_layer_halt/RUN_2026-10-01.md` | Result: gate beats prompt, F1 0.56 vs 0.43, 14 calls vs 36. Remove the halt clause from the generator prompt entirely once a gate exists |
 | T28 | Gate precision is retrieval-bound | open, highest value now | The flat top-5 deviation has become the binding constraint: rerun the MA4b gate on E4's scoped retriever before tuning the predicate |
-| T2 | Agent to subagent boundary (MA10) | RUNNING 2026-10-01, five context regimes P0 to P4 | Reframed: MA10 is now the control arm of MA14, not standalone |
+| T2 | Agent to subagent boundary (MA10) | closed 2026-10-01, thesis `docs/experiments/MA10_subagent_isolation/RUN_2026-10-01.md` | Nothing beat the parent alone. Isolation produced fabrication, not autonomy |
+| T32 | Typed envelopes launder fabrication | open, qualifies MA1 | A real id was stamped on invented content and scored full tag retention. Tag retention measures transport, not truth |
+| T33 | Ask the agent whether it has sources | open, cheap and high value | Blindness reports went 0 of 17 to 10 of 17 purely by asking. Test across models and in the real harness |
 | T22 | Enforced vs requested isolation (MA14) | open, highest value in backlog | Audits the whole program's method; MA10 supplies level A |
 | T23 | Real polyglottism across model families (MA15) | open, now the decisive experiment | MA12 only crossed two SIZES of one family and recovered 0.891, so it was not a test. Must cross different pretraining |
 | T24 | Sibling delegation through a parent (MA16) | open, partly instantiated | Four siblings already ran in this session with the parent as sole channel |

@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<!-- MA13: 26 real parent-to-subagent delegations, measured after the fact. Every number here is read from ma13_real_subagent_report.json. -->
+<html lang="en">
+<head>
+<meta name="robots" content="noindex, nofollow"/>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>A real delegation corpus: expansion, a null, and a typology that does not fit</title>
+<style>
+  :root { --ink:#1a1a1a; --muted:#555; --rule:#ccc; --wash:#f6f4ef; --accent:#2a4a6f; }
+  * { box-sizing: border-box; }
+  body { font-family: Georgia, 'Times New Roman', serif; font-size: 11.5pt; line-height: 1.5; color: var(--ink);
+    max-width: 56rem; margin: 0 auto; padding: 1.25rem 1.5rem 2.5rem; background: #fff; }
+  h1 { font-size: 1.45rem; margin: 0 0 0.5rem; }
+  h2 { font-size: 1.08rem; margin: 2rem 0 0.4rem; }
+  a { color: var(--accent); }
+  .embed-back { font-size: 0.9rem; margin: 0 0 1rem; }
+  .lede { background: var(--wash); border: 1px solid var(--rule); padding: 0.85rem 1rem; margin: 1rem 0; font-size: 0.95rem; }
+  .viz-box { border: 1px solid var(--rule); background: #fafafa; margin: 0.85rem 0 0.35rem; }
+  .viz-head { font-family: system-ui, sans-serif; font-size: 0.82rem; padding: 0.45rem 0.7rem; background: #f1efe9;
+    border-bottom: 1px solid var(--rule); }
+  canvas { display: block; width: 100%; background: #fff; }
+  .cap { font-size: 0.88rem; color: var(--muted); margin: 0.35rem 0 0; }
+  .legend { font-family: system-ui, sans-serif; font-size: 0.78rem; color: var(--muted);
+    padding: 0.45rem 0.7rem; border-top: 1px dashed var(--rule); background: #fafafa; }
+  .legend i { display: inline-block; width: 0.7rem; height: 0.7rem; border-radius: 2px; margin-right: 0.3rem; vertical-align: middle; }
+  .legend span { margin-right: 1rem; white-space: nowrap; }
+  .limits { border-left: 3px solid #9a3b3b; background: #fbf6f4; padding: 0.7rem 1rem; margin: 1rem 0; font-size: 0.93rem; }
+  .limits li { margin: 0.4rem 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 1rem 0;
+    font-family: system-ui, sans-serif; }
+  th, td { border: 1px solid var(--rule); padding: 0.45rem 0.55rem; text-align: left; vertical-align: top; }
+  th { background: #f1efe9; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  td.k { font-family: ui-monospace, 'Consolas', monospace; font-size: 0.8rem; }
+</style>
+</head>
+<body>
+<p class="embed-back"><a href="../theory/LOTMAN_INTERPRETATION.html#s10">&larr; Lotman interpretation &sect;10</a> &middot; <a href="../theory/LOTMAN_INTERPRETATION.html#s5">&sect;5 autocommunication</a> &middot; <a href="../index.html">Figures home</a></p>
+
+<h1>A real delegation corpus: expansion, a null, and a typology that does not fit</h1>
+
+<div class="lede">
+Twenty six real parent-to-subagent delegations performed by a production coding agent, measured after the fact. The child's context isolation here is enforced by the harness rather than requested in a prompt, which is what separates this corpus from the prompt-simulated dyads elsewhere on this site. All twenty six were produced during an earlier experiment battery and therefore predate the hypothesis tested against them, so the data is not contaminated by it. Three further transcripts were excluded because they had no terminal success status and were still in flight when the measurement ran. Scoring is deterministic token arithmetic with a stoplist frozen before the run; no model scored any output.
+</div>
+
+<h2 id="d1">Panel D1 &middot; The boundary expands, it does not compress</h2>
+<div class="viz-box">
+  <div class="viz-head"><strong>Report characters per instruction character, one point per delegation, logarithmic axis</strong></div>
+  <canvas id="cvRatio" height="262" role="img" aria-label="A beeswarm strip plot of 26 compression ratios on a logarithmic axis from 0.9 to 30. A vertical line marks ratio 1. All 26 points fall to the right of it, from 1.2456 to 23.65, with a median at 4.3843."></canvas>
+  <div class="legend">
+    <span><i style="background:#2a4a6f"></i> one delegation</span>
+    <span><i style="background:#9a3b3b"></i> ratio 1 &middot; no change of volume</span>
+    <span><i style="background:#b8860b"></i> median 4.3843</span>
+    <span><i style="background:#f0dedd"></i> shaded: ratio below 1, the region predicted and found empty</span>
+  </div>
+</div>
+<p class="cap">The prediction registered before the run was that delegation would compress: that reports would be shorter than the instructions that produced them, and the ratio would sit well below 1. It failed, and it failed unanimously. The smallest ratio in the corpus is 1.2456, so not one of the 26 children returned less text than it was given, and the median delegation returned 4.3843 times as much. The axis is logarithmic because the range runs from 1.2456 to 23.65 and a linear axis would crush the mass of points between 3 and 6 into a single smear. Points are offset vertically only to stop them from overlapping; the vertical position carries no information.</p>
+<p class="cap">This matters for the rest of the site rather than for the corpus. Other sections describe a hand-off as a narrowing filter, and at this boundary that description is wrong at the level of volume. Whatever the parent-subagent boundary does, it does not do it by making the message smaller. The filter language has to be restricted to the cases where it was measured, or restated as a claim about structure rather than quantity.</p>
+
+<h2 id="d2">Panel D2 &middot; The null caught an artifact</h2>
+<div class="viz-box">
+  <div class="viz-head"><strong>Observed retention, its matched permutation null, and the gap that is the actual effect</strong></div>
+  <canvas id="cvNull" height="300" role="img" aria-label="Left: two bars on a zero to one scale, observed retention 0.9356 and matched null retention 0.8732, with the 0.0624 difference bracketed between their tops. Right: the observed 0.9356 decomposed into 0.8732 of pool saturation plus 0.0624 of real effect."></canvas>
+  <div class="legend">
+    <span><i style="background:#1f5136"></i> observed retention 0.9356</span>
+    <span><i style="background:#8d94a3"></i> matched null 0.8732</span>
+    <span><i style="background:#c45c26"></i> difference 0.0624 &middot; the whole effect</span>
+  </div>
+</div>
+<p class="cap">This is the honest-methods panel and the reason the figure exists. Raw parent retention of the child's new vocabulary came out at 0.9356. Reported on its own, that number would have supported a confident claim that almost everything crossing the boundary survives into the parent's own prose. It does not support that claim. The parent's vocabulary pool is 17,521 content types spread over 5,661,308 characters of its own prose, so nearly any content word appears somewhere by saturation, whether the parent was reading the child or not. Against a matched permutation null, 200 draws per delegation from the other delegations' gain vocabularies, the null itself returns 0.8732. The real effect is the 0.0624 gap, which is roughly six percentage points rather than ninety four.</p>
+<p class="cap">The small effect is reliable. Twenty five of the 26 delegations sit above their own matched null, a sign-test fraction of 0.9615, so the direction is almost perfectly consistent and the parent does reuse this child's contribution more than it reuses contributions it was not reading. But it is small, and a small reliable effect is a different claim from a large one. Only the null distinguishes them. The loss is correspondingly thin rather than dramatic: the median delegation had 8.5 new vocabulary types the parent never reused, with a maximum of 64.</p>
+
+<h2 id="d3">Panel D3 &middot; The dyad fits neither of Lotman's cells</h2>
+<div class="viz-box">
+  <div class="viz-head"><strong>Two criteria, measured on the same corpus, pulling in opposite directions</strong></div>
+  <canvas id="cvScore" height="354" role="img" aria-label="A scorecard with two criteria. Volume change: large increase, which fails the I-s/he criterion. Receiver adds content of its own: high content gain, which fails the I-I criterion. Conclusion: the dyad fits no cell in the typology."></canvas>
+  <div class="legend">
+    <span><i style="background:#9a3b3b"></i> criterion failed</span>
+    <span><i style="background:#8d94a3"></i> neither cell admits the dyad</span>
+  </div>
+</div>
+<p class="cap">Lotman's I-s/he schema transmits information with no change of volume, and this boundary changes volume by a median factor of 4.3843, so the dyad is not I-s/he. His I-I schema, autocommunication, does increase information, but only because the second code is purely structural and adds nothing of its own; his examples are rhythm, ornament and repetition. Here the second code adds a great deal: the median content gain ratio is 0.8387, meaning most of the report's vocabulary was absent from the instruction, and the median child made 17.5 tool calls. So the dyad passes the volume test for autocommunication and fails its content test, while failing the volume test for ordinary communication. It is also not the presemiotic binding described in the transmission notes, because the child acts autonomously and returns material the parent never named, which is the opposite of a recipient valued for adding nothing. The dyad fits no cell in the typology, and that is measured rather than asserted.</p>
+
+<h2>Limits that travel with every number on this page</h2>
+<div class="limits">
+<ul>
+  <li><strong>One parent, one operator, and the instructions were authored by the same agent that measured them.</strong> This is participant observation, not instrumentation, and no blinding was possible. It cannot establish a general fact about agent architectures and must not be written up as if it could. All 26 delegations come from a single task family, so cross-session and cross-task variation is unmeasured.</li>
+  <li><strong>Tool results are absent from the transcripts, so content gain cannot separate material the child read from a file from material it produced itself.</strong> Content gain here is <em>not</em> a fabrication measure and must not be cited as one. The median of 17.5 tool calls makes retrieval the likely source of most of it, but likely is not measured. Intermediate assistant prose is redacted as well, so the child's reasoning is unobservable; only the instruction, the final report and the tool calls are visible.</li>
+  <li><strong>The retention figure pools the entire parent transcript</strong>, including prose written before a given delegation, so even the corrected 0.0624 effect is an upper bound. The true figure is lower than the one plotted.</li>
+</ul>
+</div>
+
+<h2>Provenance of every number in the figure</h2>
+<table>
+  <thead><tr><th>Value</th><th>JSON key</th><th>Where it appears</th></tr></thead>
+  <tbody>
+    <tr><td>26 delegations</td><td class="k">corpus.n_delegations</td><td>lede, D1, D2, D3</td></tr>
+    <tr><td>3 excluded</td><td class="k">corpus.n_excluded_incomplete</td><td>lede</td></tr>
+    <tr><td>26 plotted ratios</td><td class="k">delegations[].compression_ratio</td><td>D1 points</td></tr>
+    <tr><td>1.2456 minimum</td><td class="k">aggregate.compression_ratio.min</td><td>D1 label, D3 row 1</td></tr>
+    <tr><td>4.3843 median</td><td class="k">aggregate.compression_ratio.median</td><td>D1 median line, D3 row 1</td></tr>
+    <tr><td>5.6511 mean</td><td class="k">aggregate.compression_ratio.mean</td><td>D3 row 1</td></tr>
+    <tr><td>23.65 maximum</td><td class="k">aggregate.compression_ratio.max</td><td>D1 label</td></tr>
+    <tr><td>564.5 median instruction characters</td><td class="k">aggregate.prompt_chars.median</td><td>D3 row 1</td></tr>
+    <tr><td>3483.0 median report characters</td><td class="k">aggregate.return_chars.median</td><td>D3 row 1</td></tr>
+    <tr><td>0.9356 observed retention</td><td class="k">retention_permutation_null.observed_retention_mean</td><td>D2 bar, D2 stack</td></tr>
+    <tr><td>0.8732 null retention</td><td class="k">retention_permutation_null.null_retention_mean</td><td>D2 bar, D2 stack</td></tr>
+    <tr><td>0.0624 mean difference</td><td class="k">retention_permutation_null.mean_difference</td><td>D2 bracket, D2 stack</td></tr>
+    <tr><td>25 above their own null</td><td class="k">retention_permutation_null.delegations_above_null</td><td>D2 facts</td></tr>
+    <tr><td>0.9615 fraction above null</td><td class="k">retention_permutation_null.sign_test_fraction_above_null</td><td>D2 facts</td></tr>
+    <tr><td>200 permutations each</td><td class="k">retention_permutation_null.permutations_per_delegation</td><td>D2 facts</td></tr>
+    <tr><td>17,521 parent vocabulary types</td><td class="k">corpus.parent_vocabulary_types</td><td>D2 facts</td></tr>
+    <tr><td>5,661,308 parent characters</td><td class="k">corpus.parent_assistant_chars</td><td>D2 facts</td></tr>
+    <tr><td>8.5 median dropped types</td><td class="k">aggregate.gain_types_dropped.median</td><td>D2 facts</td></tr>
+    <tr><td>64 maximum dropped types</td><td class="k">aggregate.gain_types_dropped.max</td><td>D2 facts</td></tr>
+    <tr><td>0.8387 median content gain ratio</td><td class="k">aggregate.content_gain_ratio.median</td><td>D3 row 2</td></tr>
+    <tr><td>0.8051 mean content gain ratio</td><td class="k">aggregate.content_gain_ratio.mean</td><td>D3 row 2</td></tr>
+    <tr><td>0.5808 minimum content gain ratio</td><td class="k">aggregate.content_gain_ratio.min</td><td>D3 row 2</td></tr>
+    <tr><td>151.0 median new types</td><td class="k">aggregate.content_gain_types.median</td><td>D3 third line</td></tr>
+    <tr><td>17.5 median tool calls</td><td class="k">aggregate.tool_calls.median</td><td>D3 row 2, D3 third line</td></tr>
+    <tr><td>71 maximum tool calls</td><td class="k">aggregate.tool_calls.max</td><td>D3 row 2</td></tr>
+  </tbody>
+</table>
+<p class="cap">Source report: <span class="k">data/bc_corpus/benchmarks/ma13_real_subagent_report.json</span>, generated 2026-10-02, with preregistration and run notes under <span class="k">docs/experiments/MA13_real_subagent_corpus/</span> in the thesis lab repository. Raw transcripts stay out of this repository by design; only derived counts appear here.</p>
+
+<script>
+/* ---- shared canvas helpers, same idioms as fig-multi-agent-typing.html ---- */
+function fit(c, h) {
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+  var w = c.clientWidth || 760;
+  c.width = w * dpr;
+  c.height = h * dpr;
+  c.style.height = h + 'px';
+  var ctx = c.getContext('2d');
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, w, h);
+  return { ctx: ctx, w: w, h: h };
+}
+
+function arrow(ctx, x1, y1, x2, y2, color, dashed) {
+  ctx.save();
+  ctx.strokeStyle = color;
+  ctx.fillStyle = color;
+  ctx.lineWidth = 2;
+  if (dashed) ctx.setLineDash([5, 4]);
+  ctx.beginPath();
+  ctx.moveTo(x1, y1);
+  ctx.lineTo(x2, y2);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  var a = Math.atan2(y2 - y1, x2 - x1), hl = 9;
+  ctx.beginPath();
+  ctx.moveTo(x2, y2);
+  ctx.lineTo(x2 - hl * Math.cos(a - 0.4), y2 - hl * Math.sin(a - 0.4));
+  ctx.lineTo(x2 - hl * Math.cos(a + 0.4), y2 - hl * Math.sin(a + 0.4));
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
+}
+
+function node(ctx, x, y, r, label, sub) {
+  ctx.save();
+  ctx.fillStyle = '#eef3f8';
+  ctx.strokeStyle = '#2a4a6f';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.arc(x, y, r, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.stroke();
+  ctx.fillStyle = '#1a1a1a';
+  ctx.textAlign = 'center';
+  ctx.font = 'bold 13px Georgia, serif';
+  ctx.fillText(label, x, y + 4);
+  if (sub) {
+    ctx.fillStyle = '#555';
+    ctx.font = '10px system-ui, sans-serif';
+    ctx.fillText(sub, x, y + r + 14);
+  }
+  ctx.restore();
+}
+
+function edgeLabel(ctx, x, y, text, color) {
+  ctx.save();
+  ctx.font = '10px system-ui, sans-serif';
+  ctx.textAlign = 'center';
+  var pad = 4, tw = ctx.measureText(text).width;
+  ctx.fillStyle = 'rgba(255,255,255,0.92)';
+  ctx.fillRect(x - tw / 2 - pad, y - 9, tw + pad * 2, 14);
+  ctx.fillStyle = color || '#555';
+  ctx.fillText(text, x, y + 2);
+  ctx.restore();
+}
+
+function panelTitle(ctx, x, y, text) {
+  ctx.save();
+  ctx.fillStyle = '#1a1a1a';
+  ctx.font = 'bold 12px system-ui, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText(text, x, y);
+  ctx.restore();
+}
+
+/* measured wrapping: line counts come from measureText, never from an estimate */
+function wrapLines(ctx, text, maxWidth) {
+  var words = String(text).split(' '), lines = [], cur = '';
+  for (var i = 0; i < words.length; i++) {
+    var t = cur ? cur + ' ' + words[i] : words[i];
+    if (cur && ctx.measureText(t).width > maxWidth) { lines.push(cur); cur = words[i]; }
+    else cur = t;
+  }
+  if (cur) lines.push(cur);
+  return lines;
+}
+
+function drawLines(ctx, lines, x, y, lh) {
+  for (var i = 0; i < lines.length; i++) ctx.fillText(lines[i], x, y + i * lh);
+  return y + (lines.length - 1) * lh;
+}
+
+function log10(v) { return Math.log(v) / Math.LN10; }
+
+/* ---- D1: compression ratio beeswarm on a log axis ---- */
+/* delegations[].compression_ratio, report order */
+var RATIOS = [5.482, 1.4339, 4.3694, 1.4807, 4.3992, 1.3324, 4.3166, 10.3278,
+              4.5395, 4.1049, 3.5108, 5.377, 13.2275, 8.0397, 3.8171, 5.4087,
+              16.5696, 23.65, 1.5038, 4.5563, 5.7861, 5.1047, 2.3242, 1.2456,
+              3.6931, 1.3285];
+var R_MIN = 1.2456, R_MED = 4.3843, R_MAX = 23.65;
+
+function drawRatio() {
+  var c = document.getElementById('cvRatio');
+  if (!c) return;
+  var narrow = (c.clientWidth || 760) < 640;
+  var s = fit(c, narrow ? 300 : 262), ctx = s.ctx, w = s.w;
+
+  var L = 56, R = 24, ax0 = L, ax1 = w - R, span = Math.max(ax1 - ax0, 60);
+  var lo = log10(0.9), hi = log10(30), domain = hi - lo;
+  function X(v) { return ax0 + (log10(v) - lo) / domain * span; }
+
+  var boxTop = 58, boxBot = 192, base = 128, dotR = 4;
+
+  panelTitle(ctx, w / 2, 22, 'Compression ratio, all 26 delegations');
+  ctx.save();
+  ctx.fillStyle = '#555';
+  ctx.font = '10px system-ui, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('report characters per instruction character', w / 2, 42);
+  ctx.restore();
+
+  /* plot field */
+  ctx.save();
+  ctx.fillStyle = '#fbfaf7';
+  ctx.strokeStyle = '#e2ded5';
+  ctx.lineWidth = 1;
+  ctx.fillRect(ax0, boxTop, span, boxBot - boxTop);
+  ctx.strokeRect(ax0, boxTop, span, boxBot - boxTop);
+  /* the region the prediction expected to be occupied */
+  ctx.fillStyle = 'rgba(154,59,59,0.10)';
+  ctx.fillRect(ax0, boxTop, X(1) - ax0, boxBot - boxTop);
+  ctx.restore();
+
+  /* ticks and gridlines */
+  var ticks = [1, 2, 3, 5, 10, 20, 30];
+  ctx.save();
+  ctx.strokeStyle = '#eceae4';
+  ctx.lineWidth = 1;
+  for (var t = 0; t < ticks.length; t++) {
+    var tx = X(ticks[t]);
+    ctx.beginPath();
+    ctx.moveTo(tx, boxTop);
+    ctx.lineTo(tx, boxBot);
+    ctx.stroke();
+  }
+  ctx.restore();
+
+  /* median marker, drawn under the points */
+  ctx.save();
+  ctx.strokeStyle = '#b8860b';
+  ctx.lineWidth = 1.5;
+  ctx.setLineDash([5, 4]);
+  ctx.beginPath();
+  ctx.moveTo(X(R_MED), boxTop);
+  ctx.lineTo(X(R_MED), boxBot);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.restore();
+
+  /* the no-change line */
+  ctx.save();
+  ctx.strokeStyle = '#9a3b3b';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(X(1), boxTop);
+  ctx.lineTo(X(1), boxBot);
+  ctx.stroke();
+  ctx.fillStyle = '#9a3b3b';
+  ctx.textAlign = 'left';
+  ctx.font = 'bold 10px system-ui, sans-serif';
+  ctx.fillText('ratio 1', X(1) + 5, 70);
+  ctx.font = '10px system-ui, sans-serif';
+  ctx.fillText('no change', X(1) + 5, 84);
+  ctx.restore();
+
+  /* axis */
+  ctx.save();
+  ctx.strokeStyle = '#555';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(ax0, boxBot);
+  ctx.lineTo(ax1, boxBot);
+  ctx.stroke();
+  ctx.fillStyle = '#555';
+  ctx.font = '10px system-ui, sans-serif';
+  ctx.textAlign = 'center';
+  for (var k = 0; k < ticks.length; k++) {
+    var kx = X(ticks[k]);
+    ctx.beginPath();
+    ctx.moveTo(kx, boxBot);
+    ctx.lineTo(kx, boxBot + 5);
+    ctx.stroke();
+    ctx.fillText(String(ticks[k]), kx, boxBot + 17);
+  }
+  ctx.restore();
+
+  /* beeswarm rows: greedy packing so no two dots overlap horizontally */
+  var sorted = RATIOS.slice().sort(function (a, b) { return a - b; });
+  var need = dotR * 2 + 1, lastInRow = [], rows = [], maxRow = 0;
+  for (var i = 0; i < sorted.length; i++) {
+    var px = X(sorted[i]), row = 0;
+    while (lastInRow[row] !== undefined && px - lastInRow[row] < need) row++;
+    lastInRow[row] = px;
+    rows[i] = row;
+    if (row > maxRow) maxRow = row;
+  }
+  var half = Math.ceil(maxRow / 2);
+  var gap = half > 0 ? Math.min(9, 27 / half) : 9;   /* keeps every dot inside base +/- 31 */
+
+  ctx.save();
+  ctx.fillStyle = '#2a4a6f';
+  ctx.strokeStyle = '#fff';
+  ctx.lineWidth = 1;
+  for (var j = 0; j < sorted.length; j++) {
+    var r = rows[j];
+    var off = Math.ceil(r / 2) * gap * (r % 2 === 1 ? -1 : 1);
+    ctx.globalAlpha = 0.82;
+    ctx.beginPath();
+    ctx.arc(X(sorted[j]), base + off, dotR, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+  }
+  ctx.globalAlpha = 1;
+  ctx.restore();
+
+  /* extreme callouts, boxed so they sit over the field cleanly */
+  edgeLabel(ctx, X(R_MIN), 178, 'min 1.2456', '#2a4a6f');
+  edgeLabel(ctx, X(R_MAX), 178, 'max 23.6500', '#2a4a6f');
+  edgeLabel(ctx, X(R_MED), 72, 'median 4.3843', '#8a6508');
+
+  /* the claim */
+  ctx.save();
+  ctx.fillStyle = '#1a1a1a';
+  ctx.font = '11px system-ui, sans-serif';
+  ctx.textAlign = 'left';
+  var claim = 'Every one of the 26 points falls to the right of the no-change line. Not one delegation returned less text than it was given.';
+  drawLines(ctx, wrapLines(ctx, claim, span), ax0, 226, 15);
+  ctx.restore();
+}
+
+/* ---- D2: observed retention against its matched permutation null ---- */
+var OBS = 0.9356, NUL = 0.8732, DIFF = 0.0624;
+
+function drawNull() {
+  var c = document.getElementById('cvNull');
+  if (!c) return;
+  var narrow = (c.clientWidth || 760) < 640;
+  var s = fit(c, narrow ? 640 : 300), ctx = s.ctx, w = s.w;
+
+  /* --- left block: the paired bars --- */
+  var axL = narrow ? 70 : 86;
+  var baseY = narrow ? 230 : 250;
+  var hs = narrow ? 160 : 180;
+  var barW = 56;
+  var b1x = axL + 26, b2x = b1x + 94;
+  var brx = b2x + barW + 22;
+  var leftMid = narrow ? w / 2 : (axL + b2x + barW) / 2;
+
+  panelTitle(ctx, leftMid, 22, 'Observed retention against its matched null');
+  ctx.save();
+  ctx.fillStyle = '#555';
+  ctx.font = '10px system-ui, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText("share of the child's new vocabulary found in parent prose", leftMid, 40);
+  ctx.restore();
+
+  /* scale */
+  ctx.save();
+  ctx.strokeStyle = '#ccc';
+  ctx.lineWidth = 1;
+  ctx.fillStyle = '#555';
+  ctx.font = '10px system-ui, sans-serif';
+  ctx.textAlign = 'right';
+  var vals = [0, 0.25, 0.5, 0.75, 1];
+  for (var v = 0; v < vals.length; v++) {
+    var gy = baseY - vals[v] * hs;
+    ctx.strokeStyle = vals[v] === 0 ? '#555' : '#ececec';
+    ctx.beginPath();
+    ctx.moveTo(axL, gy);
+    ctx.lineTo(b2x + barW, gy);
+    ctx.stroke();
+    ctx.fillText(vals[v].toFixed(2), axL - 6, gy + 3);
+  }
+  ctx.strokeStyle = '#999';
+  ctx.beginPath();
+  ctx.moveTo(axL, baseY - hs);
+  ctx.lineTo(axL, baseY);
+  ctx.stroke();
+  ctx.restore();
+
+  var obsTop = baseY - OBS * hs, nulTop = baseY - NUL * hs;
+
+  function bar(x, top, color, value, name) {
+    ctx.save();
+    ctx.fillStyle = color;
+    ctx.globalAlpha = 0.85;
+    ctx.fillRect(x, top, barW, baseY - top);
+    ctx.globalAlpha = 1;
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 1;
+    ctx.strokeRect(x, top, barW, baseY - top);
+    ctx.textAlign = 'center';
+    ctx.fillStyle = color;
+    ctx.font = 'bold 11px system-ui, sans-serif';
+    ctx.fillText(value, x + barW / 2, top - 8);
+    ctx.fillStyle = '#555';
+    ctx.font = '10px system-ui, sans-serif';
+    ctx.fillText(name, x + barW / 2, baseY + 16);
+    ctx.restore();
+  }
+  bar(b1x, obsTop, '#1f5136', '0.9356', 'observed');
+  bar(b2x, nulTop, '#8d94a3', '0.8732', 'matched null');
+
+  /* the gap, which is the actual effect */
+  ctx.save();
+  ctx.strokeStyle = '#c45c26';
+  ctx.lineWidth = 1;
+  ctx.setLineDash([3, 3]);
+  ctx.beginPath();
+  ctx.moveTo(b1x + barW, obsTop);
+  ctx.lineTo(brx, obsTop);
+  ctx.moveTo(b2x + barW, nulTop);
+  ctx.lineTo(brx, nulTop);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.moveTo(brx, obsTop);
+  ctx.lineTo(brx, nulTop);
+  ctx.moveTo(brx - 5, obsTop);
+  ctx.lineTo(brx + 5, obsTop);
+  ctx.moveTo(brx - 5, nulTop);
+  ctx.lineTo(brx + 5, nulTop);
+  ctx.stroke();
+  ctx.textAlign = 'left';
+  ctx.fillStyle = '#c45c26';
+  ctx.font = '10px system-ui, sans-serif';
+  ctx.fillText('difference', brx + 8, (obsTop + nulTop) / 2 - 3);
+  ctx.font = 'bold 11px system-ui, sans-serif';
+  ctx.fillText('0.0624', brx + 8, (obsTop + nulTop) / 2 + 11);
+  ctx.restore();
+
+  /* --- right block (or lower block when narrow): the decomposition --- */
+  var ry = narrow ? 290 : 22;
+  var RL = narrow ? 24 : Math.round(w * 0.5);
+  var RR = w - 24;
+  var sw = Math.max(RR - RL, 80);
+
+  ctx.save();
+  ctx.strokeStyle = '#ddd';
+  ctx.lineWidth = 1;
+  ctx.setLineDash([4, 4]);
+  ctx.beginPath();
+  if (narrow) { ctx.moveTo(24, ry - 22); ctx.lineTo(w - 24, ry - 22); }
+  else { ctx.moveTo(RL - 24, 50); ctx.lineTo(RL - 24, 272); }
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.restore();
+
+  panelTitle(ctx, narrow ? w / 2 : (RL + RR) / 2, ry, 'Where the 0.9356 comes from');
+
+  var nulEnd = RL + NUL * sw, obsEnd = RL + OBS * sw;
+  var barTop = ry + 46, barH = 32, barBot = barTop + barH;
+
+  /* effect segment callout, above the bar */
+  var eMid = (nulEnd + obsEnd) / 2;
+  ctx.save();
+  ctx.textAlign = 'center';
+  ctx.fillStyle = '#c45c26';
+  ctx.font = '10px system-ui, sans-serif';
+  ctx.fillText('real effect', eMid, ry + 22);
+  ctx.font = 'bold 11px system-ui, sans-serif';
+  ctx.fillText('0.0624', eMid, ry + 34);
+  ctx.strokeStyle = '#c45c26';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(eMid, ry + 40);
+  ctx.lineTo(eMid, barTop);
+  ctx.stroke();
+  ctx.restore();
+
+  ctx.save();
+  ctx.fillStyle = '#e8e4dc';
+  ctx.fillRect(RL, barTop, sw, barH);
+  ctx.fillStyle = '#8d94a3';
+  ctx.globalAlpha = 0.9;
+  ctx.fillRect(RL, barTop, nulEnd - RL, barH);
+  ctx.globalAlpha = 1;
+  ctx.fillStyle = '#c45c26';
+  ctx.fillRect(nulEnd, barTop, obsEnd - nulEnd, barH);
+  ctx.strokeStyle = '#999';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(RL, barTop, sw, barH);
+  ctx.fillStyle = '#fff';
+  ctx.font = '10px system-ui, sans-serif';
+  ctx.textAlign = 'left';
+  ctx.fillText('pool saturation 0.8732', RL + 8, barTop + 20);
+  ctx.fillStyle = '#555';
+  ctx.textAlign = 'right';
+  ctx.fillText('not retained', RR, barBot + 16);
+  ctx.restore();
+
+  /* the four figures from the null block, plus the cause of the artifact */
+  var facts = [
+    'observed retention mean 0.9356',
+    'matched null mean 0.8732, 200 permutations each',
+    'mean difference 0.0624 is the entire real effect',
+    '25 of 26 delegations above their own null (0.9615)',
+    'parent pool 17,521 types over 5,661,308 characters',
+    'median 8.5 new types dropped, maximum 64'
+  ];
+  ctx.save();
+  ctx.font = '11px system-ui, sans-serif';
+  ctx.textAlign = 'left';
+  var fy = ry + 124;
+  for (var f = 0; f < facts.length; f++) {
+    ctx.fillStyle = f === 4 ? '#9a3b3b' : '#2a4a6f';
+    ctx.fillRect(RL, fy - 8, 5, 5);
+    ctx.fillStyle = '#1a1a1a';
+    fy = drawLines(ctx, wrapLines(ctx, facts[f], sw - 12), RL + 11, fy, 15) + 18;
+  }
+  ctx.restore();
+}
+
+/* ---- D3: the two-criterion scorecard ---- */
+var SCORE_ROWS = [
+  {
+    crit: 'Volume change at the boundary',
+    meas: 'Large increase. Median compression ratio 4.3843, mean 5.6511, minimum 1.2456 across 26 delegations. Median report 3483.0 characters against a median instruction of 564.5.',
+    verd: 'Fails the I-s/he criterion. That schema transmits information with no change of volume.'
+  },
+  {
+    crit: 'Receiver adds content of its own',
+    meas: 'High content gain. Median content gain ratio 0.8387, mean 0.8051, minimum 0.5808. Median 17.5 tool calls, maximum 71.',
+    verd: 'Fails the I-I criterion. Autocommunication increases information only because the second code is purely structural and adds nothing of its own.'
+  }
+];
+var SCORE_THIRD = 'Not presemiotic binding either. The child acts autonomously, a median of 17.5 tool calls, and returns material the parent never named, a median of 151.0 new vocabulary types. That is the opposite of a recipient valued for adding nothing.';
+var SCORE_END = 'The dyad fits no cell in the typology.';
+
+function drawScore() {
+  var c = document.getElementById('cvScore');
+  if (!c) return;
+  var w0 = c.clientWidth || 760;
+  var narrow = w0 < 640;
+  /* pass one: a provisional surface purely to measure wrapped line counts */
+  var probe = fit(c, 420).ctx;
+  var plan = planScore(probe, w0, narrow);
+  /* pass two: the real surface, sized to the measured content */
+  var s = fit(c, plan.h);
+  renderScore(s.ctx, w0, narrow, plan);
+}
+
+function planScore(ctx, w, narrow) {
+  var pad = narrow ? 20 : 40;
+  var x0 = pad, tw = w - pad * 2;
+  var plan = { pad: pad, x0: x0, tw: tw, rows: [] };
+  var y;
+
+  if (narrow) {
+    plan.cols = null;
+    ctx.font = '11px system-ui, sans-serif';
+    y = 46;
+    for (var i = 0; i < SCORE_ROWS.length; i++) {
+      var R = SCORE_ROWS[i];
+      var m = wrapLines(ctx, R.meas, tw - 16);
+      var v = wrapLines(ctx, R.verd, tw - 16);
+      plan.rows.push({ top: y, meas: m, verd: v, h: 24 + 16 + m.length * 15 + 10 + 16 + v.length * 15 + 10 });
+      y += plan.rows[i].h + 12;
+    }
+  } else {
+    plan.cols = [tw * 0.26, tw * 0.42, tw * 0.32];
+    ctx.font = '11px system-ui, sans-serif';
+    plan.headTop = 46;
+    plan.headH = 26;
+    y = plan.headTop + plan.headH;
+    for (var j = 0; j < SCORE_ROWS.length; j++) {
+      var Q = SCORE_ROWS[j];
+      ctx.font = 'bold 11px system-ui, sans-serif';
+      var cl = wrapLines(ctx, Q.crit, plan.cols[0] - 20);
+      ctx.font = '11px system-ui, sans-serif';
+      var ml = wrapLines(ctx, Q.meas, plan.cols[1] - 20);
+      /* verdict text is indented 22px past the column edge to clear the cross mark */
+      var vl = wrapLines(ctx, Q.verd, plan.cols[2] - 34);
+      var n = Math.max(cl.length, ml.length, vl.length);
+      plan.rows.push({ top: y, crit: cl, meas: ml, verd: vl, h: n * 15 + 20 });
+      y += plan.rows[j].h;
+    }
+  }
+
+  ctx.font = '11px system-ui, sans-serif';
+  plan.thirdTop = y + 16;
+  plan.third = wrapLines(ctx, SCORE_THIRD, tw - 24);
+  plan.thirdH = plan.third.length * 15 + 22;
+  plan.endY = plan.thirdTop + plan.thirdH + 32;
+  plan.h = plan.endY + 22;
+  return plan;
+}
+
+function renderScore(ctx, w, narrow, p) {
+  panelTitle(ctx, w / 2, 22, 'Two criteria, one corpus, opposite directions');
+
+  function fail(x, y) {   /* small cross marking a failed criterion */
+    ctx.save();
+    ctx.strokeStyle = '#9a3b3b';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(x - 4, y - 4); ctx.lineTo(x + 4, y + 4);
+    ctx.moveTo(x + 4, y - 4); ctx.lineTo(x - 4, y + 4);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  var i, R;
+  if (!narrow) {
+    var cx1 = p.x0, cx2 = p.x0 + p.cols[0], cx3 = p.x0 + p.cols[0] + p.cols[1];
+    /* header */
+    ctx.save();
+    ctx.fillStyle = '#f1efe9';
+    ctx.fillRect(p.x0, p.headTop, p.tw, p.headH);
+    ctx.strokeStyle = '#ccc';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(p.x0, p.headTop, p.tw, p.headH);
+    ctx.fillStyle = '#444';
+    ctx.font = 'bold 10px system-ui, sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText('CRITERION', cx1 + 10, p.headTop + 17);
+    ctx.fillText('MEASURED ON THIS CORPUS', cx2 + 10, p.headTop + 17);
+    ctx.fillText('VERDICT', cx3 + 10, p.headTop + 17);
+    ctx.restore();
+
+    for (i = 0; i < p.rows.length; i++) {
+      R = p.rows[i];
+      ctx.save();
+      ctx.fillStyle = i % 2 ? '#fbfaf7' : '#fff';
+      ctx.fillRect(p.x0, R.top, p.tw, R.h);
+      ctx.strokeStyle = '#ddd';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(p.x0, R.top, p.tw, R.h);
+      ctx.beginPath();
+      ctx.moveTo(cx2, R.top); ctx.lineTo(cx2, R.top + R.h);
+      ctx.moveTo(cx3, R.top); ctx.lineTo(cx3, R.top + R.h);
+      ctx.stroke();
+      ctx.textAlign = 'left';
+      ctx.fillStyle = '#1a1a1a';
+      ctx.font = 'bold 11px system-ui, sans-serif';
+      drawLines(ctx, R.crit, cx1 + 10, R.top + 24, 15);
+      ctx.font = '11px system-ui, sans-serif';
+      ctx.fillStyle = '#1a1a1a';
+      drawLines(ctx, R.meas, cx2 + 10, R.top + 24, 15);
+      ctx.fillStyle = '#9a3b3b';
+      drawLines(ctx, R.verd, cx3 + 22, R.top + 24, 15);
+      ctx.restore();
+      fail(cx3 + 11, R.top + 20);
+    }
+  } else {
+    for (i = 0; i < p.rows.length; i++) {
+      R = p.rows[i];
+      ctx.save();
+      ctx.fillStyle = '#fbfaf7';
+      ctx.fillRect(p.x0, R.top, p.tw, R.h);
+      ctx.strokeStyle = '#ddd';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(p.x0, R.top, p.tw, R.h);
+      ctx.fillStyle = '#2a4a6f';
+      ctx.fillRect(p.x0, R.top, p.tw, 24);
+      ctx.fillStyle = '#fff';
+      ctx.font = 'bold 11px system-ui, sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillText(SCORE_ROWS[i].crit, p.x0 + 8, R.top + 16);
+      var yy = R.top + 24;
+      ctx.fillStyle = '#666';
+      ctx.font = 'bold 9px system-ui, sans-serif';
+      ctx.fillText('MEASURED', p.x0 + 8, yy + 12);
+      ctx.fillStyle = '#1a1a1a';
+      ctx.font = '11px system-ui, sans-serif';
+      yy = drawLines(ctx, R.meas, p.x0 + 8, yy + 27, 15) + 10;
+      ctx.fillStyle = '#666';
+      ctx.font = 'bold 9px system-ui, sans-serif';
+      ctx.fillText('VERDICT', p.x0 + 8, yy + 12);
+      ctx.fillStyle = '#9a3b3b';
+      ctx.font = '11px system-ui, sans-serif';
+      drawLines(ctx, R.verd, p.x0 + 8, yy + 27, 15);
+      ctx.restore();
+    }
+  }
+
+  /* third line: not presemiotic binding either */
+  ctx.save();
+  ctx.fillStyle = '#f4f4f6';
+  ctx.fillRect(p.x0, p.thirdTop, p.tw, p.thirdH);
+  ctx.fillStyle = '#8d94a3';
+  ctx.fillRect(p.x0, p.thirdTop, 3, p.thirdH);
+  ctx.fillStyle = '#333';
+  ctx.font = '11px system-ui, sans-serif';
+  ctx.textAlign = 'left';
+  drawLines(ctx, p.third, p.x0 + 12, p.thirdTop + 20, 15);
+  ctx.restore();
+
+  /* conclusion */
+  ctx.save();
+  ctx.fillStyle = '#1a1a1a';
+  ctx.font = 'bold 13px Georgia, serif';
+  ctx.textAlign = 'center';
+  ctx.fillText(SCORE_END, w / 2, p.endY);
+  ctx.strokeStyle = '#9a3b3b';
+  ctx.lineWidth = 1.5;
+  var cw = ctx.measureText(SCORE_END).width;
+  ctx.beginPath();
+  ctx.moveTo(w / 2 - cw / 2, p.endY + 6);
+  ctx.lineTo(w / 2 + cw / 2, p.endY + 6);
+  ctx.stroke();
+  ctx.restore();
+}
+
+function drawAll() { drawRatio(); drawNull(); drawScore(); }
+window.addEventListener('load', drawAll);
+window.addEventListener('resize', drawAll);
+</script>
+</body>
+</html>

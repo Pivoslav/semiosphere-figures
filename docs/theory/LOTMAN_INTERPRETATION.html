@@ -150,6 +150,8 @@
     <li><a href="#s11">Sources, tiers, and what must not be claimed</a></li>
     <li><a href="#s12">What a typed hand-off actually buys (MA1, MA4)</a></li>
     <li><a href="#s13">Transmission, and the cell that has no name (MA4b, MA13)</a></li>
+    <li><a href="#s14">Where the distance actually lives (MA12)</a></li>
+    <li><a href="#s15">What isolation actually produces (MA10)</a></li>
     <li><a href="#glossary">Glossary</a> <span class="hint">(click dotted terms)</span></li>
   </ol>
 </div>
@@ -642,6 +644,45 @@
 <p>The iterated condition makes the same point from the other side. Three successive round trips did not converge: distance from the original grew while successive outputs grew more alike, so the drift decelerated without settling, and only one stretch of thirteen reached a fixed point against a preregistered expectation of seven. <a href="../embed/fig-roundtrip-asymmetry.html#r4">The one that did settle is the instructive row.</a> It stabilised only after deleting the scare quotes that carried a KGB author's irony and deleting the named course the memorandum is actually about. It converged by discarding the two features that made it archival evidence. So a pipeline that reaches a fixed point has not thereby agreed about anything, and convergence cannot be reported as recovery.</p>
 
 <p>Two cautions about the measure itself, both of which came out of the run rather than the design. A high recovery score can mark a refusal to transform: in at least one case the reverse pass returned the forward output unchanged, and token overlap cannot tell that apart from a successful round trip. And two of the survival measures read 1.000 while being vacuous, because no sampled stretch contained an archival reference or a literal corpus id, so the denominator was zero. They are recorded as untestable rather than as results, which is the same discipline section 1 arrived at by a more expensive route.</p>
+
+<h2 id="s15"><span class="num">SECTION FIFTEEN</span>What isolation actually produces (MA10)</h2>
+
+<p><em>2026-10-02.</em></p>
+
+<p>Section 13 reported twenty six real delegations and found content gain of 0.84, material in the child's report that the parent's instruction never contained. I flagged at the time that the transcripts do not record tool results, so that figure could not separate what a child read from what a child made up. This run separates them, by removing the sources entirely and watching what happens.</p>
+
+<p>A parent retrieves archival context and hands a subtask to a subagent, which reports back; the parent then writes the answer. Only the child's view changes across conditions. Seventeen items rather than eighteen, because a preregistered leak audit caught the parent writing a real unit id into its own delegation and dropped that item.</p>
+
+<table>
+  <thead><tr><th>What the subagent could see</th><th>Unsupported claims</th><th>Content gain</th><th>Autonomy</th><th>Said it had nothing</th></tr></thead>
+  <tbody>
+    <tr><td>No subagent, parent alone</td><td>0.22</td><td>20.3</td><td>n/a</td><td>n/a</td></tr>
+    <tr><td>The parent's full sources</td><td>0.34</td><td>19.1</td><td>0.86</td><td>0 of 17</td></tr>
+    <tr><td>Typed claims only</td><td>0.48</td><td>19.9</td><td>0.75</td><td>0 of 17</td></tr>
+    <tr><td>Nothing at all</td><td>0.47</td><td>26.9</td><td>0.74</td><td>0 of 17</td></tr>
+    <tr><td>Nothing, and told so</td><td>0.42</td><td>21.1</td><td>0.71</td><td>10 of 17</td></tr>
+  </tbody>
+</table>
+
+<p>No delegation condition beat the parent working alone. The baseline had the lowest unsupported claim rate at 0.22, every delegating arm ran between 1.6 and 2.2 times worse, and they spent two to three times the prompt bytes to do it. On this plate, at this scale, adding a subagent bought nothing and cost accuracy.</p>
+
+<p><a href="../embed/fig-isolation-laundering.html#i1">The isolated condition produced the highest content gain of any arm</a>, 26.9 novel types against 19.1 for the child that could see everything. Fourteen of its seventeen answers contained a key term that appears nowhere in the corpus. The gain was invention, and the ordering holds under a stricter baseline that also subtracts the task wording, so there is no residue that looks like contribution. That settles the ambiguity I left open in section 13 in the least convenient direction: content gain is not evidence of contribution, and what separates the two is whether the child had sources, not where the boundary sat. The twenty six real delegations in section 13 had tool access and a median of seventeen tool calls, which is the likeliest reason their gain looks like retrieval, but that reading is now an inference rather than a measurement.</p>
+
+<p>I also have to withdraw something I wrote in the design note a few hours earlier. I argued there that a child which cannot see the parent's sources is structurally closer to an autonomous unit, on the reasoning that enforced isolation is a real boundary where a requested one is not. The boundary is real, and crossing it changes behaviour sharply. It does not produce autonomy. The autonomy proxy falls as isolation increases, from 0.86 with full context to 0.74 with none, and every other measure that would indicate a position of its own gets worse at the same time. Enforced separation manufactured confident invention rather than a second point of view.</p>
+
+<p><a href="../embed/fig-isolation-laundering.html#i2">The exception is the one result I keep returning to.</a> Isolated with no sources, the subagent reported its own blindness in zero of seventeen cases, and in nine of seventeen it asserted research it had not done, once under a heading it invented for itself reading <code>**CLASSIFIED DOCUMENT**</code>. Told plainly that it had been given no sources, the same model said so in ten of seventeen. The capacity to report having nothing was available the whole time and appeared only when the prompt asked for it. Two caveats, both of which belong next to the number: the preregistered regex for this measure was too narrow and scored the declared condition at 0.06, so the corrected figure is post-hoc and labelled as such, and the corrected pattern fired on none of the returns in conditions that did have sources, which is the check that it is not simply over-firing. The substantive prediction still failed, since the isolated condition scores zero under both instruments.</p>
+
+<p>The qualitative case qualifies an earlier finding of this journal, which is why it matters more than the table. Section 12 reported that a <a class="term" href="#gloss-typed" data-tip="Claims carry shell, surface and proof tier.">typed</a> envelope held attribution at 0.72 where plain prose held it at 0.06, and treated that as the case for typing the channel. On item <code>e2_i06</code> the isolated subagent invented participants, naming Pierre Trudeau, Lester B. Pearson and Andrei Sakharov, and invented an institution to convene them. The parent, holding all five correctly tagged excerpts, then wrote:</p>
+
+<blockquote>
+  <p>The internal KGB characterization (SHELL=secret surface=internal_1206 id=s1206_mace) describes the symposium as a "provocation" aimed at undermining Soviet interests in Canada.</p>
+</blockquote>
+
+<p><code>s1206_mace</code> is a real unit. It is a Russian list of symposium speakers. The words "provocation" and "counter-revolutionary" occur in no unit of the corpus. That answer scored full marks on tag retention. <a href="../embed/fig-isolation-laundering.html#i3">The envelope carried provenance faithfully onto content that had none</a>, which is the <a class="term" href="#gloss-launder" data-tip="Moving a claim up a proof tier by restating it with better-looking provenance.">laundering</a> move of section 7 performed by our own apparatus. Section 12's result stands as measured. What has to be added to it is that typing propagates provenance whether or not the claim deserves it, so the envelope is a transport format and not a safeguard, and the adjudication still has to happen somewhere else. MA4b in section 13 says where: upstream, by rule, before generation.</p>
+
+<p>Read against Lotman, the isolated child is close to his presemiotic limit case after all, though not in the way I expected. He describes a recipient valued for transparency, for adding nothing of its own. This one added a great deal of its own and none of it was true, which is a different failure from transparency and arguably a worse one. A part that cannot exist autonomously, asked to behave as though it could, produced the appearance of autonomy without its substance.</p>
+
+<p>Four limits, all of them live. Every role here is the same base model, so this bounds one model under five context regimes and says nothing about agent architectures in general, and nothing at all about the 1981 structural claim, which is theoretical. Content gain under isolation is indistinguishable from fabrication by construction, which is the point of the design and also its ceiling. The autonomy measure is a surface proxy, and text without pronouns can still hold no position. And there were seventeen items, one plate, one seed, no human adjudication, no null model and no effect size, so the ordering is suggestive and the magnitudes are not.</p>
 
 </main>
 

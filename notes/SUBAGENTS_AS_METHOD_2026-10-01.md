@@ -49,6 +49,10 @@ The two-level comparison that MA13 makes possible. Same task, same instruction t
 
 Measures carried over from MA10 unchanged so the levels are comparable: content gain, unsupported claim rate, autonomy, blindness report rate, tag retention, id survival.
 
+**Level A has now run, 2026-10-01, and it removes one of this note's own assumptions.** MA10 found that isolation does not move a child toward autonomy. The autonomy proxy fell from 0.86 with full context to 0.74 with none, no delegation condition beat the parent working alone, and the isolated child produced the highest content gain of any arm entirely through fabrication, with fourteen of seventeen answers containing a term absent from the whole corpus. So the hypothesis that a child which cannot see the parent's sources is structurally closer to an autonomous unit is false for the requested case. Enforced separation still has to be tested, but the prior should now be that isolation without sources produces confident invention rather than a second position.
+
+Two findings from that run change how level B should be built. First, the only thing that produced any trace of a position was telling the child it had no sources: blindness reports went from zero of seventeen to ten of seventeen on the same model. Level B must include that declared arm or it will measure the wrong thing. Second, the parent attached a real archival id to invented content and scored full marks on tag retention, so tag retention cannot be used as a quality measure in level B. It measures transport, not truth.
+
 The question is whether requested isolation behaves like enforced isolation. If it does, prompt-simulated dyads are a valid cheap proxy and the whole program's method is vindicated. If it does not, every earlier dyad result is a claim about instruction compliance rather than about structure, and that has to be said plainly. This is the single highest-value experiment in the current backlog because it audits the method rather than extending it.
 
 MA10 is therefore no longer a standalone run. It is the control arm of MA14.
