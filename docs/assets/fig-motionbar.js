@@ -4,7 +4,8 @@
    OrbitControls instance is reachable as window.FIG_CONTROLS and, on L1, so
    that the relay pulses follow window.FIG_MOTION.pulses.
 
-   Every page gets "Turn the model". L1 also gets "Play relays / Pause relays",
+   Every page gets "Turn the model". L1 also gets a guided "Play the relay
+   story" and "Play relays / Pause relays", with its pulse dots made visible,
    and L3 gets a guided "Play before and after" camera move between its two
    planes. Nothing here starts on its own. */
 (function () {
@@ -82,6 +83,101 @@
     };
   }
 
+  /* L1 only. The page's relay pulses are 0.07-unit dots in the same colour as
+     the arc they ride on, so they are nearly invisible. Make them white with a
+     sky-blue glow. pulseDots is a top-level const in the page's script. */
+  function brightenPulses() {
+    /* global pulseDots, THREE */
+    if (typeof pulseDots === "undefined" || typeof THREE === "undefined") return;
+    pulseDots.forEach(function (p) {
+      if (!p || !p.dot || p.dot.userData.figBright) return;
+      p.dot.userData.figBright = true;
+      p.dot.material.color.setHex(0xffffff);
+      p.dot.scale.setScalar(2.2);
+      var glow = new THREE.Mesh(
+        new THREE.SphereGeometry(0.07, 12, 10),
+        new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.35, depthWrite: false })
+      );
+      glow.scale.setScalar(2.1);
+      p.dot.add(glow);
+    });
+  }
+
+  /* L1 only: a guided walk through the 1983 relay. The camera keeps its angle,
+     moves its focus to each document in turn and zooms in, while the caption
+     says what happened there. posById, scene and needsRender belong to the page. */
+  function relayStory(controls, say, btn) {
+    /* global posById, scene, needsRender */
+    var cam = controls.object, target = controls.target, V = target.constructor;
+    var STOPS = [
+      { id: "internal_1206", dist: 3.4, text: "24 March 1983, Kyiv. A secret KGB memo calls the coming Montreal symposium a hostile \u00ab\u0441\u0431\u043e\u0440\u0438\u0449\u0435\u00bb (\"gathering\") and puts \"artificial famine\" in scare quotes." },
+      { id: "embassy_1983", dist: 3.4, text: "28 April 1983, Ottawa. The Soviet embassy denies the famine was man-made and blames drought and kulaks. The topic crossed outward along the sky-blue relay. The scare quotes did not." },
+      { id: "novosti_1983", dist: 3.4, text: "April 1983. Novosti, the Soviet press agency, runs the same denial text. The green arc means near-identical wording on the outward channel." },
+      { id: "pravda_1983", dist: 3.8, text: "Pravda, at home. No denial arc in the anniversary window: silence for domestic readers while the denial ran abroad." },
+      { id: null, dist: 0, text: "The whole semiosphere: four shells by intended reader, from secret memos at the centre to the diaspora press at the edge. The white dots keep running along the two proven relays." }
+    ].filter(function (st) { return st.id === null || (typeof posById !== "undefined" && posById[st.id]); });
+    var home = { t: target.clone(), c: cam.position.clone() };
+    var halo = null;
+    if (typeof THREE !== "undefined" && typeof scene !== "undefined") {
+      halo = new THREE.Mesh(
+        new THREE.SphereGeometry(0.32, 20, 14),
+        new THREE.MeshBasicMaterial({ color: 0xf59e0b, transparent: true, opacity: 0.0, depthWrite: false })
+      );
+      scene.add(halo);
+    }
+    var i = 0, t = 0, last = 0, raf = 0, active = false, fromT, fromC, toT, toC;
+    var MOVE = 2.0, HOLD = 4.2;
+    function aim(st) {
+      fromT = target.clone(); fromC = cam.position.clone();
+      if (!st.id) { toT = home.t.clone(); toC = home.c.clone(); return; }
+      toT = posById[st.id].clone();
+      var dir = cam.position.clone().sub(target).normalize();
+      toC = toT.clone().add(dir.multiplyScalar(st.dist));
+    }
+    function stop() {
+      active = false;
+      if (raf) cancelAnimationFrame(raf);
+      raf = 0;
+      if (halo) halo.material.opacity = 0;
+      try { needsRender = true; } catch (e) { /* page may not expose it */ }
+      btn.textContent = "Play the relay story";
+      btn.setAttribute("aria-pressed", "false");
+    }
+    function frame(now) {
+      var dt = last ? Math.min((now - last) / 1000, 0.1) : 0;
+      last = now; t += dt;
+      var st = STOPS[i];
+      var k = ease(Math.min(1, t / MOVE));
+      target.lerpVectors(fromT, toT, k);
+      cam.position.lerpVectors(fromC, toC, k);
+      if (halo) {
+        if (st.id) { halo.position.copy(toT); halo.material.opacity = 0.25 + 0.2 * Math.sin(now / 260); }
+        else halo.material.opacity = 0;
+      }
+      try { needsRender = true; } catch (e) { /* ignore */ }
+      if (say.textContent !== st.text) say.textContent = st.text;
+      if (t >= MOVE + (st.id ? HOLD : 2.5)) {
+        i += 1; t = 0;
+        if (i >= STOPS.length) { stop(); return; }
+        aim(STOPS[i]);
+      }
+      raf = requestAnimationFrame(frame);
+    }
+    return function toggle() {
+      if (active) { stop(); return; }
+      if (window.FIG_MOTION) window.FIG_MOTION.pulses = true;
+      var pb = document.querySelector(".fig-motionbar [data-role=pulses]");
+      if (pb) { pb.textContent = "Pause relays"; pb.setAttribute("aria-pressed", "true"); }
+      controls.autoRotate = false;
+      home = { t: target.clone(), c: cam.position.clone() };
+      active = true; i = 0; t = 0; last = 0;
+      aim(STOPS[0]);
+      btn.textContent = "Stop the story";
+      btn.setAttribute("aria-pressed", "true");
+      raf = requestAnimationFrame(frame);
+    };
+  }
+
   function build(controls) {
     if (document.querySelector(".fig-motionbar")) return;
     var stage = document.getElementById("viz-stage");
@@ -109,7 +205,14 @@
 
     var motion = window.FIG_MOTION;
     if (motion && motion.hasPulses) {
+      brightenPulses();
+      if (typeof posById !== "undefined" && posById.internal_1206) {
+        var story = button("Play the relay story");
+        story.addEventListener("click", relayStory(controls, say, story));
+        bar.appendChild(story);
+      }
       var pulses = button(motion.pulses ? "Pause relays" : "Play relays");
+      pulses.setAttribute("data-role", "pulses");
       pulses.setAttribute("aria-pressed", motion.pulses ? "true" : "false");
       pulses.addEventListener("click", function () {
         motion.pulses = !motion.pulses;
