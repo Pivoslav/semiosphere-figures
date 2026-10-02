@@ -148,6 +148,7 @@
     <li><a href="#s9">Potential findings: what the unrun experiments would mean</a></li>
     <li><a href="#s10">Multi-agent communication, persistence, and the bilingual filter</a></li>
     <li><a href="#s11">Sources, tiers, and what must not be claimed</a></li>
+    <li><a href="#s12">What a typed hand-off actually buys (MA1, MA4)</a></li>
     <li><a href="#glossary">Glossary</a> <span class="hint">(click dotted terms)</span></li>
   </ol>
 </div>
@@ -538,6 +539,35 @@
 
 <h3>The shape of the night's result</h3>
 <p>The pattern across six experiments is consistent enough to state as a single sentence. Every claim that depended on fitting a geometry to a handful of examples failed; every claim that depended on typed structure and archival warrant held. That is not a comfortable outcome for a project that had a beautiful number, and it is a coherent one for a project whose theoretical commitment was always that meaning lives in boundaries, prohibitions, and positions rather than in distances.</p>
+
+<!-- ============================================================ -->
+<!-- s12: the first section where the multi-agent prose had to survive a measurement -->
+<h2 id="s12"><span class="num">SECTION TWELVE</span>What a typed hand-off actually buys (MA1, MA4)</h2>
+
+<p><em>2026-10-01.</em></p>
+
+<p>Section 10 argued that default agent exchange is <a class="term" href="#gloss-sms" data-tip="Culture layered on ordinary language: ideology, genre, institutional register.">primary-system</a> coupling, and that <a class="term" href="#gloss-bilingual" data-tip="Boundary as filter: cross, recode, or refuse. Not lossless translation.">bilingual</a> relay has to be engineered into the channel rather than hoped for. That was prose. It has now met a measurement, on all eighteen frozen items of the merge-error manifest, with retrieval held flat in every arm so that only the hand-off envelope varied.</p>
+
+<table>
+  <thead><tr><th>Hand-off</th><th>Attribution survives</th><th>Surface id survives</th><th>Refusal recall on &perp;</th><th>False refusal</th></tr></thead>
+  <tbody>
+    <tr><td>Prose, one agent</td><td>0.11</td><td>0.00</td><td>0.20</td><td>0.08</td></tr>
+    <tr><td>Prose, two agents</td><td>0.06</td><td>0.00</td><td>0.00</td><td>0.23</td></tr>
+    <tr><td>Typed, one agent</td><td>0.78</td><td>0.37</td><td>0.60</td><td>0.15</td></tr>
+    <tr><td>Typed, two agents</td><td>0.72</td><td>0.19</td><td>0.20</td><td>0.38</td></tr>
+    <tr><td>Typed, halt licensed in the prompt</td><td>0.28</td><td>0.03</td><td>1.00</td><td>1.00</td></tr>
+  </tbody>
+</table>
+
+<p>Three things follow. First, typing the envelope is not decoration: carrying shell, surface, and proof tier on each claim held attribution at 0.72 where prose held it at 0.06, and the lexical <a class="term" href="#gloss-tier-conflation" data-tip="Primary file treated as proof of outward fact.">tier-conflation</a> flag fell from roughly a fifth of answers to one in sixteen. Second, the hop costs identifiers rather than labels. Coarse register labels barely moved across the hand-off, while surface-id survival halved, from 0.37 to 0.19. Agents keep the category and drop the document, which is the <a class="term" href="#gloss-unpaired" data-tip="Outward effect named without clip; do not invent to close.">unpaired</a> failure of section 5 in miniature: the register name survives and the thing that makes the claim checkable does not.</p>
+
+<p>Third, and this is the result worth keeping, licensing the halt inside the prompt destroyed it. Recall on the five documented-absence items went to 1.00 and false refusal went to 1.00 in the same arm: the model refused all eighteen items, including both licensed <em>Globe</em> clips, so it produced nothing usable. The <a class="term" href="#gloss-halt" data-tip="Refuse when no licensed outward sentence exists.">halt</a> in section 10's research-design list is therefore a retrieval condition and not a prompt. The rule layer has to adjudicate absence before generation, the way the retrieval experiment already does, because a generator told it may refuse will refuse everything rather than discriminate.</p>
+
+<p>The qualitative case is more instructive than the table. On the unpaired <em>Globe and Mail</em> item, the untyped hand-off reproduced section 5 live: the first agent's message asserted that the newspaper had published articles presenting evidence that the famine was fabricated, which is the internal claim of spr. 1249 restated as outward print, and the second agent inherited it without a flag. The geometry of the error was not new. What is new is that it happened in a channel we built, in a configuration we can now ablate.</p>
+
+<p>Two honest limits. This was one small local model at one seed on eighteen items, so a negative result bounds this configuration and nothing larger, and the scoring was deterministic pattern matching rather than the blind human rubric that the merge-error evaluation still requires. A model in the chain was not permitted to score the chain.</p>
+
+<p>The run also sharpened a question it cannot answer. If a peer message is absorbed rather than encountered, the channel may contain no second position at all, which would make agent exchange, and possibly this exchange, a case of <a class="term" href="#gloss-autocomm" data-tip="Message returns to sender; restructures the institution, not the public.">autocommunication</a> conducted through a medium rather than communication between systems. The same result is equally well explained by weak instruction-following at three billion parameters, and those two readings are indistinguishable from the numbers above. The design response is a battery that measures four signatures in every dyad, human to model, model to model, agent to agent, agent to subagent, and sibling subagents through a parent: content gain, whether a model's position can be recovered from content once style is stripped, stance following, and whether only one party is restructured. The outcome I expect is not autocommunication but a cell Lotman's typology does not have, content gain above zero with no recoverable addressee position, and if that is where the numbers land it needs a name and a defence rather than an analogy.</p>
 
 </main>
 
