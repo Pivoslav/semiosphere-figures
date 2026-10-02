@@ -201,7 +201,7 @@
   <span class="cite"><span class="tier tA">TIER A</span> Juri Lotman and Boris Uspensky, &ldquo;On the Semiotic Mechanism of Culture&rdquo; (1971/1978), trans. George Mihaychuk, <em>New Literary History</em> 9.2.</span>
 </blockquote>
 
-<p>A multilingual sentence <a class="term" href="#gloss-embedding" data-tip="A numeric fingerprint of a sentence from a frozen language model. Nearby fingerprints often share topic; they routinely miss scare quotes and meeting names.">encoder</a> is trained to do exactly one thing well: place translationally equivalent sentences near each other regardless of language. It is an instrument tuned to the <em>primary</em> system. When we asked it to separate a Russian secret register from an English public one, it answered with the only distinction it reliably holds - the language distinction - and we mistook that answer for a register finding.</p>
+<p>A multilingual sentence <a class="term" href="appendix_language_encoding.html#encoder" data-tip="A numeric fingerprint of a sentence from a frozen language model. Nearby fingerprints often share topic; they routinely miss scare quotes and meeting names.">encoder</a> is trained to do exactly one thing well: place translationally equivalent sentences near each other regardless of language. It is an instrument tuned to the <em>primary</em> system. When we asked it to separate a Russian secret register from an English public one, it answered with the only distinction it reliably holds - the language distinction - and we mistook that answer for a register finding.</p>
 
 <p>So the confound is a measurement of where the instrument sits in Lotman's stack. It sits on the primary system. The secondary system, which is what the dissertation is about, is not visible to it in that geometry. This is worth stating positively: the experiment did not fail to find register structure because register structure is absent. It failed because a cosine distance between a Russian and an English document is dominated by a difference the theory considers prior to the one under study.</p>
 
@@ -430,7 +430,7 @@
 
 <p><em>2026-10-01.</em></p>
 
-<p>Section 2 showed that a multilingual <a class="term" href="#gloss-embedding" data-tip="Numeric sentence fingerprint from a frozen language model.">encoder</a> lives on the <a class="term" href="#gloss-sms" data-tip="Culture layered on ordinary language: ideology, genre, institutional register.">primary</a> system: it pulls translationally equivalent sentences together and cannot, by itself, separate a Russian secret <a class="term" href="#gloss-register" data-tip="Document type plus audience contract.">register</a> from an English public one. The persistence figure asks a parallel question about <em>time</em>. On the LLM side, what survives is whatever still sits in the context window (attention dilution) plus whatever was frozen at pretraining; the model does not accrete a fond. On the semiosphere side, what survives is layered: shell position, <a class="term" href="#gloss-pair-read" data-tip="Read secret beside dated outward counterpart - or record the miss.">pair-read</a> warrant, inward <a class="term" href="#gloss-autocomm" data-tip="Message returns to sender; restructures the institution, not the public.">autocommunication</a>, and ingress from outside that can rewire operators without raising volume. Those two pictures are not two settings of the same slider. They are two different answers to what structures the next act of meaning.</p>
+<p>Section 2 showed that a multilingual <a class="term" href="appendix_language_encoding.html#encoder" data-tip="Numeric sentence fingerprint from a frozen language model.">encoder</a> lives on the <a class="term" href="#gloss-sms" data-tip="Culture layered on ordinary language: ideology, genre, institutional register.">primary</a> system: it pulls translationally equivalent sentences together and cannot, by itself, separate a Russian secret <a class="term" href="#gloss-register" data-tip="Document type plus audience contract.">register</a> from an English public one. The persistence figure asks a parallel question about <em>time</em>. On the LLM side, what survives is whatever still sits in the context window (attention dilution) plus whatever was frozen at pretraining; the model does not accrete a fond. On the semiosphere side, what survives is layered: shell position, <a class="term" href="#gloss-pair-read" data-tip="Read secret beside dated outward counterpart - or record the miss.">pair-read</a> warrant, inward <a class="term" href="#gloss-autocomm" data-tip="Message returns to sender; restructures the institution, not the public.">autocommunication</a>, and ingress from outside that can rewire operators without raising volume. Those two pictures are not two settings of the same slider. They are two different answers to what structures the next act of meaning.</p>
 
 <p>Multi-agent language-model setups sit in the gap between them unless typing is engineered in. By default, agents share one base model, one tokenizer, and one geometry trained for paraphrase and topic continuity. Messages passed agent to agent are natural-language continuations in that shared space. That relation is <strong>not</strong> Lotman's <a class="term" href="#gloss-bilingual" data-tip="Boundary as filter: cross, recode, or refuse. Not lossless translation.">bilingual mechanism</a>. Bilingual relay on the Montreal plate is <a class="term" href="#gloss-partial-map" data-tip="Translation with ⊥ cases and operator change.">partial</a>: operators transform or refuse to cross; scare quotes stay internal; some expected outward sentences are absent by design. Agent paraphrase, by contrast, tends to preserve <a class="term" href="#gloss-theme-gravity" data-tip="Topic overlap as the only organiser.">theme</a> and weaken shell unless the pipeline enforces it - the same failure mode section 6 measured as 6/6 tier confusion under flat retrieval, now accelerated by message passing.</p>
 
@@ -595,6 +595,7 @@
     <dt id="gloss-embedding">Embedding / encoder</dt>
     <dd>
       A <strong>numeric fingerprint</strong> of a sentence from a frozen language model. Nearby fingerprints often share topic; they routinely miss scare quotes, gathering recodes, and other register habits.
+      <a href="appendix_language_encoding.html#encoder">Appendix: language encoding</a>
     </dd>
 
     <dt id="gloss-nn">Nearest-neighbour</dt>
@@ -967,7 +968,7 @@
     { re: /\bpair-reads?\b/gi, id: 'gloss-pair-read', tip: 'Read secret beside dated outward - or record the miss.' },
     { re: /\bout-of-bag\b/gi, id: 'gloss-oob', tip: 'Tested on pairs the map never saw.' },
     { re: /\bsemiosphere\b/gi, id: 'gloss-semiosphere', tip: 'Map of surfaces and which relay arcs are licensed or missing.' },
-    { re: /\bembeddings?\b/gi, id: 'gloss-embedding', tip: 'Numeric sentence fingerprints from a frozen model.' },
+    { re: /\bembeddings?\b/gi, id: 'gloss-embedding', appendix: 'appendix_language_encoding.html#encoder', tip: 'Numeric sentence fingerprints from a frozen model.' },
     { re: /\boperators?\b/gi, id: 'gloss-operator', tip: 'Recoding habit: scare quotes, gathering recode, drought frame.' },
     { re: /\bregisters?\b/gi, id: 'gloss-register', tip: 'Document type plus audience contract.' },
     { re: /\bsurfaces?\b/gi, id: 'gloss-surface', tip: 'Document venue in the corpus.' },
@@ -985,7 +986,7 @@
     { re: /\bplates?\b/gi, id: 'gloss-plate', tip: 'Dated, scored calibration set. Montreal is the working plate.' },
     { re: /\bmorphisms?\b/gi, id: 'gloss-morphism', tip: 'Named type of a typed edge.' },
     { re: /\bwarrants?\b/gi, id: 'gloss-warrant', tip: 'What licenses a claim. Counts are checks.' },
-    { re: /\bencoders?\b/gi, id: 'gloss-embedding', tip: 'Frozen model that emits sentence fingerprints.' },
+    { re: /\bencoders?\b/gi, id: 'gloss-embedding', appendix: 'appendix_language_encoding.html#encoder', tip: 'Frozen model that emits sentence fingerprints.' },
     { re: /\bretrievers?\b/gi, id: 'gloss-retrieval', tip: 'Search that returns the nearest fingerprint.' },
     { re: /\bretrieval\b/gi, id: 'gloss-retrieval', tip: 'Search by fingerprint. Flat retrieval has no shell rules.' },
     { re: /\btautologically\b/gi, id: 'gloss-tautology', tip: 'True by how the test was set up - it does not prove a new fact.' },
@@ -1060,12 +1061,13 @@
     var label = term.textContent.replace(/\s+/g, ' ').trim();
     var tip = term.getAttribute('data-tip') || '';
     var href = term.getAttribute('href') || '';
-    pop.innerHTML =
-      '<strong>' + label + '</strong>' +
-      '<div>' + tip + '</div>' +
-      (href.indexOf('#gloss-') === 0
-        ? '<a class="more term-goto" href="' + href + '">Full definition \u2193</a>'
-        : '');
+    var more = '';
+    if (href.indexOf('appendix_language_encoding') >= 0) {
+      more = '<a class="more term-goto" href="' + href + '">Full appendix \u2192</a>';
+    } else if (href.indexOf('#gloss-') === 0 || href.indexOf('#eq-') === 0) {
+      more = '<a class="more term-goto" href="' + href + '">Full definition \u2193</a>';
+    }
+    pop.innerHTML = '<strong>' + label + '</strong>' + '<div>' + tip + '</div>' + more;
     pop.style.left = Math.min(Math.max(8, x), window.innerWidth - 360) + 'px';
     pop.style.top = Math.min(y + 12, window.innerHeight - 140) + 'px';
     pop.classList.add('visible');
@@ -1122,7 +1124,7 @@
         var re = new RegExp(g.re.source, g.re.flags);
         var m;
         while ((m = re.exec(text)) !== null) {
-          entries.push({ start: m.index, end: m.index + m[0].length, match: m[0], id: g.id, tip: g.tip });
+          entries.push({ start: m.index, end: m.index + m[0].length, match: m[0], id: g.id, tip: g.tip, href: g.appendix || ('#' + g.id) });
         }
       });
       if (!entries.length) return;
@@ -1138,7 +1140,7 @@
         if (e.start > pos) frag.appendChild(document.createTextNode(text.slice(pos, e.start)));
         var a = document.createElement('a');
         a.className = 'term term-auto';
-        a.href = '#' + e.id;
+        a.href = e.href || ('#' + e.id);
         a.setAttribute('data-tip', e.tip);
         a.textContent = e.match;
         frag.appendChild(a);

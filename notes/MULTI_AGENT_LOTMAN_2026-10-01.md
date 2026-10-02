@@ -2,6 +2,7 @@
 
 **Dated:** 2026-10-01  
 **Published as:** `docs/theory/LOTMAN_INTERPRETATION.html` §10 (`#s10`)  
+**Encoder appendix:** `docs/theory/appendix_language_encoding.html` (linked from glossary embedding/encoder)  
 **Sources:** §2 language confound; §5 unpaired claim; §6 flat retrieval; `LLM_VS_SEMIOSPHERE_VIZ.html` Fig. 3 persistence; Fig. 4 typed map vs manifold.
 
 ## Core claim (not yet measured on a multi-agent plate)

@@ -350,7 +350,7 @@
 </part-divider>
 
 <h3>One sentence</h3>
-<p><a class="term" href="#gloss-semiosis" data-tip="How meaning moves between texts - not a single dictionary entry, but a relay with rules about who may read what.">Semiosis</a> is not a point in one <a class="term" href="#gloss-embedding" data-tip="A numeric fingerprint of a sentence from a frozen language model. Good at topic; bad at scare quotes and meeting names.">embedding</a> space; it is <strong><a class="term" href="#gloss-relay" data-tip="Movement of a theme or operator from one document surface to another (e.g. secret memo → embassy release), with rules about what may change.">typed relay</a> across incompatible document surfaces</strong>, and machine systems that merge <a class="term" href="#gloss-register" data-tip="The document type and audience contract - secret memo vs embassy release vs diaspora press. Same week, different rules.">registers</a> <strong>reproduce embassy-shaped readings</strong>.</p>
+<p><a class="term" href="#gloss-semiosis" data-tip="How meaning moves between texts - not a single dictionary entry, but a relay with rules about who may read what.">Semiosis</a> is not a point in one <a class="term" href="appendix_language_encoding.html#encoder" data-tip="A numeric fingerprint of a sentence from a frozen language model. Good at topic; bad at scare quotes and meeting names.">embedding</a> space; it is <strong><a class="term" href="#gloss-relay" data-tip="Movement of a theme or operator from one document surface to another (e.g. secret memo → embassy release), with rules about what may change.">typed relay</a> across incompatible document surfaces</strong>, and machine systems that merge <a class="term" href="#gloss-register" data-tip="The document type and audience contract - secret memo vs embassy release vs diaspora press. Same week, different rules.">registers</a> <strong>reproduce embassy-shaped readings</strong>.</p>
 
 <h3>What we are not claiming</h3>
 <ul>
@@ -368,7 +368,7 @@
   <li><strong><a class="term" href="#gloss-operator" data-tip="A recoding habit: scare quotes, gathering-not-symposium, drought frame. Countable on each surface.">Operators</a> are measurable.</strong> Scare quotes, gathering vs symposium, drought-and-kulak denial form an <strong>operator × surface <a class="term" href="#gloss-tensor" data-tip="A grid: which wording habits appear on which document surfaces. Empty cells are findings, not gaps in data.">tensor</a></strong> (L2). Gaps in the tensor are as real as peaks (48 internal scare-quote hits, 0 outward in the pilot matrix).</li>
   <li><strong><a class="term" href="#gloss-relay" data-tip="Movement of theme or operator between surfaces.">Relay</a> is <a class="term" href="#gloss-partial-map" data-tip="Translation between shells that sometimes has no answer (⊥) - e.g. symposium has no embassy sentence.">partial</a>.</strong> Some thematic fields cross (famine, Canada, anniversary); some operators <strong>do not</strong> (symposium has no outward Montreal sentence).</li>
   <li><strong><a class="term" href="#gloss-silence" data-tip="When a channel does not carry a frame (e.g. Pravda not printing drought denial). Evidence about routing, not missing files.">Silence</a> is a coordinate.</strong> Domestic Pravda/Izvestiia not printing the drought frame in the processed 1983 window is evidence about <strong>which channel carries which job</strong>, not “missing data.”</li>
-  <li><strong>Frozen <a class="term" href="#gloss-embedding" data-tip="Numeric sentence fingerprint from a frozen encoder.">embeddings</a> already encode the failure mode.</strong> A secret→outward linear map fits in-sample pairs but <strong>does not</strong> align secret text with Weekly/CIUS rivals; <span class="ru">сборище</span> lands near drought; scare-quoted symposium near Khmil’s “lie” sentence.</li>
+  <li><strong>Frozen <a class="term" href="appendix_language_encoding.html#encoder" data-tip="Numeric sentence fingerprint from a frozen encoder.">embeddings</a> already encode the failure mode.</strong> A secret→outward linear map fits in-sample pairs but <strong>does not</strong> align secret text with Weekly/CIUS rivals; <span class="ru">сборище</span> lands near drought; scare-quoted symposium near Khmil’s “lie” sentence.</li>
 </ol>
 
 <h3>Three models (L1 / L2 / L3)</h3>
@@ -414,13 +414,13 @@ Counts, L1-L3 models, probe  →  falsify bad averaging / false survey</pre>
 
 <h2 class="section" id="s1">1 · Core thesis</h2>
 <p><strong><a class="term" href="#gloss-semiosis" data-tip="Meaning as typed relay, not a dictionary point.">Semiosis</a> is not a point in one vector space.</strong> It is <strong><a class="term" href="#gloss-relay" data-tip="Movement between surfaces under institutional rules.">typed relay</a></strong> across document <a class="term" href="#gloss-surface" data-tip="Where a text lives: memo, embassy release, Weekly, etc.">surfaces</a> that obey different grammars on the same calendar week.</p>
-<p>When institutional language crosses from secret report to embassy release to diaspora press, <strong><a class="term" href="#gloss-operator" data-tip="Recoding habits: scare quotes, gathering recode, drought frame.">operators</a> change</strong> (quotation marks, meeting names, famine frames) even when <strong>themes persist</strong> (Canada, anniversary, famine). Generic <a class="term" href="#gloss-embedding" data-tip="Numeric sentence fingerprints.">embeddings</a> mostly recover <a class="term" href="#gloss-theme-level" data-tip="Topic co-occurrence level.">theme-level</a> gravity; they <strong>fail <a class="term" href="#gloss-register-level" data-tip="Operator preservation across relay.">register-faithful</a> relay</strong> unless structure is imposed.</p>
+<p>When institutional language crosses from secret report to embassy release to diaspora press, <strong><a class="term" href="#gloss-operator" data-tip="Recoding habits: scare quotes, gathering recode, drought frame.">operators</a> change</strong> (quotation marks, meeting names, famine frames) even when <strong>themes persist</strong> (Canada, anniversary, famine). Generic <a class="term" href="appendix_language_encoding.html#encoder" data-tip="Numeric sentence fingerprints.">embeddings</a> mostly recover <a class="term" href="#gloss-theme-level" data-tip="Topic co-occurrence level.">theme-level</a> gravity; they <strong>fail <a class="term" href="#gloss-register-level" data-tip="Operator preservation across relay.">register-faithful</a> relay</strong> unless structure is imposed.</p>
 <p><strong>One-sentence version:</strong> The gap in an <a class="term" href="#gloss-operator" data-tip="Recoding habit countable on each surface.">operator</a> × surface <a class="term" href="#gloss-tensor" data-tip="Grid of operators × surfaces.">tensor</a> is where ideology lives; machine cognition that averages <a class="term" href="#gloss-register" data-tip="Document type and audience contract.">registers</a> fills that gap with embassy-shaped summaries.</p>
 
 <h2 class="section" id="s2">2 · Why the usual “vectored plain” fails</h2>
 <h3>2.1 Default ML picture</h3>
 <ul>
-  <li>One <a class="term" href="#gloss-manifold" data-tip="One shared meaning space for all texts.">manifold</a> (e.g. <a class="term" href="#gloss-cosine" data-tip="Angle between fingerprint vectors - topic neighborhood, not register-faithful translation.">cosine</a> space of <a class="term" href="#gloss-embedding" data-tip="Numeric sentence fingerprint.">embeddings</a>).</li>
+  <li>One <a class="term" href="#gloss-manifold" data-tip="One shared meaning space for all texts.">manifold</a> (e.g. <a class="term" href="#gloss-cosine" data-tip="Angle between fingerprint vectors - topic neighborhood, not register-faithful translation.">cosine</a> space of <a class="term" href="appendix_language_encoding.html#encoder" data-tip="Numeric sentence fingerprint.">embeddings</a>).</li>
   <li>Neighborhood ≈ similarity ≈ meaning.</li>
   <li>More data smooths noise; multilingual alignment shares a language-neutral core.</li>
 </ul>
@@ -538,7 +538,7 @@ Counts, L1-L3 models, probe  →  falsify bad averaging / false survey</pre>
     <strong>What this equation says in plain language</strong>
     <p>The probe asks a narrow question: if you treat secret memo sentences and outward public sentences as two clouds of numeric fingerprints, can you <strong>rotate</strong> the secret cloud so paired stretches line up with their embassy/UN counterparts?</p>
     <ul>
-      <li><strong>X</strong> = matrix of secret-side <a class="term" href="#gloss-embedding" data-tip="Sentence fingerprints.">embeddings</a> (spr. 1206 famine line, spr. 1208 leak line, …).</li>
+      <li><strong>X</strong> = matrix of secret-side <a class="term" href="appendix_language_encoding.html#encoder" data-tip="Sentence fingerprints.">embeddings</a> (spr. 1206 famine line, spr. 1208 leak line, …).</li>
       <li><strong>Y</strong> = matrix of outward-side embeddings (embassy drought sentence, Khmil slander sentence, …).</li>
       <li><strong>W</strong> = the rotation map fit on nine licensed secret→outward pairs from pair-read.</li>
     </ul>
@@ -583,7 +583,7 @@ Counts, L1-L3 models, probe  →  falsify bad averaging / false survey</pre>
 </ul>
 
 <h2 class="section" id="s6">6 · Proposed coordinate system (extrapolation)</h2>
-<p>Generic <a class="term" href="#gloss-embedding" data-tip="Unchosen axes from a frozen encoder.">embeddings</a> supply <strong>unchosen axes</strong>. Lotman’s question requires <strong><a class="term" href="#gloss-fiber" data-tip="Named axis in the coordinate system - shell, date, operator, proof tier.">named fibers</a></strong>:</p>
+<p>Generic <a class="term" href="appendix_language_encoding.html#encoder" data-tip="Unchosen axes from a frozen encoder.">embeddings</a> supply <strong>unchosen axes</strong>. Lotman’s question requires <strong><a class="term" href="#gloss-fiber" data-tip="Named axis in the coordinate system - shell, date, operator, proof tier.">named fibers</a></strong>:</p>
 <table>
   <thead><tr><th><a class="term" href="#gloss-fiber" data-tip="Named coordinate axis.">Fiber</a> / axis</th><th>Encodes</th></tr></thead>
   <tbody>
@@ -906,9 +906,10 @@ Counts, L1-L3 models, probe  →  falsify bad averaging / false survey</pre>
       The warrant chain: read a secret stretch beside its <strong>dated outward counterpart</strong> (or record a documented absence). Every historical claim and every geometric check ultimately answers to pair-read - not to the probe alone.
     </dd>
 
-    <dt id="gloss-embedding">Embedding</dt>
+    <dt id="gloss-embedding">Embedding / encoder</dt>
     <dd>
       A <strong>numeric fingerprint</strong> of a sentence from a frozen language model. Nearby fingerprints often share <em>topic</em>; they routinely miss scare quotes, gathering recodes, and other register-specific operators.
+      <a href="appendix_language_encoding.html#encoder">Appendix: language encoding</a>
     </dd>
 
     <dt id="gloss-manifold">Manifold (single-manifold assumption)</dt>
@@ -998,7 +999,8 @@ Counts, L1-L3 models, probe  →  falsify bad averaging / false survey</pre>
     { re: /\bproof tiers?\b/gi, id: 'gloss-proof-tier', tip: 'Warrant strength on a claim or edge.' },
     { re: /\buntranslatables?\b/gi, id: 'gloss-untranslatable', tip: 'Cannot cross unchanged - empty tensor cell.' },
     { re: /\bsemiosphere\b/gi, id: 'gloss-semiosphere', tip: 'L1 map of surfaces and relay arcs.' },
-    { re: /\bembeddings?\b/gi, id: 'gloss-embedding', tip: 'Numeric sentence fingerprints.' },
+    { re: /\bembeddings?\b/gi, id: 'gloss-embedding', appendix: 'appendix_language_encoding.html#encoder', tip: 'Numeric sentence fingerprints.' },
+    { re: /\bencoders?\b/gi, id: 'gloss-embedding', appendix: 'appendix_language_encoding.html#encoder', tip: 'Frozen model that emits sentence fingerprints.' },
     { re: /\boperators?\b/gi, id: 'gloss-operator', tip: 'Recoding habit on a stretch.' },
     { re: /\bregisters?\b/gi, id: 'gloss-register', tip: 'Document type + audience contract.' },
     { re: /\bsurfaces?\b/gi, id: 'gloss-surface', tip: 'Document venue in the corpus.' },
@@ -1065,12 +1067,13 @@ Counts, L1-L3 models, probe  →  falsify bad averaging / false survey</pre>
     var label = term.textContent.replace(/\s+/g, ' ').trim();
     var tip = term.getAttribute('data-tip') || '';
     var href = term.getAttribute('href') || '';
-    pop.innerHTML =
-      '<strong>' + label + '</strong>' +
-      '<div>' + tip + '</div>' +
-      (href.indexOf('#gloss-') === 0 || href.indexOf('#eq-') === 0
-        ? '<a class="more term-goto" href="' + href + '">Full definition ↓</a>'
-        : '');
+    var more = '';
+    if (href.indexOf('appendix_language_encoding') >= 0) {
+      more = '<a class="more term-goto" href="' + href + '">Full appendix →</a>';
+    } else if (href.indexOf('#gloss-') === 0 || href.indexOf('#eq-') === 0) {
+      more = '<a class="more term-goto" href="' + href + '">Full definition ↓</a>';
+    }
+    pop.innerHTML = '<strong>' + label + '</strong>' + '<div>' + tip + '</div>' + more;
     pop.style.left = Math.min(Math.max(8, x), window.innerWidth - 360) + 'px';
     pop.style.top = Math.min(y + 12, window.innerHeight - 140) + 'px';
     pop.classList.add('visible');
@@ -1127,7 +1130,7 @@ Counts, L1-L3 models, probe  →  falsify bad averaging / false survey</pre>
         var re = new RegExp(g.re.source, g.re.flags);
         var m;
         while ((m = re.exec(text)) !== null) {
-          entries.push({ start: m.index, end: m.index + m[0].length, match: m[0], id: g.id, tip: g.tip });
+          entries.push({ start: m.index, end: m.index + m[0].length, match: m[0], id: g.id, tip: g.tip, href: g.appendix || ('#' + g.id) });
         }
       });
       if (!entries.length) return;
@@ -1143,7 +1146,7 @@ Counts, L1-L3 models, probe  →  falsify bad averaging / false survey</pre>
         if (e.start > pos) frag.appendChild(document.createTextNode(text.slice(pos, e.start)));
         var a = document.createElement('a');
         a.className = 'term term-auto';
-        a.href = '#' + e.id;
+        a.href = e.href || ('#' + e.id);
         a.setAttribute('data-tip', e.tip);
         a.textContent = e.match;
         frag.appendChild(a);
