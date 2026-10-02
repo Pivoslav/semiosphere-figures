@@ -309,20 +309,50 @@ left('The clause was never wrong about which items to refuse. It was never evalu
 left('Remove HALT_CLAUSE from the generator prompt once a correct gate exists upstream.', 10, L + 14, R - 8, 'H3 verdict 2')
 left('Kept as a backup it destroys every item the gate worked to clear: E2 refused 7 of 7 cleared items, D2 refused 2 of 7.', 10, L + 14, R - 8, 'H3 verdict 3')
 
-h3rows = [('title', 18 - 9, 18 + 3), ('sub 1', 36 - 8, 36 + 3), ('sub 2', 50 - 8, 50 + 3),
-          ('col headers', 78 - 8, 78 + 3), ('rule', 86, 86)]
+# every drawn element of H3 as a rectangle, checked pairwise on both axes
+h3rects = [
+    ('title', W / 2 - tw('Same predicate, two places to evaluate it', 12, True) / 2, 18 - 9,
+     W / 2 + tw('Same predicate, two places to evaluate it', 12, True) / 2, 18 + 3),
+    ('sub 1', L, 36 - 8, R, 36 + 3),
+    ('sub 2', L, 50 - 8, R, 50 + 3),
+    ('col header 1', L, 78 - 8, L + tw('arm and generator prompt', 10), 78 + 3),
+    ('col header 2', dotX0, 78 - 8, dotX0 + tw('one dot per tagged message; filled = refused', 10), 78 + 3),
+    ('col header 3', rateX, 78 - 8, rateX + tw('refused anyway', 10), 78 + 3),
+]
 for i, (name, prompt, n, refused, rate, clause) in enumerate(AUDIT):
     y = 112 + i * 44
-    h3rows.append(('row %s band' % name.split('_')[0], y - 20, y + 20))
-    h3rows.append(('row %s sub' % name.split('_')[0], y + 11 - 7, y + 11 + 3))
-h3rows += [('separator', 276, 276), ('R3 dots', 304 - 7, 304 + 7), ('R3 sub', 315 - 7, 315 + 3),
-           ('verdict box', 336, 404)]
-for i in range(len(h3rows) - 1):
-    chk(h3rows[i][2] <= h3rows[i + 1][1],
-        'H3 vertical overlap: %s ends %.0f, %s starts %.0f' % (h3rows[i][0], h3rows[i][2],
-                                                               h3rows[i + 1][0], h3rows[i + 1][1]))
-chk(h3rows[-1][2] <= 420, 'H3 content ends %.0f, canvas height 420' % h3rows[-1][2])
-print('  vertical stack 9..%.0f inside canvas height 420' % h3rows[-1][2])
+    tag = name.split('_')[0]
+    h3rects.append(('%s arm label' % tag, L, y - 3 - 8, L + tw(name, 10, True), y - 3 + 3))
+    h3rects.append(('%s prompt sub' % tag, L, y + 11 - 7, L + tw(prompt, 9), y + 11 + 3))
+    h3rects.append(('%s dots' % tag, dotX0 + pitch / 2 - r, y - r,
+                    dotX0 + pitch / 2 + (n - 1) * pitch + r, y + r))
+    rtxt = '%d of %d refused anyway, rate %s' % (refused, n, rate)
+    h3rects.append(('%s rate' % tag, rateX, y + 3 - 8, rateX + tw(rtxt, 10, clause), y + 3 + 3))
+h3rects += [
+    ('R3 label', L, 301 - 8, L + tw('R3: the clause as a rule', 10, True), 301 + 3),
+    ('R3 sub', L, 315 - 7, L + tw('same wording, in Python', 9), 315 + 3),
+    ('R3 dots', dotX0 + pitch2 / 2 - r2, 304 - r2, dotX0 + pitch2 / 2 + 17 * pitch2 + r2, 304 + r2),
+    ('R3 rate', rateX, 307 - 8, rateX + tw('1 of 18 closed by the rule', 10, True), 307 + 3),
+    ('verdict box', L, 336, R, 404),
+]
+no_overlap(h3rects, 'H3 elements')
+# the tinted band behind a clause row must not reach a neighbouring row's content
+for i, (name, prompt, n, refused, rate, clause) in enumerate(AUDIT):
+    if not clause:
+        continue
+    y = 112 + i * 44
+    for j, other in enumerate(AUDIT):
+        if j == i:
+            continue
+        oy = 112 + j * 44
+        top, bot = oy - 3 - 8, oy + 11 + 3           # that row's own ink extent
+        chk(bot <= y - 20 or top >= y + 20,
+            'H3 band for %s (%.0f..%.0f) covers ink of %s (%.0f..%.0f)'
+            % (name, y - 20, y + 20, other[0], top, bot))
+bottom = max(rct[4] for rct in h3rects)
+chk(bottom <= 420, 'H3 content ends %.0f, canvas height 420' % bottom)
+print('  %d element rectangles checked pairwise; content spans 9..%.0f inside canvas height 420'
+      % (len(h3rects), bottom))
 
 # =====================================================================
 print()
