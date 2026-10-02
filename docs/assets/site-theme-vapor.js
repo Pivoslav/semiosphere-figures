@@ -76,11 +76,22 @@
     scan.setAttribute("aria-hidden", "true");
     document.body.appendChild(scan);
 
-    if (family === "home") {
+    if (family === "home" || family === "montreal") {
       var sun = document.createElement("div");
       sun.className = "vapor-decor vapor-sun";
       sun.setAttribute("aria-hidden", "true");
       document.body.appendChild(sun);
+    }
+
+    if (family === "experiment" || family === "home") {
+      var c1 = document.createElement("div");
+      c1.className = "vapor-decor vapor-wire-cube";
+      c1.setAttribute("aria-hidden", "true");
+      document.body.appendChild(c1);
+      var c2 = document.createElement("div");
+      c2.className = "vapor-decor vapor-wire-cube vapor-wire-cube-2";
+      c2.setAttribute("aria-hidden", "true");
+      document.body.appendChild(c2);
     }
 
     if (family === "journal") {
@@ -98,9 +109,9 @@
       badge.setAttribute("aria-hidden", "true");
       badge.textContent = sticker;
       badge.style.cssText =
-        "position:fixed;bottom:1rem;right:1rem;z-index:1;font:600 10px/1 system-ui,sans-serif;" +
-        "letter-spacing:0.08em;padding:0.3rem 0.5rem;color:#5c564c;" +
-        "border:1px solid #c8c0b0;background:rgba(255,253,250,0.92);transform:rotate(-2deg);";
+        "position:fixed;bottom:1rem;right:1rem;z-index:1;font:bold 11px/1 system-ui,sans-serif;" +
+        "letter-spacing:0.12em;padding:0.35rem 0.55rem;color:#01cdfe;" +
+        "border:2px solid #ff71ce;background:rgba(26,16,51,0.75);transform:rotate(-4deg);";
       document.body.appendChild(badge);
     }
   }

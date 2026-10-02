@@ -1,16 +1,14 @@
-/* Vaporwave atmosphere — readability and figures first (Phase 1.5) */
+/* Vaporwave / textbook CD-ROM atmosphere (Phase 1: CSS only) */
 
 :root {
-  --vapor-ink: #141218;
-  --vapor-muted: #3a3644;
+  --vapor-ink: #1a1033;
+  --vapor-paper: rgba(255, 253, 250, 0.93);
   --vapor-paper-solid: #fffdfa;
-  --vapor-paper: #fffdfa;
   --vapor-magenta: #ff71ce;
   --vapor-cyan: #01cdfe;
   --vapor-purple: #6b5bff;
-  --vapor-grid: rgba(1, 205, 254, 0.22);
-  --vapor-content-max: min(96vw, 76rem);
-  --vapor-figure-max: min(96vw, 52rem);
+  --vapor-sunset: #ff9a56;
+  --vapor-grid: rgba(1, 205, 254, 0.35);
 }
 
 html.has-vapor-theme {
@@ -24,7 +22,19 @@ body.has-vapor-theme {
   color: var(--vapor-ink);
 }
 
-/* ---- Background stack (viewport only; content is opaque) ---- */
+body.has-vapor-theme[data-vapor-family="experiment"],
+body.has-vapor-theme[data-vapor-family="montreal"],
+body.has-vapor-theme[data-vapor-family="theory"] {
+  background: var(--vapor-paper) !important;
+  box-shadow: 0 12px 64px rgba(18, 8, 42, 0.45);
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 8px;
+  max-width: 56rem;
+  margin-top: 0.35rem;
+}
+
+/* Animated sky */
 body.has-vapor-theme::before {
   content: "";
   position: fixed;
@@ -33,13 +43,13 @@ body.has-vapor-theme::before {
   background: linear-gradient(
     180deg,
     #2d1b69 0%,
-    #4a3a8a 28%,
-    #6b5bff 45%,
-    #c96bb8 62%,
+    #6b5bff 22%,
+    #ff71ce 48%,
+    #ff9a56 72%,
     #01cdfe 100%
   );
-  background-size: 100% 180%;
-  animation: vapor-sky 32s ease-in-out infinite alternate;
+  background-size: 100% 200%;
+  animation: vapor-sky 28s ease-in-out infinite alternate;
 }
 
 @keyframes vapor-sky {
@@ -51,59 +61,42 @@ body.has-vapor-theme::before {
   }
 }
 
+/* Perspective grid floor */
 body.has-vapor-theme::after {
   content: "";
   position: fixed;
   left: -50%;
   right: -50%;
-  bottom: -22%;
-  height: 50%;
+  bottom: -20%;
+  height: 55%;
   z-index: -2;
   transform: perspective(320px) rotateX(58deg);
   transform-origin: center bottom;
   background-image: linear-gradient(var(--vapor-grid) 1px, transparent 1px),
     linear-gradient(90deg, var(--vapor-grid) 1px, transparent 1px);
   background-size: 48px 48px;
-  mask-image: linear-gradient(to top, black 25%, transparent 92%);
-  opacity: 0.55;
+  mask-image: linear-gradient(to top, black 40%, transparent 95%);
+  opacity: 0.85;
   pointer-events: none;
 }
 
-/* Calmer backdrop on long reads and data pages */
-body.has-vapor-theme[data-vapor-family="journal"]::before,
-body.has-vapor-theme[data-vapor-family="experiment"]::before,
-body.has-vapor-theme[data-vapor-family="montreal"]::before,
-body.has-vapor-theme[data-vapor-family="theory"]::before {
-  filter: saturate(0.75) brightness(0.92);
-}
-
-body.has-vapor-theme[data-vapor-family="experiment"]::after,
-body.has-vapor-theme[data-vapor-family="montreal"]::after,
-body.has-vapor-theme[data-vapor-family="journal"]::after {
-  opacity: 0.28;
-}
-
+/* Scanlines */
 .vapor-scanlines {
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  opacity: 0.035;
+  opacity: 0.07;
   background: repeating-linear-gradient(
     0deg,
     transparent,
     transparent 2px,
-    rgba(0, 0, 0, 0.35) 2px,
-    rgba(0, 0, 0, 0.35) 3px
+    rgba(0, 0, 0, 0.4) 2px,
+    rgba(0, 0, 0, 0.4) 3px
   );
 }
 
-body.has-vapor-theme[data-vapor-family="experiment"] .vapor-scanlines,
-body.has-vapor-theme[data-vapor-family="montreal"] .vapor-scanlines {
-  display: none;
-}
-
-/* ---- Decor (home only by default; JS may skip elsewhere) ---- */
+/* Injected decor */
 .vapor-decor {
   position: fixed;
   pointer-events: none;
@@ -111,14 +104,14 @@ body.has-vapor-theme[data-vapor-family="montreal"] .vapor-scanlines {
 }
 
 .vapor-sun {
-  width: 120px;
-  height: 120px;
-  top: calc(var(--site-nav-total-h, var(--site-nav-h, 3rem)) + 1rem);
-  right: max(2%, calc((100vw - var(--vapor-content-max)) / 2 - 4rem));
+  width: 140px;
+  height: 140px;
+  top: calc(var(--site-nav-h, 2.75rem) + 1.5rem);
+  right: 4%;
   border-radius: 50%;
   background: linear-gradient(180deg, #ffe9a0 0%, #ff71ce 55%, #ff9a56 100%);
-  box-shadow: 0 0 40px rgba(255, 113, 206, 0.35);
-  opacity: 0.4;
+  box-shadow: 0 0 60px rgba(255, 113, 206, 0.5);
+  opacity: 0.55;
 }
 
 .vapor-sun::before {
@@ -130,20 +123,48 @@ body.has-vapor-theme[data-vapor-family="montreal"] .vapor-scanlines {
     0deg,
     transparent,
     transparent 6px,
-    rgba(255, 255, 255, 0.3) 6px,
-    rgba(255, 255, 255, 0.3) 10px
+    rgba(255, 255, 255, 0.35) 6px,
+    rgba(255, 255, 255, 0.35) 10px
   );
 }
 
 .vapor-wire-cube {
-  display: none;
+  width: 72px;
+  height: 72px;
+  bottom: 18%;
+  left: 3%;
+  border: 2px solid rgba(1, 205, 254, 0.65);
+  transform: rotate(45deg);
+  box-shadow: 12px 12px 0 rgba(255, 113, 206, 0.25);
+  animation: vapor-float 9s ease-in-out infinite;
+}
+
+.vapor-wire-cube.vapor-wire-cube-2 {
+  left: auto;
+  right: 5%;
+  bottom: 22%;
+  width: 48px;
+  height: 48px;
+  animation-delay: -4s;
+  border-color: rgba(255, 113, 206, 0.7);
+}
+
+@keyframes vapor-float {
+  0%,
+  100% {
+    transform: rotate(45deg) translateY(0);
+  }
+  50% {
+    transform: rotate(45deg) translateY(-10px);
+  }
 }
 
 .vapor-textbook-stripe {
-  top: var(--site-nav-total-h, var(--site-nav-h, 3rem));
+  position: fixed;
+  top: var(--site-nav-h, 2.75rem);
   bottom: 0;
-  left: max(0px, calc((100vw - var(--vapor-content-max)) / 2 - 32px));
-  width: 20px;
+  left: 0;
+  width: 28px;
   z-index: -1;
   background: repeating-linear-gradient(
     180deg,
@@ -152,148 +173,74 @@ body.has-vapor-theme[data-vapor-family="montreal"] .vapor-scanlines {
     #fff 8px,
     #fff 16px
   );
-  opacity: 0.22;
-  border-right: 1px solid rgba(107, 91, 255, 0.25);
+  opacity: 0.35;
+  border-right: 2px solid rgba(107, 91, 255, 0.4);
 }
 
-/* ---- Content columns (solid paper, use width) ---- */
+/* Frost content blocks */
+body.has-vapor-theme main,
+body.has-vapor-theme .wrap,
+body.has-vapor-theme .doc,
+body.has-vapor-theme > h1:first-of-type,
+body.has-vapor-theme .grid {
+  /* soft lift where layout allows */
+}
+
 body.has-vapor-theme main,
 body.has-vapor-theme .wrap {
-  background: var(--vapor-paper-solid);
-  box-shadow: 0 4px 32px rgba(26, 16, 51, 0.12);
-  border-radius: 0;
-}
-
-body.has-vapor-theme[data-vapor-family="home"] main {
-  max-width: none;
-  width: 100%;
-  margin: 0;
-  padding: 1.5rem clamp(1rem, 3.5vw, 2.5rem) 2.5rem;
-  box-sizing: border-box;
-}
-
-body.has-vapor-theme[data-vapor-family="home"] .grid {
-  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
-  gap: 1rem;
-}
-
-body.has-vapor-theme[data-vapor-family="journal"] .wrap {
-  max-width: var(--vapor-content-max) !important;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 1.25rem clamp(1rem, 3vw, 2rem) 4rem !important;
-  box-sizing: border-box;
-}
-
-body.has-vapor-theme[data-vapor-family="experiment"],
-body.has-vapor-theme[data-vapor-family="montreal"] {
-  max-width: var(--vapor-content-max) !important;
-  width: 100%;
-  margin-left: auto !important;
-  margin-right: auto !important;
-  background: var(--vapor-paper-solid) !important;
-  box-shadow: 0 4px 32px rgba(26, 16, 51, 0.1);
-  border-radius: 0;
-  margin-top: 0;
-  padding-left: clamp(1rem, 3vw, 2rem) !important;
-  padding-right: clamp(1rem, 3vw, 2rem) !important;
-  box-sizing: border-box;
-}
-
-body.has-vapor-theme[data-vapor-family="theory"] .wrap {
-  max-width: var(--vapor-content-max) !important;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 1.25rem clamp(1rem, 3vw, 2rem) 3rem !important;
-  box-sizing: border-box;
+  background: var(--vapor-paper);
+  box-shadow: 0 8px 48px rgba(26, 16, 51, 0.25), 0 0 0 1px rgba(1, 205, 254, 0.12);
+  border-radius: 6px;
 }
 
 body.has-vapor-theme .card,
+body.has-vapor-theme .viz-box,
 body.has-vapor-theme .lede,
 body.has-vapor-theme .guide,
 body.has-vapor-theme .toc,
-body.has-vapor-theme .banner,
-body.has-vapor-theme .callout,
-body.has-vapor-theme blockquote {
-  background-color: var(--vapor-paper-solid);
-}
-
-/* Figure / chart sandbox — neutral grays, no theme bleed */
-body.has-vapor-theme .viz-box {
-  background: #fafafa !important;
-  border-color: #d4cfc4 !important;
-}
-
-body.has-vapor-theme .viz-head {
-  background: #f0ece6 !important;
-  color: var(--vapor-ink) !important;
-  border-bottom-color: #d4cfc4 !important;
-}
-
-body.has-vapor-theme .viz-box canvas,
-body.has-vapor-theme canvas.viz-canvas,
-body.has-vapor-theme .figure-canvas,
-body.has-vapor-theme #canvas,
-body.has-vapor-theme .plot-host,
-body.has-vapor-theme .viz-stage {
-  background: #faf8f4 !important;
-  border-color: #d4cfc4 !important;
-}
-
-body.has-vapor-theme .viz-stage #viz3d {
-  background: transparent !important;
-}
-
 body.has-vapor-theme table {
   background-color: var(--vapor-paper-solid);
 }
 
-body.has-vapor-theme .cap,
-body.has-vapor-theme .sub,
-body.has-vapor-theme .meta,
-body.has-vapor-theme .site-trail {
-  color: var(--vapor-muted) !important;
-}
-
 body.has-vapor-theme .embed-back,
 body.has-vapor-theme p.site-trail {
-  text-shadow: none;
+  text-shadow: 0 0 12px rgba(255, 253, 250, 0.8);
 }
 
-body.has-vapor-theme a {
-  color: #1e4468;
-}
-
-body.has-vapor-theme a:visited {
-  color: #4a3568;
-}
-
-/* Page headers: keep original dark bar (readable), not neon overlay */
 body.has-vapor-theme header:not(#site-nav-drawer header) {
-  background: #2c2820 !important;
-  color: #f0ece4;
-  border-bottom: 3px solid #8b6914 !important;
-  box-shadow: none;
+  background: linear-gradient(135deg, rgba(44, 40, 32, 0.95), rgba(107, 91, 255, 0.85)) !important;
+  border-bottom-color: var(--vapor-magenta) !important;
+  box-shadow: 0 4px 24px rgba(255, 113, 206, 0.25);
 }
 
-body.has-vapor-theme header:not(#site-nav-drawer header) p {
-  color: #c8c0b0;
-}
-
+/* Nav bar harmony */
 body.has-vapor-theme #site-nav-bar {
-  background: linear-gradient(90deg, #1a1033 0%, #2d2450 50%, #1a1033 100%);
-  border-bottom-color: #8b6914;
+  background: linear-gradient(90deg, #1a1033 0%, #3d2a7a 50%, #1a1033 100%);
+  border-bottom-color: var(--vapor-cyan);
 }
 
 body.has-vapor-theme #site-nav-drawer header {
-  background: #2c2820;
-  border-bottom-color: #8b6914;
+  background: linear-gradient(135deg, #2d1b69, #6b5bff);
+  border-bottom-color: var(--vapor-magenta);
 }
 
-body.has-vapor-theme[data-vapor-family="experiment"] h1,
-body.has-vapor-theme[data-vapor-family="montreal"] h1 {
-  text-shadow: none;
-  letter-spacing: normal;
+/* Family-specific */
+body[data-vapor-family="experiment"] h1 {
+  letter-spacing: 0.02em;
+  text-shadow: 2px 2px 0 rgba(1, 205, 254, 0.35);
+}
+
+body[data-vapor-family="montreal"]::after {
+  opacity: 1;
+  background-size: 36px 36px;
+}
+
+body[data-vapor-family="legacy"] {
+  filter: none;
+}
+
+body[data-vapor-family="legacy"]::before {
+  filter: saturate(0.65) hue-rotate(-10deg);
 }
 
 /* Plain mode */
@@ -309,13 +256,9 @@ html.vapor-theme-off body.has-vapor-theme {
 }
 
 html.vapor-theme-off body.has-vapor-theme main,
-html.vapor-theme-off body.has-vapor-theme .wrap,
-html.vapor-theme-off body.has-vapor-theme[data-vapor-family="experiment"],
-html.vapor-theme-off body.has-vapor-theme[data-vapor-family="montreal"],
-html.vapor-theme-off body.has-vapor-theme[data-vapor-family="theory"] {
-  background: transparent !important;
+html.vapor-theme-off body.has-vapor-theme .wrap {
+  background: transparent;
   box-shadow: none;
-  max-width: none !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -333,8 +276,7 @@ html.vapor-theme-off body.has-vapor-theme[data-vapor-family="theory"] {
     display: none !important;
   }
   body.has-vapor-theme main,
-  body.has-vapor-theme .wrap,
-  body.has-vapor-theme[data-vapor-family="experiment"] {
+  body.has-vapor-theme .wrap {
     background: #fff;
     box-shadow: none;
   }
