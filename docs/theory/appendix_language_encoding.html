@@ -16,7 +16,7 @@
   header p { margin: 0; color: var(--muted); font-size: 0.95rem; }
   .back { font-size: 0.88rem; margin-bottom: 1rem; }
   .back a { color: var(--accent); }
-  h2 { font-size: 1.22rem; margin: 2rem 0 0.5rem; padding-top: 0.5rem; border-top: 1px solid var(--rule); }
+  h2 { font-size: 1.22rem; margin: 2rem 0 0.5rem; padding-top: 0.5rem; border-top: 1px solid var(--rule); scroll-margin-top: 1rem; }
   h2:first-of-type { border-top: none; margin-top: 0; }
   h3 { font-size: 1.02rem; color: var(--accent); margin: 1.25rem 0 0.4rem; }
   p { margin: 0 0 0.75rem; }
@@ -26,6 +26,11 @@
   .math-line { padding: 0.65rem 1rem; text-align: center; font-style: italic; border-bottom: 1px solid var(--rule); background: #fff; }
   .math-explain { padding: 0.75rem 1rem; font-size: 0.95rem; }
   .math-explain strong { display: block; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--accent); margin-bottom: 0.35rem; font-style: normal; }
+  .walk { margin: 0.65rem 0 0; padding-left: 1.2rem; }
+  .walk li { margin: 0.35rem 0; }
+  .sym-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.65rem 0 0; }
+  .sym-table th, .sym-table td { border: 1px solid var(--rule); padding: 0.4rem 0.5rem; text-align: left; vertical-align: top; }
+  .sym-table th { background: #f3efe6; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; }
   .viz-box { border: 1px solid var(--rule); border-radius: 8px; background: var(--panel); margin: 1rem 0; overflow: hidden; }
   .viz-head { padding: 0.5rem 0.75rem; font-size: 0.82rem; background: #f3efe6; border-bottom: 1px solid var(--rule); font-family: system-ui, sans-serif; }
   .viz-stage { width: 100%; height: 280px; display: block; background: #faf8f4; }
@@ -38,65 +43,138 @@
   th { background: #f3efe6; font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.04em; }
   .fig-links { font-size: 0.9rem; margin: 0.75rem 0; }
   .fig-links a { color: var(--accent); }
+  a.term { color: var(--ink); text-decoration: none; border-bottom: 1px dotted var(--accent); cursor: help; }
+  a.term:hover, a.term:focus { color: var(--accent); border-bottom-style: solid; outline: none; }
+  #term-popover { position: fixed; z-index: 1000; max-width: 22rem; padding: 0.7rem 0.85rem; background: #fff; border: 1px solid var(--rule); box-shadow: 0 4px 18px rgba(0,0,0,.12); font-size: 0.92rem; line-height: 1.45; display: none; font-family: system-ui, sans-serif; }
+  #term-popover.visible { display: block; }
+  #term-popover strong { display: block; margin-bottom: 0.35rem; color: var(--accent); }
+  #term-popover .more { display: inline-block; margin-top: 0.45rem; font-size: 0.85rem; color: var(--accent); }
+  #return-nav { position: fixed; left: 0.75rem; bottom: 0.75rem; z-index: 999; display: none; max-width: 11.5rem; }
+  #return-nav.visible { display: block; }
+  #return-nav button { font-family: system-ui, sans-serif; font-size: 0.78rem; padding: 0.45rem 0.65rem; border: 1px solid var(--rule); border-radius: 4px; background: rgba(255,255,255,.96); color: var(--accent); cursor: pointer; width: 100%; text-align: left; }
+  section.glossary { margin-top: 2.5rem; padding-top: 1.25rem; border-top: 2px solid var(--ink); }
+  section.glossary dt { font-weight: 700; margin: 1rem 0 0.25rem; scroll-margin-top: 1rem; color: var(--accent); font-family: system-ui, sans-serif; font-size: 0.98rem; }
+  section.glossary dt:target { background: #eef3f8; padding: 0.15rem 0.4rem; margin-left: -0.4rem; }
+  section.glossary dd { margin: 0 0 0.45rem; color: var(--muted); font-size: 0.95rem; }
+  section.sources { margin-top: 2.5rem; padding-top: 1.25rem; border-top: 2px solid var(--ink); }
+  section.sources .bib { margin: 0 0 0.85rem; padding-left: 1.5rem; text-indent: -1.5rem; font-size: 0.9rem; }
+  section.sources .prov { font-size: 0.88rem; }
+  section.sources .prov td:first-child { font-weight: 600; white-space: nowrap; }
+  a.cite-ref { color: var(--accent); text-decoration: none; border-bottom: 1px dotted var(--accent); }
 </style>
 </head>
 <body>
-<div class="wrap">
+<div id="term-popover" role="tooltip" aria-hidden="true"></div>
+<div id="return-nav" aria-live="polite">
+  <button type="button" id="return-nav-btn"><span class="return-label">← Back</span><span class="return-where" id="return-nav-where"></span></button>
+</div>
+<div class="wrap" id="doc-main">
   <header>
     <h1>Appendix · language encoding</h1>
-    <p>How a sentence becomes a vector in this project, and what that vector can and cannot justify.</p>
+    <p>How a sentence becomes a vector in this project, what each symbol in the equations means, and what that vector can and cannot justify.</p>
   </header>
 
-  <!-- frozen encoder: I didn't fine-tune; shell still humiliated me -->
-  <h2 id="encoder">What an encoder does (plain language)</h2>
-  <p>An <strong>encoder</strong> (here: a frozen sentence-transformer) turns a stretch of text into a list of numbers - a <strong>embedding</strong> or fingerprint. You can think of it as coordinates in a high-dimensional space. Two sentences whose fingerprints are close are usually talking about similar <em>topics</em> (famine, film, Canada). They are not guaranteed to preserve <em>register</em> (secret memo vs embassy release vs diaspora press): scare quotes, gathering-not-symposium, and proof tier live in the archive's typing, not in the encoder's default geometry.</p>
-  <p>This dissertation uses <code>paraphrase-multilingual-MiniLM-L12-v2</code>: a small multilingual model trained so that paraphrases and translations in different languages land near each other. That training choice is why section 2 of the Lotman reading treats the encoder as an instrument on the <strong>primary</strong> language layer - good at translation-equivalence, weak at institutional shell by itself.</p>
+  <h2 id="encoder">What an <a class="term" href="#gloss-encoder" data-tip="Frozen model that turns text into a numeric fingerprint.">encoder</a> does</h2>
+  <p>An <a class="term" href="#gloss-encoder" data-tip="Same as encoder here: one vector per sentence stretch.">embedding</a> is a <strong>numeric fingerprint</strong> of a sentence: a fixed-length list of numbers. The model used here is <code>paraphrase-multilingual-MiniLM-L12-v2</code> (Sentence-Transformers checkpoint; <a class="cite-ref" href="#bib-reimers2019">Reimers and Gurevych 2019</a>), built from a twelve-layer MiniLM encoder (<a class="cite-ref" href="#bib-wang2021">Wang et al. 2021</a>) over a multilingual <a class="term" href="#gloss-transformer" data-tip="Neural network that reads word pieces and builds context layer by layer.">transformer</a> stack (<a class="cite-ref" href="#bib-vaswani2017">Vaswani et al. 2017</a>). Text is split into WordPiece <a class="term" href="#gloss-token" data-tip="Word pieces after tokenization.">tokens</a> (<a class="cite-ref" href="#bib-devlin2019">Devlin et al. 2019</a>). Weights are <a class="term" href="#gloss-frozen" data-tip="Weights not updated on the Montreal archive; used as a fixed measuring device.">frozen</a> on the Montreal corpus (not fine-tuned on your documents). Implementation: <code>SentenceTransformer.encode</code> in <code>scripts/run_semiosphere_feature_space.py</code>.</p>
+  <p>Two fingerprints that sit close together usually share <a class="term" href="#gloss-theme" data-tip="Topic overlap: famine, film, Canada - not shell or proof tier.">topic</a>. They do <em>not</em> reliably preserve <a class="term" href="#gloss-register" data-tip="Document type and audience contract: secret memo vs embassy release.">register</a> (scare quotes, gathering-not-symposium, which <a class="term" href="#gloss-shell" data-tip="Archive zone: secret, inward, Soviet outward, rival press.">shell</a> a stretch belongs to). That is why the Lotman reading treats the encoder as an instrument on the <strong>primary</strong> language layer - good at translation-equivalence, weak at institutional shell by itself.</p>
 
-  <div class="pipe" aria-hidden="true">
+  <div class="pipe" aria-label="Encoding pipeline">
     <span>Sentence text</span><i>→</i>
-    <span>Word pieces (tokens)</span><i>→</i>
+    <span><a class="term" href="#gloss-token" data-tip="Word pieces after tokenization.">Tokens</a></span><i>→</i>
     <span>12-layer transformer</span><i>→</i>
-    <span>Mean pool over tokens</span><i>→</i>
-    <span><strong>384 numbers</strong> (one vector)</span>
+    <span><a class="term" href="#gloss-mean-pool" data-tip="Average token vectors into one sentence vector.">Mean pool</a></span><i>→</i>
+    <span><strong>384 numbers</strong> (one <a class="term" href="#gloss-vector" data-tip="Ordered list of numbers treated as an arrow in space.">vector</a>)</span>
   </div>
 
-  <h3>Mean pooling (what the model outputs)</h3>
-  <div class="math-block" id="mean-pool">
-    <div class="math-line"><span class="math">e = (1/n) Σ<sub>i=1</sub><sup>n</sup> h<sub>i</sub> &nbsp;&nbsp;∈ ℝ<sup>384</sup></span></div>
+  <h3 id="mean-pool">Mean pooling equation</h3>
+  <div class="math-block" id="eq-mean-pool">
+    <div class="math-line">e = (1/n) Σ<sub>i=1</sub><sup>n</sup> h<sub>i</sub> &nbsp;&nbsp;∈ ℝ<sup>384</sup></div>
     <div class="math-explain">
-      <strong>Plain language</strong>
-      <p>Each token gets a 384-dimensional hidden vector <em>h</em> from the last layer. The sentence fingerprint is the <strong>average</strong> of those token vectors. One paragraph in, one arrow out - that is what the probe and the retriever store for each sign-event stretch.</p>
-      <p><em>n</em> is the number of tokens (word pieces) after tokenization; longer sentences average over more pieces.</p>
+      <strong>What this equation says</strong>
+      <p>Take every <a class="term" href="#gloss-token" data-tip="One word piece in the sentence.">token</a>'s internal vector from the last layer, add them up, divide by how many tokens there were. The result <strong>e</strong> is the sentence fingerprint stored for the <a class="term" href="#gloss-probe" data-tip="Computational check on fingerprints; not a substitute for pair-read.">probe</a> and retriever.</p>
+      <table class="sym-table" aria-label="Mean pool symbols">
+        <thead><tr><th>Symbol</th><th>Stands for</th><th>What happens to it</th></tr></thead>
+        <tbody>
+          <tr><td><strong>e</strong></td><td>Sentence <a class="term" href="#gloss-embedding" data-tip="Output fingerprint.">embedding</a></td><td>Built once per scored stretch; one row in the embedding matrix.</td></tr>
+          <tr><td><strong>n</strong></td><td>Token count</td><td>Longer sentences have larger <em>n</em>; each token counts equally in the average.</td></tr>
+          <tr><td><strong>h<sub>i</sub></strong></td><td>Hidden vector for token <em>i</em></td><td>Comes out of layer 12; already mixes context from the whole sentence.</td></tr>
+          <tr><td><strong>Σ</strong></td><td>Sum</td><td>Add all <em>n</em> token vectors component-wise (384 additions per dimension).</td></tr>
+          <tr><td><strong>1/n</strong></td><td>Divide by count</td><td>Turns a sum into an average so length does not automatically scale the arrow.</td></tr>
+          <tr><td><strong>ℝ<sup>384</sup></strong></td><td>384-dimensional space</td><td>Each <em>e</em> is a point (arrow from origin) with 384 coordinates.</td></tr>
+        </tbody>
+      </table>
+      <strong>Plain-language walkthrough</strong>
+      <ol class="walk">
+        <li>Tokenize the sentence into WordPiece subwords (<a class="cite-ref" href="#bib-devlin2019">Devlin et al. 2019</a>).</li>
+        <li>Run pieces through the transformer; keep the last layer's vector for each piece (<a class="cite-ref" href="#bib-vaswani2017">Vaswani et al. 2017</a>).</li>
+        <li>Mean-pool token vectors into one sentence vector (<a class="cite-ref" href="#bib-reimers2019">Reimers and Gurevych 2019</a>, default in Sentence-Transformers).</li>
+        <li>Store the resulting <strong>e</strong> as this stretch's fingerprint.</li>
+      </ol>
+      <p><em>Toy example (2 numbers instead of 384):</em> three tokens with hidden vectors (1,0), (1,2), (3,2). Sum = (5,4). Divide by 3 → <strong>e</strong> ≈ (1.67, 1.33). One sentence, one arrow.</p>
     </div>
   </div>
 
-  <!-- cosine: vectors align; my claims still need pair-read -->
-  <h2 id="cosine">Cosine similarity (the ruler we use)</h2>
-  <p>Retrieval and the semiosphere probe score candidates with <strong>cosine similarity</strong>: the angle between two fingerprint arrows, not their length.</p>
-  <div class="math-block">
-    <div class="math-line"><span class="math">cos(θ) = (x · y) / (‖x‖ ‖y‖)</span></div>
+  <h2 id="cosine">Cosine similarity</h2>
+  <p>The retriever and probe compare fingerprints by <a class="term" href="#gloss-cosine" data-tip="Angle between two vectors after optional preprocessing.">cosine similarity</a>: how much two arrows point the same way, not how long they are (standard vector-space measure; <a class="cite-ref" href="#bib-manning2008">Manning, Raghavan, and Schütze 2008</a>; computed via scikit-learn in the probe script).</p>
+
+  <h3 id="dot">Step 1 · Dot product</h3>
+  <div class="math-block" id="eq-dot">
+    <div class="math-line">x · y = Σ<sub>k=1</sub><sup>384</sup> x<sub>k</sub> y<sub>k</sub></div>
     <div class="math-explain">
-      <strong>Plain language</strong>
-      <p>After centering and normalizing (Artetxe-style preprocessing in the probe script), cosine is between −1 and 1. <strong>Near 1</strong>: same general direction in topic space. <strong>Near 0</strong>: unrelated direction. The E4 retriever returned the internal memo at cosines roughly 0.48-0.76 to outward-clip questions - high theme overlap, wrong shell.</p>
-      <p><strong>Worked example (2D sketch below):</strong> if x = (0.8, 0.6) and y = (0.6, 0.8), then x·y = 0.96, ‖x‖ = ‖y‖ = 1, so cos(θ) = 0.96 (small angle). If y = (−0.6, 0.8), cosine is 0 (perpendicular).</p>
+      <strong>What this part does</strong>
+      <p>Multiply matching coordinates and add the products. Large positive value → many coordinates push together; mixed signs → directions disagree.</p>
+      <table class="sym-table">
+        <thead><tr><th>Symbol</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><strong>x</strong>, <strong>y</strong></td><td>Two sentence fingerprints (query vs candidate, or secret vs outward).</td></tr>
+          <tr><td><strong>x<sub>k</sub></strong></td><td>The <em>k</em>th number in vector <strong>x</strong> (one coordinate).</td></tr>
+          <tr><td><strong>x · y</strong></td><td>A single score from the whole vector - not itself the cosine yet.</td></tr>
+        </tbody>
+      </table>
+      <p><em>2D example:</em> x = (0.8, 0.6), y = (0.6, 0.8). Dot = 0.8×0.6 + 0.6×0.8 = 0.96.</p>
+    </div>
+  </div>
+
+  <h3 id="norm">Step 2 · Length (norm)</h3>
+  <div class="math-block" id="eq-norm">
+    <div class="math-line">‖x‖ = √(x · x)</div>
+    <div class="math-explain">
+      <strong>What this part does</strong>
+      <p>Dot the vector with itself, take the square root - Pythagoras in 384 dimensions. <a class="term" href="#gloss-norm" data-tip="Length of the arrow from origin to the point.">Norm</a> is how long the arrow is before you compare direction.</p>
+      <p>Cosine divides by <strong>‖x‖</strong> and <strong>‖y‖</strong> so a very long vector does not automatically look "more similar."</p>
+    </div>
+  </div>
+
+  <h3 id="eq-cosine">Step 3 · Cosine (the score we report)</h3>
+  <div class="math-block">
+    <div class="math-line">cos(θ) = (x · y) / (‖x‖ ‖y‖)</div>
+    <div class="math-explain">
+      <strong>What happens in order</strong>
+      <ol class="walk">
+        <li>Compute <strong>x · y</strong> (overlap of coordinates).</li>
+        <li>Compute lengths <strong>‖x‖</strong> and <strong>‖y‖</strong>.</li>
+        <li>Divide: dot product divided by both lengths → a number from −1 to 1.</li>
+        <li>Interpret: near <strong>1</strong> = same direction (often same topic); near <strong>0</strong> = unrelated angle; negative = opposite direction.</li>
+      </ol>
+      <p>Before comparing secret and outward clouds in the probe, vectors pass VecMap-style preprocessing: L2 normalize, subtract the training-side mean, L2 normalize again (<a class="cite-ref" href="#bib-artetxe2016">Artetxe, Labaka, and Agirre 2016</a>; <a class="cite-ref" href="#bib-artetxe2018">Artetxe, Labaka, and Agirre 2018</a>; function <code>artetxe_preprocess</code> in <code>run_semiosphere_feature_space.py</code>). That is the <a class="term" href="#gloss-preprocess" data-tip="Center and normalize before cosine; makes angles comparable across runs.">centering and normalization</a> step so cosine tracks angle cleanly. Cross-lingual <em>maps</em> on top of those vectors follow the Mikolov → Xing → Artetxe chain documented on <a href="SEMIOTIC_COORDINATE_PLAIN.html#eq-procrustes">Semiotic coordinate plain §5</a> (<a class="cite-ref" href="#bib-mikolov2013">Mikolov, Le, and Sutskever 2013</a>; <a class="cite-ref" href="#bib-xing2015">Xing et al. 2015</a>; orthogonal Procrustes: <a class="cite-ref" href="#bib-schonemann1966">Schönemann 1966</a>).</p>
+      <p><strong>Montreal retriever:</strong> flat search returned the internal memo at cosines about 0.48-0.76 to outward-clip questions - high <a class="term" href="#gloss-theme" data-tip="Topic overlap.">theme</a> overlap, wrong shell. Scoped by shell → tier confusion 0.</p>
     </div>
   </div>
 
   <div class="viz-box">
     <div class="viz-head">Figure A · Two fingerprints as arrows (schematic 2D)</div>
     <canvas id="cosineViz" class="viz-stage" role="img" aria-label="Two vectors and the angle between them"></canvas>
-    <p class="viz-cap">Drag is not required: orange and blue arrows share a topic direction (high cosine). Grey arrow shows a perpendicular direction (cosine ≈ 0). Real embeddings use 384 dimensions; this is a teaching projection.</p>
+    <p class="viz-cap">Orange and blue share a topic direction (high cosine). Grey is perpendicular (cosine ≈ 0). Real work uses 384 dimensions; this is a teaching projection.</p>
   </div>
 
   <h2 id="space">What the space looks like (schematic)</h2>
-  <p>In a 2D cartoon of the real 384-D space, multilingual training pulls <strong>translation mates</strong> together. Register (shell) is a secondary layer the encoder does not label for you.</p>
+  <p>Multilingual training pulls translation mates together. <a class="term" href="#gloss-register" data-tip="Shell and operator habits.">Register</a> is not an axis the frozen encoder labels for you.</p>
   <div class="viz-box">
-    <div class="viz-head">Figure B · Topic gravity vs shell (not measured axes - illustration)</div>
+    <div class="viz-head">Figure B · Topic gravity vs shell (illustration only)</div>
     <canvas id="scatterViz" class="viz-stage" role="img" aria-label="Schematic scatter of document types"></canvas>
-    <p class="viz-cap">Points that share famine/film topic drift together even when shell differs (secret memo vs memo-about-newspaper vs diaspora weekly). Shell separation must be imposed by typing, scoped retrieval, or pair-read - not read off raw cosine between Russian and English.</p>
+    <p class="viz-cap">Shared famine/film topic clumps; shell differs. Separation needs typing, scoped retrieval, or <a class="term" href="#gloss-pair-read" data-tip="Read secret beside dated outward counterpart or record miss.">pair-read</a> - not raw cosine across Russian and English alone.</p>
   </div>
 
-  <!-- 6/6 memo wins: I shipped flat retrieval and wrote the failure down -->
   <h2 id="limits">What encoders justify on the Montreal plate</h2>
   <table>
     <thead><tr><th>Question</th><th>Encoder alone</th><th>With typed archive</th></tr></thead>
@@ -108,20 +186,90 @@
     </tbody>
   </table>
 
-  <p class="fig-links"><strong>Project figures using these vectors:</strong>
+  <p class="fig-links"><strong>Related figures:</strong>
     <a href="../embed/fig-semiosphere-embedding-3d.html">3D embedding + relays</a> ·
     <a href="../embed/fig-theme-vs-register.html">Theme vs register (2D PCA)</a> ·
     <a href="SEMIOTIC_COORDINATE_PLAIN.html#eq-procrustes">Probe map Y ≈ W X</a> ·
     <a href="LLM_VS_SEMIOSPHERE_VIZ.html#fig1">LLM theme vs shell bars</a>
   </p>
 
-  <!-- bridge back: I still don't trust inline definitions -->
-  <h2 id="glossary-bridge">Back to the glossary</h2>
-  <p>On the theory pages, <strong>embedding</strong> and <strong>encoder</strong> link here for the full picture. Pair-read remains the warrant for historical claims; cosine and embeddings are checks - microscope, not oracle.</p>
+  <section class="sources" id="sources">
+    <h2>Sources · where these techniques come from</h2>
+    <p>This appendix describes the <strong>encoding and similarity layer only</strong>. Historical claims still require pair-read. The table maps each step on this page to the literature and to the lab script; the bibliography below is Chicago notes-and-bibliography style (full citations).</p>
+    <table class="prov">
+      <thead><tr><th>Step on this page</th><th>What the project does</th><th>Derived from</th></tr></thead>
+      <tbody>
+        <tr><td>Encoder checkpoint</td><td><code>paraphrase-multilingual-MiniLM-L12-v2</code>, frozen</td><td><a href="#bib-reimers2019">Reimers and Gurevych 2019</a>; <a href="#bib-wang2021">Wang et al. 2021</a></td></tr>
+        <tr><td>Tokenization</td><td>Model tokenizer (WordPiece)</td><td><a href="#bib-devlin2019">Devlin et al. 2019</a></td></tr>
+        <tr><td>Contextual vectors <em>h<sub>i</sub></em></td><td>Last hidden layer, 12 blocks</td><td><a href="#bib-vaswani2017">Vaswani et al. 2017</a></td></tr>
+        <tr><td>Mean pool → <strong>e</strong></td><td><code>SentenceTransformer.encode</code> default pooling</td><td><a href="#bib-reimers2019">Reimers and Gurevych 2019</a></td></tr>
+        <tr><td>Dot product &amp; cosine</td><td><code>sklearn.metrics.pairwise.cosine_similarity</code></td><td><a href="#bib-manning2008">Manning, Raghavan, and Schütze 2008</a></td></tr>
+        <tr><td>L2 → center → L2</td><td><code>artetxe_preprocess</code> on train/test/inventory</td><td><a href="#bib-artetxe2016">Artetxe, Labaka, and Agirre 2016</a>; <a href="#bib-artetxe2018">Artetxe, Labaka, and Agirre 2018</a></td></tr>
+        <tr><td>Secret→outward map (not re-derived here)</td><td>Orthogonal Procrustes + ridge + controls</td><td><a href="#bib-schonemann1966">Schönemann 1966</a>; <a href="#bib-mikolov2013">Mikolov, Le, and Sutskever 2013</a>; <a href="#bib-xing2015">Xing et al. 2015</a>; probe logic <a href="#bib-hewitt2019">Hewitt and Manning 2019</a>; controls <a href="#bib-hewittliang2019">Hewitt and Liang 2019</a></td></tr>
+        <tr><td>Flat retrieval (E4)</td><td>Rank by cosine over pooled inventory</td><td>Project experiment log; failure mode, not a published method claim</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.88rem;color:var(--muted);">Lab trace: <code>peter_htr_experiment/docs/EXPERIMENT_LOG_semiosphere_feature_space.md</code> (2026-09-10 literature section) mirrors this chain.</p>
+
+    <h3 id="bibliography">Bibliography</h3>
+    <p class="bib" id="bib-alain2017">Alain, Guillaume, and Yoshua Bengio. "Understanding Intermediate Layers Using Linear Classifier Probes." <em>International Conference on Learning Representations (ICLR)</em>, 2017. Workshop track. (Cited on the coordinate plain for linear probe lineage; not re-derived in the equations above.)</p>
+    <p class="bib" id="bib-artetxe2016">Artetxe, Mikel, Gorka Labaka, and Eneko Agirre. "Learning Principled Bilingual Mappings of Word Embeddings while Preserving Monolingual Invariance." In <em>Proceedings of the 2016 Conference on Empirical Methods in Natural Language Processing</em>, 2289-94. Austin, TX: Association for Computational Linguistics, 2016.</p>
+    <p class="bib" id="bib-artetxe2018">Artetxe, Mikel, Gorka Labaka, and Eneko Agirre. "A Robust Self-Learning Method for Fully Unsupervised Cross-Lingual Mappings of Word Embeddings." In <em>Proceedings of the 56th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)</em>, 789-98. Melbourne: Association for Computational Linguistics, 2018. (VecMap preprocessing recipe used in the probe script.)</p>
+    <p class="bib" id="bib-devlin2019">Devlin, Jacob, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova. "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding." In <em>Proceedings of the 2019 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1</em>, 4171-86. Minneapolis, MN: Association for Computational Linguistics, 2019.</p>
+    <p class="bib" id="bib-hewitt2019">Hewitt, John, and Christopher D. Manning. "A Structural Probe for Finding Syntax in Word Representations." In <em>Proceedings of the 2019 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1</em>, 4129-38. Minneapolis, MN: Association for Computational Linguistics, 2019.</p>
+    <p class="bib" id="bib-hewittliang2019">Hewitt, John, and Percy Liang. "Designing and Interpreting Probes with Control Tasks." In <em>Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing and the 9th International Joint Conference on Natural Language Processing (EMNLP-IJCNLP)</em>, 2733-43. Hong Kong: Association for Computational Linguistics, 2019.</p>
+    <p class="bib" id="bib-manning2008">Manning, Christopher D., Prabhakar Raghavan, and Hinrich Schütze. <em>Introduction to Information Retrieval</em>. Cambridge: Cambridge University Press, 2008. (Cosine similarity as a vector-space retrieval score.)</p>
+    <p class="bib" id="bib-mikolov2013">Mikolov, Tomas, Quoc V. Le, and Ilya Sutskever. "Exploiting Similarities among Languages for Machine Translation." <em>arXiv</em>, 1309.4168 (2013). (Linear map between embedding spaces.)</p>
+    <p class="bib" id="bib-reimers2019">Reimers, Nils, and Iryna Gurevych. "Sentence-BERT: Sentence Embeddings Using Siamese BERT-Networks." In <em>Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing and the 9th International Joint Conference on Natural Language Processing (EMNLP-IJCNLP)</em>, 3982-92. Hong Kong: Association for Computational Linguistics, 2019.</p>
+    <p class="bib" id="bib-schonemann1966">Schönemann, Peter H. "A Generalized Solution of the Orthogonal Procrustes Problem." <em>Psychometrika</em> 31, no. 1 (1966): 1-10.</p>
+    <p class="bib" id="bib-vaswani2017">Vaswani, Ashish, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, and Illia Polosukhin. "Attention Is All You Need." In <em>Advances in Neural Information Processing Systems 30</em>, 5998-6008. 2017.</p>
+    <p class="bib" id="bib-wang2021">Wang, Wenhui, Furu Wei, Li Dong, Hangbo Bao, Nan Yang, and Ming Zhou. "MiniLM: Deep Self-Attention Distillation for Task-Agnostic Knowledge Distillation of Transformer Encoders." In <em>Findings of the Association for Computational Linguistics: ACL-IJCNLP 2021</em>, 5770-81. Online: Association for Computational Linguistics, 2021.</p>
+    <p class="bib" id="bib-xing2015">Xing, Chao, Dong Wang, Chao Liu, and Yiye Lin. "Normalized Word Embedding and Orthogonal Transform for Bilingual Word Translation." In <em>Proceedings of the 2015 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies</em>, 1006-11. Denver, CO: Association for Computational Linguistics, 2015.</p>
+  </section>
+
+  <section class="glossary" id="glossary">
+    <h2>Glossary · terms on this page</h2>
+    <p style="font-size:0.92rem;color:var(--muted);">Dotted words in the text open a short definition; click again or use <strong>Full definition ↓</strong> to jump here.</p>
+    <dl>
+      <dt id="gloss-encoder">Encoder</dt>
+      <dd>Frozen neural model that reads text and outputs vectors. Here: MiniLM-L12, not fine-tuned on the archive.</dd>
+      <dt id="gloss-embedding">Embedding</dt>
+      <dd>Same as the sentence fingerprint <strong>e</strong> - one vector per scored stretch.</dd>
+      <dt id="gloss-token">Token</dt>
+      <dd>A word piece after tokenization; each gets a hidden vector <em>h<sub>i</sub></em> before pooling.</dd>
+      <dt id="gloss-transformer">Transformer</dt>
+      <dd>Stack of attention layers; each token's final hidden state depends on the whole sentence context.</dd>
+      <dt id="gloss-mean-pool">Mean pooling</dt>
+      <dd>Average token vectors into one sentence vector; equation at <a href="#eq-mean-pool">#eq-mean-pool</a>.</dd>
+      <dt id="gloss-vector">Vector</dt>
+      <dd>Ordered list of numbers treated as an arrow from the origin; 384 entries here.</dd>
+      <dt id="gloss-dot-product">Dot product</dt>
+      <dd>Sum of products of matching coordinates; measures coordinate-wise overlap before normalization.</dd>
+      <dt id="gloss-norm">Norm</dt>
+      <dd>Length of a vector, ‖x‖ = √(x · x).</dd>
+      <dt id="gloss-cosine">Cosine similarity</dt>
+      <dd>Dot product divided by both lengths; equals cos(θ) between arrows. Used in retrieval and probe scores.</dd>
+      <dt id="gloss-preprocess">Centering / normalization</dt>
+      <dd>VecMap-style L2 → mean-center (training mean reused on test) → L2 (<a href="#bib-artetxe2016">Artetxe, Labaka, and Agirre 2016</a>; <a href="#bib-artetxe2018">2018</a>).</dd>
+      <dt id="gloss-frozen">Frozen</dt>
+      <dd>Model weights fixed; the archive is measured, not used to retrain the encoder.</dd>
+      <dt id="gloss-multilingual">Multilingual</dt>
+      <dd>Training objective pulls paraphrases and translations in different languages near each other.</dd>
+      <dt id="gloss-theme">Theme / topic</dt>
+      <dd>What the sentence is about (famine, film, Canada). Encoders recover this more easily than register.</dd>
+      <dt id="gloss-register">Register</dt>
+      <dd>Document type and audience contract - secret memo vs embassy release vs diaspora weekly.</dd>
+      <dt id="gloss-shell">Shell</dt>
+      <dd>Archive typing for which zone a unit lives in (secret, inward, Soviet outward, rival).</dd>
+      <dt id="gloss-pair-read">Pair-read</dt>
+      <dd>Read secret stretch beside dated outward counterpart or record a documented miss - historical warrant.</dd>
+      <dt id="gloss-probe">Probe</dt>
+      <dd>Fit maps and controls on frozen embeddings; microscope for theme-level linearity, not oracle for history.</dd>
+    </dl>
+  </section>
 </div>
 <script>
 (function () {
-  // 2D sketch because I can't canvas 384 dimensions without crying
   function drawCosine() {
     var c = document.getElementById('cosineViz');
     if (!c) return;
@@ -154,7 +302,6 @@
     ctx.fillStyle = '#5c564c'; ctx.font = '11px system-ui, sans-serif';
     ctx.fillText('Small angle → high cosine (same topic direction)', 12, h - 12);
   }
-  // scatter: topic clumps; shell ignored my cartoon axes again
   function drawScatter() {
     var c = document.getElementById('scatterViz');
     if (!c) return;
@@ -187,9 +334,190 @@
     ctx.fillStyle = '#5c564c'; ctx.font = '10px system-ui, sans-serif';
     ctx.fillText('Horizontal axis (cartoon): shared famine/film topic · Vertical: not shell', 12, h - 10);
   }
-  function run() { drawCosine(); drawScatter(); }
-  window.addEventListener('load', run);
-  window.addEventListener('resize', run);
+  window.addEventListener('load', function () { drawCosine(); drawScatter(); });
+  window.addEventListener('resize', function () { drawCosine(); drawScatter(); });
+})();
+</script>
+<script>
+(function () {
+  var GLOSS = [
+    { re: /\bencoders?\b/gi, id: 'gloss-encoder', tip: 'Frozen model that outputs sentence fingerprints.' },
+    { re: /\bembeddings?\b/gi, id: 'gloss-embedding', tip: 'Numeric fingerprint of a sentence.' },
+    { re: /\btokens?\b/gi, id: 'gloss-token', tip: 'Word pieces after tokenization.' },
+    { re: /\btransformers?\b/gi, id: 'gloss-transformer', tip: 'Context-building neural stack.' },
+    { re: /\bmean pooling\b/gi, id: 'gloss-mean-pool', tip: 'Average token vectors into one sentence vector.' },
+    { re: /\bvectors?\b/gi, id: 'gloss-vector', tip: 'List of numbers treated as an arrow in space.' },
+    { re: /\bdot product\b/gi, id: 'gloss-dot-product', tip: 'Sum of products of matching coordinates.' },
+    { re: /\bnorms?\b/gi, id: 'gloss-norm', tip: 'Length of a vector.' },
+    { re: /\bcosine\b/gi, id: 'gloss-cosine', tip: 'Angle-based similarity between fingerprints.' },
+    { re: /\bfrozen\b/gi, id: 'gloss-frozen', tip: 'Weights not retrained on the archive.' },
+    { re: /\bmultilingual\b/gi, id: 'gloss-multilingual', tip: 'Trained across languages; pulls translations together.' },
+    { re: /\bregisters?\b/gi, id: 'gloss-register', tip: 'Document type and audience contract.' },
+    { re: /\bshells?\b/gi, id: 'gloss-shell', tip: 'Archive zone: secret, outward, rival, etc.' },
+    { re: /\bthemes?\b/gi, id: 'gloss-theme', tip: 'Topic overlap - famine, film, Canada.' },
+    { re: /\btopics?\b/gi, id: 'gloss-theme', tip: 'What the text is about; encoders see this first.' },
+    { re: /\bpair-reads?\b/gi, id: 'gloss-pair-read', tip: 'Secret beside outward read or documented miss.' },
+    { re: /\bprobes?\b/gi, id: 'gloss-probe', tip: 'Checks on frozen embeddings; not historical warrant alone.' },
+    { re: /\bcentering\b/gi, id: 'gloss-preprocess', tip: 'Shift vectors before comparing angles.' },
+    { re: /\bnormaliz(?:e|ing|ation)\b/gi, id: 'gloss-preprocess', tip: 'Scale vectors so length does not dominate cosine.' },
+    { re: /\bfingerprints?\b/gi, id: 'gloss-embedding', tip: 'Same as embedding - one vector per stretch.' }
+  ];
+  var pop = document.getElementById('term-popover');
+  var returnNav = document.getElementById('return-nav');
+  var returnBtn = document.getElementById('return-nav-btn');
+  var returnWhere = document.getElementById('return-nav-where');
+  var openTerm = null;
+  var returnPoint = null;
+
+  function nearestSectionLabel(el) {
+    var node = el;
+    while (node && node !== document.body) {
+      if (node.id && (node.id.indexOf('gloss-') === 0 || /^eq-|^encoder|^cosine|^mean|^dot|^norm|^space|^limits/.test(node.id))) {
+        var t = node.textContent.replace(/\s+/g, ' ').trim();
+        return t.length > 42 ? t.slice(0, 40) + '\u2026' : t;
+      }
+      if (node.tagName === 'H2' || node.tagName === 'H3') {
+        return node.textContent.replace(/\s+/g, ' ').trim().slice(0, 42);
+      }
+      node = node.parentElement;
+    }
+    return 'last reading position';
+  }
+
+  function saveReturnPoint(fromEl) {
+    returnPoint = { y: window.scrollY, label: nearestSectionLabel(fromEl) };
+  }
+
+  function showReturnNav() {
+    if (!returnPoint) return;
+    returnWhere.textContent = returnPoint.label;
+    returnNav.classList.add('visible');
+  }
+
+  function hideReturnNav() { returnNav.classList.remove('visible'); }
+
+  function hidePopover() {
+    pop.classList.remove('visible');
+    pop.setAttribute('aria-hidden', 'true');
+    openTerm = null;
+  }
+
+  function showPopover(term, x, y) {
+    var label = term.textContent.replace(/\s+/g, ' ').trim();
+    var tip = term.getAttribute('data-tip') || '';
+    var href = term.getAttribute('href') || '';
+    var more = (href.indexOf('#gloss-') === 0 || href.indexOf('#eq-') === 0)
+      ? '<a class="more term-goto" href="' + href + '">Full definition \u2193</a>' : '';
+    pop.innerHTML = '<strong>' + label + '</strong><div>' + tip + '</div>' + more;
+    pop.style.left = Math.min(Math.max(8, x), window.innerWidth - 360) + 'px';
+    pop.style.top = Math.min(y + 12, window.innerHeight - 140) + 'px';
+    pop.classList.add('visible');
+    pop.setAttribute('aria-hidden', 'false');
+    openTerm = term;
+  }
+
+  function bindTerm(term) {
+    term.addEventListener('click', function (e) {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) {
+        saveReturnPoint(term);
+        showReturnNav();
+        return;
+      }
+      var rect = term.getBoundingClientRect();
+      if (openTerm === term && pop.classList.contains('visible')) {
+        hidePopover();
+        e.preventDefault();
+        return;
+      }
+      saveReturnPoint(term);
+      showPopover(term, rect.left, rect.bottom);
+      e.preventDefault();
+      if ((term.getAttribute('href') || '').indexOf('#gloss-') === 0) {
+        showReturnNav();
+        if (history.replaceState) history.replaceState(null, '', term.getAttribute('href'));
+      }
+    });
+  }
+
+  function autoLinkTerms(root) {
+    var skipTag = { A: 1, CODE: 1, PRE: 1, SCRIPT: 1, STYLE: 1, DT: 1, DD: 1, TH: 1, TD: 1 };
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode: function (node) {
+        var p = node.parentElement;
+        if (!p || skipTag[p.tagName] || p.closest('a.term, code, pre, script, style, .math-line')) {
+          return NodeFilter.FILTER_REJECT;
+        }
+        return node.textContent.trim() ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+      }
+    });
+    var nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(function (textNode) {
+      var text = textNode.textContent;
+      var entries = [];
+      GLOSS.forEach(function (g) {
+        var re = new RegExp(g.re.source, g.re.flags);
+        var m;
+        while ((m = re.exec(text)) !== null) {
+          entries.push({ start: m.index, end: m.index + m[0].length, match: m[0], id: g.id, tip: g.tip });
+        }
+      });
+      if (!entries.length) return;
+      entries.sort(function (a, b) { return a.start - b.start || b.end - a.end; });
+      var filtered = [], last = -1;
+      entries.forEach(function (e) {
+        if (e.start >= last) { filtered.push(e); last = e.end; }
+      });
+      var frag = document.createDocumentFragment();
+      var pos = 0;
+      filtered.forEach(function (e) {
+        if (e.start > pos) frag.appendChild(document.createTextNode(text.slice(pos, e.start)));
+        var a = document.createElement('a');
+        a.className = 'term term-auto';
+        a.href = '#' + e.id;
+        a.setAttribute('data-tip', e.tip);
+        a.textContent = e.match;
+        frag.appendChild(a);
+        pos = e.end;
+      });
+      if (pos < text.length) frag.appendChild(document.createTextNode(text.slice(pos)));
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+
+  returnBtn.addEventListener('click', function () {
+    if (!returnPoint) return;
+    hidePopover();
+    window.scrollTo({ top: returnPoint.y, behavior: 'smooth' });
+    hideReturnNav();
+    returnPoint = null;
+    if (history.replaceState) history.replaceState(null, '', '#encoder');
+  });
+
+  pop.addEventListener('click', function (e) {
+    var link = e.target.closest('a.term-goto');
+    if (!link) return;
+    e.preventDefault();
+    hidePopover();
+    showReturnNav();
+    var href = link.getAttribute('href') || '';
+    if (href.charAt(0) === '#') {
+      var target = document.querySelector(href);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (history.replaceState) history.replaceState(null, '', href);
+    }
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!pop.contains(e.target) && !e.target.classList.contains('term')) hidePopover();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { hidePopover(); hideReturnNav(); }
+  });
+
+  var main = document.getElementById('doc-main');
+  if (main) autoLinkTerms(main);
+  document.querySelectorAll('a.term').forEach(bindTerm);
 })();
 </script>
 </body>
