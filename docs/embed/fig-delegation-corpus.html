@@ -73,7 +73,7 @@ Twenty six real parent-to-subagent delegations performed by a production coding 
 <h2 id="d3">Panel D3 &middot; The dyad fits neither of Lotman's cells</h2>
 <div class="viz-box">
   <div class="viz-head"><strong>Two criteria, measured on the same corpus, pulling in opposite directions</strong></div>
-  <canvas id="cvScore" height="354" role="img" aria-label="A scorecard with two criteria. Volume change: large increase, which fails the I-s/he criterion. Receiver adds content of its own: high content gain, which fails the I-I criterion. Conclusion: the dyad fits no cell in the typology."></canvas>
+  <canvas id="cvScore" height="380" role="img" aria-label="A scorecard with two criteria. Volume change: large increase, which fails the I-s/he criterion. Receiver adds content of its own: high content gain, which fails the I-I criterion. Conclusion: the dyad fits no cell in the typology."></canvas>
   <div class="legend">
     <span><i style="background:#9a3b3b"></i> criterion failed</span>
     <span><i style="background:#8d94a3"></i> neither cell admits the dyad</span>
@@ -436,8 +436,8 @@ function drawNull() {
     ctx.fillText(name, x + barW / 2, baseY + 16);
     ctx.restore();
   }
-  bar(b1x, obsTop, '#1f5136', '0.9356', 'observed');
-  bar(b2x, nulTop, '#8d94a3', '0.8732', 'matched null');
+  bar(b1x, obsTop, '#1f5136', OBS.toFixed(4), 'observed');
+  bar(b2x, nulTop, '#8d94a3', NUL.toFixed(4), 'matched null');
 
   /* the gap, which is the actual effect */
   ctx.save();
@@ -465,7 +465,7 @@ function drawNull() {
   ctx.font = '10px system-ui, sans-serif';
   ctx.fillText('difference', brx + 8, (obsTop + nulTop) / 2 - 3);
   ctx.font = 'bold 11px system-ui, sans-serif';
-  ctx.fillText('0.0624', brx + 8, (obsTop + nulTop) / 2 + 11);
+  ctx.fillText(DIFF.toFixed(4), brx + 8, (obsTop + nulTop) / 2 + 11);
   ctx.restore();
 
   /* --- right block (or lower block when narrow): the decomposition --- */
@@ -498,7 +498,7 @@ function drawNull() {
   ctx.font = '10px system-ui, sans-serif';
   ctx.fillText('real effect', eMid, ry + 22);
   ctx.font = 'bold 11px system-ui, sans-serif';
-  ctx.fillText('0.0624', eMid, ry + 34);
+  ctx.fillText(DIFF.toFixed(4), eMid, ry + 34);
   ctx.strokeStyle = '#c45c26';
   ctx.lineWidth = 1;
   ctx.beginPath();

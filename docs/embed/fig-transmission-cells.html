@@ -34,51 +34,99 @@
   th, td { border: 1px solid var(--rule); padding: 0.45rem 0.55rem; text-align: left; vertical-align: top; }
   th { background: #f1efe9; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.04em; }
   code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.82em; }
+  a.term { color: var(--accent); text-decoration: none; border-bottom: 1px dotted var(--accent); cursor: help; }
+  a.term:hover { background: rgba(42,74,111,0.08); }
+  .guide { background: #fff; border: 1px solid var(--rule); border-left: 4px solid var(--accent); padding: 0.75rem 1rem; margin: 0.75rem 0 1rem; font-size: 0.96rem; }
+  .guide h3 { font-family: system-ui, sans-serif; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin: 0 0 0.45rem; font-weight: 600; }
+  .guide p { margin: 0.35rem 0; }
+  .guide p:first-of-type { margin-top: 0; }
+  .guide p:last-child { margin-bottom: 0; }
+  .toc-mini { font-family: system-ui, sans-serif; font-size: 0.88rem; margin: 0.5rem 0 1.25rem; padding: 0.6rem 0.85rem; background: #fafafa; border: 1px dashed var(--rule); }
+  .toc-mini a { margin-right: 0.85rem; white-space: nowrap; }
+  .wink { font-size: 0.9rem; color: #444; font-style: italic; margin: 0.5rem 0; }
+  #term-popover { display: none; position: fixed; z-index: 9999; max-width: 22rem; padding: 0.65rem 0.85rem; background: #fff; border: 1px solid var(--rule);
+    box-shadow: 0 4px 18px rgba(0,0,0,0.12); font-family: system-ui, sans-serif; font-size: 0.88rem; line-height: 1.45; }
+  #term-popover.visible { display: block; }
+  #term-popover strong { display: block; margin-bottom: 0.35rem; color: var(--accent); font-size: 0.95rem; }
+  #term-popover .more { display: inline-block; margin-top: 0.45rem; font-size: 0.85rem; color: var(--accent); }
 </style>
 </head>
 <body>
-<p class="embed-back"><a href="../theory/LOTMAN_INTERPRETATION.html#s5">← Lotman interpretation §5</a> · <a href="../theory/LOTMAN_INTERPRETATION.html#s10">§10</a> · <a href="../index.html">Figures home</a></p>
+<p class="embed-back"><a href="../theory/LOTMAN_INTERPRETATION.html#s13">← Journal §13 (transmission)</a> · <a href="../theory/LOTMAN_INTERPRETATION.html#s10">§10</a> · <a href="../index.html">Figures home</a></p>
 
 <h1>Transmission in Lotman: cells, verbs, outcomes</h1>
-<div class="lede">Three schematics for the transmission question. T1 arranges Lotman's communication types on his own two criteria and marks the one cell he never names. T2 separates the three verbs his 1979, 1981 and 1983 essays actually use for what crosses between systems. T3 sets his colour example beside a measured counter-instance. Only two elements here carry counts: the plotted point in T1 (experiment MA13) and the right half of T3 (experiment MA4b). Everything else is Lotman's own categorisation and is drawn as theory, not as measurement.</div>
+<div class="lede">Lotman is often quoted as if he hated the word <em>transmission</em>. He did hate it as a picture of <strong>meaning</strong> moving like a parcel from sender to receiver. He did not hate it as a picture of <strong>codes</strong> crossing between parts of culture. These three figures are a cheat sheet for that distinction, plus one awkward square on a chart where our own measurements landed. Grey dashed boxes are Lotman's categories. The solid blue box and the red/green numbers are ours.</div>
+
+<p class="toc-mini"><strong>Jump:</strong> <a href="#t1">T1 · the four rooms</a> · <a href="#t2">T2 · three verbs</a> · <a href="#t3">T3 · enlarge vs collapse</a> · <a href="#theory-bridge">How this ties to the journal</a> · <a href="#read-order">Read order for the committee</a></p>
+
+<div class="guide" id="theory-bridge">
+  <h3>Why this page exists (plain version)</h3>
+  <p>The dissertation asks whether multi-agent pipelines behave like dialogue between independent voices, like one institution talking to itself (<a class="term" href="../theory/LOTMAN_INTERPRETATION.html#gloss-autocomm" data-tip="The message comes back to its sender and restructures how the institution sees itself, not how the public sees it.">autocommunication</a>), or like something Lotman's typology never named. Transmission is the wrong word for most of that story. These figures say <em>which</em> wrong word people keep reaching for, and where the right one might live.</p>
+  <p class="wink">If the committee's eyes glaze over at "semiotic heterogeneity," tell them: Lotman thinks cultures need at least two languages that do not fully translate, and that pretending one pipe carries meaning unchanged is how you accidentally write a Globe and Mail article into an embassy packet.</p>
+</div>
 
 <h2 id="t1">Figure T1 · The cells, and the one that has no name</h2>
+<div class="guide">
+  <h3>How to read T1 without the jargon</h3>
+  <p>Imagine a spreadsheet with two questions. <strong>Did the message get bigger or smaller?</strong> and <strong>Did the receiver bring their own stuff?</strong> Lotman puts ordinary outward mail in the "same size, receiver adds little" corner (<a class="term" href="../theory/LOTMAN_INTERPRETATION.html#gloss-i-she" data-tip="Ordinary sending: code and message stay put while who speaks and who listens swap.">I-s/he</a>). He puts internal pep-talk in the "gets bigger, but only rhythm and repetition do the work" corner (<a class="term" href="../theory/LOTMAN_INTERPRETATION.html#gloss-autocomm" data-tip="Volume can grow, but the second code must be structural (ornament, rhythm), not new factual content.">I-I</a>). He puts reflex arcs in the basement: parts of one organism, not a conversation.</p>
+  <p>The blue dot is us. Parent agent delegates to subagent; the reply comes back longer and mostly new words. That is not "mail unchanged" and not "pep-talk with no new facts." It is a fourth room Lotman never labelled. The journal's section 13 argues the dissertation should admit the room exists before it names it.</p>
+</div>
 <div class="viz-box">
   <div class="viz-head"><strong>Lotman's two criteria: change of volume, and what the receiver adds</strong></div>
-  <canvas id="cvCells" height="420" role="img" aria-label="A two by two chart. Horizontal axis: whether the volume of information changes across the exchange. Vertical axis: how much content the receiver adds of its own. Bottom left, presemiotic binding. Top left, I and he or she. Bottom right, I-I autocommunication. Top right, an unnamed cell holding the measured MA13 point."></canvas>
+  <canvas id="cvCells" height="580" role="img" aria-label="A two by two chart. Horizontal axis: whether the volume of information changes across the exchange. Vertical axis: how much content the receiver adds of its own. Bottom left, presemiotic binding. Top left, I and he or she. Bottom right, I-I autocommunication. Top right, an unnamed cell holding the measured MA13 point."></canvas>
   <div class="legend">
     <span><i style="background:#b9bdc6"></i> dashed, grey · Lotman's own categories, no counts</span>
     <span><i style="background:#2a4a6f"></i> solid, emphasised · this project's claim, carries counts</span>
   </div>
 </div>
-<p class="cap">The two criteria are his. Volume is the autocommunication chapter's own test: the I-s/he schema implies transmission with no change of volume, while the I-I schema is geared towards increasing the information. What the receiver adds is the phrase from his limit case, where the recipient is valuable for its transparency, for the fact that it adds nothing of its own. Put those two criteria on axes and three of the four cells are occupied by categories he names. The fourth is not. A parent agent delegating to a subagent lands there: the reply is several times the volume of the instruction, and most of its vocabulary is content the instruction did not contain. That is neither I-s/he, which forbids the volume change, nor I-I, whose second code is rhythm and ornament and adds no content of its own. Presemiotic binding is drawn at the origin because it is Lotman's floor rather than one of his communication types, and because a tool call belongs to it: impulse traffic within one organism, not dialogue between autonomous units.</p>
+<p class="cap"><strong>Theory tie-in:</strong> This is the visual version of journal section 13's correction. We are not claiming Lotman would have called a coding agent a "semiotic person." We are claiming his axes let you see when a pipeline does not fit his named boxes. <strong>What to point at in the room:</strong> the dashed grey cells versus the solid blue "unnamed" cell and the MA13 dot (median volume about 4.4x, content gain ratio about 0.84, n = 26 delegations).</p>
 
 <h2 id="t2">Figure T2 · What actually crosses, texts or codes</h2>
+<div class="guide">
+  <h3>Three lanes, one allowed use of "transmission"</h3>
+  <p>Think of two departments in a university that share a building but not a vocabulary. When they talk, three different things happen and English uses one sloppy verb for all of them.</p>
+  <p><strong>Texts</strong> get translated: something always falls off the truck. <strong>Meaning</strong> is generated in the gap between non-identical codes: that is where new thought lives, and it is not a parcel. <strong>Codes and metatexts</strong> can pass intact: grammar rules, citation formats, the typed <a class="term" href="../theory/LOTMAN_INTERPRETATION.html#gloss-typed" data-tip="Claims carry shell, surface, and proof tier on the edge, not just plain prose.">hand-off envelope</a> from experiment MA1. Only the bottom lane earns the word transmission in Lotman's strict sense.</p>
+  <p class="wink">Committee translation: "We were not measuring meaning-in-a-tube. We may have been measuring whether a rule sticker survived the tube."</p>
+</div>
 <div class="viz-box">
   <div class="viz-head"><strong>Three verbs, three lanes, one correct use of the word transmission</strong></div>
-  <canvas id="cvLanes" height="360" role="img" aria-label="Two semiotic systems, A and B, with three horizontal lanes between them. Top lane: texts are translated. Middle lane: meaning is generated. Bottom lane: codes and metatexts are transmitted, and this is the only lane where the word transmission is correct."></canvas>
+  <canvas id="cvLanes" height="500" role="img" aria-label="Two semiotic systems, A and B, with three horizontal lanes between them. Top lane: texts are translated. Middle lane: meaning is generated. Bottom lane: codes and metatexts are transmitted, and this is the only lane where the word transmission is correct."></canvas>
   <div class="legend">
     <span><i style="background:#c45c26"></i> texts · translated, part always cut off</span>
     <span><i style="background:#6b3fa0"></i> meaning · generated, never crosses whole</span>
     <span><i style="background:#1f5136"></i> codes and metatexts · transmitted, strict sense</span>
   </div>
 </div>
-<p class="cap">The common summary that Lotman rejects transmission is too coarse. He rejects it as a model of meaning and uses it, approvingly and in the strict sense, of codes. The 1979 essay rules out the first lane as transmission, because an act of communication is a translation of a text from the language of my I into the language of your you, and a certain part of the message is always cut off. It rules out the second lane more sharply still: the addresser to addressee chain does not merely fail to explain the production of new messages, it excludes the possibility in advance. The third lane is where his own vocabulary of transmission sits.</p>
 <blockquote>an exchange of metatexts, of codes, which are transmitted from one "hemisphere" of culture to another
-<cite>Lotman, "Asimmetriya i dialog" (1983), printed p. 28. Rendering ours; the Russian reads обмен метатекстами, кодами, которые передаются из одного «полушария» культуры в другое.</cite></blockquote>
-<p class="cap">So transmission is a real process in his system, operating one level below meaning. That is a cleaner claim than a blanket rejection, and it has a consequence for our own vocabulary: the typed hand-off envelope used in MA1 is a code, so MA1 may have measured code transmission while we described it as content transmission.</p>
+</blockquote>
+<p class="cap"><strong>Theory tie-in:</strong> Sections 8 and 10 worry about <a class="term" href="../theory/LOTMAN_INTERPRETATION.html#gloss-bilingual" data-tip="Boundary as filter: cross, recode, or refuse. Not lossless translation.">bilingual</a> relay at the archive <a class="term" href="../theory/LOTMAN_INTERPRETATION.html#gloss-boundary" data-tip="What may cross, in what form, and what must be refused.">boundary</a>. T2 says the engineering mistake is to describe all three lanes with one verb. <strong>Interpretation tip:</strong> orange and purple lanes are where novelty and loss belong; green is where compliance belongs, and where a halt rule should live if anywhere.</p>
 
 <h2 id="t3">Figure T3 · A transmitted code can enlarge or collapse the receiver</h2>
+<div class="guide">
+  <h3>Same gift, opposite birthday</h3>
+  <p>Left side (grey, Lotman's story): culture hands you a finer colour vocabulary. After the code crosses, you notice shades you could not name before. That is enlargement: the receiver can <em>evaluate</em> the code and see more.</p>
+  <p>Right side (measured, MA4b): we handed a small model a halt instruction in its prompt. It treated the instruction like a blanket ban and refused everything, including items whose own message already showed the tags that should have meant "you may answer." That is collapse: the receiver could only pattern-match, not read the condition.</p>
+  <p>The rule layer upstream (same predicate, no model in the loop) kept recall but cut false refusals. Moral for the dissertation: codes are not neutral pipes. They are tests of whether the receiver has a position.</p>
+</div>
 <div class="viz-box">
   <div class="viz-head"><strong>Same act of code transfer, opposite effects on what the receiver can tell apart</strong></div>
-  <canvas id="cvOutcomes" height="400" role="img" aria-label="Left: Lotman's colour case. Two indistinguishable swatches before a code crosses, two distinguished swatches after. The receiver gains a distinction. Right: the measured MA4b counter-instance. Answer and refuse are told apart before the halt clause crosses, and every item is refused after. The receiver loses the distinction."></canvas>
+  <canvas id="cvOutcomes" height="540" role="img" aria-label="Left: Lotman's colour case. Two indistinguishable swatches before a code crosses, two distinguished swatches after. The receiver gains a distinction. Right: the measured MA4b counter-instance. Answer and refuse are told apart before the halt clause crosses, and every item is refused after. The receiver loses the distinction."></canvas>
   <div class="legend">
     <span><i style="background:#1f5136"></i> enlargement · receiver gains a distinction</span>
     <span><i style="background:#9a3b3b"></i> collapse · receiver loses a distinction</span>
     <span><i style="background:#8d94a3"></i> grey text · unmeasured, Lotman's example</span>
   </div>
 </div>
-<p class="cap">Whether code transfer enlarges or collapses the receiver depends on whether the receiver can evaluate the code or only pattern-match it. On the left, the hemispheric example from 1983: a language of distinctions is worked out where the constraint of objecthood does not apply, the distinctions then cross as a fact of linguistic code, and only then does ordinary consciousness begin to see shades of the colour range that were previously indistinguishable to it. On the right, the same structure with the opposite result. The halt clause of MA4b is a code handed to a generator. The generator received it and became strictly less discriminating: it refused every item, including all eleven whose own first-hop message visibly carried the outward shell tag that the clause itself names as grounds for answering. The identical predicate, evaluated by a rule over retrieved-hit metadata with no model call at all, kept full recall on the items that should be refused and cut the false refusal rate by more than a third. The difference is not the code. The difference is what the receiver could do with it.</p>
+<p class="cap"><strong>Theory tie-in:</strong> journal section 13 uses this pair to argue that "move halt upstream" is not enough: once a gate works, remove the prompt clause or it vandalises cleared items. Section 15 (MA10) adds the darker cousin: typed envelopes can <a class="term" href="../theory/LOTMAN_INTERPRETATION.html#gloss-launder" data-tip="Restate a claim with better-looking provenance than the archive licensed.">launder</a> invention if the parent stamps real ids on fiction. T3's left half is aspirational; the right half is what we actually measured on a 3B model.</p>
+
+<h2 id="read-order">How the three figures talk to each other</h2>
+<div class="guide">
+  <h3>Suggested read order (still accurate, slightly less funeral)</h3>
+  <p><strong>T2 first</strong> if the room is allergic to charts: it fixes vocabulary. Meaning is not transmitted; codes sometimes are.</p>
+  <p><strong>T1 second</strong> if the room wants the "so what for agents" punchline: our delegation dot sits in a cell Lotman never drew.</p>
+  <p><strong>T3 last</strong> if the room wants policy: where to put rules, and why asking the model to police itself failed comedy-style.</p>
+  <p>Cross-links in the journal: <a href="../theory/LOTMAN_INTERPRETATION.html#s13">§13</a> (transmission and the unnamed cell), <a href="../theory/LOTMAN_INTERPRETATION.html#s12">§12</a> (typed hand-offs), <a href="../theory/LOTMAN_INTERPRETATION.html#s10">§10</a> (multi-agent and the <a class="term" href="../theory/LOTMAN_INTERPRETATION.html#gloss-semiosphere" data-tip="Map of surfaces and which relay arcs are licensed or missing.">semiosphere</a> metaphor).</p>
+</div>
 
 <h2>Numbers in these figures, and where they come from</h2>
 <p class="cap">Every count was read from the report file named below rather than from prose. Both files are in the thesis lab at <code>data/bc_corpus/benchmarks/</code> and are not published with this page.</p>
@@ -174,8 +222,8 @@ function panelTitle(ctx, x, y, text) {
 function drawCells() {
   var c = document.getElementById('cvCells');
   if (!c) return;
-  var s = fit(c, 420), ctx = s.ctx, w = s.w;
-  var L = 92, R = w - 20, T = 52, B = 372;
+  var s = fit(c, 580), ctx = s.ctx, w = s.w;
+  var L = 108, R = w - 28, T = 58, B = 528;
   var midX = (L + R) / 2, midY = (T + B) / 2;
   var cw = midX - L, chh = midY - T;
 
@@ -196,11 +244,11 @@ function drawCells() {
     ctx.save();
     ctx.textAlign = 'left';
     ctx.fillStyle = titleColor;
-    ctx.font = 'bold 13px Georgia, serif';
+    ctx.font = 'bold 14px Georgia, serif';
     ctx.fillText(title, x, y);
     ctx.fillStyle = '#444';
-    ctx.font = '10px system-ui, sans-serif';
-    for (var i = 0; i < rows.length; i++) ctx.fillText(rows[i], x, y + 16 + i * 13);
+    ctx.font = '11px system-ui, sans-serif';
+    for (var i = 0; i < rows.length; i++) ctx.fillText(rows[i], x, y + 18 + i * 15);
     ctx.restore();
   }
 
@@ -330,8 +378,8 @@ function drawCells() {
 function drawLanes() {
   var c = document.getElementById('cvLanes');
   if (!c) return;
-  var s = fit(c, 360), ctx = s.ctx, w = s.w;
-  var lx = 104, rx = w - 104, tx = 116;
+  var s = fit(c, 500), ctx = s.ctx, w = s.w;
+  var lx = 112, rx = w - 112, tx = 124;
 
   panelTitle(ctx, w / 2, 22, 'What crosses between two semiotic systems');
 
@@ -339,53 +387,53 @@ function drawLanes() {
     ctx.save();
     ctx.fillStyle = color;
     ctx.globalAlpha = emph ? 0.11 : 0.06;
-    ctx.fillRect(lx, y, rx - lx, 76);
+    ctx.fillRect(lx, y, rx - lx, 96);
     ctx.globalAlpha = 1;
     ctx.strokeStyle = color;
     ctx.lineWidth = emph ? 2 : 1;
     if (!emph) ctx.setLineDash([4, 3]);
-    ctx.strokeRect(lx, y, rx - lx, 76);
+    ctx.strokeRect(lx, y, rx - lx, 96);
     ctx.setLineDash([]);
     ctx.textAlign = 'left';
     ctx.fillStyle = color;
-    ctx.font = 'bold 12px system-ui, sans-serif';
-    ctx.fillText(head, tx, y + 18);
+    ctx.font = 'bold 13px system-ui, sans-serif';
+    ctx.fillText(head, tx, y + 22);
     ctx.fillStyle = '#444';
-    ctx.font = '10px system-ui, sans-serif';
-    ctx.fillText(under, tx, y + 34);
+    ctx.font = '11px system-ui, sans-serif';
+    ctx.fillText(under, tx, y + 42);
     ctx.fillStyle = emph ? color : '#8a5a5a';
-    ctx.font = 'bold 10px system-ui, sans-serif';
-    ctx.fillText(verdict, tx, y + 70);
+    ctx.font = 'bold 11px system-ui, sans-serif';
+    ctx.fillText(verdict, tx, y + 88);
     ctx.restore();
-    arrow(ctx, lx + 8, y + 52, rx - 8, y + 52, color, !emph);
-    edgeLabel(ctx, w / 2, y + 54, moving, color);
+    arrow(ctx, lx + 8, y + 62, rx - 8, y + 62, color, !emph);
+    edgeLabel(ctx, w / 2, y + 64, moving, color);
   }
 
-  lane(56, '#c45c26', 'Texts: TRANSLATED',
+  lane(64, '#c45c26', 'Texts: TRANSLATED',
     'recoded into the other language; part is cut off',
     'wrong word: the text does not stay itself', 'a text', false);
-  lane(148, '#6b3fa0', 'Meaning: GENERATED',
+  lane(188, '#6b3fa0', 'Meaning: GENERATED',
     'arises between two non-identical codes',
     'wrong word: a chain excludes new messages', 'nothing crosses whole', false);
-  lane(240, '#1f5136', 'Codes and metatexts: TRANSMITTED',
+  lane(312, '#1f5136', 'Codes and metatexts: TRANSMITTED',
     'arrive intact, one level below meaning',
     'the only lane where transmission is correct', 'code / metatext', true);
 
-  node(ctx, 62, 186, 32, 'A', 'generator');
-  node(ctx, w - 62, 186, 32, 'B', 'generator');
+  node(ctx, 68, 250, 36, 'A', 'generator');
+  node(ctx, w - 68, 250, 36, 'B', 'generator');
 
   ctx.save();
   ctx.fillStyle = '#555';
   ctx.textAlign = 'center';
   ctx.font = 'italic 10px Georgia, serif';
-  ctx.fillText('1983: "exchange of metatexts, of codes, which are transmitted from one hemisphere of culture to another"', w / 2, 340);
+  ctx.fillText('1983: "exchange of metatexts, of codes, which are transmitted from one hemisphere of culture to another"', w / 2, 468);
   ctx.restore();
 }
 
 function drawOutcomes() {
   var c = document.getElementById('cvOutcomes');
   if (!c) return;
-  var s = fit(c, 400), ctx = s.ctx, w = s.w, h = s.h;
+  var s = fit(c, 540), ctx = s.ctx, w = s.w, h = s.h;
   var half = w / 2;
   var lx = 20, lr = half - 16, rx = half + 16, rr = w - 20;
 
@@ -424,18 +472,18 @@ function drawOutcomes() {
     ctx.save();
     ctx.fillStyle = color;
     ctx.globalAlpha = 0.12;
-    ctx.fillRect(x0, 180, x1 - x0, 42);
+    ctx.fillRect(x0, 200, x1 - x0, 48);
     ctx.globalAlpha = 1;
     ctx.strokeStyle = color;
     ctx.lineWidth = 1.5;
-    ctx.strokeRect(x0, 180, x1 - x0, 42);
+    ctx.strokeRect(x0, 200, x1 - x0, 48);
     ctx.textAlign = 'left';
     ctx.fillStyle = color;
-    ctx.font = 'bold 11px system-ui, sans-serif';
-    ctx.fillText(head, x0 + 10, 198);
+    ctx.font = 'bold 12px system-ui, sans-serif';
+    ctx.fillText(head, x0 + 10, 220);
     ctx.fillStyle = '#333';
-    ctx.font = '10px system-ui, sans-serif';
-    ctx.fillText(detail, x0 + 10, 214);
+    ctx.font = '11px system-ui, sans-serif';
+    ctx.fillText(detail, x0 + 10, 238);
     ctx.restore();
   }
 
@@ -452,8 +500,8 @@ function drawOutcomes() {
     ctx.save();
     ctx.textAlign = 'left';
     ctx.fillStyle = color;
-    ctx.font = 'bold 10.5px system-ui, sans-serif';
-    ctx.fillText(text, x0, 306);
+    ctx.font = 'bold 11px system-ui, sans-serif';
+    ctx.fillText(text, x0, 368);
     ctx.restore();
   }
 
@@ -474,13 +522,13 @@ function drawOutcomes() {
     'distinctions arrive as linguistic code',
     'and ordinary consciousness then sees',
     'shades previously indistinguishable'
-  ], '#333', 10, 240);
-  rows(lx, ['Asimmetriya i dialog, 1983, printed p. 18'], '#8d94a3', 9.5, 280);
+  ], '#333', 11, 268);
+  rows(lx, ['Asimmetriya i dialog, 1983, printed p. 18'], '#8d94a3', 10, 312);
   diagnosis(lx, 'the receiver could evaluate the code', '#1f5136');
   rows(lx, [
     'his example, not a measurement:',
     'the enlargement side is unmeasured'
-  ], '#8d94a3', 9.5, 332);
+  ], '#8d94a3', 10, 400);
 
   swatchRow(rx, 58, 'before', '#6f8a3f', '#b06a6a', 'told apart', '#5c6670');
   arrow(ctx, rx + 72, 92, rx + 72, 130, '#9a3b3b', false);
@@ -491,8 +539,8 @@ function drawOutcomes() {
     '11 of 11 items whose own message carried',
     'the tags the clause names as grounds',
     'for answering were refused anyway'
-  ], '#333', 10, 240);
-  rows(rx, ['MA4b arm C2, llama3.2:3b, 18 items'], '#8d94a3', 9.5, 280);
+  ], '#333', 11, 268);
+  rows(rx, ['MA4b arm C2, llama3.2:3b, 18 items'], '#8d94a3', 10, 312);
   diagnosis(rx, 'the receiver could only pattern-match', '#9a3b3b');
 
   var bandW = rr - rx;
@@ -503,29 +551,29 @@ function drawOutcomes() {
   ctx.save();
   ctx.textAlign = 'left';
   ctx.fillStyle = '#444';
-  ctx.font = '10px system-ui, sans-serif';
-  ctx.fillText('same predicate, evaluated by a rule:', rx, 330);
+  ctx.font = '11px system-ui, sans-serif';
+  ctx.fillText('same predicate, evaluated by a rule:', rx, 392);
   ctx.fillStyle = '#8d94a3';
-  ctx.font = '9.5px system-ui, sans-serif';
-  ctx.fillText('halt clause', rx, 364);
+  ctx.font = '10px system-ui, sans-serif';
+  ctx.fillText('halt clause', rx, 428);
   ctx.fillStyle = '#1f5136';
-  ctx.fillText('rule layer', rx, 380);
+  ctx.fillText('rule layer', rx, 446);
   ctx.textAlign = 'center';
   for (var i = 0; i < 3; i++) {
     ctx.fillStyle = '#8d94a3';
-    ctx.font = '9.5px system-ui, sans-serif';
-    ctx.fillText(heads[i], cols[i], 348);
-    ctx.fillStyle = '#9a3b3b';
     ctx.font = '10px system-ui, sans-serif';
-    ctx.fillText(r1[i], cols[i], 364);
+    ctx.fillText(heads[i], cols[i], 410);
+    ctx.fillStyle = '#9a3b3b';
+    ctx.font = '11px system-ui, sans-serif';
+    ctx.fillText(r1[i], cols[i], 428);
     ctx.fillStyle = '#1f5136';
-    ctx.fillText(r2[i], cols[i], 380);
+    ctx.fillText(r2[i], cols[i], 446);
   }
   ctx.strokeStyle = '#ddd';
   ctx.lineWidth = 1;
   ctx.beginPath();
-  ctx.moveTo(rx, 353);
-  ctx.lineTo(rr, 353);
+  ctx.moveTo(rx, 416);
+  ctx.lineTo(rr, 416);
   ctx.stroke();
   ctx.restore();
 }
@@ -533,6 +581,56 @@ function drawOutcomes() {
 function drawAll() { drawCells(); drawLanes(); drawOutcomes(); }
 window.addEventListener('load', drawAll);
 window.addEventListener('resize', drawAll);
+</script>
+
+<div id="term-popover" role="tooltip" aria-hidden="true"></div>
+<script>
+(function () {
+  var pop = document.getElementById('term-popover');
+  var openTerm = null;
+
+  function hidePopover() {
+    pop.classList.remove('visible');
+    pop.setAttribute('aria-hidden', 'true');
+    openTerm = null;
+  }
+
+  function showPopover(term, x, y) {
+    var label = term.textContent.replace(/\s+/g, ' ').trim();
+    var tip = term.getAttribute('data-tip') || '';
+    var href = term.getAttribute('href') || '';
+    var more = href ? '<a class="more" href="' + href + '">Full glossary entry \u2192</a>' : '';
+    pop.innerHTML = '<strong>' + label + '</strong><div>' + tip + '</div>' + more;
+    pop.style.left = Math.min(Math.max(8, x), window.innerWidth - 360) + 'px';
+    pop.style.top = Math.min(y + 12, window.innerHeight - 160) + 'px';
+    pop.classList.add('visible');
+    pop.setAttribute('aria-hidden', 'false');
+    openTerm = term;
+  }
+
+  document.querySelectorAll('a.term').forEach(function (term) {
+    term.addEventListener('click', function (e) {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      var rect = term.getBoundingClientRect();
+      if (openTerm === term && pop.classList.contains('visible')) {
+        hidePopover();
+        e.preventDefault();
+        var go = term.getAttribute('href');
+        if (go) window.location.assign(go);
+        return;
+      }
+      showPopover(term, rect.left, rect.bottom);
+      e.preventDefault();
+    });
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!pop.contains(e.target) && !e.target.closest('a.term')) hidePopover();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') hidePopover();
+  });
+})();
 </script>
 </body>
 </html>
