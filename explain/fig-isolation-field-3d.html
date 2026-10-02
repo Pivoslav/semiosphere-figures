@@ -8,13 +8,13 @@
       <div class="math-block">
         <div class="math-line">u<sub>a</sub> = (1/17) Σ<sub>i=1</sub><sup>17</sup> ( claims in answer<sub>i</sub> with no corpus support ) / ( claims in answer<sub>i</sub> )</div>
         <div class="math-explain">
-          <p>The unsupported-claim rate for arm <em>a</em>, averaged over the 17 relay items. This is a working form of the measure. The exact rule for what counts as a claim and what counts as support is in the MA10 preregistration and should replace this line once it is copied in.</p>
+          <p>The unsupported-claim rate for arm <em>a</em>, averaged over the 17 relay items. This is a working form of the measure. The exact rule for what counts as a claim and what counts as support is in the <a class="sec" data-sec="ma10">MA10</a> preregistration and should replace this line once it is copied in.</p>
         </div>
       </div>
       <div class="math-block">
         <div class="math-line">G<sub>a</sub> = (1/17) Σ<sub>i</sub> | V(answer<sub>i</sub>) \ V(baseline<sub>i</sub>) |</div>
         <div class="math-explain">
-          <p>Content gain in MA10 is a count of new content-word types: words in the answer that are absent from a baseline vocabulary, averaged over items. The MA10 report defines that baseline; its strict version also removes the words of the task itself, which takes the isolated arm from 26.9 to 25.2. This is a count, not the share used in MA13, so the two numbers are not on the same scale.</p>
+          <p>Content gain in <a class="sec" data-sec="ma10">MA10</a> is a count of new content-word types: words in the answer that are absent from a baseline vocabulary, averaged over items. The <a class="sec" data-sec="ma10">MA10</a> report defines that baseline; its strict version also removes the words of the task itself, which takes the isolated arm from 26.9 to 25.2. This is a count, not the share used in <a class="sec" data-sec="ma13">MA13</a>, so the two numbers are not on the same scale.</p>
         </div>
       </div>
       <table class="sym">
@@ -27,7 +27,7 @@
           <tr><td>Nothing, and told so (P4)</td><td>0.42</td><td>21.1</td></tr>
         </tbody>
       </table>
-      <p class="fx-note">Table from <a href="../theory/LOTMAN_INTERPRETATION.html#s15">journal §15</a>, rounded there to two places. The figure's labels use the 2D page's 0.2167 for P0.</p>
+      <p class="fx-note">Table from <a class="sec" data-sec="journal-s15" href="../theory/LOTMAN_INTERPRETATION.html#s15">journal §15</a>, rounded there to two places. The figure's labels use the 2D page's 0.2167 for P0.</p>
     </div>
   </details>
 
@@ -45,7 +45,7 @@
   <details class="fx">
     <summary>Where the numbers and code live</summary>
     <div class="fx-body">
-      <p>Rates and gains come from <code>ma10_subagent_isolation_report.json</code> by way of figures I1 and I3 on the <a href="fig-isolation-laundering.html">2D page</a>, which also prints the full <code>e2_i06</code> answer. The drawing code is the script at the bottom of this page, using <code>assets/fig3d.js</code> and Three.js r128.</p>
+      <p>Rates and gains come from <code>ma10_subagent_isolation_report.json</code> by way of <a class="sec" data-sec="fig-i1">figures I1</a> and <a class="sec" data-sec="fig-i3">I3</a> on the <a href="fig-isolation-laundering.html">2D page</a>, which also prints the full <code>e2_i06</code> answer. The drawing code is the script at the bottom of this page, using <code>assets/fig3d.js</code> and Three.js r128.</p>
     </div>
   </details>
 </section>
@@ -65,6 +65,6 @@
   <p>"Laundering" is the dissertation's word for making a claim look better sourced than the archive allows. A KGB memo that says it placed a story in the Globe and Mail is real evidence that the memo said so. It is not evidence that the Globe printed the story. Here an AI pipeline did the same thing by itself: a tidy citation tag carried a false claim and made it look checked.</p>
   <p>The lesson reaches past this project. Citation tags in AI output show where a claim says it came from; they don't check that the source supports it. That checking has to happen somewhere else, and the <a href="fig-halt-flow-3d.html">halt figure</a> suggests where: in a rule placed before the model writes anything.</p>
   <h3>Potential for the bigger picture</h3>
-  <p>As a test of whether isolation creates an independent voice, this angle failed, and it isn't worth repeating as designed. Isolation produced invention, not autonomy, and no setup with a subagent beat the parent working alone. Its lasting value is the laundering case. That case qualifies the earlier typed-envelope result and matters to anyone building AI answers with citations (open thread T32).</p>
-  <p>One result is encouraging and cheap to follow up. Simply telling the subagent it had no sources raised honest "I have nothing" reports from 0 of 17 to 10 of 17 (T33). Testing that across models and in a real agent harness costs little. The other pending step is to compare isolation that is requested in a prompt with isolation the system enforces (MA14, thread T22). That comparison audits the method behind every dyad result on the site.</p>
+  <p>As a test of whether isolation creates an independent voice, this angle failed, and it isn't worth repeating as designed. Isolation produced invention, not autonomy, and no setup with a subagent beat the parent working alone. Its lasting value is the laundering case. That case qualifies the earlier typed-envelope result and matters to anyone building AI answers with citations (open thread <a class="sec" data-sec="t32">T32</a>).</p>
+  <p>One result is encouraging and cheap to follow up. Simply telling the subagent it had no sources raised honest "I have nothing" reports from 0 of 17 to 10 of 17 (<a class="sec" data-sec="t33">T33</a>). Testing that across models and in a real agent harness costs little. The other pending step is to compare isolation that is requested in a prompt with isolation the system enforces (<a class="sec" data-sec="ma14">MA14</a>, thread <a class="sec" data-sec="t22">T22</a>). That comparison audits the method behind every dyad result on the site.</p>
 </section>

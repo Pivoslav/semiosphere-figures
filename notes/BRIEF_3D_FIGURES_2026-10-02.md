@@ -30,6 +30,12 @@ Three statements in those panels need confirming against the thesis lab before a
 - The MA10 panel gives the unsupported-claim rate in a working form and does not define the content-gain baseline. Both should be copied from the MA10 preregistration and report.
 - The MA12 and MA15 panels say tokens are compared as sets, "tokenised as in the MA12 harness". If the harness lowercases, strips punctuation or uses a stoplist, say so in `explain/fig-roundtrip-helicoid-3d.html`.
 
+## Section references open a plain-language note
+
+Every mention of a journal section (§13), a figure or panel (figure R1, panel D3, L2), an experiment (MA10) or an open thread (T29) on the 3D pages is a link with class `sec`. The first click opens a short note on what that part of the project is; the second click goes there, if it has a public page. The notes live in `docs/assets/fig-sections.js`. Open threads and planned experiments have no public page, and their popover says so.
+
+`python scripts/link_section_refs.py` adds the markup to the explainer files, the hub and the six pilots, then `python scripts/sanitize_public_site.py` copies the explainers into the pages. Run them in that order after editing any of those files. A reference with no entry in `fig-sections.js` stays plain text, so add the entry first. Bare R1 to R4 and T1 to T3 are never linked, because on these pages they also name round-trip conditions, gate rules and open threads. Breadcrumbs, card link rows and jump menus are left as plain navigation.
+
 ## Before the next sync from the thesis lab
 
 `docs/theory/LOTMAN_INTERPRETATION.html` is mirrored from the thesis lab, so the next sync will overwrite it. The commit added nine glossary entries to the docs copy so the new popover links resolve: `gloss-round-trip`, `gloss-dyad`, `gloss-polyglottism`, `gloss-compression-ratio`, `gloss-content-gain`, `gloss-rule-gate`, `gloss-unsupported-claim`, `gloss-presemiotic`, `gloss-fond`. They sit at the end of the glossary `<dl>` under a comment. Copy them into the thesis-lab source of the journal first, then sync.

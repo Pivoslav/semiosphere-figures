@@ -14,6 +14,7 @@
 <title>Delegation stack · 3D (MA13)</title>
 <link rel="stylesheet" href="../assets/fig3d.css"/>
 <script defer src="../assets/fig-quotes.js"></script>
+<script defer src="../assets/fig-sections.js"></script>
 <script defer src="../assets/fig-terms.js"></script>
 <link rel="stylesheet" href="../assets/fig-explain.css"/>
 </head>
@@ -45,7 +46,7 @@
   <span><i class="sq" style="background:#9a3b3b"></i> median 4.3843</span>
   <span><i class="sq" style="background:#e8e4dc;border:1px solid #d8d0c4"></i> floor = ratio 1, no change of length</span>
 </div>
-<p class="cap"><strong>Theory tie-in:</strong> the same 26 delegations are the blue ball in <a href="fig-transmission-cells-3d.html">Lotman's rooms</a>. Journal <a href="../theory/LOTMAN_INTERPRETATION.html#s13">§13</a> uses the volume result to rule out <a class="q" data-q="lotman-two-channels">Lotman's I-s/he cell</a>, and <a href="../theory/LOTMAN_INTERPRETATION.html#s15">§15</a> (MA10) takes up the question this corpus cannot answer, which is how much of the new material was read and how much was made up.</p>
+<p class="cap"><strong>Theory tie-in:</strong> the same 26 delegations are the blue ball in <a href="fig-transmission-cells-3d.html">Lotman's rooms</a>. Journal <a class="sec" data-sec="journal-s13" href="../theory/LOTMAN_INTERPRETATION.html#s13">§13</a> uses the volume result to rule out <a class="q" data-q="lotman-two-channels">Lotman's I-s/he cell</a>, and <a class="sec" data-sec="journal-s15" href="../theory/LOTMAN_INTERPRETATION.html#s15">§15</a> (<a class="sec" data-sec="ma10">MA10</a>) takes up the question this corpus cannot answer, which is how much of the new material was read and how much was made up.</p>
 
 <!-- fig-explain:start from explain/fig-delegation-stack-3d.html; edit there, not here -->
 <section class="fig-explain" id="how-made">
@@ -105,7 +106,7 @@
   <details class="fx">
     <summary>Where the numbers and code live</summary>
     <div class="fx-body">
-      <p>The 26 ratios are the <code>delegations[].compression_ratio</code> array from <code>ma13_real_subagent_report.json</code>, copied from the D1 chart on the <a href="fig-delegation-corpus.html#d1">2D page</a>, which lists every report key. The drawing code is the script at the bottom of this page, using <code>assets/fig3d.js</code> and Three.js r128.</p>
+      <p>The 26 ratios are the <code>delegations[].compression_ratio</code> array from <code>ma13_real_subagent_report.json</code>, copied from the <a class="sec" data-sec="fig-d1">D1</a> chart on the <a class="sec" data-sec="fig-d1" href="fig-delegation-corpus.html#d1">2D page</a>, which lists every report key. The drawing code is the script at the bottom of this page, using <code>assets/fig3d.js</code> and Three.js r128.</p>
     </div>
   </details>
 </section>
@@ -123,9 +124,9 @@
   <p>Not one report came back shorter than its instruction. Even the shortest ran about a quarter longer. The prediction made before the run was the opposite.</p>
   <h3>Why it matters</h3>
   <p>Engineers often describe handing work to a subagent as a filter that narrows things down. In volume, at least, it did the reverse every time. That matters for the dissertation's use of Lotman. In <a class="q" data-q="lotman-two-channels">Lotman's scheme</a>, ordinary sending keeps a message the same size, so this is not that. Talking to yourself can make a message grow, but only through form, with no new facts, and most of these reports' words were new, so it is not that either. The <a href="fig-transmission-cells-3d.html">rooms figure</a> shows where that leaves AI delegation: in a corner his typology never named.</p>
-  <p>One caution travels with every number here. The transcripts don't record what the subagents read, so this figure can't tell new material that was looked up from new material that was made up. <a href="fig-isolation-field-3d.html">MA10</a> takes that question on directly.</p>
+  <p>One caution travels with every number here. The transcripts don't record what the subagents read, so this figure can't tell new material that was looked up from new material that was made up. <a class="sec" data-sec="ma10" href="fig-isolation-field-3d.html">MA10</a> takes that question on directly.</p>
   <h3>Potential for the bigger picture</h3>
-  <p>The volume result is solid and settles one question: calling a hand-off "compression" is wrong for this corpus. Using content gain as evidence that subagents contributed something is a dead end on these transcripts, because the tool results are missing, and <a href="fig-isolation-field-3d.html">MA10</a> showed that gain can be pure invention.</p>
+  <p>The volume result is solid and settles one question: calling a hand-off "compression" is wrong for this corpus. Using content gain as evidence that subagents contributed something is a dead end on these transcripts, because the tool results are missing, and <a class="sec" data-sec="ma10" href="fig-isolation-field-3d.html">MA10</a> showed that gain can be pure invention.</p>
   <p>The corpus is also narrow: one agent, one operator, one family of tasks, and the person measuring wrote the instructions. More, and more varied, delegation logs would help a great deal, ideally from other harnesses and other people's work, with tool results kept so read material can be separated from produced material. A cheaper alternative while those are gathered: re-run a sample of the same tasks with tool logging switched on and compare the gain with and without access to sources.</p>
 </section>
 <!-- fig-explain:end -->
@@ -134,7 +135,7 @@
 <table>
   <thead><tr><th>Value as drawn</th><th>Report key</th><th>Source file</th></tr></thead>
   <tbody>
-    <tr><td>26 column heights, in report order</td><td><code>delegations[].compression_ratio</code></td><td><code>ma13_real_subagent_report.json</code> (same array as D1 on the 2D page)</td></tr>
+    <tr><td>26 column heights, in report order</td><td><code>delegations[].compression_ratio</code></td><td><code>ma13_real_subagent_report.json</code> (same array as <a class="sec" data-sec="fig-d1">D1</a> on the 2D page)</td></tr>
     <tr><td>26 delegations, 3 excluded as incomplete</td><td><code>corpus.n_delegations</code>, <code>corpus.n_excluded_incomplete</code></td><td>same</td></tr>
     <tr><td>shortest 1.2456, median 4.3843, longest 23.65</td><td><code>aggregate.compression_ratio.min</code>, <code>.median</code>, <code>.max</code></td><td>same</td></tr>
     <tr><td>content gain 0.8387 (guide text only)</td><td><code>aggregate.content_gain_ratio.median</code></td><td>same</td></tr>

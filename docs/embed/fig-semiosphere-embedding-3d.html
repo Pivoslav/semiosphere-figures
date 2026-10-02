@@ -63,6 +63,7 @@ a{color:var(--accent)}
 </style><link rel="stylesheet" href="../assets/fig-explain.css"/>
 <script defer src="../assets/fig-quotes.js"></script>
 <script defer src="../assets/fig-terms.js"></script>
+<script defer src="../assets/fig-sections.js"></script>
 </head><body>
 <h1>Semiosphere · 3D embedding + bilingual relays</h1>
 <p class="how-to"><strong>How to explore:</strong> <strong>drag empty space</strong> to rotate · scroll to zoom · <strong>click a dot</strong> (short click, don’t drag) for detail in the panel - no hover picking; that keeps the camera stable. Green = licensed RU→EN; orange = contrast; purple = intersemiotic; violet dots = audio carrier.</p>
@@ -150,11 +151,11 @@ a{color:var(--accent)}
   <h3>What it shows</h3>
   <p>The model happily lines up a Russian secret memo and an English newspaper story when they share a topic, even though they were written for different readers and say opposite things about it. The shells only appear because the project imposed them from the archive.</p>
   <h3>Why it matters</h3>
-  <p>The project's early headline number came from this kind of geometry and was later withdrawn (<a href="../theory/LOTMAN_INTERPRETATION.html#s1">journal §1</a>), because fingerprints track topic and miss register. Scare quotes, the switch from "symposium" to "gathering" and the shift to drought talk are what separate the memo from the embassy release, and those are what the model doesn't see. This figure shows why the dissertation reads pairs of documents side by side instead of trusting similarity scores.</p>
+  <p>The project's early headline number came from this kind of geometry and was later withdrawn (<a class="sec" data-sec="journal-s1" href="../theory/LOTMAN_INTERPRETATION.html#s1">journal §1</a>), because fingerprints track topic and miss register. Scare quotes, the switch from "symposium" to "gathering" and the shift to drought talk are what separate the memo from the embassy release, and those are what the model doesn't see. This figure shows why the dissertation reads pairs of documents side by side instead of trusting similarity scores.</p>
   <p>It matters for AI systems too. Most retrieval tools rank by this kind of fingerprint, so without rules about audience they will hand back a secret memo when someone asks for the public statement. Lotman's <a class="q" data-q="lotman-boundary">boundary</a> has to be added from outside the model.</p>
   <h3>Potential for the bigger picture</h3>
   <p>Pessimism is earned here. Using this geometry as evidence about the boundary has already failed twice on the site. The headline alignment number was withdrawn because it did no better than its null, and the gap between shells measured by nearest neighbours reversed once topic was controlled for. With nine licensed pairs in 384 dimensions, nothing fitted to these points is likely to survive. Keep the figure as an illustration of what fingerprints see and miss, not as a measurement.</p>
-  <p>If the angle is revisited, it needs many more licensed pairs first (T11), a second frozen encoder to rule out the model as the cause (T10), and matched nulls built in from the start. A humbler use may pay off sooner: as the baseline retriever that the typed, rule-based approaches have to beat.</p>
+  <p>If the angle is revisited, it needs many more licensed pairs first (<a class="sec" data-sec="t11">T11</a>), a second frozen encoder to rule out the model as the cause (<a class="sec" data-sec="t10">T10</a>), and matched nulls built in from the start. A humbler use may pay off sooner: as the baseline retriever that the typed, rule-based approaches have to beat.</p>
 </section>
 <!-- fig-explain:end -->
 

@@ -14,6 +14,7 @@
 <title>Model pairings cube · 3D (MA15)</title>
 <link rel="stylesheet" href="../assets/fig3d.css"/>
 <script defer src="../assets/fig-quotes.js"></script>
+<script defer src="../assets/fig-sections.js"></script>
 <script defer src="../assets/fig-terms.js"></script>
 <link rel="stylesheet" href="../assets/fig-explain.css"/>
 </head>
@@ -21,12 +22,12 @@
 <p class="embed-back"><a href="../figures_animated_3d.html">&larr; Animated 3D hub</a> · <a href="fig-roundtrip-asymmetry.html#r2">MA12 2D charts</a> · <a href="fig-roundtrip-helicoid-3d.html">Round-trip orbits (3D)</a> · <a href="../theory/LOTMAN_INTERPRETATION.html#s14">Journal §14</a> · <a href="../index.html">Figures home</a></p>
 
 <h1>Four model pairings on a cube (MA15 pilot, 3D)</h1>
-<div class="lede">In the archived Llama run of MA12, swapping one size of a model for another on the return trip barely moved recovery (0.891). Lotman would have expected that, since he asks for <a class="q" data-q="lotman-two-generators">generators that are built differently</a>, and two sizes of one family are not. MA15 puts different families on each side of the <a class="term" href="../theory/LOTMAN_INTERPRETATION.html#gloss-round-trip" data-tip="Send a passage out and back with the original hidden from the return pass, then score how much came home: mean token Jaccard, from 0 to 1.">round trip</a>. Each ribbon is one pairing, running from the model that wrote the forward pass to the one that brought it back, and the thicker the ribbon, the more of the passage came home (mean <a class="q" data-q="method-jaccard">token Jaccard</a>).</div>
+<div class="lede">In the archived Llama run of <a class="sec" data-sec="ma12">MA12</a>, swapping one size of a model for another on the return trip barely moved recovery (0.891). Lotman would have expected that, since he asks for <a class="q" data-q="lotman-two-generators">generators that are built differently</a>, and two sizes of one family are not. <a class="sec" data-sec="ma15">MA15</a> puts different families on each side of the <a class="term" href="../theory/LOTMAN_INTERPRETATION.html#gloss-round-trip" data-tip="Send a passage out and back with the original hidden from the return pass, then score how much came home: mean token Jaccard, from 0 to 1.">round trip</a>. Each ribbon is one pairing, running from the model that wrote the forward pass to the one that brought it back, and the thicker the ribbon, the more of the passage came home (mean <a class="q" data-q="method-jaccard">token Jaccard</a>).</div>
 
 <div class="guide">
   <h3>How to read this</h3>
   <p>Each labelled cube is a model family. Ribbon colour shows which model wrote the forward pass, and the cone shows the direction of travel. Pick a pairing and press Play to send a pulse along it. qwen out and gemma back is the thick one at 0.743. Both pairings that come back through phi3:mini are thin, at roughly a third. Which model sits on the return side matters as much as whether the two models differ, so <a class="term" href="../theory/LOTMAN_INTERPRETATION.html#gloss-polyglottism" data-tip="Lotman's claim that a culture needs at least two differently built languages that do not fully translate. MA15 tests it with different model families.">polyglottism</a> turns out to be more than one knob.</p>
-  <p>This is a pilot: four <a class="term" href="../theory/LOTMAN_INTERPRETATION.html#gloss-dyad" data-tip="A pair of parties in one exchange: a forward model and a reverse model, or a parent agent and its subagent.">dyads</a>, the same thirteen stretches as MA12, one run on 2 October 2026. Read the ordering more than the decimals.</p>
+  <p>This is a pilot: four <a class="term" href="../theory/LOTMAN_INTERPRETATION.html#gloss-dyad" data-tip="A pair of parties in one exchange: a forward model and a reverse model, or a parent agent and its subagent.">dyads</a>, the same thirteen stretches as <a class="sec" data-sec="ma12">MA12</a>, one run on 2 October 2026. Read the ordering more than the decimals.</p>
 </div>
 
 <div class="viz-stage" id="viz-stage" role="img" aria-label="Three model families at corners of a wire cube: qwen2.5:3b, gemma2:2b and phi3:mini. Four directed ribbons join them, thickness by mean recovery: qwen to gemma 0.743, gemma to qwen 0.52, qwen to phi3 0.34, gemma to phi3 0.31.">
@@ -44,7 +45,7 @@
   <span><i style="background:#1f5136"></i> gemma wrote the forward pass</span>
   <span>thickness = mean recovery</span>
 </div>
-<p class="cap"><strong>Theory tie-in:</strong> journal <a href="../theory/LOTMAN_INTERPRETATION.html#s14">§14</a> uses these four numbers to reopen the question of where semiotic distance lives. Families differ, but the best cross-family pairing still sits well above the register and tier conditions in <a href="fig-roundtrip-helicoid-3d.html">MA12</a>. Open thread T31 waits on the full matrix.</p>
+<p class="cap"><strong>Theory tie-in:</strong> journal <a class="sec" data-sec="journal-s14" href="../theory/LOTMAN_INTERPRETATION.html#s14">§14</a> uses these four numbers to reopen the question of where semiotic distance lives. Families differ, but the best cross-family pairing still sits well above the register and tier conditions in <a class="sec" data-sec="ma12" href="fig-roundtrip-helicoid-3d.html">MA12</a>. Open thread <a class="sec" data-sec="t31">T31</a> waits on the full matrix.</p>
 
 <!-- fig-explain:start from explain/fig-ma15-dyad-cube-3d.html; edit there, not here -->
 <section class="fig-explain" id="how-made">
@@ -57,7 +58,7 @@
       <div class="math-block">
         <div class="math-line">R<sub>f→g</sub> = (1/13) Σ<sub>i=1</sub><sup>13</sup> J( T(x<sub>i</sub>), T(g(f(x<sub>i</sub>))) ), &nbsp; J(A, B) = |A ∩ B| / |A ∪ B|</div>
         <div class="math-explain">
-          <p>The same recovery measure as <a href="fig-roundtrip-helicoid-3d.html">MA12</a>, the <a class="q" data-q="method-jaccard">Jaccard index</a> of word-token sets, averaged over the same thirteen stretches. The difference is that two different model families do the two halves.</p>
+          <p>The same recovery measure as <a class="sec" data-sec="ma12" href="fig-roundtrip-helicoid-3d.html">MA12</a>, the <a class="q" data-q="method-jaccard">Jaccard index</a> of word-token sets, averaged over the same thirteen stretches. The difference is that two different model families do the two halves.</p>
           <table class="sym">
             <thead><tr><th>Symbol</th><th>Stands for</th></tr></thead>
             <tbody>
@@ -101,7 +102,7 @@
   <details class="fx">
     <summary>Where the numbers and code live</summary>
     <div class="fx-body">
-      <p>The four scores are typed into the page from <code>ma15_polyglottism_report.json</code> (pilot run, 2026-10-02). The 0.743 for qwen out and gemma back, and the range of 0.31 to 0.37 for returns through phi3:mini, are also stated in <a href="../theory/LOTMAN_INTERPRETATION.html#s14">journal §14</a>. The 0.52 for gemma out and qwen back appears only in this figure's data and is still being checked against the report. The drawing code is the script at the bottom of this page, using <code>assets/fig3d.js</code> and Three.js r128.</p>
+      <p>The four scores are typed into the page from <code>ma15_polyglottism_report.json</code> (pilot run, 2026-10-02). The 0.743 for qwen out and gemma back, and the range of 0.31 to 0.37 for returns through phi3:mini, are also stated in <a class="sec" data-sec="journal-s14" href="../theory/LOTMAN_INTERPRETATION.html#s14">journal §14</a>. The 0.52 for gemma out and qwen back appears only in this figure's data and is still being checked against the report. The drawing code is the script at the bottom of this page, using <code>assets/fig3d.js</code> and Three.js r128.</p>
     </div>
   </details>
 </section>
@@ -118,11 +119,11 @@
   <h3>What it shows</h3>
   <p>qwen out and gemma back returns the most (0.743). The same two models the other way round return less (0.52). Anything that comes back through phi3:mini returns about a third. Direction matters: the same pair of models scores differently depending on which one goes first.</p>
   <h3>Why it matters</h3>
-  <p>Lotman held that a thinking culture needs at least two <a class="q" data-q="lotman-two-generators">generators built differently</a>, which the site calls polyglottism. Many AI pipelines run two copies, or two sizes, of one model and call the result a conversation. In the archived MA12 run, two sizes of one model family barely lost anything on the way back, which is what Lotman would predict inside a single language.</p>
+  <p>Lotman held that a thinking culture needs at least two <a class="q" data-q="lotman-two-generators">generators built differently</a>, which the site calls polyglottism. Many AI pipelines run two copies, or two sizes, of one model and call the result a conversation. In the archived <a class="sec" data-sec="ma12">MA12</a> run, two sizes of one model family barely lost anything on the way back, which is what Lotman would predict inside a single language.</p>
   <p>The dissertation's archive has exactly that two-voice structure: secret memos and public releases written for different readers by different parts of the same state. This figure is the first test of whether AI pipelines can have it too. Different families do behave differently, so the answer is not a flat no. It is still a pilot with four pairings, and the full matrix has yet to be run.</p>
   <h3>Potential for the bigger picture</h3>
-  <p>Promising, and plainly underpowered. Four pairings over thirteen stretches can show that model families differ, but not by how much or why. That's a data problem, not a design problem, and it's cheap to fix: run the full matrix with every model on both the forward and the return side, add stretches, and report the spread in each cell alongside the mean. Because recovery can reward echoing, count echoed returns separately (T30).</p>
-  <p>If differently built models keep giving different returns once the matrix is full, the multi-agent work has its first real candidate for Lotman's two-generator minimum (threads T5 and T31). If they don't, that's worth knowing too: it would mean model swaps, like personas, stay inside one language.</p>
+  <p>Promising, and plainly underpowered. Four pairings over thirteen stretches can show that model families differ, but not by how much or why. That's a data problem, not a design problem, and it's cheap to fix: run the full matrix with every model on both the forward and the return side, add stretches, and report the spread in each cell alongside the mean. Because recovery can reward echoing, count echoed returns separately (<a class="sec" data-sec="t30">T30</a>).</p>
+  <p>If differently built models keep giving different returns once the matrix is full, the multi-agent work has its first real candidate for Lotman's two-generator minimum (threads <a class="sec" data-sec="t5">T5</a> and <a class="sec" data-sec="t31">T31</a>). If they don't, that's worth knowing too: it would mean model swaps, like personas, stay inside one language.</p>
 </section>
 <!-- fig-explain:end -->
 
@@ -130,13 +131,13 @@
 <table>
   <thead><tr><th>Pairing (forward, then reverse)</th><th>Mean recovery as drawn</th><th>Source</th></tr></thead>
   <tbody>
-    <tr><td>qwen2.5:3b, then gemma2:2b</td><td>0.743</td><td><code>ma15_polyglottism_report.json</code>; journal §14</td></tr>
+    <tr><td>qwen2.5:3b, then gemma2:2b</td><td>0.743</td><td><code>ma15_polyglottism_report.json</code>; <a class="sec" data-sec="journal-s14">journal §14</a></td></tr>
     <tr><td>gemma2:2b, then qwen2.5:3b</td><td>0.52</td><td><code>ma15_polyglottism_report.json</code></td></tr>
-    <tr><td>qwen2.5:3b, then phi3:mini</td><td>0.34</td><td>same; journal §14 gives 0.31 to 0.37 for phi3 returns</td></tr>
+    <tr><td>qwen2.5:3b, then phi3:mini</td><td>0.34</td><td>same; <a class="sec" data-sec="journal-s14">journal §14</a> gives 0.31 to 0.37 for phi3 returns</td></tr>
     <tr><td>gemma2:2b, then phi3:mini</td><td>0.31</td><td>same</td></tr>
   </tbody>
 </table>
-<p class="limits">Limits. Four dyads out of the possible matrix, thirteen stretches, temperature 0.0, open local models. Token Jaccard cannot tell a faithful return from a refusal to transform: in MA12, nine of thirteen cross-model reverse passes simply echoed the forward text.</p>
+<p class="limits">Limits. Four dyads out of the possible matrix, thirteen stretches, temperature 0.0, open local models. Token Jaccard cannot tell a faithful return from a refusal to transform: in <a class="sec" data-sec="ma12">MA12</a>, nine of thirteen cross-model reverse passes simply echoed the forward text.</p>
 
 <script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>
 <script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>

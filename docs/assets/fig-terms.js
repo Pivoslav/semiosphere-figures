@@ -4,6 +4,10 @@
    a.q     : source behind a claim. data-q is a key into window.FIG_QUOTES
              (assets/fig-quotes.js), which holds the exact quotation or the
              labelled paraphrase, the citation, and the journal's tier note.
+   a.sec   : reference to a journal section, figure, experiment or open thread.
+             data-sec is a key into window.FIG_SECTIONS (assets/fig-sections.js),
+             which holds a plain-language note on what it is; optional data-why
+             says why it is mentioned at that spot.
    Same behaviour as the inline script on embed/fig-transmission-cells.html:
    first click shows the popover, second click follows the link, Escape closes. */
 (function () {
@@ -23,7 +27,11 @@
     "#term-popover blockquote{margin:.2rem 0 .45rem;padding-left:.65rem;border-left:3px solid #c9a227;font-family:Georgia,serif;font-size:.92rem;color:#2b2722}" +
     "#term-popover .para{font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:#8b6914;margin-bottom:.15rem}" +
     "#term-popover .src{font-size:.8rem;color:#5c564c}" +
-    "#term-popover .tier{font-size:.78rem;color:#7a5a12;margin-top:.3rem}";
+    "#term-popover .tier{font-size:.78rem;color:#7a5a12;margin-top:.3rem}" +
+    "a.sec{color:inherit;text-decoration:none;border-bottom:1px solid rgba(42,74,111,.5);cursor:help}" +
+    "a.sec:hover{background:rgba(42,74,111,.08)}" +
+    "#term-popover .kind{font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;color:#5c564c;margin-bottom:.15rem}" +
+    "#term-popover .why{font-size:.82rem;color:#3b4a5c;margin-top:.4rem;padding-top:.35rem;border-top:1px dashed #d8d0c4}";
 
   function siteRoot() {
     var m = document.querySelector('meta[name="site-nav-root"]');
@@ -39,7 +47,14 @@
       if (!a.getAttribute("href") && q.where) a.setAttribute("href", root + q.where);
       if (!a.getAttribute("href")) { a.setAttribute("tabindex", "0"); a.setAttribute("role", "button"); }
     });
-    var terms = document.querySelectorAll("a.term, a.q");
+    var SECTIONS = window.FIG_SECTIONS || {};
+    Array.prototype.forEach.call(document.querySelectorAll("a.sec"), function (a) {
+      var sec = SECTIONS[a.getAttribute("data-sec")];
+      if (!sec) { if (window.console) console.warn("fig-terms: no section entry for", a.getAttribute("data-sec")); return; }
+      if (!a.getAttribute("href") && sec.where) a.setAttribute("href", root + sec.where);
+      if (!a.getAttribute("href")) { a.setAttribute("tabindex", "0"); a.setAttribute("role", "button"); }
+    });
+    var terms = document.querySelectorAll("a.term, a.q, a.sec");
     if (!terms.length) return;
 
     if (!document.getElementById("fig-terms-css")) {
@@ -84,19 +99,28 @@
 
     function show(term, x, y) {
       var isQ = term.classList.contains("q");
+      var isSec = term.classList.contains("sec");
       var q = isQ ? QUOTES[term.getAttribute("data-q")] : null;
-      if (isQ && !q) return;
+      var sec = isSec ? SECTIONS[term.getAttribute("data-sec")] : null;
+      if ((isQ && !q) || (isSec && !sec)) return;
       pop.textContent = "";
-      pop.classList.toggle("quote", isQ);
+      pop.classList.toggle("quote", isQ || isSec);
       if (isQ) {
         fillQuote(q);
+      } else if (isSec) {
+        pop.appendChild(el("div", "kind", sec.kind));
+        pop.appendChild(el("strong", "", sec.title));
+        pop.appendChild(el("div", "", sec.what));
+        var why = term.getAttribute("data-why");
+        if (why) pop.appendChild(el("div", "why", "Why it comes up here: " + why));
+        if (!sec.where) pop.appendChild(el("div", "why", "Internal working note or planned work; there is no public page for it yet."));
       } else {
         pop.appendChild(el("strong", "", term.textContent.replace(/\s+/g, " ").trim()));
         pop.appendChild(el("div", "", term.getAttribute("data-tip") || ""));
       }
       var href = term.getAttribute("href");
       if (href) {
-        var more = el("a", "more", isQ ? "Where the journal uses this →" : "Full glossary entry →");
+        var more = el("a", "more", isQ ? "Where the journal uses this →" : (isSec ? "Go to it →" : "Full glossary entry →"));
         more.href = href;
         if (term.target) more.target = term.target;
         pop.appendChild(more);
@@ -128,11 +152,11 @@
     });
 
     document.addEventListener("click", function (e) {
-      if (!pop.contains(e.target) && !e.target.closest("a.term, a.q")) hide();
+      if (!pop.contains(e.target) && !e.target.closest("a.term, a.q, a.sec")) hide();
     });
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape") hide();
-      if ((e.key === "Enter" || e.key === " ") && e.target.matches && e.target.matches("a.q[role=button]")) {
+      if ((e.key === "Enter" || e.key === " ") && e.target.matches && e.target.matches("a.q[role=button], a.sec[role=button]")) {
         e.preventDefault();
         e.target.click();
       }
@@ -140,6 +164,10 @@
     window.addEventListener("scroll", hide, { passive: true });
   }
 
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
-  else init();
+  /* Wait for the DOM and for every deferred registry script (fig-quotes.js,
+     fig-sections.js), whatever order the page lists them in. */
+  var started = false;
+  function go() { if (started) return; started = true; init(); }
+  if (document.readyState === "complete") go();
+  else { document.addEventListener("DOMContentLoaded", go); window.addEventListener("load", go); }
 })();

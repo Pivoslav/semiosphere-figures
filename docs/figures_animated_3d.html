@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="assets/site-nav.css"/>
 <script defer src="assets/site-nav.js"></script>
 <script defer src="assets/fig-quotes.js"></script>
+<script defer src="assets/fig-sections.js"></script>
 <script defer src="assets/fig-terms.js"></script>
 <meta name="robots" content="noindex, nofollow"/>
 <meta charset="utf-8"/>
@@ -56,7 +57,7 @@
   <div class="guide" id="how">
     <h3>How to read any of these</h3>
     <p>Drag to turn the scene and scroll to zoom. Where there is a Play button, the motion stands for a process: an item moving through a pipeline, or a passage going out and coming back. Scenes without one are structures you look at from different sides. If your system is set to reduce motion, nothing plays on its own.</p>
-    <p>Every card ends with a line saying which parts are measured and which are drawn for the eye. Words with a dotted underline open a short definition. Click the word a second time to jump to its full entry in the journal glossary. Phrases with a gold dashed underline open the source behind the claim.</p>
+    <p>Every card ends with a line saying which parts are measured and which are drawn for the eye. Words with a dotted underline open a short definition. Click the word a second time to jump to its full entry in the journal glossary. Phrases with a gold dashed underline open the source behind the claim. Names of journal sections, figures, experiments and open threads have a thin solid underline and open a short plain-language note on what that part of the project is.</p>
     <p>Each figure page ends with two extra sections. "How this figure is made" has fold-out panels with the equations and constants used to draw it. "In plain words" explains everything in the picture, why it matters, and how much potential the angle has.</p>
   </div>
 
@@ -64,7 +65,7 @@
   <div class="grid">
 
     <article class="card motion">
-      <span class="tag">MA12 · Journal §14</span>
+      <span class="tag"><a class="sec" data-sec="ma12">MA12</a> · <a class="sec" data-sec="journal-s14">Journal §14</a></span>
       <h3>Round trips that do not close</h3>
       <p>A passage is sent out and brought back under five conditions. The nearer a loop gets to the gold anchor, the more of the original survived the <a class="term" href="theory/LOTMAN_INTERPRETATION.html#gloss-round-trip" data-tip="Send a passage out and back with the original hidden from the return pass, then score how much came home: mean token Jaccard, from 0 to 1.">round trip</a>. The identity run nearly closes at 0.877. A change of <a class="term" href="theory/LOTMAN_INTERPRETATION.html#gloss-register" data-tip="Who a text is written for and what its genre allows. The same word does different work in a secret memo and in an embassy release.">register</a> leaves a wide gap at 0.274.</p>
       <p class="status">Measured: the five recovery scores (<a class="q" data-q="method-jaccard">token Jaccard</a>, n = 13 stretches each). Drawn: the loops and shells.</p>
@@ -72,7 +73,7 @@
     </article>
 
     <article class="card motion">
-      <span class="tag">MA4b · Journal §13</span>
+      <span class="tag"><a class="sec" data-sec="ma4b">MA4b</a> · <a class="sec" data-sec="journal-s13">Journal §13</a></span>
       <h3>Where halt is decided</h3>
       <p>Eighteen test items flow from retriever to generator. With no gate, the generator runs twice per item, 36 calls in all. Put a <a class="term" href="theory/LOTMAN_INTERPRETATION.html#gloss-rule-gate" data-tip="A deterministic check placed before the generator. It reads retrieved metadata and, when it closes, writes the standard refusal with no model call.">rule gate</a> in front of it and 11 items stop there with the standard <a class="term" href="theory/LOTMAN_INTERPRETATION.html#gloss-halt" data-tip="An explicit refusal: the system says there is no licensed outward sentence instead of substituting a nearby document.">halt</a> string, so the generator only runs 14 times.</p>
       <p class="status">Measured: call counts and gate closures, on flat retrieval only. Drawn: particle paths.</p>
@@ -80,7 +81,7 @@
     </article>
 
     <article class="card motion">
-      <span class="tag">MA15 pilot · Journal §14</span>
+      <span class="tag"><a class="sec" data-sec="ma15">MA15</a> pilot · <a class="sec" data-sec="journal-s14">Journal §14</a></span>
       <h3>Four model pairings on a cube</h3>
       <p>Each corner is a model family. A ribbon runs from the model that wrote the forward pass to the one that brought it back, and its thickness is how much of the passage came home. qwen out and gemma back holds at 0.743. Anything returning through phi3:mini falls to about a third. This is the site's first test of Lotman's call for <a class="q" data-q="lotman-two-generators">generators built differently</a>, which the site calls <a class="term" href="theory/LOTMAN_INTERPRETATION.html#gloss-polyglottism" data-tip="Lotman's claim that a culture needs at least two differently built languages that do not fully translate. MA15 tests it with different model families.">polyglottism</a>.</p>
       <p class="status">Measured: mean recovery for four <a class="term" href="theory/LOTMAN_INTERPRETATION.html#gloss-dyad" data-tip="A pair of parties in one exchange: a forward model and a reverse model, or a parent agent and its subagent.">dyads</a> over thirteen stretches. Pilot only; the full matrix is not run yet.</p>
@@ -88,7 +89,7 @@
     </article>
 
     <article class="card motion">
-      <span class="tag">MA13 · Journal §13</span>
+      <span class="tag"><a class="sec" data-sec="ma13">MA13</a> · <a class="sec" data-sec="journal-s13">Journal §13</a></span>
       <h3>Twenty six hand-offs, none of them shorter</h3>
       <p>One column per real delegation from a coding agent to a subagent. Height is the <a class="term" href="theory/LOTMAN_INTERPRETATION.html#gloss-compression-ratio" data-tip="Report characters divided by instruction characters. Below 1 means the subagent shrank the message. None of the 26 did.">compression ratio</a> on a log scale. Every column clears 1, so no subagent handed back less than it was given, and the median report ran 4.38 times the length of its instruction.</p>
       <p class="status">Measured: all 26 ratios, read from the same array as the 2D beeswarm. Drawn: the play sequence.</p>
@@ -96,7 +97,7 @@
     </article>
 
     <article class="card motion">
-      <span class="tag">MA10 · Journal §15</span>
+      <span class="tag"><a class="sec" data-sec="ma10">MA10</a> · <a class="sec" data-sec="journal-s15">Journal §15</a></span>
       <h3>What a subagent invents with nothing to read</h3>
       <p>Left dome: the parent answering alone, with the lowest <a class="term" href="theory/LOTMAN_INTERPRETATION.html#gloss-unsupported-claim" data-tip="Working gloss until the MA10 preregistration wording is copied in: the share of an answer's claims that no corpus unit supports.">unsupported-claim</a> rate in the run (0.2167). Right dome: a subagent given no sources at all. It added more new vocabulary than any other arm, and 14 of its 17 answers used a key term found nowhere in the corpus. The purple slab is the <a class="term" href="theory/LOTMAN_INTERPRETATION.html#gloss-typed" data-tip="Claims carry shell, surface, and proof tier on the edge, not just plain prose.">typed</a> tag that let some of that invention into the parent's answer under a real archive id, which is what this site calls <a class="term" href="theory/LOTMAN_INTERPRETATION.html#gloss-launder" data-tip="Restate a claim with better-looking provenance than the archive licensed.">laundering</a>.</p>
       <p class="status">Measured: the rates and their ordering (17 items). Drawn: every particle.</p>
@@ -104,7 +105,7 @@
     </article>
 
     <article class="card motion">
-      <span class="tag">Transmission T1 · Journal §13</span>
+      <span class="tag"><a class="sec" data-sec="fig-t1">Transmission T1</a> · <a class="sec" data-sec="journal-s13">Journal §13</a></span>
       <h3>Lotman's rooms, and the one he left out</h3>
       <p><a class="q" data-q="lotman-two-channels">Lotman sorts exchanges</a> by two questions: does the message change size, and does the receiver add anything of its own? His named cases, <a class="term" href="theory/LOTMAN_INTERPRETATION.html#gloss-i-she" data-tip="Ordinary sending: code and message stay put while who speaks and who listens swap.">I-s/he</a>, <a class="term" href="theory/LOTMAN_INTERPRETATION.html#gloss-autocomm" data-tip="The message comes back to its sender and restructures how the institution sees itself, not how the public sees it.">autocommunication</a> and <a class="term" href="theory/LOTMAN_INTERPRETATION.html#gloss-presemiotic" data-tip="Lotman's limit case below both cells: parts of one organism, where the recipient is valued for adding nothing of its own.">presemiotic binding</a>, are the wire rooms. The solid room is the corner he never named. The blue ball is the median of our 26 delegations, which lands in that corner.</p>
       <p class="status">Measured: the blue ball (volume 4.4 times, content gain 0.84, n = 26). Drawn: Lotman's rooms, which carry no counts.</p>
@@ -112,7 +113,7 @@
     </article>
 
     <article class="card motion">
-      <span class="tag">Montreal L1 · Lotman gallery</span>
+      <span class="tag">Montreal <a class="sec" data-sec="fig-l1">L1</a> · Lotman gallery</span>
       <h3>The Montreal semiosphere, with relays moving</h3>
       <p>This is the site's spatial reading of Lotman's <a class="q" data-q="lotman-semiosis-unit">semiosphere</a>. Thirteen <a class="term" href="theory/LOTMAN_INTERPRETATION.html#gloss-surface" data-tip="A document venue in the corpus: spr. 1206, the embassy release, Novosti, a UN speech, the Ukrainian Weekly, and so on.">surfaces</a> from the pilot corpus sit on nested <a class="term" href="theory/LOTMAN_INTERPRETATION.html#gloss-shell" data-tip="One of four zones: secret memos, inward reports, Soviet outward channels, and rival or diaspora press.">shells</a> according to who they were written for, from the secret memo out to diaspora press. Sky-blue dots travel along the thematic <a class="term" href="theory/LOTMAN_INTERPRETATION.html#gloss-relay" data-tip="Movement of a theme or wording habit from one document to another, with rules about what may change or stop.">relays</a> we can prove. Pravda gets no arc at all, and that silence is one of the findings.</p>
       <p class="status">Measured: every arc is a stored <a class="term" href="theory/LOTMAN_INTERPRETATION.html#gloss-pair-read" data-tip="Read a secret stretch beside its dated outward counterpart, or record that the counterpart is missing.">pair-read</a> with a proof tier. Drawn: the shells and the pulse.</p>
@@ -131,7 +132,7 @@
     </article>
 
     <article class="card">
-      <span class="tag">Lotman L2</span>
+      <span class="tag">Lotman <a class="sec" data-sec="fig-l2">L2</a></span>
       <h3>Operator tensor</h3>
       <p>A 3D bar chart of wording habits by document. The scare-quote towers on the internal memos (48 hits across three memos) drop to zero on the embassy release in the same row. That empty cell is the counted version of what Lotman's <a class="q" data-q="lotman-boundary">boundary</a> refuses to pass, which the site calls <a class="term" href="theory/LOTMAN_INTERPRETATION.html#gloss-untranslatable" data-tip="What cannot cross a shell unchanged: an empty tensor cell or a documented miss.">untranslatability</a>.</p>
       <p class="status">Measured: every bar is a raw <a class="term" href="theory/LOTMAN_INTERPRETATION.html#gloss-operator" data-tip="A recoding habit on a stretch of text: scare quotes, calling a symposium a gathering, answering famine talk with drought.">operator</a> count.</p>
@@ -139,7 +140,7 @@
     </article>
 
     <article class="card">
-      <span class="tag">Lotman L3</span>
+      <span class="tag">Lotman <a class="sec" data-sec="fig-l3">L3</a></span>
       <h3>Explosion, before and after 1983</h3>
       <p>Two phrase networks stacked in time: the two memos from before Montreal on the lower plane, the fourteen after it on top. Red lines join wording habits that only start turning up together after 1983. This is the site's test for Lotman's <a class="q" data-q="lotman-explosion">explosion</a>. The glossary gives the <a class="term" href="theory/LOTMAN_INTERPRETATION.html#gloss-explosion" data-tip="A change in which moves are available: new frames appear, old ones drop, volume stays flat.">working definition</a>.</p>
       <p class="status">Measured: every line is a count of shared memos, listed in a table under the figure.</p>
@@ -149,7 +150,7 @@
     <article class="card">
       <span class="tag">Illustration</span>
       <h3>Ideal semiosphere (made up on purpose)</h3>
-      <p>What L1 would look like with every shell and relay type filled in. The extra documents and arcs are fabricated so a reader can see the target shape before the archive work supplies it.</p>
+      <p>What <a class="sec" data-sec="fig-l1">L1</a> would look like with every shell and relay type filled in. The extra documents and arcs are fabricated so a reader can see the target shape before the archive work supplies it.</p>
       <p class="status">Nothing on this page is a count.</p>
       <p class="links"><a class="open" href="embed/fig-lotman-semiosphere-demo-3d.html">Open 3D &rarr;</a> · <a href="embed/fig-lotman-semiosphere-3d.html">Compare with L1</a></p>
     </article>
@@ -168,7 +169,7 @@
     <h3>If you only have five minutes</h3>
     <p>Open the delegation stack and the transmission room together. The first shows that no hand-off got shorter. The second shows where that leaves the parent and subagent in <a class="q" data-q="lotman-two-channels">Lotman's scheme</a>, which is in a room he never drew.</p>
     <p>Then open the halt flow. It is the one with a practical lesson: put the refusal rule upstream of the model, because a sentence in the prompt asking the model to refuse got treated as a ban on everything.</p>
-    <p>The Lotman L1 to L3 models are the archive side of the argument. They read best in the <a href="lotman_3d_evidence.html">gallery</a>, where all four sit on one page.</p>
+    <p>The Lotman <a class="sec" data-sec="fig-l1">L1</a> to <a class="sec" data-sec="fig-l3">L3</a> models are the archive side of the argument. They read best in the <a href="lotman_3d_evidence.html">gallery</a>, where all four sit on one page.</p>
   </div>
   <p class="wink">Committee translation: the 2D charts are the evidence and these are the slides you show so people believe you read the 2D charts.</p>
 

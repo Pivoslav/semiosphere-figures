@@ -169,6 +169,8 @@ def inject_fig_explain(text: str, path: Path) -> str:
         head_bits.append(f'<link rel="stylesheet" href="{root}assets/fig-explain.css"/>')
     if "fig-quotes.js" not in text:
         head_bits.append(f'<script defer src="{root}assets/fig-quotes.js"></script>')
+    if "fig-sections.js" not in text:
+        head_bits.append(f'<script defer src="{root}assets/fig-sections.js"></script>')
     if "fig-terms.js" not in text:
         head_bits.append(f'<script defer src="{root}assets/fig-terms.js"></script>')
     if head_bits:

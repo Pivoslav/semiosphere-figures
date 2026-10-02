@@ -14,6 +14,7 @@
 <title>Round-trip orbits · 3D (MA12)</title>
 <link rel="stylesheet" href="../assets/fig3d.css"/>
 <script defer src="../assets/fig-quotes.js"></script>
+<script defer src="../assets/fig-sections.js"></script>
 <script defer src="../assets/fig-terms.js"></script>
 <link rel="stylesheet" href="../assets/fig-explain.css"/>
 </head>
@@ -41,7 +42,7 @@
 </div>
 <p class="cap" id="cap" aria-live="polite"></p>
 <div class="legend" id="legend"></div>
-<p class="cap"><strong>Theory tie-in:</strong> journal <a href="../theory/LOTMAN_INTERPRETATION.html#s14">§14</a> explains why the preregistered ordering failed and why a round-trip score cannot be read alone. <a class="q" data-q="lotman-round-trip">Lotman's criterion</a> is necessary and not sufficient, so low recovery also needs a licensing check before anyone calls it creative. <a href="fig-ma15-dyad-cube-3d.html">MA15</a> extends the cross-model leg to other model families.</p>
+<p class="cap"><strong>Theory tie-in:</strong> journal <a class="sec" data-sec="journal-s14" href="../theory/LOTMAN_INTERPRETATION.html#s14">§14</a> explains why the preregistered ordering failed and why a round-trip score cannot be read alone. <a class="q" data-q="lotman-round-trip">Lotman's criterion</a> is necessary and not sufficient, so low recovery also needs a licensing check before anyone calls it creative. <a class="sec" data-sec="ma15" href="fig-ma15-dyad-cube-3d.html">MA15</a> extends the cross-model leg to other model families.</p>
 
 <!-- fig-explain:start from explain/fig-roundtrip-helicoid-3d.html; edit there, not here -->
 <section class="fig-explain" id="how-made">
@@ -66,7 +67,7 @@
             <tbody>
               <tr><td>x<sub>i</sub></td><td>Stretch <em>i</em> of the corpus, as it went out.</td></tr>
               <tr><td>y<sub>i,c</sub></td><td>What came back after the round trip under condition <em>c</em>. The reverse call never sees the original.</td></tr>
-              <tr><td>T(·)</td><td>The set of word tokens in a text, tokenised as in the MA12 harness.</td></tr>
+              <tr><td>T(·)</td><td>The set of word tokens in a text, tokenised as in the <a class="sec" data-sec="ma12">MA12</a> harness.</td></tr>
               <tr><td>c</td><td>One of five conditions: R0 identity, R1 register change, R2 across the corpus tier boundary, R3 cross-model, R4 three register trips.</td></tr>
             </tbody>
           </table>
@@ -112,7 +113,7 @@
   <details class="fx">
     <summary>Where the numbers and code live</summary>
     <div class="fx-body">
-      <p>The five recovery scores are typed into the page from <code>ma12_roundtrip_report.json</code> (the 2026-10-02 run on qwen2.5:3b and gemma2:2b) and match figure R1 on the <a href="fig-roundtrip-asymmetry.html#r1">2D page</a>. The drawing code is the script at the bottom of this page, using the shared stage in <code>assets/fig3d.js</code> and Three.js r128.</p>
+      <p>The five recovery scores are typed into the page from <code>ma12_roundtrip_report.json</code> (the 2026-10-02 run on qwen2.5:3b and gemma2:2b) and match <a class="sec" data-sec="fig-r1">figure R1</a> on the <a class="sec" data-sec="fig-r1" href="fig-roundtrip-asymmetry.html#r1">2D page</a>. The drawing code is the script at the bottom of this page, using the shared stage in <code>assets/fig3d.js</code> and Three.js r128.</p>
     </div>
   </details>
 </section>
@@ -130,13 +131,13 @@
   </ul>
   <p>The size of the gap where a loop fails to close is how much of the original wording did not come back. A small gap means most words returned.</p>
   <h3>What it shows</h3>
-  <p>Restating with the same model keeps most of the words (0.877). Swapping in a different model for the return trip still keeps most of them (0.740). Changing the audience loses most of them (0.274), and doing it three times loses a little more without ever settling (0.251). On these two models the request matters far more than the machine, though the <a href="fig-ma15-dyad-cube-3d.html">MA15 pairings</a> show that a weaker model on the return trip can lose nearly as much.</p>
+  <p>Restating with the same model keeps most of the words (0.877). Swapping in a different model for the return trip still keeps most of them (0.740). Changing the audience loses most of them (0.274), and doing it three times loses a little more without ever settling (0.251). On these two models the request matters far more than the machine, though the <a class="sec" data-sec="ma15" href="fig-ma15-dyad-cube-3d.html">MA15 pairings</a> show that a weaker model on the return trip can lose nearly as much.</p>
   <h3>Why it matters</h3>
   <p><a class="q" data-q="lotman-round-trip">Lotman's test</a> says a round trip that hands back the same text is a sign of an artificial language, and one that doesn't is a sign of translation in his creative sense. The dissertation's archive is full of register changes: a secret memo in March 1983 becomes an embassy release in April, and the wording transforms on the way. This figure runs the machine version of the same move. It shows that asking a model for a different register moves text much further than swapping the model does.</p>
   <p>It also shows the trap. Low recovery is not the same as creation. In one R1 trip, a record of what the archive does <em>not</em> contain came back as a false claim that a Canadian newspaper called Novosti had printed the denial. So any pipeline that rewrites archival text for a new audience needs a second check that the new material is licensed by a source. The same goes for AI tools generally: a round-trip or back-translation score cannot tell a creative rewrite from a corrupted one.</p>
   <h3>Potential for the bigger picture</h3>
-  <p>Strong as a diagnostic, weak as evidence of creativity. The contrast between changing the register and changing the model is one of the clearest results on the site and is worth carrying into the dissertation. Recovery as a stand-alone score is close to a dead end for Lotman's questions, though. It rewards echoes (nine of thirteen R3 returns simply handed the forward text back) and it can't tell creation from damage (open threads T29 and T30).</p>
-  <p>What would make it worth more: pair every round trip with a licensing check that asks whether each new claim in the returned text is backed by a corpus unit (T29), score echoed returns separately, and run the five conditions on more than thirteen stretches and across the MA15 model families. One extension would tie it straight back to the archive: run the same round trip on real memo and release pairs, where we already know what the human institution did with the wording, and compare the machine's transformation with the institution's.</p>
+  <p>Strong as a diagnostic, weak as evidence of creativity. The contrast between changing the register and changing the model is one of the clearest results on the site and is worth carrying into the dissertation. Recovery as a stand-alone score is close to a dead end for Lotman's questions, though. It rewards echoes (nine of thirteen R3 returns simply handed the forward text back) and it can't tell creation from damage (open threads <a class="sec" data-sec="t29">T29</a> and <a class="sec" data-sec="t30">T30</a>).</p>
+  <p>What would make it worth more: pair every round trip with a licensing check that asks whether each new claim in the returned text is backed by a corpus unit (<a class="sec" data-sec="t29">T29</a>), score echoed returns separately, and run the five conditions on more than thirteen stretches and across the <a class="sec" data-sec="ma15">MA15</a> model families. One extension would tie it straight back to the archive: run the same round trip on real memo and release pairs, where we already know what the human institution did with the wording, and compare the machine's transformation with the institution's.</p>
 </section>
 <!-- fig-explain:end -->
 
@@ -144,11 +145,11 @@
 <table>
   <thead><tr><th>Condition</th><th>Mean recovery as drawn</th><th>Where it is checked</th></tr></thead>
   <tbody>
-    <tr><td>R0 identity, qwen both passes</td><td>0.8768</td><td>2D figure R1; <code>ma12_roundtrip_report.json</code></td></tr>
+    <tr><td>R0 identity, qwen both passes</td><td>0.8768</td><td><a class="sec" data-sec="fig-r1">2D figure R1</a>; <code>ma12_roundtrip_report.json</code></td></tr>
     <tr><td>R3 cross-model, qwen out, gemma back</td><td>0.7398</td><td>same</td></tr>
     <tr><td>R2 across the corpus tier boundary</td><td>0.3858</td><td>same</td></tr>
     <tr><td>R1 register change, same model</td><td>0.2739</td><td>same</td></tr>
-    <tr><td>R4 three register trips, mean</td><td>0.2508</td><td>same; better read on 2D figure R4</td></tr>
+    <tr><td>R4 three register trips, mean</td><td>0.2508</td><td>same; better read on <a class="sec" data-sec="fig-r4">2D figure R4</a></td></tr>
   </tbody>
 </table>
 <p class="limits">Limits carried over from the 2D page. Thirteen stretches, one plate, open local models. Vacuous survival measures read 1.000 when no stretch contained the item type and are recorded as untestable. The archived Llama 3.2 run (R0 1.000, R3 0.891) lives in <code>ma12_roundtrip_report_2026-10-01_llama.json</code> and is not drawn here.</p>

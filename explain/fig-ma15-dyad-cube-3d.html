@@ -8,7 +8,7 @@
       <div class="math-block">
         <div class="math-line">R<sub>f→g</sub> = (1/13) Σ<sub>i=1</sub><sup>13</sup> J( T(x<sub>i</sub>), T(g(f(x<sub>i</sub>))) ), &nbsp; J(A, B) = |A ∩ B| / |A ∪ B|</div>
         <div class="math-explain">
-          <p>The same recovery measure as <a href="fig-roundtrip-helicoid-3d.html">MA12</a>, the <a class="q" data-q="method-jaccard">Jaccard index</a> of word-token sets, averaged over the same thirteen stretches. The difference is that two different model families do the two halves.</p>
+          <p>The same recovery measure as <a class="sec" data-sec="ma12" href="fig-roundtrip-helicoid-3d.html">MA12</a>, the <a class="q" data-q="method-jaccard">Jaccard index</a> of word-token sets, averaged over the same thirteen stretches. The difference is that two different model families do the two halves.</p>
           <table class="sym">
             <thead><tr><th>Symbol</th><th>Stands for</th></tr></thead>
             <tbody>
@@ -52,7 +52,7 @@
   <details class="fx">
     <summary>Where the numbers and code live</summary>
     <div class="fx-body">
-      <p>The four scores are typed into the page from <code>ma15_polyglottism_report.json</code> (pilot run, 2026-10-02). The 0.743 for qwen out and gemma back, and the range of 0.31 to 0.37 for returns through phi3:mini, are also stated in <a href="../theory/LOTMAN_INTERPRETATION.html#s14">journal §14</a>. The 0.52 for gemma out and qwen back appears only in this figure's data and is still being checked against the report. The drawing code is the script at the bottom of this page, using <code>assets/fig3d.js</code> and Three.js r128.</p>
+      <p>The four scores are typed into the page from <code>ma15_polyglottism_report.json</code> (pilot run, 2026-10-02). The 0.743 for qwen out and gemma back, and the range of 0.31 to 0.37 for returns through phi3:mini, are also stated in <a class="sec" data-sec="journal-s14" href="../theory/LOTMAN_INTERPRETATION.html#s14">journal §14</a>. The 0.52 for gemma out and qwen back appears only in this figure's data and is still being checked against the report. The drawing code is the script at the bottom of this page, using <code>assets/fig3d.js</code> and Three.js r128.</p>
     </div>
   </details>
 </section>
@@ -69,9 +69,9 @@
   <h3>What it shows</h3>
   <p>qwen out and gemma back returns the most (0.743). The same two models the other way round return less (0.52). Anything that comes back through phi3:mini returns about a third. Direction matters: the same pair of models scores differently depending on which one goes first.</p>
   <h3>Why it matters</h3>
-  <p>Lotman held that a thinking culture needs at least two <a class="q" data-q="lotman-two-generators">generators built differently</a>, which the site calls polyglottism. Many AI pipelines run two copies, or two sizes, of one model and call the result a conversation. In the archived MA12 run, two sizes of one model family barely lost anything on the way back, which is what Lotman would predict inside a single language.</p>
+  <p>Lotman held that a thinking culture needs at least two <a class="q" data-q="lotman-two-generators">generators built differently</a>, which the site calls polyglottism. Many AI pipelines run two copies, or two sizes, of one model and call the result a conversation. In the archived <a class="sec" data-sec="ma12">MA12</a> run, two sizes of one model family barely lost anything on the way back, which is what Lotman would predict inside a single language.</p>
   <p>The dissertation's archive has exactly that two-voice structure: secret memos and public releases written for different readers by different parts of the same state. This figure is the first test of whether AI pipelines can have it too. Different families do behave differently, so the answer is not a flat no. It is still a pilot with four pairings, and the full matrix has yet to be run.</p>
   <h3>Potential for the bigger picture</h3>
-  <p>Promising, and plainly underpowered. Four pairings over thirteen stretches can show that model families differ, but not by how much or why. That's a data problem, not a design problem, and it's cheap to fix: run the full matrix with every model on both the forward and the return side, add stretches, and report the spread in each cell alongside the mean. Because recovery can reward echoing, count echoed returns separately (T30).</p>
-  <p>If differently built models keep giving different returns once the matrix is full, the multi-agent work has its first real candidate for Lotman's two-generator minimum (threads T5 and T31). If they don't, that's worth knowing too: it would mean model swaps, like personas, stay inside one language.</p>
+  <p>Promising, and plainly underpowered. Four pairings over thirteen stretches can show that model families differ, but not by how much or why. That's a data problem, not a design problem, and it's cheap to fix: run the full matrix with every model on both the forward and the return side, add stretches, and report the spread in each cell alongside the mean. Because recovery can reward echoing, count echoed returns separately (<a class="sec" data-sec="t30">T30</a>).</p>
+  <p>If differently built models keep giving different returns once the matrix is full, the multi-agent work has its first real candidate for Lotman's two-generator minimum (threads <a class="sec" data-sec="t5">T5</a> and <a class="sec" data-sec="t31">T31</a>). If they don't, that's worth knowing too: it would mean model swaps, like personas, stay inside one language.</p>
 </section>

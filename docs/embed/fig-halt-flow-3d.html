@@ -14,6 +14,7 @@
 <title>Where halt is decided · 3D (MA4b)</title>
 <link rel="stylesheet" href="../assets/fig3d.css"/>
 <script defer src="../assets/fig-quotes.js"></script>
+<script defer src="../assets/fig-sections.js"></script>
 <script defer src="../assets/fig-terms.js"></script>
 <link rel="stylesheet" href="../assets/fig-explain.css"/>
 </head>
@@ -21,7 +22,7 @@
 <p class="embed-back"><a href="../figures_animated_3d.html">&larr; Animated 3D hub</a> · <a href="fig-halt-adjudication.html">MA4b 2D charts</a> · <a href="fig-transmission-cells.html#t3">Transmission T3</a> · <a href="../theory/LOTMAN_INTERPRETATION.html#s13">Journal §13</a> · <a href="../theory/LOTMAN_INTERPRETATION.html#s12">§12</a> · <a href="../index.html">Figures home</a></p>
 
 <h1>Where halt is decided (MA4b, 3D)</h1>
-<div class="lede">When a question can't be answered from licensed sources, the pipeline should say so. MA4b asked where that decision belongs: in the generator's prompt, or in a rule that runs before any model is called. This view follows all 18 frozen items through two of the four arms. In B2 there is no gate, and every item visits the generator twice. In D2 a <a class="term" href="../theory/LOTMAN_INTERPRETATION.html#gloss-rule-gate" data-tip="A deterministic check placed before the generator. It reads retrieved metadata and, when it closes, writes the standard refusal with no model call.">rule gate</a> reads the retrieved metadata, stops 11 items with the canonical <a class="term" href="../theory/LOTMAN_INTERPRETATION.html#gloss-halt" data-tip="An explicit refusal: the system says there is no licensed outward sentence instead of substituting a nearby document.">halt</a> string and lets 7 through, so the generator runs 14 times instead of 36.</div>
+<div class="lede">When a question can't be answered from licensed sources, the pipeline should say so. <a class="sec" data-sec="ma4b">MA4b</a> asked where that decision belongs: in the generator's prompt, or in a rule that runs before any model is called. This view follows all 18 frozen items through two of the four arms. In B2 there is no gate, and every item visits the generator twice. In D2 a <a class="term" href="../theory/LOTMAN_INTERPRETATION.html#gloss-rule-gate" data-tip="A deterministic check placed before the generator. It reads retrieved metadata and, when it closes, writes the standard refusal with no model call.">rule gate</a> reads the retrieved metadata, stops 11 items with the canonical <a class="term" href="../theory/LOTMAN_INTERPRETATION.html#gloss-halt" data-tip="An explicit refusal: the system says there is no licensed outward sentence instead of substituting a nearby document.">halt</a> string and lets 7 through, so the generator runs 14 times instead of 36.</div>
 
 <div class="guide">
   <h3>How to read this</h3>
@@ -46,7 +47,7 @@
   <span><i style="background:#2a4a6f"></i> item that reaches the generator</span>
   <span><i style="background:#1f5136"></i> item stopped by the gate</span>
 </div>
-<p class="cap"><strong>Theory tie-in:</strong> journal <a href="../theory/LOTMAN_INTERPRETATION.html#s13">§13</a> uses this result to argue that the refusal rule belongs upstream, and that once a gate works the prompt clause should go, because in E2 it went on refusing items the gate had already cleared. One caution travels with the 11: on the scoped retriever (MA4c, qwen2.5:3b) the same gate closed 0 of 18, so this figure shows flat retrieval only.</p>
+<p class="cap"><strong>Theory tie-in:</strong> journal <a class="sec" data-sec="journal-s13" href="../theory/LOTMAN_INTERPRETATION.html#s13">§13</a> uses this result to argue that the refusal rule belongs upstream, and that once a gate works the prompt clause should go, because in E2 it went on refusing items the gate had already cleared. One caution travels with the 11: on the scoped retriever (<a class="sec" data-sec="ma4c">MA4c</a>, qwen2.5:3b) the same gate closed 0 of 18, so this figure shows flat retrieval only.</p>
 
 <!-- fig-explain:start from explain/fig-halt-flow-3d.html; edit there, not here -->
 <section class="fig-explain" id="how-made">
@@ -127,13 +128,13 @@
     <li>Each dot is one of 18 test questions. Five of them should be refused and thirteen should be answered.</li>
   </ul>
   <h3>What it shows</h3>
-  <p>Without a gate (B2), every question goes to the model twice, 36 calls in all, and the model catches only one of the five questions it should refuse. With the gate (D2), eleven questions stop before any model sees them, the model runs only fourteen times, and all five should-refuse questions are caught. The gate is not precise, though. Six of the eleven it stopped could have been answered. With a better retriever in the follow-up (MA4c), it stopped none at all.</p>
+  <p>Without a gate (B2), every question goes to the model twice, 36 calls in all, and the model catches only one of the five questions it should refuse. With the gate (D2), eleven questions stop before any model sees them, the model runs only fourteen times, and all five should-refuse questions are caught. The gate is not precise, though. Six of the eleven it stopped could have been answered. With a better retriever in the follow-up (<a class="sec" data-sec="ma4c">MA4c</a>), it stopped none at all.</p>
   <h3>Why it matters</h3>
   <p>The dissertation reads the boundary between secret and public Soviet texts as the place where meaning is governed: what may cross, in what form, and what must be refused. In <a class="q" data-q="lotman-boundary">Lotman's terms</a> the boundary is a filter. The KGB memo's hostile wording never reached the embassy release, because something at the boundary stopped it.</p>
   <p>This figure asks where that decision should sit in an AI pipeline. When the refusal rule was written as a sentence in the model's prompt (arm C2, on the 2D page), the model refused all eighteen questions, including ones its own instructions said to answer. The rule was never evaluated as a condition. Put in front of the model as plain logic, the same rule kept every correct refusal and cut the calls by more than half. For anyone building with AI, the lesson is to keep boundary rules in the plumbing, at least with small models, and not to trust the model to police itself.</p>
   <h3>Potential for the bigger picture</h3>
   <p>The most practically useful result on the site, and the one most likely to matter outside it. The negative half is decisive: a refusal sentence in a small model's prompt is close to useless as a safeguard, because the model refused everything. The positive half needs more work. The gate is topic blind, so on flat retrieval it stops answerable questions, and on the scoped retriever it stops nothing at all.</p>
-  <p>Eighteen items and one model are thin, and one item currently moves recall by 0.20. The next steps are already sketched in open thread T28: a halt at the retrieval layer that reads which documents were touched, combined with scoped context. Beyond that, a larger frozen item set with more should-refuse cases, and a second model family to check that the prompt-clause failure isn't a quirk of one 3B model. For the dissertation, this is also the first measured case of a code handed to a receiver making it less discerning, the reverse of Lotman's colour example (T27). It deserves a deliberately designed positive case alongside it.</p>
+  <p>Eighteen items and one model are thin, and one item currently moves recall by 0.20. The next steps are already sketched in open thread <a class="sec" data-sec="t28">T28</a>: a halt at the retrieval layer that reads which documents were touched, combined with scoped context. Beyond that, a larger frozen item set with more should-refuse cases, and a second model family to check that the prompt-clause failure isn't a quirk of one 3B model. For the dissertation, this is also the first measured case of a code handed to a receiver making it less discerning, the reverse of Lotman's colour example (<a class="sec" data-sec="t27">T27</a>). It deserves a deliberately designed positive case alongside it.</p>
 </section>
 <!-- fig-explain:end -->
 
