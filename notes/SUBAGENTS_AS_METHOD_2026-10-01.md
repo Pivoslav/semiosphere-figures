@@ -57,11 +57,20 @@ MA10 is therefore no longer a standalone run. It is the control arm of MA14.
 
 Lotman: a minimal thinking system requires two languages, and the harder the translation between them, the more useful each is to the whole. Prompt personas cannot test this. Different pretraining can.
 
+The 1981 and 1983 essays, acquired after this note was first written, give the criterion in a form that settles the design question. Culture is a minimally two-channel structure linking *raznostrukturnye semioticheskie generatory*, differently-structured semiotic generators, so the minimum is not two generators but two generators built differently. And the other is necessary, in his words, precisely because it gives a different model of the same reality, a different modelling language, and a different transformation of the same text. A thinking device, he adds, must itself be a semiotic person and needs another semiotic person.
+
+That is decisive for this method. A subagent on the same base model is not another semiotic person; it is the same person with a different context window. Model family is therefore not one variable among several in this design, it is the variable that decides whether the dyad qualifies as a dyad at all.
+
 Launch the same instruction to subagents on genuinely different model families, with the family as the only manipulated variable. Then measure, deterministically:
 
 - Position identifiability after style normalization. Strip surface markers and ask whether the source family is still recoverable from content alone. This is the S2 signature from the I-I designs, and it is the crux: if families remain distinguishable after normalization, there are two positions; if not, there is one position in two costumes.
 - Round-trip asymmetry, MA12's measure, run across families rather than across registers. Lotman's prediction is that greater distance between languages yields less recovery, and that the non-recovery is where new material comes from.
 - Disagreement that survives aggregation. Per the transmission reading, residual non-understanding may index complexity rather than failure, so convergence between families is to be reported as a loss and not as a success.
+
+Two measures added from the second reading pass, both cheap and both available only with real subagents:
+
+- **Alternation with suppression.** Lotman's own condition for dialogue, taken from Newson: the parties act in turn, and during reception each suppresses its own activity and orients to the partner. A delegation where the parent continues its own line through the child's turn fails a constitutive condition, and the transcripts record enough to tell.
+- **Perceptual enlargement after code transfer.** After receiving a code from the other family, can a party make a distinction it demonstrably could not make before? This follows Lotman's colour example, where a transmitted code changes what the receiver can see. It is the one measure in the whole program that could show a dyad doing something neither party could do alone, which is the claim the dissertation most needs and least has.
 
 Forbidden here, as everywhere in this project: cross-model embedding cosine. The spaces are not comparable and no amount of normalization makes them so.
 

@@ -123,9 +123,91 @@ Torop, Peeter. "Translation as Communication and Auto-communication." *Sign Syst
 
 Andrews, Edna, and Elena Maksimova. "Semiospheric Transitions: A Key to Modelling Translation." *Sign Systems Studies* 36, no. 2 (2008): 259-69.
 
+Lotman, Iuri. "Cerebro-texto-cultura-inteligencia artificial." Translated by Rinaldo Acosta. *Semiosfera: humanidades-tecnologias* (Universidad Carlos III de Madrid), no. 2 (Autumn 1994): 73-100. Translation of "Mozg - tekst - kul'tura - iskusstvennyj intellekt," *Semiotika i informatika* 17 (1981): 3-17, per the translation's own source note. Open access, CC BY-NC-ND 3.0 ES.
+
+Lotman, Iu. M. "Asimmetriya i dialog." *Trudy po znakovym sistemam* 16, *Tekst i kul'tura* (Tartu, 1983): 15-30. Open access, CC0, University of Tartu DSpace.
+
+Lotman, Juri. "On the Semiosphere." Translated by Wilma Clark. *Sign Systems Studies* 33, no. 1 (2005): 205-29.
+
+## Second pass, same day: what the 1981 and 1983 essays changed
+
+Three further texts were acquired after the first pass above was written: the 1981 artificial intelligence essay, the 1983 "Asymmetry and Dialogue", and the 2005 English translation of "On the Semiosphere". All three are in the thesis manifest with checksums. English renderings below are mine and are marked as such; the original is given first in every case because this project does not let a translation stand unchallenged.
+
+### Correction to a citation I had wrong
+
+I cited the 1981 essay from the secondary literature as *Semiotika i informatika* 1 (1981), 13-17. The article's own source footnote on its first page reads *Semiotika i informatika* **17** (1981), **3-17**. Secondary sources repeat the first version widely. Until the Russian volume is in hand I am citing the footnote and recording the divergence rather than harmonizing it silently.
+
+There is no English translation of this essay. Monoskop, archive.org and both Tartu platforms were checked. The trails lead to the Estonian collection (Olion 1990, print only) or the Russian *Izbrannye stat'i* (Tallinn: Aleksandra, 1992), 25-33. The copy we have is the Spanish translation by Rinaldo Acosta for the Havana journal *Criterios*, open access under Creative Commons, complete at pp. 73-100.
+
+### The 1981 essay states the criterion more sharply than the 1979 one
+
+> "La necesidad de un 'otro' es la necesidad de la propia originalidad, ya que el otro es necesario precisamente porque da un modelo distinto de la misma realidad, un distinto lenguaje de modelización y una distinta transformación del mismo texto." (p. 98)
+
+My rendering: the need for an "other" is the need for one's own originality, since the other is necessary precisely because it gives a different model of the same reality, a different modelling language, and a different transformation of the same text.
+
+> "El propio dispositivo pensante debe ser una persona semiótica y necesita de otra persona semiótica." (p. 98)
+
+My rendering: the thinking device must itself be a semiotic person and it needs another semiotic person.
+
+> "De lo expresado se deriva que si el hombre logra crear una inteligencia artificial cabal, lo que menos nos interesaría es que esta inteligencia fuera una copia exacta de la humana." (p. 99)
+
+My rendering: it follows that if humanity manages to create a complete artificial intelligence, the last thing that would interest us is for that intelligence to be an exact copy of the human one.
+
+> "El texto, en esta segunda acepción, posee heterogeneidad semiótica y, como consecuencia de ello, la capacidad de generar nuevos mensajes." (p. 79)
+
+My rendering: the text, in this second sense, possesses semiotic heterogeneity and, as a consequence, the capacity to generate new messages.
+
+The repository's own French abstract states the same thesis independently of the scan's OCR layer, which is a useful check on the passages above.
+
+Why this matters more than the 1979 formulation. "A different model of the same reality" is a sharper criterion than "two languages", because it specifies what the difference has to be about. Two personas of one base model do not give a different model of the same reality; they give one model in two registers. And the last quotation is the strongest thing he says for our purposes: the value of an artificial intelligence would lie in its *not* being a copy. An evaluation regime that rewards human-likeness is, on this argument, optimizing away the only property that would make the thing useful to the whole.
+
+### 1983: transmission does appear, and only ever of codes
+
+This partially closes the question I left open at the end of the first pass. Lotman does use *передача* positively, but not of meaning.
+
+> "протекают мгновенные смены состояний «приема» и «передачи», обеспечивающие диалогическую природу сознания" (printed p. 23)
+
+My rendering: there occur instantaneous alternations of states of "reception" and "transmission", which secure the dialogic nature of consciousness.
+
+> "обмен метатекстами, кодами, которые передаются из одного «полушария» культуры в другое" (printed p. 28)
+
+My rendering: an exchange of metatexts, of codes, which are transmitted from one "hemisphere" of culture to another.
+
+So the pattern across all three essays is consistent: texts are translated, meaning is generated, and only codes are transmitted. Transmission is a real process in his system, operating one level down from meaning. That is a cleaner statement than "Lotman rejects transmission", and it is the version that should go into a chapter.
+
+The hemispheric example on printed p. 18 shows what code transmission buys: the left hemisphere, freed from the constraint of objecthood, works out a language of distinctions; those distinctions are then transmitted as a fact of linguistic code to the right hemisphere, and only then does ordinary consciousness begin to *see* shades of the colour range that were previously indistinguishable to it. A transmitted code changes what the receiver can perceive. That is a considerably more interesting claim than information transfer, and it is measurable.
+
+### The turn-taking criterion, which we were not measuring
+
+Lotman takes from John Newson's work on infant dialogue a condition he endorses: that the parties act in alternation, with pauses during which they **suppress their own activity** and orient to perceiving the partner's activity (printed p. 23).
+
+Nothing in our dyad designs measures this. A model that continues its own line while nominally receiving is failing a condition Lotman treats as constitutive of dialogue, and the failure is observable.
+
+### Two channels, differently structured
+
+> "Идея культуры как двухканальной (минимально) структуры, связывающей разноструктурные семиотические генераторы" (printed p. 26)
+
+My rendering: the idea of culture as a (minimally) two-channel structure linking differently-structured semiotic generators.
+
+*Raznostrukturnye*, differently-structured, is the operative word. The minimum is not two generators but two generators built differently. This is the precise theoretical warrant for testing across model families rather than across personas, and it is why the polyglottism experiment is worth the cost.
+
+### An analogy he draws that we did not
+
+On learning, printed p. 28: the child receives not separate words but language as such, with the consequence that a great mass of words already in its consciousness is not linked to any reality at all, and the subsequent "learning of culture" consists in discovering those linkages and filling the "foreign" word.
+
+That is a description of pretraining followed by grounding, written in 1983 about children. I am recording it because it is his own formulation rather than our analogy, but it should be used carefully: the resemblance is structural and does not license any claim about what a model understands. Flagged for the chapter, not for a results section.
+
+## Signatures added by the second pass
+
+- **S9, alternation with suppression.** Does a party actually suspend its own production while receiving, or does it continue its line through the partner's turn? Lotman's own condition for dialogue, via Newson, and unmeasured by us until now.
+- **S10, code transfer versus text transfer.** Distinguish exchanges where what crosses is a code or metatext from exchanges where what crosses is content. His system permits the former to be transmission in the strict sense. The typed hand-off envelope from MA1 is a code, so MA1 may have been measuring code transmission while we described it as content transmission.
+- **S11, perceptual enlargement after code transfer.** Following the colour example: after receiving a code, can the receiver make a distinction it demonstrably could not make before? This is a stronger and more interesting test than answer quality, and it is the one measure here that could show a dyad doing something neither party could do alone.
+
 ## Still open
 
-- Lotman, "Brain, Text, Culture, Artificial Intelligence" (1981) and "Culture and Text as Generators of Meaning" (1983) are the companion pieces to the 1979 essay and were not obtained. These are the next acquisitions.
+- The 1981 essay is now in hand in Spanish; the Russian original in *Semiotika i informatika* is still wanted, both to settle the volume and page discrepancy and to check *ustrojstvo* and *lichnost'* against Acosta's "dispositivo" and "persona".
+- "Kul'tura i tekst kak generatory smysla" (1983) was not obtained. It exists online only as an unlicensed reproduction, so it was deliberately not taken. "Asimmetriya i dialog" was acquired instead, from the complete CC0 Tartu scan of *Trudy po znakovym sistemam* 16.
+- "The Semiotics of Culture and the Concept of a Text", *Soviet Psychology* 26, no. 3 (1988), is paywalled and was not pursued.
 - The Russian *ustrojstvo* is rendered as both "mechanism" and "apparatus" across translations, which matters when the argument turns on whether culture is a device. Flagged in the secondary literature on Lotman's cybernetic vocabulary; worth checking against the Russian before quoting in a chapter.
 - A recent *Semiotica* article on Lotman's semiotics of culture in the age of AI is paywalled and unread. It may already make the argument in point 3, in which case we cite it rather than claim it.
-- No evidence so far that Lotman uses "transmission" in a positive technical sense anywhere. If a counterexample exists it would most likely be in the information-theoretic passages of *The Structure of the Artistic Text*, which is downloaded and unsearched for this purpose.
+- The question of whether Lotman ever uses "transmission" positively is now partly answered: he does, of codes and of the alternating states of reception and transmission, never of meaning. *The Structure of the Artistic Text* is downloaded and still unsearched for this purpose, and would either confirm the pattern or break it.

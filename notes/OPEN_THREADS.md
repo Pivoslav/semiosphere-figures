@@ -29,7 +29,9 @@
 | T11 | More licensed pairs (D1) | open, archival labor | Target n of 30 or more; everything quantitative waits on this |
 | T12 | Peter plate completion (E3) | open, design decision first | Decide what individuates an edge when the third shell is empty |
 | T13 | Portability threads (D3 to D8) | open, unscoped | Pick one thread and build ten dated pairs as a feasibility test |
-| T14 | Transmission in Lotman and Tartu | reading done 2026-10-01, `notes/TRANSMISSION_LOTMAN_2026-10-01.md` | 1981 and 1983 essay acquisition RUNNING; journal section 13 waits on it |
+| T14 | Transmission in Lotman and Tartu | closed 2026-10-01, two passes, `notes/TRANSMISSION_LOTMAN_2026-10-01.md` | Journal section 13 is unblocked; 1981 Russian original still wanted |
+| T26 | Alternation with suppression (S9) | open, new from the 1983 essay | Lotman's constitutive condition for dialogue; unmeasured by every design so far |
+| T27 | Perceptual enlargement after code transfer (S11) | open, highest theoretical payoff | Can a party make a distinction it could not make before receiving the other's code |
 | T21 | Round-trip asymmetry across dyads (MA12) | RUNNING 2026-10-01, five conditions R0 to R4 | Await `docs/experiments/MA12_roundtrip_asymmetry/RUN_2026-10-01.md` |
 | T15 | Mihhail Lotman rhetoric citation | blocked_human | Section 11 of the journal has a deliberately empty row |
 | T16 | Partial map formalism | open, writing | Decide venue: dissertation appendix or separate paper (roadmap Q5) |
