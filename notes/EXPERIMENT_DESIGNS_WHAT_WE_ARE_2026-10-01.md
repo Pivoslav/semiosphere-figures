@@ -21,6 +21,8 @@ Standing constraint on all of it: the Montreal plate has **n = 9 licensed pairs*
 
 ## MA1 · Typed hand-off ablation
 
+**Run 2026-10-01** on `llama3.2:3b`, all 18 frozen items. Typed envelope held attribution at 0.72 against 0.06 untyped; surface-id survival halved across the hop (0.37 → 0.19); generator-side halt gave recall 1.00 with false refusal 1.00, so halt belongs to the rule layer. Full write-up: thesis `docs/experiments/MA1_typed_handoff/RUN_2026-10-01.md`. The design below is what was preregistered.
+
 **Question.** Does an inter-agent message that carries shell type and proof tier reduce tier confusion relative to a plain-text hand-off?
 
 **Design.** Three arms over the same query set, two hops (A retrieves, B answers from A's output):
@@ -156,4 +158,4 @@ Glavlit-cut editions against their originals, or translated editions against sou
 
 ## Handoff for the next agent
 
-Read in this order: §10 of `LOTMAN_INTERPRETATION.html`, then `notes/MULTI_AGENT_LOTMAN_2026-10-01.md`, then this file. Cheapest real progress is **MA1** (no new ingest, local model sufficient) and **MA4** (same items, sharper question). **MA2** and **MA6** are human-gated by design and should stay gated. Write results into the thesis repo under `docs/experiments/`, keep the ID namespace `MA*`, and record the prereg before the run, not after.
+Read in this order: §10 of `LOTMAN_INTERPRETATION.html`, then `notes/MULTI_AGENT_LOTMAN_2026-10-01.md`, then this file, then `notes/DESIGNS_II_COMMUNICATION_2026-10-01.md` (MA7–MA11: autocommunication signatures across human–LLM, LLM–LLM, agent–agent, agent–subagent, and sibling-subagent dyads). Cheapest real progress is **MA1** (no new ingest, local model sufficient) and **MA4** (same items, sharper question). **MA2** and **MA6** are human-gated by design and should stay gated. Write results into the thesis repo under `docs/experiments/`, keep the ID namespace `MA*`, and record the prereg before the run, not after.
