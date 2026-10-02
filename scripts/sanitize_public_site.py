@@ -130,6 +130,45 @@ EXPLAIN_ANCHORS = (
 )
 
 
+CONTROLS_RE = re.compile(r"(const controls = new (?:THREE\.)?OrbitControls\([^;]*\);)")
+PULSE_GATE = "const pulseActive = !reduceMotion && pulseDots.length;"
+REDUCE_LINE = "const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;"
+
+
+def patch_lab_motion(text: str, path: Path) -> str:
+    """Give the thesis-lab 3D pages reader-controlled motion.
+
+    Exposes the page's OrbitControls as window.FIG_CONTROLS and, where the
+    relay pulses exist (L1), lets window.FIG_MOTION.pulses switch them, then
+    loads assets/fig-motionbar.js, which draws the buttons. Pages that already
+    use the shared stage (assets/fig3d.js) have their own buttons and are left
+    alone. Each patch is skipped if already applied or if the code has changed.
+    """
+    if "fig3d.js" in text or "OrbitControls" not in text:
+        return text
+    if "window.FIG_CONTROLS" not in text:
+        text, n = CONTROLS_RE.subn(r"\1 window.FIG_CONTROLS = controls;", text, count=1)
+        if not n:
+            print(f"  note: no OrbitControls line to expose in {path.name}")
+    if PULSE_GATE in text and REDUCE_LINE in text and "window.FIG_MOTION" not in text:
+        text = text.replace(
+            REDUCE_LINE,
+            REDUCE_LINE + " window.FIG_MOTION = window.FIG_MOTION || { pulses: !reduceMotion, hasPulses: true };",
+            1,
+        )
+        text = text.replace(
+            PULSE_GATE,
+            "const pulseActive = (window.FIG_MOTION ? window.FIG_MOTION.pulses : !reduceMotion) && pulseDots.length;",
+            1,
+        )
+    if "fig-motionbar.js" not in text:
+        close = text.find("</head>")
+        if close >= 0:
+            root = _nav_root(path)
+            text = text[:close] + f'<script defer src="{root}assets/fig-motionbar.js"></script>\n' + text[close:]
+    return text
+
+
 def inject_fig_explain(text: str, path: Path) -> str:
     """Add "How this figure is made" and "In plain words" to a 3D page.
 
@@ -265,6 +304,8 @@ def sanitize_html(text: str, path: Path) -> str:
     text = inject_robots_meta(text)
     text = inject_site_nav(text, path)
     text = inject_fig_explain(text, path)
+    if path.parent.name == "embed" and (EXPLAIN_DIR / path.name).is_file():
+        text = patch_lab_motion(text, path)
     return text
 
 

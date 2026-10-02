@@ -38,6 +38,7 @@
   <select id="condPick"></select>
   <button type="button" id="btnPlay">Play round trip</button>
   <button type="button" id="btnAll">Show all loops</button>
+  <button type="button" id="btnTurn">Turn the model</button>
   <span class="hint">Drag to turn · scroll to zoom</span>
 </div>
 <p class="cap" id="cap" aria-live="polite"></p>
@@ -104,9 +105,9 @@
   </details>
 
   <details class="fx">
-    <summary>What the motion does <span class="fx-sub">Play, and reduced motion</span></summary>
+    <summary>What the motion does <span class="fx-sub">Play and Turn</span></summary>
     <div class="fx-body">
-      <p>Play sends a white traveller along the selected loop. Its position along the path advances by 0.22 per second, so one trip takes about four and a half seconds and then stops. With reduced motion switched on, Play is disabled and the traveller is drawn at the end of the loop. The scene draws nothing while it is still.</p>
+      <p>Play sends a white traveller along the selected loop. Its position along the path advances by 0.22 per second, \1 Turn the model spins the scene slowly around the anchor so you can see the loops from every side; dragging still works while it turns. Nothing moves until you press one of the two, including when your system is set to reduce motion. The scene draws nothing while it is still.</p>
     </div>
   </details>
 
@@ -234,7 +235,7 @@
     var deg = Math.round((1 - c.recovery) * GAP_SCALE * 180 / Math.PI);
     cap.textContent = c.label + ": mean recovery " + c.recovery.toFixed(4) + ". The loop stops about " + deg +
       " degrees short of closing (a visual scale, not a fitted manifold).";
-    travelT = Fig3D.reduce ? 1 : 0;
+    travelT = 0;
     traveler.position.copy(c.curve.getPointAt(travelT));
     s.requestRender();
   }
@@ -256,6 +257,7 @@
     traveler.position.copy(CONDITIONS[active].curve.getPointAt(travelT));
   });
   syncBtn = Fig3D.playButton(document.getElementById("btnPlay"), s, { play: "Play round trip" });
+  Fig3D.turnButton(document.getElementById("btnTurn"), s);
   show(0);
 })();
 </script>

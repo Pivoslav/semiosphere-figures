@@ -2,9 +2,11 @@
    THREE, THREE.OrbitControls, optional THREE.CSS2DRenderer).
 
    Renders on demand. Nothing draws while the scene is still, the tab is
-   hidden, or the stage is scrolled out of view. A page's tick function runs
-   only while setRunning(true) is in effect and the reader has not asked for
-   reduced motion; it returns false to stop itself. */
+   hidden, or the stage is scrolled out of view. Nothing moves until the
+   reader presses a button: a page's tick function runs only while
+   setRunning(true) is in effect, and returns false to stop itself. A system
+   "reduce motion" setting is honoured by never autoplaying; motion the reader
+   asks for with Play or Turn still runs. */
 (function (global) {
   "use strict";
 
@@ -56,7 +58,7 @@
       var dt = last ? Math.min((now - last) / 1000, 0.1) : 0;
       last = now;
       var animating = false;
-      if (running && !reduce && tickFn) {
+      if (running && tickFn) {
         animating = tickFn(dt, now) !== false;
         if (!animating) setRunning(false);
         dirty = true;
@@ -86,7 +88,7 @@
     }
 
     function setRunning(on) {
-      running = !!on && !reduce;
+      running = !!on;
       if (opts.onRunningChange) opts.onRunningChange(running);
       if (running) requestRender();
     }
@@ -128,16 +130,10 @@
     };
   }
 
-  /* Wire a Play/Pause button to a stage. Under reduced motion the button is
-     disabled and says why; pages offer a slider or a static end state instead. */
+  /* Wire a Play/Pause button to a stage. */
   function playButton(btn, s, labels) {
     labels = labels || {};
     var playText = labels.play || btn.textContent || "Play";
-    if (s.reduce) {
-      btn.disabled = true;
-      btn.textContent = labels.reduced || "Motion off (system setting)";
-      return;
-    }
     btn.setAttribute("aria-pressed", "false");
     btn.addEventListener("click", function () { s.setRunning(!s.isRunning()); });
     return function sync(running) {
@@ -146,5 +142,21 @@
     };
   }
 
-  global.Fig3D = { stage: stage, playButton: playButton, reduce: reduce };
+  /* Wire a Turn button that slowly spins the model around its centre. Dragging
+     still works while it turns. */
+  function turnButton(btn, s, labels) {
+    labels = labels || {};
+    var on = labels.on || "Stop turning", off = labels.off || btn.textContent || "Turn the model";
+    btn.setAttribute("aria-pressed", "false");
+    btn.addEventListener("click", function () {
+      var c = s.controls;
+      c.autoRotate = !c.autoRotate;
+      c.autoRotateSpeed = 1.6;
+      btn.textContent = c.autoRotate ? on : off;
+      btn.setAttribute("aria-pressed", c.autoRotate ? "true" : "false");
+      s.requestRender();
+    });
+  }
+
+  global.Fig3D = { stage: stage, playButton: playButton, turnButton: turnButton, reduce: reduce };
 })(window);

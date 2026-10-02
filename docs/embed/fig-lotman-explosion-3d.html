@@ -120,6 +120,7 @@ details.verify summary { cursor:pointer; color:var(--accent); font-weight:600; }
 <script defer src="../assets/fig-quotes.js"></script>
 <script defer src="../assets/fig-terms.js"></script>
 <script defer src="../assets/fig-sections.js"></script>
+<script defer src="../assets/fig-motionbar.js"></script>
 </head>
 <body class="embed">
 <div class="wrap embed-wrap">
@@ -214,6 +215,13 @@ details.verify summary { cursor:pointer; color:var(--accent); font-weight:600; }
         </div>
       </div>
       <p>Colours: gold for lines on the lower plane, blue for lines carried over on the upper plane, red for new lines.</p>
+    </div>
+  </details>
+
+  <details class="fx">
+    <summary>What the motion does <span class="fx-sub">the buttons under the figure</span></summary>
+    <div class="fx-body">
+      <p>Play before and after moves the view down to the before-1983 plane, holds while the caption describes it, then rises to the after-1983 plane and settles back where it started, about fifteen seconds in all. Only the camera moves; the network is fixed. Turn the model spins the two planes slowly. Nothing starts on its own.</p>
     </div>
   </details>
 
@@ -429,7 +437,7 @@ labelRenderer.domElement.style.top = '0';
 labelRenderer.domElement.style.left = '0';
 labelRenderer.domElement.style.pointerEvents = 'none';
 stage.appendChild(labelRenderer.domElement);
-const controls = new OrbitControls(camera, renderer.domElement);
+const controls = new OrbitControls(camera, renderer.domElement); window.FIG_CONTROLS = controls;
 controls.enableDamping = true;
 controls.target.set(0, 0, 0);
 scene.add(new THREE.DirectionalLight(0xffffff, 1.05), new THREE.AmbientLight(0xffffff, 0.58));

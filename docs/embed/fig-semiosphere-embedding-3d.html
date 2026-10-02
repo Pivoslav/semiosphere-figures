@@ -64,6 +64,7 @@ a{color:var(--accent)}
 <script defer src="../assets/fig-quotes.js"></script>
 <script defer src="../assets/fig-terms.js"></script>
 <script defer src="../assets/fig-sections.js"></script>
+<script defer src="../assets/fig-motionbar.js"></script>
 </head><body>
 <h1>Semiosphere · 3D embedding + bilingual relays</h1>
 <p class="how-to"><strong>How to explore:</strong> <strong>drag empty space</strong> to rotate · scroll to zoom · <strong>click a dot</strong> (short click, don’t drag) for detail in the panel - no hover picking; that keeps the camera stable. Green = licensed RU→EN; orange = contrast; purple = intersemiotic; violet dots = audio carrier.</p>
@@ -128,6 +129,13 @@ a{color:var(--accent)}
           <p>Each arc bends through a point M above the midpoint of its two dots, so it arcs over the sphere instead of cutting through it. The data holds 38 dots (18 Russian, 20 English, 3 of them audio) and 33 arcs: 13 from secret to rival texts, 9 from secret to Soviet outward texts, 7 from secret texts to silence records, and 4 between rival texts. Green arcs are licensed Russian to English relays, orange arcs are contrasts, and purple arcs are intersemiotic.</p>
         </div>
       </div>
+    </div>
+  </details>
+
+  <details class="fx">
+    <summary>What the motion does <span class="fx-sub">the buttons under the figure</span></summary>
+    <div class="fx-body">
+      <p>Nothing in the data moves. Turn the model spins the shells slowly; the direction of each dot comes from the model and its distance from the archive, so watching it turn shows which passages point the same way.</p>
     </div>
   </details>
 
@@ -256,7 +264,7 @@ camera.position.set(5.5, 4.2, 6.8);
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio||1, 2));
 el.appendChild(renderer.domElement);
-const controls = new THREE.OrbitControls(camera, renderer.domElement);
+const controls = new THREE.OrbitControls(camera, renderer.domElement); window.FIG_CONTROLS = controls;
 controls.target.set(0, 0, 0);
 controls.enableDamping = true;
 controls.dampingFactor = 0.08;

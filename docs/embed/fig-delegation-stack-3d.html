@@ -35,6 +35,7 @@
 </div>
 <div class="viz-controls">
   <button type="button" id="btnPlay">Play sequence</button>
+  <button type="button" id="btnTurn">Turn the model</button>
   <label for="pick">Hand-off</label>
   <input type="range" id="pick" min="1" max="26" step="1" value="1"/>
   <span class="hint">Drag to turn · scroll to zoom</span>
@@ -99,7 +100,7 @@
   <details class="fx">
     <summary>What the motion does <span class="fx-sub">Play and the slider</span></summary>
     <div class="fx-body">
-      <p>Play highlights one column every 0.8 seconds in report order and prints its exact ratio. The slider does the same by hand and works with reduced motion switched on. The scene draws nothing while it is still.</p>
+      <p>Play highlights one column every 0.8 seconds in report order and prints its exact ratio. The slider does the same by hand. Turn the model spins the row of columns slowly. Nothing moves until you press a button, including when your system is set to reduce motion, and the scene draws nothing while it is still.</p>
     </div>
   </details>
 
@@ -214,6 +215,7 @@
     if (clock >= 0.8) { clock = 0; select((current + 1) % N); }
   });
   syncBtn = Fig3D.playButton(document.getElementById("btnPlay"), s, { play: "Play sequence" });
+  Fig3D.turnButton(document.getElementById("btnTurn"), s);
   select(0);
 })();
 </script>

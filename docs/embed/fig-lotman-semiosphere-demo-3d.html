@@ -120,6 +120,7 @@ details.verify summary { cursor:pointer; color:var(--accent); font-weight:600; }
 <script defer src="../assets/fig-quotes.js"></script>
 <script defer src="../assets/fig-terms.js"></script>
 <script defer src="../assets/fig-sections.js"></script>
+<script defer src="../assets/fig-motionbar.js"></script>
 </head>
 <body class="embed">
 <div class="wrap embed-wrap">
@@ -204,6 +205,13 @@ details.verify summary { cursor:pointer; color:var(--accent); font-weight:600; }
           <p>Arcs bow outward exactly as in <a class="sec" data-sec="fig-l1" target="_top">L1</a>, and their colours follow the same relay types. The click panels use the same fields: what the connection tells us, what it does not prove, and why it matters. The arcs for autocommunication loops, silences, the dialogue with CIUS 1986, a tier-A Globe clip, an exile broadcast and an MFA circular are fabricated. Nothing on this page is counted from a file.</p>
         </div>
       </div>
+    </div>
+  </details>
+
+  <details class="fx">
+    <summary>What the motion does <span class="fx-sub">the buttons under the figure</span></summary>
+    <div class="fx-body">
+      <p>Nothing in the data moves. Turn the model spins the spheres slowly so the invented layers can be seen from every side.</p>
     </div>
   </details>
 
@@ -417,7 +425,7 @@ let labelRenderer = null;
   labelRenderer.domElement.style.pointerEvents = 'none';
   stage.appendChild(labelRenderer.domElement);
 }
-const controls = new OrbitControls(camera, renderer.domElement);
+const controls = new OrbitControls(camera, renderer.domElement); window.FIG_CONTROLS = controls;
 controls.enableDamping = true;
 const pickables = [];
 

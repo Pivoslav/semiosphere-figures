@@ -36,6 +36,12 @@ Every mention of a journal section (§13), a figure or panel (figure R1, panel D
 
 `python scripts/link_section_refs.py` adds the markup to the explainer files, the hub and the six pilots, then `python scripts/sanitize_public_site.py` copies the explainers into the pages. Run them in that order after editing any of those files. A reference with no entry in `fig-sections.js` stays plain text, so add the entry first. Bare R1 to R4 and T1 to T3 are never linked, because on these pages they also name round-trip conditions, gate rules and open threads. Breadcrumbs, card link rows and jump menus are left as plain navigation.
 
+## Motion controls on every 3D page
+
+Every 3D page has a Turn the model button, and every figure that shows a process has a Play control. The six pilots get theirs from `docs/assets/fig3d.js` (`Fig3D.playButton`, `Fig3D.turnButton`). The rooms page has a Run the tests animation that walks the measured median through each of Lotman's named rooms. Nothing autoplays. A system reduce-motion setting no longer disables the buttons, because motion the reader asks for is allowed.
+
+The five pages built in the thesis lab get their controls from `docs/assets/fig-motionbar.js`, which the sanitize step injects. To reach their internals, `patch_lab_motion` in `scripts/sanitize_public_site.py` makes two small, guarded edits to each page. It adds `window.FIG_CONTROLS = controls;` after the OrbitControls line. On L1 it lets `window.FIG_MOTION.pulses` switch the relay pulses. The bar adds Play relays on L1 and a camera move called Play before and after on L3. If a rebuilt page no longer matches those patterns, the script prints a note and leaves the page alone, and the page then has no buttons. The lasting fix is to build the same controls into `build_lotman_3d_visualizations.py` and the embedding builder, after which the patches become no-ops.
+
 ## Before the next sync from the thesis lab
 
 `docs/theory/LOTMAN_INTERPRETATION.html` is mirrored from the thesis lab, so the next sync will overwrite it. The commit added nine glossary entries to the docs copy so the new popover links resolve: `gloss-round-trip`, `gloss-dyad`, `gloss-polyglottism`, `gloss-compression-ratio`, `gloss-content-gain`, `gloss-rule-gate`, `gloss-unsupported-claim`, `gloss-presemiotic`, `gloss-fond`. They sit at the end of the glossary `<dl>` under a comment. Copy them into the thesis-lab source of the journal first, then sync.

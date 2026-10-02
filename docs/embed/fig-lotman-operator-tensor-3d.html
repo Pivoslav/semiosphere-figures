@@ -108,6 +108,7 @@ details.verify summary { cursor:pointer; color:var(--accent); font-weight:600; }
 <script defer src="../assets/fig-quotes.js"></script>
 <script defer src="../assets/fig-terms.js"></script>
 <script defer src="../assets/fig-sections.js"></script>
+<script defer src="../assets/fig-motionbar.js"></script>
 </head>
 <body class="embed">
 <div class="wrap embed-wrap">
@@ -182,6 +183,13 @@ details.verify summary { cursor:pointer; color:var(--accent); font-weight:600; }
         <div class="math-line">Σ<sub>internal</sub> O(scare, s) = 13 + 19 + 16 = 48 &nbsp;&nbsp; vs &nbsp;&nbsp; O(scare, embassy) = 0</div>
         <div class="math-explain"><p>The comparison the figure is built for: scare quotes across the three internal memos against the embassy release in the same row.</p></div>
       </div>
+    </div>
+  </details>
+
+  <details class="fx">
+    <summary>What the motion does <span class="fx-sub">the buttons under the figure</span></summary>
+    <div class="fx-body">
+      <p>Nothing in the data moves. Turn the model spins the bars slowly so rows and columns hidden behind tall towers come into view. Dragging still works while it turns.</p>
     </div>
   </details>
 
@@ -350,7 +358,7 @@ const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 200);
 camera.position.set(14, 16, 18);
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 el.appendChild(renderer.domElement);
-const controls = new OrbitControls(camera, renderer.domElement);
+const controls = new OrbitControls(camera, renderer.domElement); window.FIG_CONTROLS = controls;
 controls.enableDamping = true;
 scene.add(new THREE.DirectionalLight(0xffffff, 1), new THREE.AmbientLight(0xffffff, 0.5));
 const pickables = [];

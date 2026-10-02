@@ -37,6 +37,7 @@
   <label for="dyadPick">Pairing</label>
   <select id="dyadPick"></select>
   <button type="button" id="btnPlay">Play pulse</button>
+  <button type="button" id="btnTurn">Turn the model</button>
   <span class="hint">Drag to turn · scroll to zoom</span>
 </div>
 <p class="cap" id="cap" aria-live="polite"></p>
@@ -95,7 +96,7 @@
   <details class="fx">
     <summary>What the motion does <span class="fx-sub">the pulse</span></summary>
     <div class="fx-body">
-      <p>Play sends a white pulse along the selected pairing. Its position t advances by 0.35 per second and wraps around, about three seconds per pass. With reduced motion switched on, Play is disabled and the pulse rests at the arrival end. The scene draws nothing while it is still.</p>
+      <p>Play sends a white pulse along the selected pairing. Its position t advances by 0.35 per second and wraps around, \1 Turn the model spins the cube slowly so the three corners separate on screen. Nothing moves until you press a button, including when your system is set to reduce motion. The scene draws nothing while it is still.</p>
     </div>
   </details>
 
@@ -219,7 +220,7 @@
     cap.textContent = FAM[d.from].name + " wrote the forward pass and " + FAM[d.to].name +
       " brought it back. Mean recovery " + d.j + " over thirteen stretches (MA15 pilot, 2026-10-02).";
     t = 0;
-    pulse.position.copy(d.curve.getPointAt(Fig3D.reduce ? 0.98 : 0));
+    pulse.position.copy(d.curve.getPointAt(0));
     s.requestRender();
   }
   pick.addEventListener("change", function () { select(parseInt(pick.value, 10)); });
@@ -229,6 +230,7 @@
     pulse.position.copy(DYADS[active].curve.getPointAt(t));
   });
   syncBtn = Fig3D.playButton(document.getElementById("btnPlay"), s, { play: "Play pulse" });
+  Fig3D.turnButton(document.getElementById("btnTurn"), s);
   select(0);
 })();
 </script>
