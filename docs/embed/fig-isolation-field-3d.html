@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- MA10 companion: isolated vs baseline source field (animated metaphor) -->
+<!-- MA10 companion: P0 (parent alone) vs P3 (isolated subagent) as two domes; particles are decoration, rates and ordering from ma10_subagent_isolation_report.json via fig-isolation-laundering.html -->
 <html lang="en">
 <head>
 <link rel="stylesheet" href="../assets/site-theme-vapor.css"/>
@@ -11,142 +11,143 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta name="color-scheme" content="light"/>
-<title>Isolation · 3D source field (MA10)</title>
-<style>
-  :root { --ink:#1a1814; --muted:#5c564c; --rule:#d8d0c4; --wash:#f6f4ef; --accent:#2a4a6f; }
-  body { margin:0; font-family: Georgia, serif; font-size: 11.5pt; line-height: 1.55; color: var(--ink);
-    max-width: 56rem; margin: 0 auto; padding: 1rem 1.25rem 2rem; background: #fff; }
-  h1 { font-size: 1.35rem; margin: 0 0 0.35rem; }
-  a { color: var(--accent); }
-  .embed-back { font-size: 0.88rem; margin: 0 0 0.85rem; }
-  .lede { background: var(--wash); border: 1px solid var(--rule); padding: 0.75rem 0.95rem; margin: 0.75rem 0; font-size: 0.93rem; }
-  .viz-stage { position: relative; border: 1px solid var(--rule); border-radius: 8px; overflow: hidden;
-    background: #faf8f4; height: min(58vh, 480px); min-height: 320px; }
-  #viz3d { position: absolute; inset: 0; cursor: grab; }
-  .viz-controls { margin: 0.55rem 0; font-family: system-ui, sans-serif; font-size: 0.78rem; }
-  .viz-controls button { font: inherit; padding: 0.35rem 0.55rem; border: 1px solid var(--rule); border-radius: 5px; background: #fff; cursor: pointer; }
-  .cap { font-size: 0.86rem; color: var(--muted); margin: 0.35rem 0 0; max-width: 65ch; }
-</style>
+<title>Isolation field · 3D (MA10)</title>
+<link rel="stylesheet" href="../assets/fig3d.css"/>
+<script defer src="../assets/fig-quotes.js"></script>
+<script defer src="../assets/fig-terms.js"></script>
 </head>
 <body>
-<p class="embed-back"><a href="../figures_animated_3d.html">&larr; Animated 3D hub</a> · <a href="fig-isolation-laundering.html">MA10 (2D)</a> · <a href="../theory/LOTMAN_INTERPRETATION.html#s15">Journal §15</a></p>
-<h1>Isolation · 3D source field</h1>
-<div class="lede">Left hemisphere: <strong>P0</strong> (corpus shared) — particles stay inside, low unsupported-claim rate (0.2167 mean in I1). Right: <strong>P3</strong> (isolated, no sources) — particles spawn without corpus backing and bleed outward through a typed tag gate (laundering metaphor). Animation is illustrative; ordering matches I1: P3 posts highest content gain (~26.9 types).</div>
-<div class="viz-stage" id="viz-stage"><div id="viz3d"></div></div>
-<div class="viz-controls"><button type="button" id="btnPlay">Play field</button></div>
-<p class="cap">Drag to orbit. Red drift = invention crossing the boundary with a real identifier attached.</p>
+<p class="embed-back"><a href="../figures_animated_3d.html">&larr; Animated 3D hub</a> · <a href="fig-isolation-laundering.html">MA10 2D charts</a> · <a href="fig-delegation-stack-3d.html">Delegation stack (3D)</a> · <a href="../theory/LOTMAN_INTERPRETATION.html#s15">Journal §15</a> · <a href="../theory/LOTMAN_INTERPRETATION.html#s12">§12</a> · <a href="../index.html">Figures home</a></p>
+
+<h1>What a subagent invents with nothing to read (MA10, 3D)</h1>
+<div class="lede">MA10 took the sources away from a subagent and watched what came back: seventeen relay items, five arms, one model. The parent answering alone (P0) made the fewest <a class="term" href="../theory/LOTMAN_INTERPRETATION.html#gloss-unsupported-claim" data-tip="Working gloss until the MA10 preregistration wording is copied in: the share of an answer's claims that no corpus unit supports.">unsupported claims</a>, at a rate of 0.2167. The subagent with no sources (P3) added the most new vocabulary of any arm, 26.9 types on average, and 14 of its 17 answers used a key term that appears nowhere in the corpus. That new material was invented, and the parent then passed some of it on under a real archive tag.</div>
+
+<div class="guide">
+  <h3>How to read this</h3>
+  <p>Left dome: P0, the parent with no subagent. Right dome: P3, the subagent that saw nothing. Particles inside a dome stand for claims the corpus backs. The orange ones leaving the right dome stand for invented material, and the purple slab they pass through is the <a class="term" href="../theory/LOTMAN_INTERPRETATION.html#gloss-typed" data-tip="Claims carry shell, surface, and proof tier on the edge, not just plain prose.">typed</a> tag. On item <code>e2_i06</code> the parent wrote that the KGB called the symposium a "provocation", under the tag <code>id=s1206_mace</code>. That unit is real, and it is a Russian list of symposium speakers. Neither "provocation" nor "counter-revolutionary" occurs anywhere in the <a class="term" href="../theory/LOTMAN_INTERPRETATION.html#gloss-fond" data-tip="An archive collection. Here, HDA SBU fond 16 (Operation Vozmezdie, 1976 to 1988).">fond</a>.</p>
+  <p>Only the rates and their order are measured. How many particles there are, how fast they move and how many leak are all made up for the picture.</p>
+</div>
+
+<div class="viz-stage" id="viz-stage" role="img" aria-label="Two translucent domes. The left dome, P0, holds blue particles that stay inside. The right dome, P3, holds orange particles, some of which leave through a purple slab labelled as the typed tag. Labels give P0's unsupported-claim rate of 0.2167 and P3's mean content gain of 26.9 types.">
+  <div id="viz3d"></div>
+</div>
+<div class="viz-controls">
+  <button type="button" id="btnPlay">Play field</button>
+  <span class="hint">Drag to turn · scroll to zoom</span>
+</div>
+<div class="legend">
+  <span><i style="background:#2a4a6f"></i> claim the corpus backs</span>
+  <span><i style="background:#c45c26"></i> invented material</span>
+  <span><i class="sq" style="background:#6d28d9"></i> typed tag carrying a real id</span>
+</div>
+<p class="cap"><strong>Theory tie-in:</strong> journal <a href="../theory/LOTMAN_INTERPRETATION.html#s15">§15</a> qualifies <a href="../theory/LOTMAN_INTERPRETATION.html#s12">§12</a>. A typed envelope carries provenance faithfully whether or not the claim earned it, so typing is a transport format and the checking has to happen somewhere else. <a href="fig-halt-flow-3d.html">MA4b</a> says where: upstream, by rule, before generation. This site calls the move <a class="term" href="../theory/LOTMAN_INTERPRETATION.html#gloss-launder" data-tip="Restate a claim with better-looking provenance than the archive licensed.">laundering</a>.</p>
+<p class="wink">Committee translation: the subagent was handed an empty folder and came back with a classified dossier.</p>
+
+<h2>Numbers in this figure, and where they come from</h2>
+<table>
+  <thead><tr><th>Value as drawn</th><th>Where it is checked</th><th>Source file</th></tr></thead>
+  <tbody>
+    <tr><td>17 items, 5 arms, temperature 0.0</td><td>2D page lede</td><td><code>ma10_subagent_isolation_report.json</code></td></tr>
+    <tr><td>P0 unsupported-claim rate 0.2167, lowest of all arms</td><td>2D figure I1</td><td>same</td></tr>
+    <tr><td>P3 mean content gain 26.9 types (25.2 under the strict baseline)</td><td>2D figure I1</td><td>same</td></tr>
+    <tr><td>14 of 17 P3 answers with a key term absent from the corpus</td><td>2D figure I1 caption</td><td>same</td></tr>
+    <tr><td><code>e2_i06</code>, <code>s1206_mace</code></td><td>2D figure I3</td><td>same</td></tr>
+  </tbody>
+</table>
+<p class="limits">Limits carried over from the 2D page. One model, synthetic relay tasks, one plate, no human adjudication. Under isolation, content gain cannot be told apart from fabrication by construction, which is the point of the design and also its ceiling.</p>
+
 <script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>
 <script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://unpkg.com/three@0.128.0/examples/js/renderers/CSS2DRenderer.js"></script>
+<script src="../assets/fig3d.js"></script>
 <script>
 (function () {
-  var stage = document.getElementById("viz-stage");
-  var mount = document.getElementById("viz3d");
-  var scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xfaf8f4);
-  var camera = new THREE.PerspectiveCamera(44, 1, 0.1, 60);
-  camera.position.set(0, 4, 9);
-  var renderer = new THREE.WebGLRenderer({ antialias: true });
-  mount.appendChild(renderer.domElement);
-  var controls = new THREE.OrbitControls(camera, renderer.domElement);
-  controls.target.set(0, 1, 0);
-  scene.add(new THREE.AmbientLight(0xffffff, 0.72));
-  var dir = new THREE.DirectionalLight(0xffffff, 0.75);
-  dir.position.set(3, 6, 5);
-  scene.add(dir);
+  var syncBtn = null;
+  var s = Fig3D.stage({ camera: [0, 4.2, 9.5], target: [0, 0.9, 0.4], onRunningChange: function (on) { if (syncBtn) syncBtn(on); } });
+  var LX = -3.2, RX = 3.2, R = 2.2;
+  var GATE = new THREE.Vector3(RX, 0.6, R + 0.1);
 
-  function dome(x, color, label) {
-    var g = new THREE.SphereGeometry(2.2, 32, 20, 0, Math.PI * 2, 0, Math.PI / 2);
-    var shell = new THREE.Mesh(g, new THREE.MeshPhongMaterial({
-      color: color, transparent: true, opacity: 0.22, side: THREE.DoubleSide
-    }));
-    shell.position.set(x, 0, 0);
-    scene.add(shell);
-    var ring = new THREE.Mesh(
-      new THREE.RingGeometry(2.15, 2.35, 48),
-      new THREE.MeshBasicMaterial({ color: color, side: THREE.DoubleSide, transparent: true, opacity: 0.5 })
-    );
+  function dome(x, color) {
+    var shell = new THREE.Mesh(
+      new THREE.SphereGeometry(R, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2),
+      new THREE.MeshPhongMaterial({ color: color, transparent: true, opacity: 0.2, side: THREE.DoubleSide, depthWrite: false }));
+    shell.position.x = x;
+    s.scene.add(shell);
+    var ring = new THREE.Mesh(new THREE.RingGeometry(R - 0.05, R + 0.12, 48),
+      new THREE.MeshBasicMaterial({ color: color, side: THREE.DoubleSide, transparent: true, opacity: 0.5 }));
     ring.rotation.x = -Math.PI / 2;
-    ring.position.set(x, 0.02, 0);
-    scene.add(ring);
-    return { x: x, label: label };
+    ring.position.set(x, 0.01, 0);
+    s.scene.add(ring);
+  }
+  dome(LX, 0x2a4a6f);
+  dome(RX, 0x9a3b3b);
+
+  var slab = new THREE.Mesh(new THREE.BoxGeometry(0.9, 1.2, 0.14),
+    new THREE.MeshPhongMaterial({ color: 0x6d28d9, emissive: 0x2e1065, emissiveIntensity: 0.3, transparent: true, opacity: 0.85 }));
+  slab.position.copy(GATE);
+  s.scene.add(slab);
+
+  s.label("P0 · parent alone · unsupported 0.2167", new THREE.Vector3(LX, R + 0.45, 0), "strong");
+  s.label("P3 · subagent, no sources · gain 26.9 types", new THREE.Vector3(RX, R + 0.45, 0), "warn");
+  s.label("typed tag, real id (s1206_mace)", new THREE.Vector3(RX, 1.45, R + 0.2));
+
+  var dot = new THREE.SphereGeometry(0.08, 10, 8);
+  var matIn = new THREE.MeshBasicMaterial({ color: 0x2a4a6f });
+  var matInvent = new THREE.MeshBasicMaterial({ color: 0xc45c26 });
+  var parts = [];
+
+  function seed(p, x) {
+    p.ang = Math.random() * Math.PI * 2;
+    p.r = 0.3 + Math.random() * 1.4;
+    p.y = 0.2 + Math.random() * 1.1;
+    p.cx = x;
+    p.leak = -1;
+  }
+  function put(p) {
+    if (p.leak >= 0) {
+      var a = p.from, k = p.leak;
+      if (k < 0.5) p.mesh.position.lerpVectors(a, GATE, k / 0.5);
+      else p.mesh.position.set(GATE.x + (k - 0.5) * 1.2, GATE.y - (k - 0.5) * 0.4, GATE.z + (k - 0.5) * 3.6);
+      return;
+    }
+    p.mesh.position.set(p.cx + Math.cos(p.ang) * p.r, p.y, Math.sin(p.ang) * p.r);
+  }
+  function add(x, mat, rogue) {
+    var p = { mesh: new THREE.Mesh(dot, mat), rogue: rogue, speed: 0.35 + Math.random() * 0.45 };
+    seed(p, x);
+    s.scene.add(p.mesh);
+    parts.push(p);
+    return p;
+  }
+  var i;
+  for (i = 0; i < 24; i++) put(add(LX, matIn, false));
+  for (i = 0; i < 18; i++) {
+    var p = add(RX, matInvent, true);
+    if (i < 3) { p.from = new THREE.Vector3(RX, 0.6, 1.2); p.leak = 0.35 + i * 0.25; }
+    put(p);
   }
 
-  var left = dome(-3.2, 0x2a4a6f, "P0");
-  var right = dome(3.2, 0x9a3b3b, "P3");
-
-  var gate = new THREE.Mesh(
-    new THREE.BoxGeometry(0.15, 1.2, 0.8),
-    new THREE.MeshPhongMaterial({ color: 0x6d28d9, emissive: 0x2e1065, emissiveIntensity: 0.3 })
-  );
-  gate.position.set(3.2, 0.6, 2.3);
-  scene.add(gate);
-
-  var particles = [];
-  function spawn(side, rogue) {
-    var p = new THREE.Mesh(
-      new THREE.SphereGeometry(0.08, 10, 10),
-      new THREE.MeshBasicMaterial({ color: rogue ? 0xc45c26 : 0x2a4a6f })
-    );
-    var hem = side === "L" ? left : right;
-    p.userData = {
-      side: side,
-      rogue: rogue,
-      t: Math.random(),
-      speed: 0.003 + Math.random() * 0.004,
-      ang: Math.random() * Math.PI * 2,
-      r: 0.3 + Math.random() * 1.5
-    };
-    p.position.set(hem.x + Math.cos(p.userData.ang) * p.userData.r, 0.2 + Math.random() * 1.2, Math.sin(p.userData.ang) * p.userData.r);
-    scene.add(p);
-    particles.push(p);
-  }
-  for (var i = 0; i < 24; i++) spawn("L", false);
-  for (var j = 0; j < 18; j++) spawn("R", true);
-
-  var playing = false;
-  document.getElementById("btnPlay").onclick = function () {
-    playing = !playing;
-    this.textContent = playing ? "Pause" : "Play field";
-  };
-
-  function resize() {
-    var w = Math.max(stage.clientWidth, 280), h = Math.max(stage.clientHeight, 240);
-    camera.aspect = w / h;
-    camera.updateProjectionMatrix();
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-    renderer.setSize(w, h);
-  }
-  window.addEventListener("resize", resize);
-  resize();
-
-  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var needsRender = true;
-  controls.addEventListener("change", function () { needsRender = true; });
-  function tick() {
-    requestAnimationFrame(tick);
-    if (document.visibilityState !== "visible") return;
-    var animating = playing && !reduce;
-    if (animating) {
-      particles.forEach(function (p) {
-        var u = p.userData;
-        u.ang += u.speed;
-        var hemX = u.side === "L" ? left.x : right.x;
-        p.position.x = hemX + Math.cos(u.ang) * u.r;
-        p.position.z = Math.sin(u.ang) * u.r;
-        if (u.rogue && u.r < 2.1) u.r += 0.006;
-        if (u.rogue && p.position.z > 1.8 && p.position.x > 2.5) {
-          p.position.z -= 0.02;
-          p.position.x += 0.015;
+  s.onTick(function (dt) {
+    parts.forEach(function (p) {
+      if (p.leak >= 0) {
+        p.leak += dt * 0.35;
+        if (p.leak > 1.4) seed(p, p.cx);
+      } else {
+        p.ang += dt * p.speed;
+        if (p.rogue) {
+          p.r = Math.min(p.r + dt * 0.12, R - 0.15);
+          var front = Math.sin(p.ang) > 0.93;
+          if (p.r >= R - 0.2 && front) {
+            p.from = p.mesh.position.clone();
+            p.leak = 0;
+          }
         }
-      });
-    }
-    var damp = controls.update();
-    if (animating || damp || needsRender) {
-      renderer.render(scene, camera);
-      needsRender = false;
-    }
-  }
-  tick();
+      }
+      put(p);
+    });
+  });
+  syncBtn = Fig3D.playButton(document.getElementById("btnPlay"), s, { play: "Play field" });
+  s.requestRender();
 })();
 </script>
 </body>

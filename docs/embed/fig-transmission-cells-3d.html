@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Transmission T1 companion: Lotman cells in 3D + MA13 exterior point -->
+<!-- Transmission T1 companion: Lotman's cells as rooms on a two-axis floor, plus the measured MA13 median (ma13_real_subagent_report.json) -->
 <html lang="en">
 <head>
 <link rel="stylesheet" href="../assets/site-theme-vapor.css"/>
@@ -11,118 +11,108 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta name="color-scheme" content="light"/>
-<title>Transmission cells · 3D room model</title>
-<style>
-  :root { --ink:#1a1814; --muted:#5c564c; --rule:#d8d0c4; --wash:#f6f4ef; --accent:#2a4a6f; }
-  body { margin:0; font-family: Georgia, serif; font-size: 11.5pt; line-height: 1.55; color: var(--ink);
-    max-width: 56rem; margin: 0 auto; padding: 1rem 1.25rem 2rem; background: #fff; }
-  h1 { font-size: 1.35rem; margin: 0 0 0.35rem; }
-  a { color: var(--accent); }
-  .embed-back { font-size: 0.88rem; margin: 0 0 0.85rem; }
-  .lede { background: var(--wash); border: 1px solid var(--rule); padding: 0.75rem 0.95rem; margin: 0.75rem 0; font-size: 0.93rem; }
-  .viz-stage { position: relative; border: 1px solid var(--rule); border-radius: 8px; overflow: hidden;
-    background: #faf8f4; height: min(62vh, 520px); min-height: 340px; }
-  #viz3d { position: absolute; inset: 0; cursor: grab; }
-  .cap { font-size: 0.86rem; color: var(--muted); margin: 0.35rem 0 0; max-width: 65ch; }
-</style>
+<title>Transmission rooms · 3D (T1)</title>
+<link rel="stylesheet" href="../assets/fig3d.css"/>
+<script defer src="../assets/fig-quotes.js"></script>
+<script defer src="../assets/fig-terms.js"></script>
 </head>
 <body>
-<p class="embed-back"><a href="fig-transmission-cells.html#t1">&larr; Transmission (2D T1)</a> · <a href="fig-delegation-corpus.html">MA13</a> · <a href="../theory/LOTMAN_INTERPRETATION.html#s13">Journal §13</a></p>
-<h1>Lotman's cells · 3D room model</h1>
-<div class="lede">Horizontal axis: change of volume. Depth axis: how much the receiver adds. Four dashed rooms are Lotman's named corners; the solid blue point is the measured MA13 delegation median (volume ~4.4×, content gain ~0.84, n=26) — outside every named box.</div>
-<div class="viz-stage" id="viz-stage"><div id="viz3d"></div></div>
-<p class="cap">Drag to rotate. Grey wire rooms = Lotman's categories (no counts). Blue sphere = this project's measured cell. Height encodes volume change; forward position encodes receiver-added content.</p>
+<p class="embed-back"><a href="../figures_animated_3d.html">&larr; Animated 3D hub</a> · <a href="fig-transmission-cells.html#t1">Transmission T1 (2D)</a> · <a href="fig-delegation-stack-3d.html">Delegation stack (3D)</a> · <a href="fig-delegation-corpus.html">MA13 2D charts</a> · <a href="../theory/LOTMAN_INTERPRETATION.html#s13">Journal §13</a> · <a href="../index.html">Figures home</a></p>
+
+<h1>Lotman's rooms, and the one he left out (T1, 3D)</h1>
+<div class="lede"><a class="q" data-q="lotman-two-channels">Lotman sorts exchanges</a> with two questions. Does the message change size on the way across? Does the receiver add anything of its own? His named answers are the three wire rooms. The solid room is the corner he never filled in, and the blue ball is the median of our 26 real delegations, which sits right in it: about 4.4 times the volume, with 0.84 of the report's vocabulary new.</div>
+
+<div class="guide">
+  <h3>How to read this</h3>
+  <p>The floor has two axes, labelled in the scene: whether the volume changes, and how much the receiver adds. The four rooms are the four corners of that floor, the same quadrants as the 2D chart. Position inside a room is not scaled, and the rooms' heights mean nothing.</p>
+  <p>Ordinary sending, <a class="term" href="../theory/LOTMAN_INTERPRETATION.html#gloss-i-she" data-tip="Ordinary sending: code and message stay put while who speaks and who listens swap.">I-s/he</a>, keeps the message the same size. <a class="term" href="../theory/LOTMAN_INTERPRETATION.html#gloss-autocomm" data-tip="The message comes back to its sender and restructures how the institution sees itself, not how the public sees it.">Autocommunication</a> lets it grow, but only through rhythm and repetition, with no new facts. <a class="term" href="../theory/LOTMAN_INTERPRETATION.html#gloss-presemiotic" data-tip="Lotman's limit case below both cells: parts of one organism, where the recipient is valued for adding nothing of its own.">Presemiotic binding</a> sits beneath both: parts of one organism, where the receiver is <a class="q" data-q="lotman-presemiotic">prized for adding nothing</a>. A subagent's report grows and fills up with new words, so it fits none of the three, and the plain transmission picture that Lotman criticises <a class="q" data-q="lotman-excludes-new">rules out new messages</a> altogether.</p>
+</div>
+
+<div class="viz-stage" id="viz-stage" role="img" aria-label="Four rooms on a floor with two labelled axes, volume change and receiver-added content. Three wireframe rooms are Lotman's named cells: presemiotic binding, I-s/he, and I-I autocommunication. The fourth, solid and translucent, is the unnamed cell, and it holds a blue ball for the measured MA13 median: volume about 4.4 times, content gain about 0.84, 26 delegations.">
+  <div id="viz3d"></div>
+</div>
+<div class="viz-controls"><span class="hint">Drag to turn · scroll to zoom · nothing here moves on its own</span></div>
+<div class="legend">
+  <span><i class="sq" style="background:#b9bdc6"></i> Lotman's cells, no counts</span>
+  <span><i class="sq" style="background:#2a4a6f"></i> unnamed cell, this project's claim</span>
+  <span><i style="background:#2a4a6f"></i> MA13 median, measured</span>
+</div>
+<p class="cap"><strong>Theory tie-in:</strong> this is the 3D version of journal <a href="../theory/LOTMAN_INTERPRETATION.html#s13">§13</a>'s correction. The claim is narrow: <a class="q" data-q="lotman-two-channels">Lotman's two axes</a> let you see when a pipeline does not fit his named boxes. Nobody is claiming he would have called a coding agent a semiotic person. Section 13 argues the dissertation should admit the room exists before it names it.</p>
+
+<h2>Numbers in this figure, and where they come from</h2>
+<table>
+  <thead><tr><th>Value as drawn</th><th>Report key</th><th>Source file</th></tr></thead>
+  <tbody>
+    <tr><td>volume about 4.4 times at the median</td><td><code>aggregate.compression_ratio.median</code> = 4.3843</td><td><code>ma13_real_subagent_report.json</code></td></tr>
+    <tr><td>content gain about 0.84 at the median</td><td><code>aggregate.content_gain_ratio.median</code> = 0.8387</td><td>same</td></tr>
+    <tr><td>n = 26 real delegations</td><td><code>corpus.n_delegations</code> = 26</td><td>same</td></tr>
+  </tbody>
+</table>
+<p class="limits">Typology cells from Lotman, <em>Universe of the Mind: A Semiotic Theory of Culture</em>, trans. Ann Shukman (Bloomington: Indiana UP, 1990), autocommunication chapter. MA13 is retrospective token arithmetic over one agent's corpus with the child's intermediate prose redacted. Its content gain is a vocabulary measure and says nothing about quality.</p>
+
 <script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>
 <script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://unpkg.com/three@0.128.0/examples/js/renderers/CSS2DRenderer.js"></script>
+<script src="../assets/fig3d.js"></script>
 <script>
 (function () {
-  var CELLS = [
-    { name: "Presemiotic binding", x: -1.8, z: -1.8, h: 0.4, color: 0xb9bdc6, dashed: true },
-    { name: "I–s/he", x: -1.8, z: 1.8, h: 0.5, color: 0xb9bdc6, dashed: true },
-    { name: "I–I autocomm", x: 1.8, z: -1.8, h: 1.2, color: 0xb9bdc6, dashed: true },
-    { name: "Unnamed (claim)", x: 1.8, z: 1.8, h: 1.0, color: 0x2a4a6f, dashed: false }
-  ];
-  var MA13 = { x: 2.35, z: 2.1, h: 1.35, vol: 4.4, gain: 0.84 };
+  /* Quadrants match the 2D T1 canvas: x = volume of information (left unchanged, right increases),
+     z = content the receiver adds (back none, front substantial). The 2D guide text calls
+     I-s/he "receiver adds little" while its canvas puts it in the substantial row; this follows the canvas. */
+  var C = 1.8, ROOM = 1.5, H = 0.9;
+  var s = Fig3D.stage({ camera: [4.8, 6.4, 8.6], target: [0, 0.2, 0.4], fov: 46 });
 
-  var stage = document.getElementById("viz-stage");
-  var mount = document.getElementById("viz3d");
-  var scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xfaf8f4);
-  var camera = new THREE.PerspectiveCamera(48, 1, 0.1, 100);
-  camera.position.set(5, 5, 6);
-  var renderer = new THREE.WebGLRenderer({ antialias: true });
-  mount.appendChild(renderer.domElement);
-  var controls = new THREE.OrbitControls(camera, renderer.domElement);
-  controls.target.set(0, 0.6, 0);
-  scene.add(new THREE.AmbientLight(0xffffff, 0.7));
-  var dir = new THREE.DirectionalLight(0xffffff, 0.75);
-  dir.position.set(4, 6, 3);
-  scene.add(dir);
-
-  var floor = new THREE.Mesh(
-    new THREE.PlaneGeometry(8, 8),
-    new THREE.MeshPhongMaterial({ color: 0xe8e4dc, side: THREE.DoubleSide })
-  );
+  var floor = new THREE.Mesh(new THREE.PlaneGeometry(8, 8), new THREE.MeshPhongMaterial({ color: 0xe8e4dc, side: THREE.DoubleSide }));
   floor.rotation.x = -Math.PI / 2;
   floor.position.y = -0.01;
-  scene.add(floor);
+  s.scene.add(floor);
+  var grid = new THREE.GridHelper(8, 2, 0xb9b2a6, 0xb9b2a6);
+  s.scene.add(grid);
 
+  var roomGeo = new THREE.BoxGeometry(ROOM, H, ROOM);
+  roomGeo.translate(0, H / 2, 0);
+  var edgeGeo = new THREE.EdgesGeometry(roomGeo);
+  var greyLine = new THREE.LineDashedMaterial({ color: 0x8d94a3, dashSize: 0.12, gapSize: 0.08 });
+
+  var CELLS = [
+    { name: "Presemiotic binding", x: -C, z: -C },
+    { name: "I-s/he", x: -C, z: C },
+    { name: "I-I autocommunication", x: C, z: -C },
+    { name: "Unnamed (our claim)", x: C, z: C, ours: true }
+  ];
   CELLS.forEach(function (c) {
-    var geo = new THREE.BoxGeometry(1.5, c.h, 1.5);
-    var mat = new THREE.MeshPhongMaterial({
-      color: c.color,
-      transparent: true,
-      opacity: c.dashed ? 0.15 : 0.35,
-      wireframe: c.dashed
-    });
-    var mesh = new THREE.Mesh(geo, mat);
-    mesh.position.set(c.x, c.h / 2, c.z);
-    scene.add(mesh);
+    if (c.ours) {
+      var solid = new THREE.Mesh(roomGeo, new THREE.MeshPhongMaterial({ color: 0x2a4a6f, transparent: true, opacity: 0.16, depthWrite: false }));
+      solid.position.set(c.x, 0, c.z);
+      s.scene.add(solid);
+      var edges = new THREE.LineSegments(edgeGeo, new THREE.LineBasicMaterial({ color: 0x2a4a6f }));
+      edges.position.set(c.x, 0, c.z);
+      s.scene.add(edges);
+    } else {
+      var wire = new THREE.LineSegments(edgeGeo, greyLine);
+      wire.computeLineDistances();
+      wire.position.set(c.x, 0, c.z);
+      s.scene.add(wire);
+    }
+    s.label(c.name, new THREE.Vector3(c.x, H + 0.25, c.z), c.ours ? "strong" : "muted");
   });
 
-  var ext = new THREE.Mesh(
-    new THREE.SphereGeometry(0.22, 24, 24),
-    new THREE.MeshPhongMaterial({ color: 0x2a4a6f, emissive: 0x1a3050, emissiveIntensity: 0.4 })
-  );
-  ext.position.set(MA13.x, MA13.h, MA13.z);
-  scene.add(ext);
-
-  var ring = new THREE.Mesh(
-    new THREE.RingGeometry(0.28, 0.38, 32),
-    new THREE.MeshBasicMaterial({ color: 0x9a3b3b, side: THREE.DoubleSide, transparent: true, opacity: 0.7 })
-  );
+  var ball = new THREE.Mesh(new THREE.SphereGeometry(0.22, 24, 16),
+    new THREE.MeshPhongMaterial({ color: 0x2a4a6f, emissive: 0x1a3050, emissiveIntensity: 0.4 }));
+  ball.position.set(C + 0.25, 0.45, C + 0.2);
+  s.scene.add(ball);
+  var ring = new THREE.Mesh(new THREE.RingGeometry(0.28, 0.38, 32),
+    new THREE.MeshBasicMaterial({ color: 0x9a3b3b, side: THREE.DoubleSide, transparent: true, opacity: 0.7 }));
   ring.rotation.x = -Math.PI / 2;
-  ring.position.set(MA13.x, 0.02, MA13.z);
-  scene.add(ring);
+  ring.position.set(ball.position.x, 0.02, ball.position.z);
+  s.scene.add(ring);
+  s.label("MA13 median: volume ×4.4, content gain 0.84, n = 26", new THREE.Vector3(ball.position.x, 0.05, ball.position.z + 0.75), "strong");
 
-  function resize() {
-    var w = Math.max(stage.clientWidth, 280), h = Math.max(stage.clientHeight, 240);
-    camera.aspect = w / h;
-    camera.updateProjectionMatrix();
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-    renderer.setSize(w, h);
-  }
-  window.addEventListener("resize", resize);
-  resize();
-
-  var t0 = performance.now();
-  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var needsRender = true;
-  controls.addEventListener("change", function () { needsRender = true; });
-  function tick(now) {
-    requestAnimationFrame(tick);
-    if (document.visibilityState !== "visible") return;
-    var motion = !reduce;
-    if (motion) {
-      ext.position.y = MA13.h + Math.sin((now - t0) * 0.0012) * 0.08;
-    }
-    var damp = controls.update();
-    if (motion || damp || needsRender) {
-      renderer.render(scene, camera);
-      needsRender = false;
-    }
-  }
-  tick();
+  s.label("volume unchanged", new THREE.Vector3(-C, 0.02, 4.3), "axis");
+  s.label("volume increases", new THREE.Vector3(C, 0.02, 4.3), "axis");
+  s.label("receiver adds nothing", new THREE.Vector3(-4.4, 0.02, -C), "axis");
+  s.label("receiver adds a lot", new THREE.Vector3(-4.4, 0.02, C), "axis");
+  s.requestRender();
 })();
 </script>
 </body>

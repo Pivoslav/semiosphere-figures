@@ -13,7 +13,7 @@ Each figure should answer: *what quantity is encoded in which axis, and what wou
 | **MA12** round-trip | Bars, loss chart | **Open orbits** — done: `fig-roundtrip-helicoid-3d.html`. |
 | **MA15** polyglottism | (tables) | **Dyad cube** — pilot: `fig-ma15-dyad-cube-3d.html` (sync full matrix from JSON when expanded). |
 | **MA4b/MA4c** halt | Pipeline canvas, bars | **Flow model** — pilot: `fig-halt-flow-3d.html` (B2 vs D2); next: scoped MA4c second manifold. |
-| **MA13** delegation | Corpus strips | **Stack height** — pilot: `fig-delegation-stack-3d.html` (26 columns, play sequence; sync exact ratios from JSON when bundled). |
+| **MA13** delegation | Corpus strips | **Stack height** — done: `fig-delegation-stack-3d.html` draws the 26 measured ratios in report order (same array as the 2D beeswarm). |
 | **MA10** isolation | Gain bars | **Source field** — pilot: `fig-isolation-field-3d.html` (P0 vs P3 hemispheres, tag-gate bleed). |
 | **Montreal** embedding | PCA 2D/3D | **Relay pulse** on thematic arcs — done in `fig-lotman-semiosphere-3d.html` (2026-10-02). |
 | **Transmission cells** | Cell diagram | **3D rooms** — pilot: `fig-transmission-cells-3d.html`. |
@@ -21,7 +21,7 @@ Each figure should answer: *what quantity is encoded in which axis, and what wou
 
 ## Technical stack
 
-- **Three.js** (same 0.128 CDN as Lotman L1 figures), `OrbitControls`, optional `CSS2DRenderer` for labels.
+- **Three.js** (same 0.128 CDN as Lotman L1 figures), `OrbitControls`, `CSS2DRenderer` for labels. Shared stage in `docs/assets/fig3d.js` (render on demand, pauses off screen); shared layout in `docs/assets/fig3d.css`; glossary and source popovers in `docs/assets/fig-terms.js` with quotations in `docs/assets/fig-quotes.js`.
 - **No theme animation** on text; figure stage uses `#faf8f4` / white canvas only.
 - **Reduced motion**: `prefers-reduced-motion: reduce` → static frame, scrubber instead of autoplay.
 - **Accessibility**: `role="img"` + prose caption with all numbers; motion is illustrative.

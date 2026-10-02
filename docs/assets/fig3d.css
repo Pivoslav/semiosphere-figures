@@ -1,0 +1,48 @@
+/* Shared layout for the 3D companion pages in docs/embed/*-3d.html (the pilots
+   authored in this repo). Matches the 2D experiment pages: Georgia body,
+   wash lede, left-ruled guide boxes, provenance table. */
+:root { --ink:#1a1814; --muted:#5c564c; --rule:#d8d0c4; --wash:#f6f4ef; --accent:#2a4a6f; }
+* { box-sizing: border-box; }
+body { margin: 0 auto; font-family: Georgia, "Times New Roman", serif; font-size: 11.5pt; line-height: 1.55; color: var(--ink);
+  max-width: 56rem; padding: 1rem 1.25rem 2.5rem; background: #fff; }
+h1 { font-size: 1.4rem; margin: 0 0 0.4rem; }
+h2 { font-size: 1.06rem; margin: 1.9rem 0 0.45rem; }
+a { color: var(--accent); }
+code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.82em; }
+.embed-back { font-size: 0.88rem; margin: 0 0 0.85rem; }
+.lede { background: var(--wash); border: 1px solid var(--rule); padding: 0.8rem 1rem; margin: 0.75rem 0 1rem; font-size: 0.95rem; }
+.guide { background: #fff; border: 1px solid var(--rule); border-left: 4px solid var(--accent); padding: 0.75rem 1rem; margin: 0.75rem 0 1rem; font-size: 0.95rem; }
+.guide h3 { font-family: system-ui, sans-serif; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin: 0 0 0.45rem; font-weight: 600; }
+.guide p { margin: 0.35rem 0; }
+.guide p:first-of-type { margin-top: 0; }
+.guide p:last-child { margin-bottom: 0; }
+.wink { font-size: 0.9rem; color: #444; font-style: italic; margin: 0.6rem 0; }
+.viz-stage { position: relative; border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; background: #faf8f4;
+  height: min(60vh, 500px); min-height: 330px; }
+.viz-stage.tall { height: min(64vh, 540px); }
+#viz3d { position: absolute; inset: 0; cursor: grab; touch-action: none; }
+#viz3d:active { cursor: grabbing; }
+.viz-controls { display: flex; flex-wrap: wrap; gap: 0.45rem 0.6rem; align-items: center; margin: 0.55rem 0 0.35rem;
+  font-family: system-ui, sans-serif; font-size: 0.8rem; }
+.viz-controls button, .viz-controls select { font: inherit; padding: 0.35rem 0.6rem; border: 1px solid var(--rule); border-radius: 5px; background: #fff; cursor: pointer; }
+.viz-controls button:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+.viz-controls button:disabled { opacity: 0.55; cursor: default; }
+.viz-controls input[type=range] { width: min(18rem, 60vw); }
+.viz-controls .hint { color: var(--muted); }
+.cap { font-size: 0.88rem; color: var(--muted); margin: 0.35rem 0 0; }
+.legend { display: flex; flex-wrap: wrap; gap: 0.35rem 1rem; font-family: system-ui, sans-serif; font-size: 0.76rem; color: var(--muted); margin: 0.45rem 0 0; }
+.legend span { display: inline-flex; align-items: center; gap: 0.3rem; white-space: nowrap; }
+.legend i { width: 0.75rem; height: 0.75rem; border-radius: 50%; display: inline-block; }
+.legend i.sq { border-radius: 2px; }
+/* CSS2D labels inside the scene */
+.lbl { font-family: system-ui, sans-serif; font-size: 11px; line-height: 1.25; color: #1a1814; background: rgba(255,253,250,0.92);
+  border: 1px solid #d8d0c4; border-radius: 4px; padding: 0.12rem 0.4rem; white-space: nowrap; pointer-events: none; }
+.lbl.muted { color: #6b6458; background: rgba(255,253,250,0.75); }
+.lbl.strong { border-color: #2a4a6f; color: #2a4a6f; font-weight: 600; }
+.lbl.warn { border-color: #9a3b3b; color: #9a3b3b; }
+.lbl.axis { background: transparent; border: none; color: #6b6458; font-style: italic; }
+table { width: 100%; border-collapse: collapse; font-size: 0.86rem; margin: 0.75rem 0 1rem; font-family: system-ui, sans-serif; }
+th, td { border: 1px solid var(--rule); padding: 0.42rem 0.55rem; text-align: left; vertical-align: top; }
+th { background: #f1efe9; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; }
+.limits { font-size: 0.88rem; color: var(--muted); }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }

@@ -4,6 +4,7 @@ Internal working notes for `semiosphere-figures`. Nothing in this folder is publ
 
 ## Start here, in order
 
+0. `BRIEF_3D_FIGURES_2026-10-02.md` · open work on the 3D figures: what to port to the thesis lab before the next sync, six things to verify, and replacement copy for the generated Lotman pages.
 1. `OPEN_THREADS.md` · what is unexplored, with stable thread ids and the cheapest next action for each. Also lists what is closed, so nothing gets redone.
 2. `docs/theory/LOTMAN_INTERPRETATION.html` · the research journal. Sections one to eleven are the 2026-09-26 battery; section twelve is the MA1 and MA4 run.
 3. `MULTI_AGENT_LOTMAN_2026-10-01.md` · scratchpad behind journal section ten, plus the figure inventory for M1 to M3.

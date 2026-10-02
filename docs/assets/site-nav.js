@@ -42,12 +42,12 @@
       label: "Animated 3D",
       children: [
         { label: "Hub · all motion & orbit figures", href: "figures_animated_3d.html" },
-        { label: "Round-trip helicoid (MA12)", href: "embed/fig-roundtrip-helicoid-3d.html" },
-        { label: "Halt flow (MA4b)", href: "embed/fig-halt-flow-3d.html" },
-        { label: "Polyglottism dyad cube (MA15)", href: "embed/fig-ma15-dyad-cube-3d.html" },
-        { label: "Delegation stack (MA13)", href: "embed/fig-delegation-stack-3d.html" },
-        { label: "Isolation source field (MA10)", href: "embed/fig-isolation-field-3d.html" },
-        { label: "Transmission cells · 3D", href: "embed/fig-transmission-cells-3d.html" },
+        { label: "Round trips that do not close (MA12)", href: "embed/fig-roundtrip-helicoid-3d.html" },
+        { label: "Where halt is decided (MA4b)", href: "embed/fig-halt-flow-3d.html" },
+        { label: "Four model pairings (MA15 pilot)", href: "embed/fig-ma15-dyad-cube-3d.html" },
+        { label: "Twenty six hand-offs (MA13)", href: "embed/fig-delegation-stack-3d.html" },
+        { label: "What isolation invents (MA10)", href: "embed/fig-isolation-field-3d.html" },
+        { label: "Lotman's rooms (T1)", href: "embed/fig-transmission-cells-3d.html" },
         { label: "Lotman semiosphere L1 · pulse", href: "embed/fig-lotman-semiosphere-3d.html" },
         { label: "Semiosphere embedding · orbit", href: "embed/fig-semiosphere-embedding-3d.html" },
         { label: "Operator tensor L2", href: "embed/fig-lotman-operator-tensor-3d.html" },
@@ -120,19 +120,21 @@
   ];
 
   var RELATED = {
-    "index.html": [{ t: "Animated 3D hub", h: "figures_animated_3d.html" }],
     "figures_animated_3d.html": [
       { t: "Figures home", h: "index.html" },
       { t: "Lotman 3D gallery", h: "lotman_3d_evidence.html" },
       { t: "Journal", h: "theory/LOTMAN_INTERPRETATION.html" },
     ],
     "embed/fig-delegation-stack-3d.html": [
-      { t: "Animated 3D hub", h: "../figures_animated_3d.html" },
-      { t: "MA13 (2D)", h: "fig-delegation-corpus.html" },
+      { t: "Animated 3D hub", h: "figures_animated_3d.html" },
+      { t: "MA13 (2D)", h: "embed/fig-delegation-corpus.html" },
+      { t: "Lotman's rooms (3D)", h: "embed/fig-transmission-cells-3d.html" },
+      { t: "Journal §13", h: "theory/LOTMAN_INTERPRETATION.html#s13" },
     ],
     "embed/fig-isolation-field-3d.html": [
-      { t: "Animated 3D hub", h: "../figures_animated_3d.html" },
-      { t: "MA10 (2D)", h: "fig-isolation-laundering.html" },
+      { t: "Animated 3D hub", h: "figures_animated_3d.html" },
+      { t: "MA10 (2D)", h: "embed/fig-isolation-laundering.html" },
+      { t: "Journal §15", h: "theory/LOTMAN_INTERPRETATION.html#s15" },
     ],
     "embed/fig-multi-agent-typing.html": [
       { t: "Journal §10", h: "theory/LOTMAN_INTERPRETATION.html#s10" },
@@ -149,7 +151,9 @@
       { t: "Transmission §13", h: "embed/fig-transmission-cells.html" },
     ],
     "embed/fig-roundtrip-helicoid-3d.html": [
+      { t: "Animated 3D hub", h: "figures_animated_3d.html" },
       { t: "MA12 (2D charts)", h: "embed/fig-roundtrip-asymmetry.html" },
+      { t: "MA15 pairings (3D)", h: "embed/fig-ma15-dyad-cube-3d.html" },
       { t: "Journal §14", h: "theory/LOTMAN_INTERPRETATION.html#s14" },
     ],
     "embed/fig-halt-adjudication.html": [
@@ -160,7 +164,9 @@
       { t: "Multi-agent typing", h: "embed/fig-multi-agent-typing.html" },
     ],
     "embed/fig-halt-flow-3d.html": [
+      { t: "Animated 3D hub", h: "figures_animated_3d.html" },
       { t: "MA4b (2D)", h: "embed/fig-halt-adjudication.html" },
+      { t: "Transmission T3", h: "embed/fig-transmission-cells.html#t3" },
       { t: "Journal §13", h: "theory/LOTMAN_INTERPRETATION.html#s13" },
     ],
     "embed/fig-transmission-cells.html": [
@@ -171,20 +177,26 @@
       { t: "Multi-agent §10", h: "embed/fig-multi-agent-typing.html" },
     ],
     "embed/fig-transmission-cells-3d.html": [
+      { t: "Animated 3D hub", h: "figures_animated_3d.html" },
       { t: "Transmission (2D)", h: "embed/fig-transmission-cells.html#t1" },
+      { t: "Delegation stack (3D)", h: "embed/fig-delegation-stack-3d.html" },
       { t: "Journal §13", h: "theory/LOTMAN_INTERPRETATION.html#s13" },
     ],
     "embed/fig-ma15-dyad-cube-3d.html": [
+      { t: "Animated 3D hub", h: "figures_animated_3d.html" },
       { t: "MA12 round-trip", h: "embed/fig-roundtrip-asymmetry.html" },
+      { t: "Round-trip orbits (3D)", h: "embed/fig-roundtrip-helicoid-3d.html" },
       { t: "Journal §14", h: "theory/LOTMAN_INTERPRETATION.html#s14" },
     ],
     "embed/fig-delegation-corpus.html": [
+      { t: "3D stack", h: "embed/fig-delegation-stack-3d.html" },
       { t: "Journal §13", h: "theory/LOTMAN_INTERPRETATION.html#s13" },
       { t: "Transmission T1", h: "embed/fig-transmission-cells.html#t1" },
       { t: "Isolation MA10", h: "embed/fig-isolation-laundering.html" },
       { t: "Multi-agent §10", h: "embed/fig-multi-agent-typing.html" },
     ],
     "embed/fig-isolation-laundering.html": [
+      { t: "3D field", h: "embed/fig-isolation-field-3d.html" },
       { t: "Journal §15", h: "theory/LOTMAN_INTERPRETATION.html#s15" },
       { t: "Journal §12", h: "theory/LOTMAN_INTERPRETATION.html#s12" },
       { t: "Round-trip MA12", h: "embed/fig-roundtrip-asymmetry.html" },
@@ -200,6 +212,7 @@
       { t: "Figures home", h: "index.html" },
     ],
     "index.html": [
+      { t: "Animated 3D hub", h: "figures_animated_3d.html" },
       { t: "Research journal", h: "theory/LOTMAN_INTERPRETATION.html" },
       { t: "Multi-agent hand-offs", h: "embed/fig-multi-agent-typing.html" },
       { t: "Montreal 3D embedding", h: "embed/fig-semiosphere-embedding-3d.html" },
@@ -217,6 +230,7 @@
       { t: "3D embedding", h: "embed/fig-semiosphere-embedding-3d.html" },
     ],
     "embed/fig-semiosphere-embedding-3d.html": [
+      { t: "Animated 3D hub", h: "figures_animated_3d.html" },
       { t: "Partial map", h: "embed/fig-partial-map-montreal.html" },
       { t: "Filter model", h: "filter_model.html" },
       { t: "Appendix encoders", h: "theory/appendix_language_encoding.html" },

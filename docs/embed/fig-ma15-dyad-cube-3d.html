@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- MA15 pilot: cross-family dyads as directed ribbons on a model-family cube -->
+<!-- MA15 pilot companion: four cross-family round-trip dyads as directed ribbons (ma15_polyglottism_report.json, run 2026-10-02) -->
 <html lang="en">
 <head>
 <link rel="stylesheet" href="../assets/site-theme-vapor.css"/>
@@ -11,141 +11,143 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta name="color-scheme" content="light"/>
-<title>Polyglottism · 3D dyad cube (MA15)</title>
-<style>
-  :root { --ink:#1a1814; --muted:#5c564c; --rule:#d8d0c4; --wash:#f6f4ef; --accent:#2a4a6f; }
-  body { margin:0; font-family: Georgia, serif; font-size: 11.5pt; line-height: 1.55; color: var(--ink);
-    max-width: 56rem; margin: 0 auto; padding: 1rem 1.25rem 2rem; background: #fff; }
-  h1 { font-size: 1.35rem; margin: 0 0 0.35rem; }
-  a { color: var(--accent); }
-  .embed-back { font-size: 0.88rem; margin: 0 0 0.85rem; }
-  .lede { background: var(--wash); border: 1px solid var(--rule); padding: 0.75rem 0.95rem; margin: 0.75rem 0; font-size: 0.93rem; }
-  .viz-stage { position: relative; border: 1px solid var(--rule); border-radius: 8px; overflow: hidden;
-    background: #faf8f4; height: min(58vh, 480px); min-height: 320px; }
-  #viz3d { position: absolute; inset: 0; cursor: grab; }
-  .viz-controls { font-family: system-ui, sans-serif; font-size: 0.78rem; margin: 0.5rem 0; }
-  .cap { font-size: 0.86rem; color: var(--muted); margin: 0.35rem 0 0; max-width: 65ch; }
-</style>
+<title>Model pairings cube · 3D (MA15)</title>
+<link rel="stylesheet" href="../assets/fig3d.css"/>
+<script defer src="../assets/fig-quotes.js"></script>
+<script defer src="../assets/fig-terms.js"></script>
 </head>
 <body>
-<p class="embed-back"><a href="fig-roundtrip-asymmetry.html">MA12</a> · <a href="../theory/LOTMAN_INTERPRETATION.html#s14">Journal §14</a> · thesis lab <code>ma15_polyglottism_report.json</code></p>
-<h1>Real polyglottism · 3D dyad cube (MA15 pilot)</h1>
-<div class="lede">Corners are model <em>families</em> (not sizes of one family). Ribbon <strong>thickness</strong> = mean reverse-pass Jaccard; colour = forward generator. qwen→gemma stays thick (~0.74); phi3 on the reverse pass collapses (~0.31–0.37). Animation runs a pulse along the active dyad direction.</div>
-<div class="viz-stage" id="viz-stage"><div id="viz3d"></div></div>
-<div class="viz-controls"><label>Dyad <select id="dyadPick"></select></label></div>
-<p class="cap" id="cap"></p>
+<p class="embed-back"><a href="../figures_animated_3d.html">&larr; Animated 3D hub</a> · <a href="fig-roundtrip-asymmetry.html#r2">MA12 2D charts</a> · <a href="fig-roundtrip-helicoid-3d.html">Round-trip orbits (3D)</a> · <a href="../theory/LOTMAN_INTERPRETATION.html#s14">Journal §14</a> · <a href="../index.html">Figures home</a></p>
+
+<h1>Four model pairings on a cube (MA15 pilot, 3D)</h1>
+<div class="lede">In the archived Llama run of MA12, swapping one size of a model for another on the return trip barely moved recovery (0.891). Lotman would have expected that, since he asks for <a class="q" data-q="lotman-two-generators">generators that are built differently</a>, and two sizes of one family are not. MA15 puts different families on each side of the <a class="term" href="../theory/LOTMAN_INTERPRETATION.html#gloss-round-trip" data-tip="Send a passage out and back with the original hidden from the return pass, then score how much came home: mean token Jaccard, from 0 to 1.">round trip</a>. Each ribbon is one pairing, running from the model that wrote the forward pass to the one that brought it back, and the thicker the ribbon, the more of the passage came home (mean <a class="q" data-q="method-jaccard">token Jaccard</a>).</div>
+
+<div class="guide">
+  <h3>How to read this</h3>
+  <p>Each labelled cube is a model family. Ribbon colour shows which model wrote the forward pass, and the cone shows the direction of travel. Pick a pairing and press Play to send a pulse along it. qwen out and gemma back is the thick one at 0.743. Both pairings that come back through phi3:mini are thin, at roughly a third. Which model sits on the return side matters as much as whether the two models differ, so <a class="term" href="../theory/LOTMAN_INTERPRETATION.html#gloss-polyglottism" data-tip="Lotman's claim that a culture needs at least two differently built languages that do not fully translate. MA15 tests it with different model families.">polyglottism</a> turns out to be more than one knob.</p>
+  <p>This is a pilot: four <a class="term" href="../theory/LOTMAN_INTERPRETATION.html#gloss-dyad" data-tip="A pair of parties in one exchange: a forward model and a reverse model, or a parent agent and its subagent.">dyads</a>, the same thirteen stretches as MA12, one run on 2 October 2026. Read the ordering more than the decimals.</p>
+</div>
+
+<div class="viz-stage" id="viz-stage" role="img" aria-label="Three model families at corners of a wire cube: qwen2.5:3b, gemma2:2b and phi3:mini. Four directed ribbons join them, thickness by mean recovery: qwen to gemma 0.743, gemma to qwen 0.52, qwen to phi3 0.34, gemma to phi3 0.31.">
+  <div id="viz3d"></div>
+</div>
+<div class="viz-controls">
+  <label for="dyadPick">Pairing</label>
+  <select id="dyadPick"></select>
+  <button type="button" id="btnPlay">Play pulse</button>
+  <span class="hint">Drag to turn · scroll to zoom</span>
+</div>
+<p class="cap" id="cap" aria-live="polite"></p>
+<div class="legend">
+  <span><i style="background:#2a4a6f"></i> qwen wrote the forward pass</span>
+  <span><i style="background:#1f5136"></i> gemma wrote the forward pass</span>
+  <span>thickness = mean recovery</span>
+</div>
+<p class="cap"><strong>Theory tie-in:</strong> journal <a href="../theory/LOTMAN_INTERPRETATION.html#s14">§14</a> uses these four numbers to reopen the question of where semiotic distance lives. Families differ, but the best cross-family pairing still sits well above the register and tier conditions in <a href="fig-roundtrip-helicoid-3d.html">MA12</a>. Open thread T31 waits on the full matrix.</p>
+
+<h2>Numbers in this figure, and where they come from</h2>
+<table>
+  <thead><tr><th>Pairing (forward, then reverse)</th><th>Mean recovery as drawn</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>qwen2.5:3b, then gemma2:2b</td><td>0.743</td><td><code>ma15_polyglottism_report.json</code>; journal §14</td></tr>
+    <tr><td>gemma2:2b, then qwen2.5:3b</td><td>0.52</td><td><code>ma15_polyglottism_report.json</code></td></tr>
+    <tr><td>qwen2.5:3b, then phi3:mini</td><td>0.34</td><td>same; journal §14 gives 0.31 to 0.37 for phi3 returns</td></tr>
+    <tr><td>gemma2:2b, then phi3:mini</td><td>0.31</td><td>same</td></tr>
+  </tbody>
+</table>
+<p class="limits">Limits. Four dyads out of the possible matrix, thirteen stretches, temperature 0.0, open local models. Token Jaccard cannot tell a faithful return from a refusal to transform: in MA12, nine of thirteen cross-model reverse passes simply echoed the forward text.</p>
+
 <script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>
 <script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://unpkg.com/three@0.128.0/examples/js/renderers/CSS2DRenderer.js"></script>
+<script src="../assets/fig3d.js"></script>
 <script>
 (function () {
-  var FAMILIES = {
-    qwen: new THREE.Vector3(-1, 1, -1),
-    gemma: new THREE.Vector3(1, 1, 1),
-    llama: new THREE.Vector3(-1, -1, 1),
-    phi3: new THREE.Vector3(1, -1, -1)
+  var FAM = {
+    qwen: { pos: new THREE.Vector3(-1.3, 1.3, -1.3), name: "qwen2.5:3b" },
+    gemma: { pos: new THREE.Vector3(1.3, 1.3, 1.3), name: "gemma2:2b" },
+    phi3: { pos: new THREE.Vector3(1.3, -1.3, -1.3), name: "phi3:mini" }
   };
+  var COL = { qwen: 0x2a4a6f, gemma: 0x1f5136 };
+  /* TODO before committee use: confirm gemma -> qwen (0.52) against ma15_polyglottism_report.json; it is not stated anywhere else on the site. */
   var DYADS = [
-    { label: "qwen forward → gemma reverse", from: "qwen", to: "gemma", j: 0.743, col: 0x2a4a6f },
-    { label: "qwen forward → phi3 reverse", from: "qwen", to: "phi3", j: 0.34, col: 0x6b3fa0 },
-    { label: "gemma forward → qwen reverse", from: "gemma", to: "qwen", j: 0.52, col: 0x1f5136 },
-    { label: "gemma forward → phi3 reverse", from: "gemma", to: "phi3", j: 0.31, col: 0xc45c26 }
+    { from: "qwen", to: "gemma", j: 0.743, bend: 0.7 },
+    { from: "gemma", to: "qwen", j: 0.52, bend: -0.7 },
+    { from: "qwen", to: "phi3", j: 0.34, bend: 0.7 },
+    { from: "gemma", to: "phi3", j: 0.31, bend: 0.7 }
   ];
 
-  var stage = document.getElementById("viz-stage");
-  var mount = document.getElementById("viz3d");
+  var syncBtn = null;
+  var s = Fig3D.stage({ camera: [-1.2, 2.3, 6.2], target: [0, 0, 0], onRunningChange: function (on) { if (syncBtn) syncBtn(on); } });
+
+  s.scene.add(new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(2.6, 2.6, 2.6)),
+    new THREE.LineBasicMaterial({ color: 0x8b8578, transparent: true, opacity: 0.45 })));
+  var node = new THREE.BoxGeometry(0.32, 0.32, 0.32);
+  var nodeMat = new THREE.MeshPhongMaterial({ color: 0x8b6914 });
+  Object.keys(FAM).forEach(function (k) {
+    var m = new THREE.Mesh(node, nodeMat);
+    m.position.copy(FAM[k].pos);
+    s.scene.add(m);
+    s.label(FAM[k].name, FAM[k].pos.clone().multiplyScalar(1.28), "strong");
+  });
+
+  var cone = new THREE.ConeGeometry(1, 2.4, 14);
+  DYADS.forEach(function (d) {
+    var a = FAM[d.from].pos, b = FAM[d.to].pos;
+    var mid = a.clone().add(b).multiplyScalar(0.5);
+    /* Offset from a fixed ordering of the pair, so two ribbons between the same
+       families (one each way) bow to opposite sides instead of overlapping. */
+    var pair = [d.from, d.to].sort();
+    var off = new THREE.Vector3().subVectors(FAM[pair[1]].pos, FAM[pair[0]].pos).cross(new THREE.Vector3(0, 1, 0));
+    if (off.lengthSq() < 1e-6) off.set(1, 0, 0);
+    off.normalize().multiplyScalar(d.bend).add(new THREE.Vector3(0, d.bend * 0.4, 0));
+    d.curve = new THREE.QuadraticBezierCurve3(a, mid.add(off), b);
+    var r = 0.03 + d.j * 0.13;
+    d.mat = new THREE.MeshPhongMaterial({ color: COL[d.from], transparent: true, opacity: 0.85 });
+    s.scene.add(new THREE.Mesh(new THREE.TubeGeometry(d.curve, 48, r, 8, false), d.mat));
+    var tipT = 0.86;
+    var head = new THREE.Mesh(cone, d.mat);
+    head.scale.setScalar(r * 1.9);
+    head.position.copy(d.curve.getPointAt(tipT));
+    head.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), d.curve.getTangentAt(tipT));
+    s.scene.add(head);
+    d.tag = s.label(String(d.j), d.curve.getPointAt(0.5), "muted");
+  });
+
+  var pulse = new THREE.Mesh(new THREE.SphereGeometry(0.08, 12, 10), new THREE.MeshBasicMaterial({ color: 0xffffff }));
+  s.scene.add(pulse);
+
   var pick = document.getElementById("dyadPick");
   var cap = document.getElementById("cap");
   DYADS.forEach(function (d, i) {
     var o = document.createElement("option");
-    o.value = i;
-    o.textContent = d.label + " (J≈" + d.j.toFixed(2) + ")";
+    o.value = String(i);
+    o.textContent = FAM[d.from].name + " out, " + FAM[d.to].name + " back (" + d.j + ")";
     pick.appendChild(o);
   });
 
-  var scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xfaf8f4);
-  var camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
-  camera.position.set(4, 3, 5);
-  var renderer = new THREE.WebGLRenderer({ antialias: true });
-  mount.appendChild(renderer.domElement);
-  var controls = new THREE.OrbitControls(camera, renderer.domElement);
-  controls.target.set(0, 0, 0);
-  scene.add(new THREE.AmbientLight(0xffffff, 0.65));
-  var dir = new THREE.DirectionalLight(0xffffff, 0.85);
-  dir.position.set(5, 6, 4);
-  scene.add(dir);
+  var active = 0, t = 0;
+  function select(i) {
+    active = i;
+    DYADS.forEach(function (d, k) {
+      d.mat.opacity = k === i ? 0.92 : 0.25;
+      d.tag.element.className = "lbl " + (k === i ? "strong" : "muted");
+    });
+    var d = DYADS[i];
+    cap.textContent = FAM[d.from].name + " wrote the forward pass and " + FAM[d.to].name +
+      " brought it back. Mean recovery " + d.j + " over thirteen stretches (MA15 pilot, 2026-10-02).";
+    t = 0;
+    pulse.position.copy(d.curve.getPointAt(Fig3D.reduce ? 0.98 : 0));
+    s.requestRender();
+  }
+  pick.addEventListener("change", function () { select(parseInt(pick.value, 10)); });
 
-  Object.keys(FAMILIES).forEach(function (k) {
-    var p = FAMILIES[k];
-    var m = new THREE.Mesh(
-      new THREE.BoxGeometry(0.35, 0.35, 0.35),
-      new THREE.MeshPhongMaterial({ color: 0x8b6914 })
-    );
-    m.position.copy(p);
-    scene.add(m);
+  s.onTick(function (dt) {
+    t = (t + dt * 0.35) % 1;
+    pulse.position.copy(DYADS[active].curve.getPointAt(t));
   });
-
-  var wire = new THREE.Mesh(
-    new THREE.BoxGeometry(2.6, 2.6, 2.6),
-    new THREE.MeshBasicMaterial({ color: 0x2a4a6f, wireframe: true, transparent: true, opacity: 0.25 })
-  );
-  scene.add(wire);
-
-  var ribbonGroup = new THREE.Group();
-  scene.add(ribbonGroup);
-  var pulse = new THREE.Mesh(
-    new THREE.SphereGeometry(0.08, 12, 12),
-    new THREE.MeshBasicMaterial({ color: 0xffffff })
-  );
-  scene.add(pulse);
-  var activeCurve = null;
-
-  function setDyad(idx) {
-    while (ribbonGroup.children.length) ribbonGroup.remove(ribbonGroup.children[0]);
-    var d = DYADS[idx];
-    cap.textContent = d.label + ". Mean recovery J = " + d.j.toFixed(3) + " (MA15 pilot, 2026-10-02; see thesis run doc for full matrix).";
-    var a = FAMILIES[d.from], b = FAMILIES[d.to];
-    var mid = a.clone().add(b).multiplyScalar(0.5).add(new THREE.Vector3(0, 0.6, 0));
-    activeCurve = new THREE.QuadraticBezierCurve3(a, mid, b);
-    var r = 0.04 + d.j * 0.12;
-    var tube = new THREE.Mesh(
-      new THREE.TubeGeometry(activeCurve, 64, r, 8, false),
-      new THREE.MeshPhongMaterial({ color: d.col, transparent: true, opacity: 0.85 })
-    );
-    ribbonGroup.add(tube);
-  }
-  pick.onchange = function () { setDyad(parseInt(pick.value, 10)); };
-  setDyad(0);
-
-  function resize() {
-    var w = Math.max(stage.clientWidth, 280), h = Math.max(stage.clientHeight, 240);
-    camera.aspect = w / h;
-    camera.updateProjectionMatrix();
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-    renderer.setSize(w, h);
-  }
-  window.addEventListener("resize", resize);
-  resize();
-
-  var t0 = performance.now();
-  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var needsRender = true;
-  controls.addEventListener("change", function () { needsRender = true; });
-  function tick(now) {
-    requestAnimationFrame(tick);
-    if (document.visibilityState !== "visible") return;
-    var motion = activeCurve && !reduce;
-    if (motion) {
-      var t = ((now - t0) * 0.00015) % 1;
-      pulse.position.copy(activeCurve.getPointAt(t));
-    }
-    var damp = controls.update();
-    if (motion || damp || needsRender) {
-      renderer.render(scene, camera);
-      needsRender = false;
-    }
-  }
-  tick();
+  syncBtn = Fig3D.playButton(document.getElementById("btnPlay"), s, { play: "Play pulse" });
+  select(0);
 })();
 </script>
 </body>

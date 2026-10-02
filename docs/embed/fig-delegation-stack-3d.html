@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- MA13 companion: 26 delegations as a 3D column chart (log-spaced ratios from report range) -->
+<!-- MA13 companion: the 26 measured compression ratios as columns, in report order (same array as fig-delegation-corpus.html D1) -->
 <html lang="en">
 <head>
 <link rel="stylesheet" href="../assets/site-theme-vapor.css"/>
@@ -11,131 +11,125 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta name="color-scheme" content="light"/>
-<title>Delegation corpus · 3D stack (MA13)</title>
-<style>
-  :root { --ink:#1a1814; --muted:#5c564c; --rule:#d8d0c4; --wash:#f6f4ef; --accent:#2a4a6f; }
-  body { margin:0; font-family: Georgia, serif; font-size: 11.5pt; line-height: 1.55; color: var(--ink);
-    max-width: 56rem; margin: 0 auto; padding: 1rem 1.25rem 2rem; background: #fff; }
-  h1 { font-size: 1.35rem; margin: 0 0 0.35rem; }
-  a { color: var(--accent); }
-  .embed-back { font-size: 0.88rem; margin: 0 0 0.85rem; }
-  .lede { background: var(--wash); border: 1px solid var(--rule); padding: 0.75rem 0.95rem; margin: 0.75rem 0; font-size: 0.93rem; }
-  .viz-stage { position: relative; border: 1px solid var(--rule); border-radius: 8px; overflow: hidden;
-    background: #faf8f4; height: min(58vh, 480px); min-height: 320px; }
-  #viz3d { position: absolute; inset: 0; cursor: grab; }
-  .viz-controls { margin: 0.55rem 0; font-family: system-ui, sans-serif; font-size: 0.78rem; }
-  .viz-controls button { font: inherit; padding: 0.35rem 0.55rem; border: 1px solid var(--rule); border-radius: 5px; background: #fff; cursor: pointer; }
-  .cap { font-size: 0.86rem; color: var(--muted); margin: 0.35rem 0 0; max-width: 65ch; }
-</style>
+<title>Delegation stack · 3D (MA13)</title>
+<link rel="stylesheet" href="../assets/fig3d.css"/>
+<script defer src="../assets/fig-quotes.js"></script>
+<script defer src="../assets/fig-terms.js"></script>
 </head>
 <body>
-<p class="embed-back"><a href="../figures_animated_3d.html">&larr; Animated 3D hub</a> · <a href="fig-delegation-corpus.html">MA13 (2D)</a> · <a href="../theory/LOTMAN_INTERPRETATION.html#s13">Journal §13</a></p>
-<h1>Delegation corpus · 3D stack</h1>
-<div class="lede">Each column is one of <strong>26</strong> measured parent→subagent hand-offs. Height encodes <strong>compression ratio</strong> on a log scale between the corpus minimum <strong>1.2456</strong> and maximum <strong>23.65</strong> (median <strong>4.3843</strong>). Bar order follows index, not date. Play highlights hand-offs in sequence; counts match <code>ma13_real_subagent_report.json</code> aggregates in the 2D figure.</div>
-<div class="viz-stage" id="viz-stage"><div id="viz3d"></div></div>
-<div class="viz-controls"><button type="button" id="btnPlay">Play sequence</button></div>
-<p class="cap" id="cap">Drag to orbit. Violet highlight = current hand-off in the play sequence.</p>
+<p class="embed-back"><a href="../figures_animated_3d.html">&larr; Animated 3D hub</a> · <a href="fig-delegation-corpus.html">MA13 2D charts</a> · <a href="fig-transmission-cells-3d.html">Transmission rooms (3D)</a> · <a href="../theory/LOTMAN_INTERPRETATION.html#s13">Journal §13</a> · <a href="../index.html">Figures home</a></p>
+
+<h1>Twenty six hand-offs, none of them shorter (MA13, 3D)</h1>
+<div class="lede">These are 26 real delegations from a production coding agent to its subagents, measured after the fact. The prediction registered before the run was that a hand-off compresses, so the subagent's report should come back shorter than the instruction that asked for it. Every column here stands above the floor, which means the prediction failed for all 26. The median report ran 4.38 times the length of its instruction and the longest ran 23.65 times.</div>
+
+<div class="guide">
+  <h3>How to read this</h3>
+  <p>One column per delegation, left to right in report order. Height is the <a class="term" href="../theory/LOTMAN_INTERPRETATION.html#gloss-compression-ratio" data-tip="Report characters divided by instruction characters. Below 1 means the subagent shrank the message. None of the 26 did.">compression ratio</a> on a log scale, and the floor sits at a ratio of exactly 1, where a report would be the same length as its instruction. The red bar across the columns is the median. Press Play to step through them, or drag the slider.</p>
+  <p>Length is the easy part. What the subagent put in that length is covered on the 2D page: most of the report's vocabulary was new (median <a class="term" href="../theory/LOTMAN_INTERPRETATION.html#gloss-content-gain" data-tip="Vocabulary in the receiver's text that the sender never used. In MA13 it is a share of the report; in MA10 a count of new word types.">content gain</a> 0.8387), and the parent reused only a little more of it than a matched null would predict.</p>
+</div>
+
+<div class="viz-stage" id="viz-stage" role="img" aria-label="Twenty six columns on a floor that marks a compression ratio of 1. Every column rises above the floor. Heights run on a log scale from 1.2456 to 23.65, with the median at 4.3843 marked by a red bar.">
+  <div id="viz3d"></div>
+</div>
+<div class="viz-controls">
+  <button type="button" id="btnPlay">Play sequence</button>
+  <label for="pick">Hand-off</label>
+  <input type="range" id="pick" min="1" max="26" step="1" value="1"/>
+  <span class="hint">Drag to turn · scroll to zoom</span>
+</div>
+<p class="cap" id="cap" aria-live="polite"></p>
+<div class="legend">
+  <span><i class="sq" style="background:#2a4a6f"></i> one delegation</span>
+  <span><i class="sq" style="background:#7c3aed"></i> selected</span>
+  <span><i class="sq" style="background:#9a3b3b"></i> median 4.3843</span>
+  <span><i class="sq" style="background:#e8e4dc;border:1px solid #d8d0c4"></i> floor = ratio 1, no change of length</span>
+</div>
+<p class="cap"><strong>Theory tie-in:</strong> the same 26 delegations are the blue ball in <a href="fig-transmission-cells-3d.html">Lotman's rooms</a>. Journal <a href="../theory/LOTMAN_INTERPRETATION.html#s13">§13</a> uses the volume result to rule out <a class="q" data-q="lotman-two-channels">Lotman's I-s/he cell</a>, and <a href="../theory/LOTMAN_INTERPRETATION.html#s15">§15</a> (MA10) takes up the question this corpus cannot answer, which is how much of the new material was read and how much was made up.</p>
+
+<h2>Numbers in this figure, and where they come from</h2>
+<table>
+  <thead><tr><th>Value as drawn</th><th>Report key</th><th>Source file</th></tr></thead>
+  <tbody>
+    <tr><td>26 column heights, in report order</td><td><code>delegations[].compression_ratio</code></td><td><code>ma13_real_subagent_report.json</code> (same array as D1 on the 2D page)</td></tr>
+    <tr><td>26 delegations, 3 excluded as incomplete</td><td><code>corpus.n_delegations</code>, <code>corpus.n_excluded_incomplete</code></td><td>same</td></tr>
+    <tr><td>shortest 1.2456, median 4.3843, longest 23.65</td><td><code>aggregate.compression_ratio.min</code>, <code>.median</code>, <code>.max</code></td><td>same</td></tr>
+    <tr><td>content gain 0.8387 (guide text only)</td><td><code>aggregate.content_gain_ratio.median</code></td><td>same</td></tr>
+  </tbody>
+</table>
+<p class="limits">Limits carried over from the 2D page. One parent, one operator, one task family, and the instructions were written by the agent that later measured them, so this is participant observation. Tool results and the child's intermediate prose are missing from the transcripts, so nothing here separates what a subagent read from what it produced. The play order is report order and carries no meaning.</p>
+
 <script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>
 <script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://unpkg.com/three@0.128.0/examples/js/renderers/CSS2DRenderer.js"></script>
+<script src="../assets/fig3d.js"></script>
 <script>
 (function () {
-  var LO = 1.2456, HI = 23.65, MED = 4.3843, N = 26;
-  var ratios = [];
-  for (var i = 0; i < N; i++) {
-    var t = i / (N - 1);
-    ratios.push(LO * Math.pow(HI / LO, t * 0.85 + Math.sin(i * 1.7) * 0.04));
-  }
-  ratios.sort(function (a, b) { return a - b; });
+  /* delegations[].compression_ratio, report order. Copied from fig-delegation-corpus.html (RATIOS). */
+  var RATIOS = [5.482, 1.4339, 4.3694, 1.4807, 4.3992, 1.3324, 4.3166, 10.3278,
+                4.5395, 4.1049, 3.5108, 5.377, 13.2275, 8.0397, 3.8171, 5.4087,
+                16.5696, 23.65, 1.5038, 4.5563, 5.7861, 5.1047, 2.3242, 1.2456,
+                3.6931, 1.3285];
+  var MED = 4.3843, N = RATIOS.length, TOP = Math.log(30), H = 3.4, GAP = 0.38;
+  function height(r) { return Math.log(r) / TOP * H; }
 
-  var stage = document.getElementById("viz-stage");
-  var mount = document.getElementById("viz3d");
-  var scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xfaf8f4);
-  var camera = new THREE.PerspectiveCamera(42, 1, 0.1, 80);
-  camera.position.set(8, 6, 10);
-  var renderer = new THREE.WebGLRenderer({ antialias: true });
-  mount.appendChild(renderer.domElement);
-  var controls = new THREE.OrbitControls(camera, renderer.domElement);
-  controls.target.set(0, 1.2, 0);
-  scene.add(new THREE.AmbientLight(0xffffff, 0.75));
-  var dir = new THREE.DirectionalLight(0xffffff, 0.7);
-  dir.position.set(5, 8, 4);
-  scene.add(dir);
+  var syncBtn = null;
+  var s = Fig3D.stage({ camera: [2.5, 4.2, 11], target: [0, 1.3, 0], onRunningChange: function (on) { if (syncBtn) syncBtn(on); } });
+  var span = (N - 1) * GAP;
 
-  var bars = [];
-  var span = (N - 1) * 0.38;
-  ratios.forEach(function (r, i) {
-    var h = (Math.log(r) - Math.log(LO)) / (Math.log(HI) - Math.log(LO)) * 3.2 + 0.15;
-    var geo = new THREE.BoxGeometry(0.32, h, 0.32);
-    var mat = new THREE.MeshPhongMaterial({ color: 0x2a4a6f });
-    var mesh = new THREE.Mesh(geo, mat);
-    mesh.position.set(-span / 2 + i * 0.38, h / 2, 0);
-    mesh.userData = { ratio: r, idx: i + 1 };
-    scene.add(mesh);
-    bars.push(mesh);
+  var floor = new THREE.Mesh(new THREE.PlaneGeometry(span + 2.4, 3), new THREE.MeshPhongMaterial({ color: 0xe8e4dc }));
+  floor.rotation.x = -Math.PI / 2;
+  s.scene.add(floor);
+  s.label("floor: ratio 1, same length as the instruction", new THREE.Vector3(0, 0.02, 1.45), "muted");
+
+  var unit = new THREE.BoxGeometry(0.3, 1, 0.3);
+  unit.translate(0, 0.5, 0);
+  var matBase = new THREE.MeshPhongMaterial({ color: 0x2a4a6f });
+  var matPick = new THREE.MeshPhongMaterial({ color: 0x7c3aed, emissive: 0x3b0764 });
+  var bars = RATIOS.map(function (r, i) {
+    var m = new THREE.Mesh(unit, matBase);
+    m.scale.y = height(r);
+    m.position.set(-span / 2 + i * GAP, 0, 0);
+    s.scene.add(m);
+    return m;
   });
 
-  var medH = (Math.log(MED) - Math.log(LO)) / (Math.log(HI) - Math.log(LO)) * 3.2 + 0.15;
-  var plane = new THREE.Mesh(
-    new THREE.PlaneGeometry(span + 1.2, 0.02),
-    new THREE.MeshBasicMaterial({ color: 0x9a3b3b })
-  );
-  plane.rotation.x = -Math.PI / 2;
-  plane.position.set(0, medH, 0);
-  scene.add(plane);
+  var med = new THREE.Mesh(new THREE.BoxGeometry(span + 0.8, 0.03, 0.06), new THREE.MeshBasicMaterial({ color: 0x9a3b3b }));
+  med.position.set(0, height(MED), 0.2);
+  s.scene.add(med);
+  s.label("median 4.38", new THREE.Vector3(span / 2 + 0.5, height(MED), 0), "warn");
 
-  var floor = new THREE.Mesh(
-    new THREE.PlaneGeometry(span + 2, 4),
-    new THREE.MeshPhongMaterial({ color: 0xe8e4dc })
-  );
-  floor.rotation.x = -Math.PI / 2;
-  scene.add(floor);
+  [2, 5, 10, 20].forEach(function (t) {
+    s.label("×" + t, new THREE.Vector3(-span / 2 - 0.55, height(t), 0), "axis");
+  });
 
-  var playing = false, step = 0, lastStep = -1;
-  document.getElementById("btnPlay").onclick = function () {
-    playing = !playing;
-    this.textContent = playing ? "Pause" : "Play sequence";
-    if (!playing) lastStep = -1;
-  };
+  var pick = document.getElementById("pick");
+  var cap = document.getElementById("cap");
+  var tip = s.label("", new THREE.Vector3(), "strong");
+  var current = -1;
 
-  function resize() {
-    var w = Math.max(stage.clientWidth, 280), h = Math.max(stage.clientHeight, 240);
-    camera.aspect = w / h;
-    camera.updateProjectionMatrix();
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-    renderer.setSize(w, h);
+  function select(i) {
+    if (i === current) return;
+    if (current >= 0) bars[current].material = matBase;
+    current = i;
+    bars[i].material = matPick;
+    var r = RATIOS[i];
+    tip.element.textContent = "#" + (i + 1) + " · ×" + r.toFixed(2);
+    tip.position.set(bars[i].position.x, height(r) + 0.3, 0);
+    pick.value = String(i + 1);
+    cap.textContent = "Hand-off " + (i + 1) + " of " + N + ": the report ran " + r.toFixed(4) +
+      " times the length of its instruction" + (r >= MED ? ", at or above the median." : ", below the median.");
+    s.requestRender();
   }
-  window.addEventListener("resize", resize);
-  resize();
 
-  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var needsRender = true;
-  controls.addEventListener("change", function () { needsRender = true; });
-  var t0 = performance.now();
-  function tick(now) {
-    requestAnimationFrame(tick);
-    if (document.visibilityState !== "visible") return;
-    var animating = playing && !reduce;
-    if (animating) {
-      step = Math.floor((now - t0) * 0.0012) % N;
-      if (step !== lastStep) {
-        bars.forEach(function (b, j) {
-          b.material.color.setHex(j === step ? 0x7c3aed : 0x2a4a6f);
-          b.material.emissive.setHex(j === step ? 0x3b0764 : 0x000000);
-        });
-        document.getElementById("cap").textContent =
-          "Hand-off " + (step + 1) + " of " + N + " · ratio " + bars[step].userData.ratio.toFixed(2) + " (illustrative ordering; see 2D beeswarm for exact values).";
-        lastStep = step;
-        needsRender = true;
-      }
-    }
-    var damp = controls.update();
-    if (animating || damp || needsRender) {
-      renderer.render(scene, camera);
-      needsRender = false;
-    }
-  }
-  tick();
+  pick.addEventListener("input", function () { s.setRunning(false); select(parseInt(pick.value, 10) - 1); });
+
+  var clock = 0;
+  s.onTick(function (dt) {
+    clock += dt;
+    if (clock >= 0.8) { clock = 0; select((current + 1) % N); }
+  });
+  syncBtn = Fig3D.playButton(document.getElementById("btnPlay"), s, { play: "Play sequence" });
+  select(0);
 })();
 </script>
 </body>

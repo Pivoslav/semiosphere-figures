@@ -49,6 +49,17 @@ CURRENT_EMBED = [
     "fig-isolation-laundering.html",
 ]
 
+# Authored directly in docs/embed with no thesis-lab source. The prune step
+# below must keep them, and the copy step must not look for them in the lab.
+PAGES_ONLY_EMBED = [
+    "fig-roundtrip-helicoid-3d.html",
+    "fig-halt-flow-3d.html",
+    "fig-ma15-dyad-cube-3d.html",
+    "fig-delegation-stack-3d.html",
+    "fig-isolation-field-3d.html",
+    "fig-transmission-cells-3d.html",
+]
+
 THEORY_HTML = [
     "LLM_COGNITION_SEMIOSPHERE.html",
     "LLM_VS_SEMIOSPHERE_VIZ.html",
@@ -112,7 +123,7 @@ def main() -> int:
     embed_dir = REPORT / "embed"
     if embed_dir.is_dir():
         for src in sorted(embed_dir.glob(LEGACY_EMBED_GLOB)):
-            if src.name in CURRENT_EMBED:
+            if src.name in CURRENT_EMBED or src.name in PAGES_ONLY_EMBED:
                 continue
             copy_file(src, legacy_embed / src.name)
 
@@ -122,7 +133,7 @@ def main() -> int:
             print(f"  removed stale {stale.relative_to(ROOT)}")
     embed_root = DOCS / "embed"
     if embed_root.is_dir():
-        keep = set(CURRENT_EMBED)
+        keep = set(CURRENT_EMBED) | set(PAGES_ONLY_EMBED)
         for path in embed_root.glob("*.html"):
             if path.name not in keep:
                 path.unlink()
